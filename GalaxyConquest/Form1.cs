@@ -5,6 +5,13 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+// для работы с библиотекой OpenGL 
+using Tao.OpenGl;
+// для работы с библиотекой FreeGLUT 
+using Tao.FreeGlut;
+// для работы с элементом управления SimpleOpenGLControl 
+using Tao.Platform.Windows;
+
 namespace GalaxyConquest
 {
     public partial class Form1 : Form
@@ -35,6 +42,9 @@ namespace GalaxyConquest
         public Form1()
         {
             InitializeComponent();
+            // инициализация Glut 
+            Glut.glutInit();
+            Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
         }
 
         public override Size MinimumSize

@@ -27,6 +27,7 @@ namespace GalaxyConquest
         public int vertical = 0;    //for moving galaxy
         public float dynamicStarSize = 5; //Variable for dynamic of fix scale 
 
+        public int star_selected;
         public int mouseX;
         public int mouseY;
         //Brushes for stars colors
@@ -39,12 +40,20 @@ namespace GalaxyConquest
         public SolidBrush RedBrush = new SolidBrush(Color.FromArgb(255,255,0,0));
         public SolidBrush SuperWhiteBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 0));
 
+
+        public static Form1 SelfRef
+        {
+            get;
+            set;
+        }
+
         public Form1()
         {
             InitializeComponent();
             // инициализация Glut 
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
+            SelfRef = this;
         }
 
         public override Size MinimumSize
@@ -828,6 +837,7 @@ namespace GalaxyConquest
                     e.Y/scaling < (centerY + (int)screenY + starSize / 2))
                 {
                     //if mouse clicked in the ellipce open new form
+                    star_selected = s.type;//store type for selected star
                     pl.ShowDialog();
                     return;
                 }

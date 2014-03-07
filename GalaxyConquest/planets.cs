@@ -33,20 +33,35 @@ namespace GalaxyConquest
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
 
             Gl.glLoadIdentity();
-            Gl.glColor3f(1.0f, 0, 0);
+            Gl.glColor3f(1.0f, 0, 0);//set drawing color
 
-            Gl.glPushMatrix();
-            Gl.glTranslated(0, 0, -6);
-            //Gl.glPopMatrix();
-            Gl.glRotated(HorizontalSpin, 0, 1, 0);
-            Gl.glRotated(VerticalSpin, 1, 0, 0);
+            Gl.glPushMatrix();//save coordinates for all objects
+            Gl.glTranslated(-15, 0, -20);//move draw point (x=-15, y=0, z=-20)
 
-            // рисуем сферу с помощью библиотеки FreeGLUT 
-            Glut.glutWireSphere(2, 32, 32);
+            Gl.glRotated(HorizontalSpin, 0, 1, 0);//rotate
+            Gl.glRotated(VerticalSpin, 1, 0, 0);//rotate
 
-            Gl.glPopMatrix();
+            generate_planets();
+
+            Gl.glPopMatrix();//restore from saving coordinates(now draw point in 0,0,0)
             Gl.glFlush();
             planetsViev.Invalidate();
+        }
+
+        private void generate_planets()
+        {
+            int star = 1;//type of selected star
+            if (Form1.SelfRef != null)
+            {
+                star = Form1.SelfRef.star_selected;
+            }
+            //count of planets depends on type (1:1)
+            for (int i = 0; i < star; i++)
+            {
+                Gl.glTranslated(6, 0, 0);
+                // рисуем сферу с помощью библиотеки FreeGLUT
+                Glut.glutWireSphere(2, 32, 32);
+            }
         }
 
         private void showbutton_Click(object sender, EventArgs e)
@@ -96,6 +111,12 @@ namespace GalaxyConquest
         private void buttonSpinLeft_Click(object sender, EventArgs e)
         {
             HorizontalSpin -= 5;
+            show();
+        }
+
+        private void planets_Resize(object sender, EventArgs e)
+        {
+            planets_Load(sender, e);//need to reload our drawing place
             show();
         }
     }

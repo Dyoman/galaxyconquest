@@ -39,6 +39,9 @@
             // planetsViev
             // 
             this.planetsViev.AccumBits = ((byte)(0));
+            this.planetsViev.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.planetsViev.AutoCheckErrors = false;
             this.planetsViev.AutoFinish = false;
             this.planetsViev.AutoMakeCurrent = true;
@@ -54,7 +57,7 @@
             // 
             // showbutton
             // 
-            this.showbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.showbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.showbutton.Location = new System.Drawing.Point(443, 13);
             this.showbutton.Name = "showbutton";
             this.showbutton.Size = new System.Drawing.Size(75, 23);
@@ -121,6 +124,7 @@
             this.Name = "planets";
             this.Text = "planets";
             this.Load += new System.EventHandler(this.planets_Load);
+            this.Resize += new System.EventHandler(this.planets_Resize);
             this.ResumeLayout(false);
 
         }

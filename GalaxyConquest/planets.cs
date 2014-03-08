@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 // для работы с библиотекой OpenGL 
 using Tao.OpenGl;
 // для работы с библиотекой FreeGLUT 
 using Tao.FreeGlut;
-// для работы с элементом управления SimpleOpenGLControl 
-using Tao.Platform.Windows;
 
 namespace GalaxyConquest
 {
@@ -57,7 +49,7 @@ namespace GalaxyConquest
             int r_sphere = 32;  //radius of sphere
             if (Form1.SelfRef != null)
             {
-                star = Form1.SelfRef.star_selected + 1;//if type = 0 we add 1 for draw planet
+                star = Form1.SelfRef.galaxy.stars[Form1.SelfRef.star_selected].type + 1;//if type = 0 we add 1 for draw planet
             }
             //count of planets depends on type (1:1)+1
             Gl.glPushMatrix();//save coordinates for all objects (this methods can be included)
@@ -84,6 +76,11 @@ namespace GalaxyConquest
 
         private void planets_Load(object sender, EventArgs e)
         {
+
+            if (Form1.SelfRef.galaxy.stars[Form1.SelfRef.star_selected].name == "Player")
+            {
+                this.Text = "Player planets";
+            }
 
             // очитка окна 
             Gl.glClearColor(255, 255, 255, 1);

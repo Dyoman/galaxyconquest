@@ -5,12 +5,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-// для работы с библиотекой OpenGL 
-using Tao.OpenGl;
 // для работы с библиотекой FreeGLUT 
 using Tao.FreeGlut;
-// для работы с элементом управления SimpleOpenGLControl 
-using Tao.Platform.Windows;
 
 namespace GalaxyConquest
 {
@@ -102,6 +98,7 @@ namespace GalaxyConquest
                 {
                     generate_random_events();
                 }
+                Player player = new Player();
                 Redraw();
             }
 
@@ -837,7 +834,7 @@ namespace GalaxyConquest
                     e.Y/scaling < (centerY + (int)screenY + starSize / 2))
                 {
                     //if mouse clicked in the ellipce open new form
-                    star_selected = s.type;//store type for selected star
+                    star_selected = j;//store type for selected star
                     pl.ShowDialog();
                     return;
                 }

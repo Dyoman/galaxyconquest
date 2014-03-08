@@ -92,6 +92,11 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StarSystem.cs" />
     <Compile Include="StarWarp.cs" />
     <Compile Include="Tech_Tree.cs">
@@ -117,14 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Tech_Tree.resx">
       <DependentUpon>Tech_Tree.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,6 +157,14 @@
     <Content Include="freeglut.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\btn_rotateright.png" />
+    <None Include="Resources\btn_rotateleft.png" />
+    <None Include="Resources\btn_spindown.png" />
+    <None Include="Resources\btn_spinup.png" />
+    <None Include="Resources\btn_minus.png" />
+    <None Include="Resources\btn_plus.png" />
+    <None Include="Resources\btn_arrowdown.png" />
+    <None Include="Resources\btn_arrowup.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TAO_Fremwork\" />

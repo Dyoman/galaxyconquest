@@ -68,9 +68,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.starsCount);
             this.groupBox1.Controls.Add(this.StarsScrollBar);
@@ -148,19 +148,23 @@
             // 
             // button7
             // 
+            this.button7.FlatAppearance.BorderSize = 0;
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.button7.Location = new System.Drawing.Point(56, 123);
+            this.button7.Location = new System.Drawing.Point(55, 123);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(31, 23);
+            this.button7.Size = new System.Drawing.Size(21, 21);
             this.button7.TabIndex = 23;
             this.button7.UseVisualStyleBackColor = true;
             // 
             // button8
             // 
+            this.button8.FlatAppearance.BorderSize = 0;
+            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.button8.Location = new System.Drawing.Point(23, 123);
+            this.button8.Location = new System.Drawing.Point(30, 123);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(31, 23);
+            this.button8.Size = new System.Drawing.Size(21, 21);
             this.button8.TabIndex = 22;
             this.button8.UseVisualStyleBackColor = true;
             // 
@@ -242,19 +246,23 @@
             // 
             // button5
             // 
+            this.button5.FlatAppearance.BorderSize = 0;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
             this.button5.Location = new System.Drawing.Point(317, 123);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(31, 23);
+            this.button5.Size = new System.Drawing.Size(21, 21);
             this.button5.TabIndex = 13;
             this.button5.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
+            this.button6.FlatAppearance.BorderSize = 0;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.button6.Location = new System.Drawing.Point(284, 123);
+            this.button6.Location = new System.Drawing.Point(290, 123);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(31, 23);
+            this.button6.Size = new System.Drawing.Size(21, 21);
             this.button6.TabIndex = 12;
             this.button6.UseVisualStyleBackColor = true;
             // 
@@ -288,20 +296,24 @@
             // 
             // buttonGalaxySizeRight
             // 
+            this.buttonGalaxySizeRight.FlatAppearance.BorderSize = 0;
+            this.buttonGalaxySizeRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxySizeRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
             this.buttonGalaxySizeRight.Location = new System.Drawing.Point(230, 123);
             this.buttonGalaxySizeRight.Name = "buttonGalaxySizeRight";
-            this.buttonGalaxySizeRight.Size = new System.Drawing.Size(31, 23);
+            this.buttonGalaxySizeRight.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxySizeRight.TabIndex = 8;
             this.buttonGalaxySizeRight.UseVisualStyleBackColor = true;
             this.buttonGalaxySizeRight.Click += new System.EventHandler(this.buttonGalaxySizeRight_Click);
             // 
             // buttonGalaxySizeLeft
             // 
+            this.buttonGalaxySizeLeft.FlatAppearance.BorderSize = 0;
+            this.buttonGalaxySizeLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxySizeLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.buttonGalaxySizeLeft.Location = new System.Drawing.Point(197, 123);
+            this.buttonGalaxySizeLeft.Location = new System.Drawing.Point(203, 123);
             this.buttonGalaxySizeLeft.Name = "buttonGalaxySizeLeft";
-            this.buttonGalaxySizeLeft.Size = new System.Drawing.Size(31, 23);
+            this.buttonGalaxySizeLeft.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxySizeLeft.TabIndex = 7;
             this.buttonGalaxySizeLeft.UseVisualStyleBackColor = true;
             this.buttonGalaxySizeLeft.Click += new System.EventHandler(this.buttonGalaxySizeLeft_Click);
@@ -336,20 +348,24 @@
             // 
             // buttonGalaxyTypeRight
             // 
+            this.buttonGalaxyTypeRight.FlatAppearance.BorderSize = 0;
+            this.buttonGalaxyTypeRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxyTypeRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.buttonGalaxyTypeRight.Location = new System.Drawing.Point(143, 123);
+            this.buttonGalaxyTypeRight.Location = new System.Drawing.Point(144, 123);
             this.buttonGalaxyTypeRight.Name = "buttonGalaxyTypeRight";
-            this.buttonGalaxyTypeRight.Size = new System.Drawing.Size(31, 23);
+            this.buttonGalaxyTypeRight.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxyTypeRight.TabIndex = 3;
             this.buttonGalaxyTypeRight.UseVisualStyleBackColor = true;
             this.buttonGalaxyTypeRight.Click += new System.EventHandler(this.buttonGalaxyTypeRight_Click);
             // 
             // buttonGalaxyTypeLeft
             // 
+            this.buttonGalaxyTypeLeft.FlatAppearance.BorderSize = 0;
+            this.buttonGalaxyTypeLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxyTypeLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.buttonGalaxyTypeLeft.Location = new System.Drawing.Point(110, 123);
+            this.buttonGalaxyTypeLeft.Location = new System.Drawing.Point(119, 123);
             this.buttonGalaxyTypeLeft.Name = "buttonGalaxyTypeLeft";
-            this.buttonGalaxyTypeLeft.Size = new System.Drawing.Size(31, 23);
+            this.buttonGalaxyTypeLeft.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxyTypeLeft.TabIndex = 2;
             this.buttonGalaxyTypeLeft.UseVisualStyleBackColor = true;
             this.buttonGalaxyTypeLeft.Click += new System.EventHandler(this.buttonGalaxyTypeLeft_Click);

@@ -52,6 +52,8 @@
             this.buttonMoveRight = new System.Windows.Forms.Button();
             this.buttonMoveDown = new System.Windows.Forms.Button();
             this.galaxyImage = new System.Windows.Forms.PictureBox();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.SuspendLayout();
@@ -281,11 +283,39 @@
             this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
             this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
             // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.LargeChange = 100;
+            this.vScrollBar1.Location = new System.Drawing.Point(564, 24);
+            this.vScrollBar1.Maximum = 500;
+            this.vScrollBar1.Minimum = -500;
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(16, 284);
+            this.vScrollBar1.SmallChange = 50;
+            this.vScrollBar1.TabIndex = 15;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.LargeChange = 100;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 308);
+            this.hScrollBar1.Maximum = 500;
+            this.hScrollBar1.Minimum = -500;
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(580, 16);
+            this.hScrollBar1.SmallChange = 50;
+            this.hScrollBar1.TabIndex = 14;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(580, 346);
+            this.Controls.Add(this.vScrollBar1);
+            this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.buttonMoveDown);
             this.Controls.Add(this.buttonMoveRight);
             this.Controls.Add(this.buttonMoveLeft);
@@ -339,6 +369,8 @@
         private System.Windows.Forms.Button buttonMoveDown;
         private System.Windows.Forms.ToolStripMenuItem MainMenuTechTree;
         private System.Windows.Forms.ToolStripMenuItem dModelsToolStripMenuItem;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
     }
 }
 

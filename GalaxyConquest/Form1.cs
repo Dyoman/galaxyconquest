@@ -842,6 +842,18 @@ namespace GalaxyConquest
             }
         }
 
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            vertical = vScrollBar1.Value;
+            Redraw();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            horizontal = hScrollBar1.Value;
+            Redraw();
+        }
+
 
     }
 }

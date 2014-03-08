@@ -783,13 +783,13 @@ namespace GalaxyConquest
         private void MainMenuTechTree_Click(object sender, EventArgs e)
         {
             Tech_Tree tt = new Tech_Tree();
-            tt.Show();
+            tt.ShowDialog();
         }
 
         private void dModelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form_3d pl = new Form_3d();
-            pl.Show();
+            pl.ShowDialog();
         }
 
         private void Form1_Load(object sender, EventArgs e)

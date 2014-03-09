@@ -69,44 +69,52 @@
             // buttonSpinUp
             // 
             this.buttonSpinUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinUp.Location = new System.Drawing.Point(443, 153);
+            this.buttonSpinUp.FlatAppearance.BorderSize = 0;
+            this.buttonSpinUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinUp.Image = global::GalaxyConquest.Properties.Resources.btn_arrowup;
+            this.buttonSpinUp.Location = new System.Drawing.Point(470, 72);
             this.buttonSpinUp.Name = "buttonSpinUp";
-            this.buttonSpinUp.Size = new System.Drawing.Size(75, 23);
+            this.buttonSpinUp.Size = new System.Drawing.Size(21, 21);
             this.buttonSpinUp.TabIndex = 2;
-            this.buttonSpinUp.Text = "Up";
             this.buttonSpinUp.UseVisualStyleBackColor = true;
             this.buttonSpinUp.Click += new System.EventHandler(this.buttonSpinUp_Click);
             // 
             // buttonSpinRight
             // 
             this.buttonSpinRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinRight.Location = new System.Drawing.Point(482, 182);
+            this.buttonSpinRight.FlatAppearance.BorderSize = 0;
+            this.buttonSpinRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
+            this.buttonSpinRight.Location = new System.Drawing.Point(489, 93);
             this.buttonSpinRight.Name = "buttonSpinRight";
-            this.buttonSpinRight.Size = new System.Drawing.Size(75, 23);
+            this.buttonSpinRight.Size = new System.Drawing.Size(21, 21);
             this.buttonSpinRight.TabIndex = 3;
-            this.buttonSpinRight.Text = "Right";
             this.buttonSpinRight.UseVisualStyleBackColor = true;
             this.buttonSpinRight.Click += new System.EventHandler(this.buttonSpinRight_Click);
             // 
             // buttonSpinLeft
             // 
             this.buttonSpinLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinLeft.Location = new System.Drawing.Point(401, 182);
+            this.buttonSpinLeft.FlatAppearance.BorderSize = 0;
+            this.buttonSpinLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
+            this.buttonSpinLeft.Location = new System.Drawing.Point(451, 93);
             this.buttonSpinLeft.Name = "buttonSpinLeft";
-            this.buttonSpinLeft.Size = new System.Drawing.Size(75, 23);
+            this.buttonSpinLeft.Size = new System.Drawing.Size(21, 21);
             this.buttonSpinLeft.TabIndex = 4;
-            this.buttonSpinLeft.Text = "Left";
             this.buttonSpinLeft.UseVisualStyleBackColor = true;
             this.buttonSpinLeft.Click += new System.EventHandler(this.buttonSpinLeft_Click);
             // 
             // buttonSpinDown
             // 
             this.buttonSpinDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinDown.Location = new System.Drawing.Point(443, 211);
+            this.buttonSpinDown.FlatAppearance.BorderSize = 0;
+            this.buttonSpinDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinDown.Image = global::GalaxyConquest.Properties.Resources.btn_arrowdown;
+            this.buttonSpinDown.Location = new System.Drawing.Point(470, 113);
             this.buttonSpinDown.Name = "buttonSpinDown";
-            this.buttonSpinDown.Size = new System.Drawing.Size(75, 23);
+            this.buttonSpinDown.Size = new System.Drawing.Size(21, 21);
             this.buttonSpinDown.TabIndex = 5;
-            this.buttonSpinDown.Text = "Down";
             this.buttonSpinDown.UseVisualStyleBackColor = true;
             this.buttonSpinDown.Click += new System.EventHandler(this.buttonSpinDown_Click);
             // 

@@ -50,6 +50,7 @@ namespace GalaxyConquest
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
             SelfRef = this;
+            this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
         }
 
         public override Size MinimumSize
@@ -842,6 +843,56 @@ namespace GalaxyConquest
             }
         }
 
+        void this_MouseWheel(object sender, MouseEventArgs e) // resizing of galaxy at event change wheel mouse
+        {
+            if (e.Delta > 0)
+                if (scaling >= 10)
+            {
+                return;
+            }
+
+            else
+            {
+                scaling += 0.2f;
+                if (dynamicStarSize >= 3)
+                {
+                    dynamicStarSize -= 0.4f;
+                }
+                else if (dynamicStarSize >= 2)
+                {
+                    dynamicStarSize -= 0.05f;
+                }
+                else if (dynamicStarSize >= 0)
+                {
+                    dynamicStarSize -= 0.01f;
+                }
+                Redraw();
+            }
+               
+            else
+                if (scaling <= 0.4)
+                {
+                    return;
+                }
+                else
+                {
+                    scaling -= 0.2f;
+                    if (dynamicStarSize <= 2)
+                    {
+                        dynamicStarSize += 0.01f;
+                    }
+                    else if (dynamicStarSize <= 3)
+                    {
+                        dynamicStarSize += 0.05f;
+                    }
+                    else if (dynamicStarSize <= 5)
+                    {
+                        dynamicStarSize += 0.4f;
+                    }
+                    Redraw();
+                }
+                
+        }
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             vertical = vScrollBar1.Value;

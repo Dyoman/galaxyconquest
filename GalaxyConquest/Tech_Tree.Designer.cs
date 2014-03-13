@@ -36,9 +36,9 @@
             // 
             // TechTreeImage
             // 
-            this.TechTreeImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TechTreeImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TechTreeImage.BackColor = System.Drawing.Color.Black;
             this.TechTreeImage.Location = new System.Drawing.Point(82, 12);
             this.TechTreeImage.Name = "TechTreeImage";
@@ -50,21 +50,25 @@
             // 
             // buttonScalingDown
             // 
-            this.buttonScalingDown.Location = new System.Drawing.Point(1, 41);
+            this.buttonScalingDown.FlatAppearance.BorderSize = 0;
+            this.buttonScalingDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonScalingDown.Image = global::GalaxyConquest.Properties.Resources.btn_minus;
+            this.buttonScalingDown.Location = new System.Drawing.Point(27, 39);
             this.buttonScalingDown.Name = "buttonScalingDown";
-            this.buttonScalingDown.Size = new System.Drawing.Size(75, 23);
+            this.buttonScalingDown.Size = new System.Drawing.Size(21, 21);
             this.buttonScalingDown.TabIndex = 11;
-            this.buttonScalingDown.Text = "-";
             this.buttonScalingDown.UseVisualStyleBackColor = true;
             this.buttonScalingDown.Click += new System.EventHandler(this.buttonScalingDown_Click);
             // 
             // buttonScalingUp
             // 
-            this.buttonScalingUp.Location = new System.Drawing.Point(1, 12);
+            this.buttonScalingUp.FlatAppearance.BorderSize = 0;
+            this.buttonScalingUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonScalingUp.Image = global::GalaxyConquest.Properties.Resources.btn_plus;
+            this.buttonScalingUp.Location = new System.Drawing.Point(27, 12);
             this.buttonScalingUp.Name = "buttonScalingUp";
-            this.buttonScalingUp.Size = new System.Drawing.Size(75, 23);
+            this.buttonScalingUp.Size = new System.Drawing.Size(21, 21);
             this.buttonScalingUp.TabIndex = 10;
-            this.buttonScalingUp.Text = "+";
             this.buttonScalingUp.UseVisualStyleBackColor = true;
             this.buttonScalingUp.Click += new System.EventHandler(this.buttonScalingUp_Click);
             // 

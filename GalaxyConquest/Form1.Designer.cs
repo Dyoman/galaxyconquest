@@ -67,7 +67,7 @@
             this.dModelsToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(1316, 24);
+            this.mainMenu.Size = new System.Drawing.Size(1284, 24);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -150,7 +150,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 484);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1316, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -170,7 +170,7 @@
             this.buttonSpinLeft.FlatAppearance.BorderSize = 0;
             this.buttonSpinLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSpinLeft.Image = global::GalaxyConquest.Properties.Resources.btn_rotateright;
-            this.buttonSpinLeft.Location = new System.Drawing.Point(613, 429);
+            this.buttonSpinLeft.Location = new System.Drawing.Point(581, 429);
             this.buttonSpinLeft.Name = "buttonSpinLeft";
             this.buttonSpinLeft.Size = new System.Drawing.Size(91, 40);
             this.buttonSpinLeft.TabIndex = 4;
@@ -183,7 +183,7 @@
             this.buttonSpinRight.FlatAppearance.BorderSize = 0;
             this.buttonSpinRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSpinRight.Image = global::GalaxyConquest.Properties.Resources.btn_rotateleft;
-            this.buttonSpinRight.Location = new System.Drawing.Point(771, 429);
+            this.buttonSpinRight.Location = new System.Drawing.Point(739, 429);
             this.buttonSpinRight.Name = "buttonSpinRight";
             this.buttonSpinRight.Size = new System.Drawing.Size(91, 40);
             this.buttonSpinRight.TabIndex = 5;
@@ -194,7 +194,7 @@
             // 
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
             this.vScrollBar1.LargeChange = 100;
-            this.vScrollBar1.Location = new System.Drawing.Point(1300, 24);
+            this.vScrollBar1.Location = new System.Drawing.Point(1268, 24);
             this.vScrollBar1.Maximum = 500;
             this.vScrollBar1.Minimum = -500;
             this.vScrollBar1.Name = "vScrollBar1";
@@ -211,7 +211,7 @@
             this.hScrollBar1.Maximum = 500;
             this.hScrollBar1.Minimum = -500;
             this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(1316, 16);
+            this.hScrollBar1.Size = new System.Drawing.Size(1284, 16);
             this.hScrollBar1.SmallChange = 50;
             this.hScrollBar1.TabIndex = 14;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
@@ -282,7 +282,7 @@
             this.buttonSpinDown.FlatAppearance.BorderSize = 0;
             this.buttonSpinDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSpinDown.Image = global::GalaxyConquest.Properties.Resources.btn_spindown;
-            this.buttonSpinDown.Location = new System.Drawing.Point(1256, 165);
+            this.buttonSpinDown.Location = new System.Drawing.Point(1224, 165);
             this.buttonSpinDown.Name = "buttonSpinDown";
             this.buttonSpinDown.Size = new System.Drawing.Size(40, 91);
             this.buttonSpinDown.TabIndex = 7;
@@ -295,7 +295,7 @@
             this.buttonSpinUp.FlatAppearance.BorderSize = 0;
             this.buttonSpinUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSpinUp.Image = global::GalaxyConquest.Properties.Resources.btn_spinup;
-            this.buttonSpinUp.Location = new System.Drawing.Point(1257, 49);
+            this.buttonSpinUp.Location = new System.Drawing.Point(1225, 49);
             this.buttonSpinUp.Name = "buttonSpinUp";
             this.buttonSpinUp.Size = new System.Drawing.Size(40, 91);
             this.buttonSpinUp.TabIndex = 6;
@@ -322,7 +322,7 @@
             this.galaxyImage.BackColor = System.Drawing.Color.Black;
             this.galaxyImage.Location = new System.Drawing.Point(174, 27);
             this.galaxyImage.Name = "galaxyImage";
-            this.galaxyImage.Size = new System.Drawing.Size(1076, 396);
+            this.galaxyImage.Size = new System.Drawing.Size(1044, 396);
             this.galaxyImage.TabIndex = 1;
             this.galaxyImage.TabStop = false;
             this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
@@ -333,7 +333,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1316, 506);
+            this.ClientSize = new System.Drawing.Size(1284, 506);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.buttonMoveDown);

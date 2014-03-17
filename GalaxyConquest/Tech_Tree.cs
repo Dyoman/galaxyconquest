@@ -10,8 +10,6 @@ namespace GalaxyConquest
     {
 
         public Bitmap TechTreeBitmap;
-        
-        public List<Tech> TechList = new List<Tech>();
 
         public float scaling = 1f;
         public int horizontal = 0;
@@ -41,25 +39,23 @@ namespace GalaxyConquest
 
             g.ScaleTransform(scaling, scaling);
 
-            //чтение из фала списка технологий
+            //open file
             StreamReader tech_str = new StreamReader("Tech.txt");
+
             int counter = 0;
             string line;
 
+            //read while not end of the file (line by line)
             while ((line = tech_str.ReadLine()) != null)
             {
+                //draw readed line
                 g.DrawString(line, new Font("Arial", 10.0F), Brushes.White,
                     new PointF(centerX, centerY + 30 * counter));
                 counter++;
             }
 
+            //close file
             tech_str.Close();
-
-             g.DrawString("Добыча полезных\n ископаемых.", new Font("Arial", 10.0F), Brushes.White,
-                  new PointF(centerX - 170, centerY + 200));
-                 
-                g.DrawString("Обработка металлов.", new Font("Arial", 10.0F), Brushes.White,
-                  new PointF(centerX + 20, centerY + 200));
 
             TechTreeImage.Image = TechTreeBitmap;
             TechTreeImage.Refresh();

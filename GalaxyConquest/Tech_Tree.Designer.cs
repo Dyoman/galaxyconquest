@@ -40,9 +40,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TechTreeImage.BackColor = System.Drawing.Color.Black;
-            this.TechTreeImage.Location = new System.Drawing.Point(82, 12);
+            this.TechTreeImage.Location = new System.Drawing.Point(123, 18);
+            this.TechTreeImage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TechTreeImage.Name = "TechTreeImage";
-            this.TechTreeImage.Size = new System.Drawing.Size(390, 281);
+            this.TechTreeImage.Size = new System.Drawing.Size(585, 432);
             this.TechTreeImage.TabIndex = 2;
             this.TechTreeImage.TabStop = false;
             this.TechTreeImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TechTreeImage_MouseDown);
@@ -53,9 +54,10 @@
             this.buttonScalingDown.FlatAppearance.BorderSize = 0;
             this.buttonScalingDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScalingDown.Image = global::GalaxyConquest.Properties.Resources.btn_minus;
-            this.buttonScalingDown.Location = new System.Drawing.Point(27, 39);
+            this.buttonScalingDown.Location = new System.Drawing.Point(40, 60);
+            this.buttonScalingDown.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonScalingDown.Name = "buttonScalingDown";
-            this.buttonScalingDown.Size = new System.Drawing.Size(21, 21);
+            this.buttonScalingDown.Size = new System.Drawing.Size(32, 32);
             this.buttonScalingDown.TabIndex = 11;
             this.buttonScalingDown.UseVisualStyleBackColor = true;
             this.buttonScalingDown.Click += new System.EventHandler(this.buttonScalingDown_Click);
@@ -65,21 +67,23 @@
             this.buttonScalingUp.FlatAppearance.BorderSize = 0;
             this.buttonScalingUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScalingUp.Image = global::GalaxyConquest.Properties.Resources.btn_plus;
-            this.buttonScalingUp.Location = new System.Drawing.Point(27, 12);
+            this.buttonScalingUp.Location = new System.Drawing.Point(40, 18);
+            this.buttonScalingUp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonScalingUp.Name = "buttonScalingUp";
-            this.buttonScalingUp.Size = new System.Drawing.Size(21, 21);
+            this.buttonScalingUp.Size = new System.Drawing.Size(32, 32);
             this.buttonScalingUp.TabIndex = 10;
             this.buttonScalingUp.UseVisualStyleBackColor = true;
             this.buttonScalingUp.Click += new System.EventHandler(this.buttonScalingUp_Click);
             // 
             // Tech_Tree
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 305);
+            this.ClientSize = new System.Drawing.Size(726, 469);
             this.Controls.Add(this.buttonScalingDown);
             this.Controls.Add(this.buttonScalingUp);
             this.Controls.Add(this.TechTreeImage);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Tech_Tree";
             this.Text = "Tech_Tree";
             this.Resize += new System.EventHandler(this.Tech_Tree_Resize);

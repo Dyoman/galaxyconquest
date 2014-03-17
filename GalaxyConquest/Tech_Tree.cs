@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.IO;
 
 namespace GalaxyConquest
 {
     public partial class Tech_Tree : Form
     {
+
         public Bitmap TechTreeBitmap;
+        
+        public List<Tech> TechList = new List<Tech>();
 
         public float scaling = 1f;
         public int horizontal = 0;
@@ -23,6 +28,7 @@ namespace GalaxyConquest
 
         private void Redraw()
         {
+
             TechTreeBitmap = new Bitmap(TechTreeImage.Width, TechTreeImage.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);
@@ -35,12 +41,29 @@ namespace GalaxyConquest
 
             g.ScaleTransform(scaling, scaling);
 
-            g.DrawString("Обработка металлов.", new Font("Arial", 10.0F), Brushes.White, new PointF(centerX - 80, centerY + 50));
-            g.DrawString("Добыча полезных\n ископаемых.", new Font("Arial", 10.0F), Brushes.White, new PointF(centerX - 120, centerY + 100));
-            g.DrawString("Обработка металлов.", new Font("Arial", 10.0F), Brushes.White, new PointF(centerX + 20, centerY + 100));
+            //чтение из фала списка технологий
+            StreamReader tech_str = new StreamReader("Tech.txt");
+            int counter = 0;
+            string line;
+
+            while ((line = tech_str.ReadLine()) != null)
+            {
+                g.DrawString(line, new Font("Arial", 10.0F), Brushes.White,
+                    new PointF(centerX, centerY + 30 * counter));
+                counter++;
+            }
+
+            tech_str.Close();
+
+             g.DrawString("Добыча полезных\n ископаемых.", new Font("Arial", 10.0F), Brushes.White,
+                  new PointF(centerX - 170, centerY + 200));
+                 
+                g.DrawString("Обработка металлов.", new Font("Arial", 10.0F), Brushes.White,
+                  new PointF(centerX + 20, centerY + 200));
 
             TechTreeImage.Image = TechTreeBitmap;
             TechTreeImage.Refresh();
+
         }
 
 
@@ -109,5 +132,6 @@ namespace GalaxyConquest
                 Redraw();
             }
         }
+
     }
 }

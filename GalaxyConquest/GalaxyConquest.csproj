@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="StarSystem.cs" />
     <Compile Include="StarWarp.cs" />
+    <Compile Include="Tech.cs" />
     <Compile Include="Tech_Tree.cs">
       <SubType>Form</SubType>
     </Compile>

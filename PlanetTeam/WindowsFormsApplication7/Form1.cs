@@ -127,72 +127,11 @@ namespace PlanetTeam
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // ///////////////////////
         static Bitmap BIT = new Bitmap(800, 800);
         static Graphics GBIT = Graphics.FromImage(BIT);
         // ///////////////////////
         static Collection<PLANET> PLN = new Collection<PLANET>();
-
-
-
-
-
-
-
-
 
 
 
@@ -211,11 +150,8 @@ namespace PlanetTeam
                 // /////////////////////////
 
 
-
-
                 GBIT.FillEllipse(new SolidBrush(PLN[i].CLR), new Rectangle(PLN[i].GetPoint().X - (int)PLN[i].SIZE / 2, PLN[i].GetPoint().Y - (int)PLN[i].SIZE / 2, (int)PLN[i].SIZE, (int)PLN[i].SIZE));
                 GBIT.DrawString(PLN[i].NAME, new Font("arial", 10), new SolidBrush(Color.White), new Point(PLN[i].GetPoint().X, PLN[i].GetPoint().Y));
-
 
 
             }

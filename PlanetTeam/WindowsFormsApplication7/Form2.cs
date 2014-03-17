@@ -17,6 +17,9 @@ namespace PlanetTeam
            
             InitializeComponent();
             label1.Text = Form1.PLN[Form1.pln_selected].NAME;
+            label5.Text = Form1.size1;
+            label6.Text = Form1.minerals1;
+            label7.Text = Form1.PLN[Form1.pln_selected].POPULATION.ToString();
             
         }
 

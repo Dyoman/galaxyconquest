@@ -15,6 +15,8 @@ namespace PlanetTeam
         public float DISTANCE = 100f;
         public float ROT = 0f;
 
+        public float POPULATION = 1;
+        public float MINERALS = 10;
         public float SIZE = 10;
         public Color CLR = Color.FromArgb(255, 255, 255);
 

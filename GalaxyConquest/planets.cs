@@ -49,7 +49,7 @@ namespace GalaxyConquest
             int r_sphere = 32;  //radius of sphere
             if (Form1.SelfRef != null)
             {
-                star = Form1.SelfRef.galaxy.stars[Form1.SelfRef.star_selected].type + 1;//if type = 0 we add 1 for draw planet
+                star = Form1.SelfRef.galaxy.stars[Form1.SelfRef.star_selected].planets_count;
             }
             //count of planets depends on type (1:1)+1
             Gl.glPushMatrix();//save coordinates for all objects (this methods can be included)

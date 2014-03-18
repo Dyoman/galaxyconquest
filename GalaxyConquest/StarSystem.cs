@@ -14,5 +14,6 @@ namespace GalaxyConquest
         public double y;
         public double z;
         public SolidBrush br; //brush for stars
+        public int planets_count;//num of planets
     }
 }

@@ -10,6 +10,7 @@ namespace GalaxyConquest
     {
 
         public Bitmap TechTreeBitmap;
+        public List<string> tech = new List<string>();
 
         public float scaling = 1f;
         public int horizontal = 0;
@@ -18,9 +19,23 @@ namespace GalaxyConquest
         public int mouseX;
         public int mouseY;
 
+        public Brush br;
+
         public Tech_Tree()
         {
             InitializeComponent();
+            
+            StreamReader tech_str = new StreamReader("Tech.txt");
+            int counter = 0;
+            string line;
+
+            while ((line = tech_str.ReadLine()) != null)
+            {
+                tech.Add(line);
+                counter++;
+            }
+            tech_str.Close();
+
             Redraw();
         }
 
@@ -39,23 +54,25 @@ namespace GalaxyConquest
 
             g.ScaleTransform(scaling, scaling);
 
-            //open file
-            StreamReader tech_str = new StreamReader("Tech.txt");
-
-            int counter = 0;
-            string line;
-
-            //read while not end of the file (line by line)
-            while ((line = tech_str.ReadLine()) != null)
+            //чтение из фала списка технологий
+            for (int i = 0; i < tech.Count; i++)
             {
-                //draw readed line
-                g.DrawString(line, new Font("Arial", 10.0F), Brushes.White,
-                    new PointF(centerX, centerY + 30 * counter));
-                counter++;
+                for (int j = 0; j < Player.technologies.Count; j++)
+                {
+                    if (i == Player.technologies[j])
+                    {
+                        br = Brushes.Yellow;
+                        break;
+                    }
+                    else
+                    {
+                        br = Brushes.White;
+                    }
+                }
+                g.DrawString(tech[i], new Font("Arial", 10.0F), br,
+                        new PointF(centerX, centerY + 300 - 30 * i));
             }
 
-            //close file
-            tech_str.Close();
 
             TechTreeImage.Image = TechTreeBitmap;
             TechTreeImage.Refresh();

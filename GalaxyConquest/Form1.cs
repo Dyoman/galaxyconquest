@@ -35,8 +35,9 @@ namespace GalaxyConquest
         public SolidBrush OrangeBrush = new SolidBrush(Color.FromArgb(255,255,140,0));
         public SolidBrush RedBrush = new SolidBrush(Color.FromArgb(255,255,0,0));
         public SolidBrush SuperWhiteBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 0));
-
-
+        //-------------------------------added
+        public Player player = new Player();
+        //-------------------------------added
         public static Form1 SelfRef
         {
             get;
@@ -50,6 +51,7 @@ namespace GalaxyConquest
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
             SelfRef = this;
+            
             this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
         }
 
@@ -99,7 +101,7 @@ namespace GalaxyConquest
                 {
                     generate_random_events();
                 }
-                Player player = new Player();
+                
                 Redraw();
             }
 
@@ -325,6 +327,12 @@ namespace GalaxyConquest
 
             double screenX;
             double screenY;
+            //-------------------------------added
+            double ttX, ttY, ttZ;
+            ttX = player.x * Math.Cos(spinX) - player.z * Math.Sin(spinX);
+            ttZ = player.x * Math.Sin(spinX) + player.z * Math.Cos(spinX);
+            ttY = player.y * Math.Cos(spinY) - ttZ * Math.Sin(spinY);
+            //-------------------------------added
 
             //рисуем звездные системы
             for (int i = 0; i < galaxy.stars.Count; i++)
@@ -336,11 +344,17 @@ namespace GalaxyConquest
                 tX = s.x * Math.Cos(spinX) - s.z * Math.Sin(spinX);
                 tZ = s.x * Math.Sin(spinX) + s.z * Math.Cos(spinX);
                 tY = s.y * Math.Cos(spinY) - tZ * Math.Sin(spinY);
+
+                //---------------------------------------------
+                
+
                 screenX = tX;
                 screenY = tY;
 
                 starSize = s.type + dynamicStarSize;
-                
+                //-------------------------------added
+                g.FillEllipse(Brushes.Aquamarine, centerX + (int)ttX, centerY + (int)ttY, 20, 20);
+                //-------------------------------added
                 g.FillEllipse(s.br, centerX + (int)screenX - starSize / 2, centerY + (int)screenY - starSize / 2, starSize, starSize);
                 g.DrawString(s.name, new Font("Arial", 8.0F), Brushes.White, new PointF(centerX + (int)screenX, centerY + (int)screenY));
                 
@@ -471,6 +485,7 @@ namespace GalaxyConquest
                     s.z = y;
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = "";
+                    s.planets_count = s.type + 1;
                     switch (s.type)
                     {
                         //O - Blue, t =30 000 — 60 000 K
@@ -549,6 +564,7 @@ namespace GalaxyConquest
                     s.z = y;
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = "";
+                    s.planets_count = s.type + 1;
                     switch (s.type)
                     {
                         //O - Blue, t =30 000 — 60 000 K
@@ -622,6 +638,7 @@ namespace GalaxyConquest
                     s.z = y;
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = "";
+                    s.planets_count = s.type + 1;
                     switch (s.type)
                     {
                         //O - Blue, t =30 000 — 60 000 K
@@ -698,6 +715,7 @@ namespace GalaxyConquest
                     s.z = tY;
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = "";
+                    s.planets_count = s.type + 1;
                     switch (s.type)
                     {
                         //O - Blue, t =30 000 — 60 000 K
@@ -752,6 +770,54 @@ namespace GalaxyConquest
         //mouse move listener
         private void galaxyImage_MouseMove(object sender, MouseEventArgs e)
         {
+            if (galaxy != null)
+            {
+                for (int j = 0; j < galaxy.stars.Count; j++)
+                {
+                    //all need to calculate the real x,y of star on the screen
+                    //(s.x ~ 10 to 30) but the real position x on the screen is ~ 100 to 600
+                    //--------------------------------------//
+                    StarSystem s = galaxy.stars[j];
+
+                    double screenX;
+                    double screenY;
+                    double tX, tY, tZ;
+                    double starSize;
+
+                    float centerX = galaxyBitmap.Width / 2 / scaling;
+                    float centerY = galaxyBitmap.Height / 2 / scaling;
+
+                    centerX += horizontal;  //move galaxy left/right
+                    centerY += vertical;    //move galaxy up/down
+
+                    tX = s.x * Math.Cos(spinX) - s.z * Math.Sin(spinX);
+                    tZ = s.x * Math.Sin(spinX) + s.z * Math.Cos(spinX);
+                    tY = s.y * Math.Cos(spinY) - tZ * Math.Sin(spinY);
+
+                    screenX = tX;
+                    screenY = tY;
+
+                    starSize = s.type + dynamicStarSize;
+
+                    //--------------------------------------//
+
+                    //check for mouse in the star ellipce
+                    if (e.X / scaling > (centerX + (int)screenX - starSize / 2) &&
+                        e.X / scaling < (centerX + (int)screenX + starSize / 2) &&
+                        e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
+                        e.Y / scaling < (centerY + (int)screenY + starSize / 2))
+                    {
+                        textBox_planets.Text = s.planets_count.ToString();
+                        return;
+                    }
+
+
+                }
+
+            }
+
+            //---------------------
+
             if (e.Button == MouseButtons.Left)
             {
                 int dx = mouseX - e.X;
@@ -775,6 +841,8 @@ namespace GalaxyConquest
                 mouseX = e.X;   //set start x again
                 mouseY = e.Y;   //set start y again
                 Redraw();
+
+
             }
         }
 
@@ -795,7 +863,8 @@ namespace GalaxyConquest
 
         }
 
-        private void galaxyImage_MouseClick(object sender, MouseEventArgs e)
+
+        private void galaxyImage_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             planets pl = new planets();
 
@@ -829,10 +898,10 @@ namespace GalaxyConquest
                 //--------------------------------------//
 
                 //check for mouse in the star ellipce
-                if (e.X/scaling > (centerX + (int)screenX - starSize / 2) &&
-                    e.X/scaling < (centerX + (int)screenX + starSize / 2) &&
-                    e.Y/scaling > (centerY + (int)screenY - starSize / 2) &&
-                    e.Y/scaling < (centerY + (int)screenY + starSize / 2))
+                if (e.X / scaling > (centerX + (int)screenX - starSize / 2) &&
+                    e.X / scaling < (centerX + (int)screenX + starSize / 2) &&
+                    e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
+                    e.Y / scaling < (centerY + (int)screenY + starSize / 2))
                 {
                     //if mouse clicked in the ellipce open new form
                     star_selected = j;//store type for selected star
@@ -842,6 +911,57 @@ namespace GalaxyConquest
 
             }
         }
+
+        //-------------------------------added
+        private void galaxyImage_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int j = 0; j < galaxy.stars.Count; j++)
+            {
+                //all need to calculate the real x,y of star on the screen
+                //(s.x ~ 10 to 30) but the real position x on the screen is ~ 100 to 600
+                //--------------------------------------//
+                StarSystem s = galaxy.stars[j];
+
+                double screenX;
+                double screenY;
+                double tX, tY, tZ;
+                double starSize;
+
+                float centerX = galaxyBitmap.Width / 2 / scaling;
+                float centerY = galaxyBitmap.Height / 2 / scaling;
+
+                centerX += horizontal;  //move galaxy left/right
+                centerY += vertical;    //move galaxy up/down
+
+                tX = s.x * Math.Cos(spinX) - s.z * Math.Sin(spinX);
+                tZ = s.x * Math.Sin(spinX) + s.z * Math.Cos(spinX);
+                tY = s.y * Math.Cos(spinY) - tZ * Math.Sin(spinY);
+
+                screenX = tX;
+                screenY = tY;
+
+                starSize = s.type + dynamicStarSize;
+
+                //--------------------------------------//
+
+                //check for mouse in the star ellipce
+                if (e.X / scaling > (centerX + (int)screenX - starSize / 2) &&
+                    e.X / scaling < (centerX + (int)screenX + starSize / 2) &&
+                    e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
+                    e.Y / scaling < (centerY + (int)screenY + starSize / 2))
+                {
+                    //if mouse clicked in the ellipce open new form
+                    star_selected = j;//store type for selected star
+                    player.x = (int)(s.x - 20);
+                    player.y = (int)(s.y - 20);
+                    player.z = (int)(s.z);
+                    Redraw();
+                    return;
+                }
+
+            }
+        }
+        //-------------------------------added
 
         void this_MouseWheel(object sender, MouseEventArgs e) // resizing of galaxy at event change wheel mouse
         {
@@ -904,6 +1024,8 @@ namespace GalaxyConquest
             horizontal = hScrollBar1.Value;
             Redraw();
         }
+
+        
 
 
     }

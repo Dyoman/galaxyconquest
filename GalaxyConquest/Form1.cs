@@ -449,29 +449,19 @@ namespace GalaxyConquest
         {
             Double x;
             Double y;
-            Double z = 0;
             Double r;           //radius
-            Double t;           //space beetwen stars
-            Double curve = 0;   //statching spirals
+            Double t;           //rotate angle
             Random rand = new Random();
 
-            //we got 40 times for inner loop, so we need divide all stars coun for 40
-            //and we have 2 spirals, so divide agan dy 40
-            //as result (starscount/80)
-            for (int j = 0; j < (starscount/80); j++)
-            {
                 r = 0;
                 t = 0;
-                for (int i = 0; i < 40; i++)
+                for (int i = 0; i < starscount/2; i++)
                 {
-                    r += rand.Next(4) + 2 + galaxysize;
-                    curve = Math.Pow((r - 4), 2);
-                    curve = curve / 150;
+                    r += rand.Next(4) + 10 * (galaxysize+1);
                     t += 0.2;
 
-                    z = t + (rand.NextDouble() - 0.5) * 2;
-                    x = curve * Math.Cos(z) + rand.Next(30) - 15;
-                    y = curve * Math.Sin(z) + rand.Next(30) - 15;
+                    x = r * Math.Cos(t) + rand.Next(5 * (galaxysize + 1));
+                    y = r * Math.Sin(t) + rand.Next(5 * (galaxysize + 1));
 
                     if (rotate == true)
                     {
@@ -525,7 +515,8 @@ namespace GalaxyConquest
                     }
                     galaxy.stars.Add(s);
                 }
-            }
+
+            MessageBox.Show(galaxy.stars.Count.ToString());
         }
 
         public void generate_elliptical_galaxy(bool rotate, int galaxysize, int starscount)

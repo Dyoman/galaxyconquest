@@ -121,19 +121,18 @@
             this.starsCount.ReadOnly = true;
             this.starsCount.Size = new System.Drawing.Size(72, 20);
             this.starsCount.TabIndex = 26;
-            this.starsCount.Text = "400";
+            this.starsCount.Text = "10";
             // 
             // StarsScrollBar
             // 
-            this.StarsScrollBar.LargeChange = 400;
+            this.StarsScrollBar.LargeChange = 1;
             this.StarsScrollBar.Location = new System.Drawing.Point(19, 284);
-            this.StarsScrollBar.Maximum = 4399;
-            this.StarsScrollBar.Minimum = 400;
+            this.StarsScrollBar.Maximum = 20;
+            this.StarsScrollBar.Minimum = 5;
             this.StarsScrollBar.Name = "StarsScrollBar";
             this.StarsScrollBar.Size = new System.Drawing.Size(80, 16);
-            this.StarsScrollBar.SmallChange = 400;
             this.StarsScrollBar.TabIndex = 25;
-            this.StarsScrollBar.Value = 400;
+            this.StarsScrollBar.Value = 10;
             this.StarsScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.StarsScrollBar_Scroll);
             // 
             // label9

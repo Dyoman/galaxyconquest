@@ -35,6 +35,7 @@ namespace GalaxyConquest
         public SolidBrush OrangeBrush = new SolidBrush(Color.FromArgb(255,255,140,0));
         public SolidBrush RedBrush = new SolidBrush(Color.FromArgb(255,255,0,0));
         public SolidBrush SuperWhiteBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 0));
+        public SolidBrush GoldBrush = new SolidBrush(Color.Gold);
         //-------------------------------added
         public Player player = new Player();
         //-------------------------------added
@@ -80,11 +81,22 @@ namespace GalaxyConquest
             {
                 galaxy = new ModelGalaxy();
                 galaxy.name = "Млечный путь";
+                player.name = nd.namePlayer;
                 switch (nd.getGalaxyType())
                 {
                     case 0:
                         generate_spiral_galaxy(true, nd.getGalaxySize(), nd.getStarsCount());
                         generate_spiral_galaxy(false, nd.getGalaxySize(), nd.getStarsCount());
+
+                        Random rand = new Random();
+                        int planet_start;
+                        planet_start = rand.Next(galaxy.stars.Count);
+                        star_selected = planet_start;
+                        StarSystem ss = galaxy.stars[planet_start];
+                        player.x = (int)(ss.x - 3);
+                        player.y = (int)(ss.y - 3);
+                        player.z = (int)(ss.z);
+                        
                         break;
                     case 1:
                         generate_elliptical_galaxy(true, nd.getGalaxySize(), nd.getStarsCount());
@@ -302,6 +314,11 @@ namespace GalaxyConquest
 
         public void Redraw()
         {
+            int r = 6;
+            Pen pen = new Pen(Color.Gold);
+            double ugol = 2 * Math.PI / (3);
+            Point[] points = new Point[3];
+
             if (galaxy == null)
             {
                 MessageBox.Show("Error occured :`(\n\n'Nothing to draw'", "Draw Galaxy", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -353,14 +370,61 @@ namespace GalaxyConquest
 
                 starSize = s.type + dynamicStarSize;
                 //-------------------------------added
-                g.FillEllipse(Brushes.Aquamarine, centerX + (int)ttX, centerY + (int)ttY, 20, 20);
+                Point[] compPointArrayShip = {  //точки для рисование корабля
+                                    new Point((int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                                    new Point((int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                                    new Point((int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                g.FillPolygon(GoldBrush, compPointArrayShip);
+                g.DrawString(player.name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX-3 + (int)ttX + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY-12 + (int)ttY + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                
+/*                for (int j = 0; j <= 3 - 1; j++)
+                {
+                    points[j].X = (int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-j * ugol));
+                    points[j].Y = (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-j * ugol));
+                    g.FillEllipse(Brushes.Gold, points[j].X - 1, points[j].Y - 1, 1, 1);
+                }
+                for (int j = 0; j <= 3 - 1; j++)
+                {
+                    if (j + 1 + 1 <= 3) g.DrawLine(pen, points[j].X, points[j].Y, points[j + 1].X, points[j + 1].Y);
+                    else g.DrawLine(pen, points[j].X, points[j].Y, points[j + 1 - 3].X, points[j + 1 - 3].Y);
+                }
+*/                if (star_selected != galaxy.stars.Count-1 & star_selected != 0)
+                {
+                    if (s == galaxy.stars[star_selected - 1] | s == galaxy.stars[star_selected + 1])
+                    {
+                        g.FillEllipse(Brushes.Pink, centerX - 1 + (int)screenX - starSize / 2, centerY - 1 + (int)screenY - starSize / 2, starSize + 2, starSize + 2);
+                    }
+                }
+                else if (star_selected == galaxy.stars.Count-1)
+                {
+                    if (s == galaxy.stars[star_selected - 1])
+                    {
+                        g.FillEllipse(Brushes.Pink, centerX - 1 + (int)screenX - starSize / 2, centerY - 1 + (int)screenY - starSize / 2, starSize + 2, starSize + 2);
+                    }
+                }
+
+                else if (star_selected == 0)
+                {
+                    if (s == galaxy.stars[star_selected + 1])
+                    {
+                        g.FillEllipse(Brushes.Pink, centerX - 1 + (int)screenX - starSize / 2, centerY - 1 + (int)screenY - starSize / 2, starSize + 2, starSize + 2);
+                    }
+                }
+                  Rectangle rectan = new Rectangle((int)(centerX - 1 + (int)screenX - starSize / 2), (int)(centerY - 1 + (int)screenY - starSize / 2), (int)(starSize + 3), (int)(starSize + 3));
+                  if (s == galaxy.stars[star_selected]) 
+                  {
+                      g.DrawEllipse(pen, rectan);
+                  }
                 //-------------------------------added
+                //g.FillEllipse(Brushes.White, centerX -1 + (int)screenX - starSize / 2, centerY -1 + (int)screenY - starSize / 2, starSize+2, starSize+2);
                 g.FillEllipse(s.br, centerX + (int)screenX - starSize / 2, centerY + (int)screenY - starSize / 2, starSize, starSize);
-                g.DrawString(s.name, new Font("Arial", 8.0F), Brushes.White, new PointF(centerX + (int)screenX, centerY + (int)screenY));
+                
+                g.DrawString(i.ToString(), new Font("Arial", 8.0F), Brushes.White, new PointF(centerX + (int)screenX, centerY + (int)screenY));
                 
             }
-
             //рисуем гиперпереходы
+
+            
             for (int i = 0; i < galaxy.lanes.Count; i++)
             {
                 StarWarp w = galaxy.lanes[i];
@@ -474,7 +538,7 @@ namespace GalaxyConquest
                     s.y = -5.0 + rand.NextDouble() * 10.0;
                     s.z = y;
                     s.type = rand.Next(7);  //type impact on size and color
-                    s.name = "";
+                    s.name = (i+1).ToString();
                     s.planets_count = s.type + 1;
                     switch (s.type)
                     {
@@ -516,7 +580,7 @@ namespace GalaxyConquest
                     galaxy.stars.Add(s);
                 }
 
-            MessageBox.Show(galaxy.stars.Count.ToString());
+           // MessageBox.Show(galaxy.stars.Count.ToString());
         }
 
         public void generate_elliptical_galaxy(bool rotate, int galaxysize, int starscount)
@@ -906,7 +970,7 @@ namespace GalaxyConquest
         //-------------------------------added
         private void galaxyImage_MouseClick(object sender, MouseEventArgs e)
         {
-            for (int j = 0; j < galaxy.stars.Count; j++)
+            for (int j = Math.Abs(star_selected - 1); j < star_selected + 2; j++)
             {
                 //all need to calculate the real x,y of star on the screen
                 //(s.x ~ 10 to 30) but the real position x on the screen is ~ 100 to 600
@@ -943,8 +1007,8 @@ namespace GalaxyConquest
                 {
                     //if mouse clicked in the ellipce open new form
                     star_selected = j;//store type for selected star
-                    player.x = (int)(s.x - 20);
-                    player.y = (int)(s.y - 20);
+                    player.x = (int)(s.x - 6);
+                    player.y = (int)(s.y - 6);
                     player.z = (int)(s.z);
                     Redraw();
                     return;
@@ -1014,6 +1078,11 @@ namespace GalaxyConquest
         {
             horizontal = hScrollBar1.Value;
             Redraw();
+        }
+
+        private void galaxyImage_Click(object sender, EventArgs e)
+        {
+
         }
 
         

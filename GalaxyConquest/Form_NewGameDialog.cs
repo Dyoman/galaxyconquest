@@ -7,11 +7,20 @@ namespace GalaxyConquest
     {
         int galaxytype = 0;
         int galaxysize = 0;
-
+        
         public Form_NewGameDialog()
         {
             InitializeComponent();
         }
+
+        public string namePlayer
+        {
+            get
+            {
+                return textNamePlayer.Text;
+            }
+        }
+        
 
         private void buttonGalaxyTypeLeft_Click(object sender, EventArgs e)
         {
@@ -117,6 +126,15 @@ namespace GalaxyConquest
         {
             return (checkBoxRandomEvents.Checked);
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        
+       
+        
 
     }
 }

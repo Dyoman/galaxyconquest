@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textNamePlayer = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.starsCount = new System.Windows.Forms.TextBox();
             this.StarsScrollBar = new System.Windows.Forms.HScrollBar();
@@ -68,9 +70,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textNamePlayer);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.starsCount);
             this.groupBox1.Controls.Add(this.StarsScrollBar);
@@ -104,6 +108,24 @@
             this.groupBox1.Size = new System.Drawing.Size(371, 369);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 159);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "Name ";
+            // 
+            // textNamePlayer
+            // 
+            this.textNamePlayer.Location = new System.Drawing.Point(23, 175);
+            this.textNamePlayer.Name = "textNamePlayer";
+            this.textNamePlayer.Size = new System.Drawing.Size(100, 20);
+            this.textNamePlayer.TabIndex = 28;
+            this.textNamePlayer.Text = "PlayerName";
             // 
             // label2
             // 
@@ -466,5 +488,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox starsCount;
         private System.Windows.Forms.HScrollBar StarsScrollBar;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textNamePlayer;
     }
 }

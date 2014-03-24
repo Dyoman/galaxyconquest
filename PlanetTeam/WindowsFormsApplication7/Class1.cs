@@ -6,15 +6,14 @@ using System.Drawing;
 
 namespace PlanetTeam
 {
-
+    [Serializable]
     public class PLANET
     {
-
+     
         public Point CENTER = new Point(0, 0);
         public float SPEED = 0.01f;
         public float DISTANCE = 100f;
         public float ROT = 0f;
-
         public float POPULATION = 1;
         public float MINERALS = 10;
         public float SIZE = 10;

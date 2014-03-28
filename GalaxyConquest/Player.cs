@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using GalaxyConquest.Tactics;
+using System.Drawing;
 
 namespace GalaxyConquest
 {
     [Serializable]
     public class Player
     {
-        public int x = -200;
-        public int y = -200;
-        public int z = 0;
         public string name;
         public static List<int> technologies = new List<int>();
+
+        public Color player_color;
         public List<StarSystem> player_stars; //звездные системы игрока
+        public List<Fleet> player_fleets;
 
         public Player()
         {
             technologies.Add(0);
             technologies.Add(2);
+            
             player_stars = new List<StarSystem>();
+            player_fleets = new List<Fleet>();
+            player_color = Color.Red;
+
             name = "KosmoPlayer";
             /*if (Form1.SelfRef != null)
             {

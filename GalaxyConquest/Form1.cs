@@ -4,6 +4,8 @@ using System.Windows.Forms;
 
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using GalaxyConquest.StarSystems;
+using GalaxyConquest.Tactics;
 
 // для работы с библиотекой FreeGLUT 
 using Tao.FreeGlut;
@@ -16,7 +18,7 @@ namespace GalaxyConquest
         public Bitmap galaxyBitmap;
 
         public double spinX = 0.0;
-        public double spinY = 0.0;
+        public double spinY = Math.PI/2;
 
         public float scaling = 1f;
         public int horizontal = 0;  //for moving galaxy
@@ -81,7 +83,9 @@ namespace GalaxyConquest
             {
                 galaxy = new ModelGalaxy();
                 galaxy.name = "Млечный путь";
+                galaxy.player = player;
                 player.name = nd.namePlayer;
+
                 switch (nd.getGalaxyType())
                 {
                     case 0:
@@ -93,9 +97,6 @@ namespace GalaxyConquest
                         planet_start = rand.Next(galaxy.stars.Count);
                         star_selected = planet_start;
                         StarSystem ss = galaxy.stars[planet_start];
-                        player.x = (int)(ss.x - 3);
-                        player.y = (int)(ss.y - 3);
-                        player.z = (int)(ss.z);
                         
                         break;
                     case 1:
@@ -114,6 +115,29 @@ namespace GalaxyConquest
                     generate_random_events();
                 }
                 
+                Random r = new Random((int)DateTime.Now.Ticks);
+
+                //флот игрока
+                Fleet fl = generateFleet(r.Next(3, 5), 1);
+
+                player.player_stars.Add(galaxy.stars[r.Next(0, galaxy.stars.Count - 1)]);
+
+
+                player.player_fleets.Add(fl);
+                fl.s1 = player.player_stars[0];
+
+
+                for (int i = 0; i < 3; i++)
+                {
+                    StarSystem sr = galaxy.stars[r.Next(0, galaxy.stars.Count - 1)];
+                    while(sr == player.player_stars[0])
+                        sr = galaxy.stars[r.Next(0, galaxy.stars.Count - 1)];
+
+                    Fleet flneutrals = generateFleet(r.Next(2, 4), 2);
+                    flneutrals.s1 = sr;
+                    galaxy.neutrals.Add(flneutrals);
+                }
+
                 Redraw();
             }
 
@@ -218,6 +242,39 @@ namespace GalaxyConquest
             galaxy.lanes.Add(w);
              */
 #endregion
+        }
+
+
+        public Fleet generateFleet(int size, int player)
+        {
+            Random r = new Random((int)DateTime.Now.Ticks);
+            Fleet fl = new Fleet();
+
+            for (int i = 0; i < size; i++)
+            {
+                int ship_type = r.Next(0, 1);
+                int weapon_type = r.Next(0, 2);
+
+                Weapon w = null;
+                Ship sh = null;
+                switch (weapon_type)
+                {
+                    case 0: w = new wpnLightLaser(); break;
+                    case 1: w = new WpnLightIon(); break;
+                    case 2: w = new WpnHeavyLaser(); break;
+                }
+
+                switch (ship_type)
+                {
+                    case 0: sh = new ShipScout(0, w); break;
+                    case 1: sh = new ShipAssaulter(0, w); break;
+                }
+
+                sh.player = player;
+                fl.ships.Add(sh);
+            }
+
+            return fl;
         }
 
         private void buttonDraw_Click(object sender, EventArgs e)
@@ -345,10 +402,10 @@ namespace GalaxyConquest
             double screenX;
             double screenY;
             //-------------------------------added
-            double ttX, ttY, ttZ;
+/*            double ttX, ttY, ttZ;
             ttX = player.x * Math.Cos(spinX) - player.z * Math.Sin(spinX);
             ttZ = player.x * Math.Sin(spinX) + player.z * Math.Cos(spinX);
-            ttY = player.y * Math.Cos(spinY) - ttZ * Math.Sin(spinY);
+            ttY = player.y * Math.Cos(spinY) - ttZ * Math.Sin(spinY);*/
             //-------------------------------added
 
             //рисуем звездные системы
@@ -370,13 +427,13 @@ namespace GalaxyConquest
 
                 starSize = s.type + dynamicStarSize;
                 //-------------------------------added
-                Point[] compPointArrayShip = {  //точки для рисование корабля
+                /*Point[] compPointArrayShip = {  //точки для рисование корабля
                                     new Point((int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
                                     new Point((int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
                                     new Point((int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)ttY + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
                 g.FillPolygon(GoldBrush, compPointArrayShip);
                 g.DrawString(player.name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX-3 + (int)ttX + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY-12 + (int)ttY + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
-                
+                */
 /*                for (int j = 0; j <= 3 - 1; j++)
                 {
                     points[j].X = (int)centerX + (int)ttX + Convert.ToInt32(r * Math.Cos(-j * ugol));
@@ -410,11 +467,52 @@ namespace GalaxyConquest
                         g.FillEllipse(Brushes.Pink, centerX - 1 + (int)screenX - starSize / 2, centerY - 1 + (int)screenY - starSize / 2, starSize + 2, starSize + 2);
                     }
                 }
-                  Rectangle rectan = new Rectangle((int)(centerX - 1 + (int)screenX - starSize / 2), (int)(centerY - 1 + (int)screenY - starSize / 2), (int)(starSize + 3), (int)(starSize + 3));
-                  if (s == galaxy.stars[star_selected]) 
+
+
+                  Rectangle rectan = new Rectangle((int)(centerX - 5 + (int)screenX - starSize / 2), (int)(centerY - 5 + (int)screenY - starSize / 2), (int)(starSize + 11), (int)(starSize + 11));
+
+                  
+                if (s == galaxy.stars[star_selected]) 
                   {
                       g.DrawEllipse(pen, rectan);
                   }
+
+                rectan = new Rectangle((int)(centerX - 4 + (int)screenX - starSize / 2), (int)(centerY - 4 + (int)screenY - starSize / 2), (int)(starSize + 9), (int)(starSize + 9));
+                if (player.player_stars.Contains(s))
+                {
+                    g.DrawEllipse(Pens.Red, rectan);
+                }
+
+                if (player.player_fleets[0].s1 == s)
+                {
+                    int screenXfl = (int)screenX - 10;
+                    int screenYfl = (int)screenY - 10;
+                    Point[] compPointArrayShip = {  //точки для рисование корабля
+                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                    g.FillPolygon(GoldBrush, compPointArrayShip);
+                    g.DrawString(player.name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                }
+
+
+                for (int k = 0; k < galaxy.neutrals.Count; k++)
+                {
+                    if (s == galaxy.neutrals[k].s1)
+                    {
+                        int screenXfl = (int)screenX - 10;
+                        int screenYfl = (int)screenY - 10;
+                        Point[] compPointArrayShip = {  //точки для рисование корабля
+                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                        g.FillPolygon(Brushes.Lime, compPointArrayShip);
+                        g.DrawString(player.name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                    }
+                }
+
+
+
                 //-------------------------------added
                 //g.FillEllipse(Brushes.White, centerX -1 + (int)screenX - starSize / 2, centerY -1 + (int)screenY - starSize / 2, starSize+2, starSize+2);
                 g.FillEllipse(s.br, centerX + (int)screenX - starSize / 2, centerY + (int)screenY - starSize / 2, starSize, starSize);
@@ -509,6 +607,55 @@ namespace GalaxyConquest
             }
         }
 
+
+        public void generatePlanets(StarSystem s)
+        {
+            int sizemin = 5;
+            int sizemax = 15;
+            int popmin = 0;
+            int popmax = 10;
+            int mineralmin = 0;
+            int mineralmax = 35;
+            int colormin = 0;
+            int colormax = 255;
+            int dist = 50;
+            float speed = 0.001f;
+
+            if (s.PLN.Count > 0)
+            {
+                throw new Exception("Планеты уже есть");
+            }
+
+            Random r = new Random(DateTime.Now.Millisecond);
+
+            int planets_count = s.type + 1 + (-1 + r.Next(0,2));
+
+            s.PLN.Add(new PLANET());
+            s.PLN[0].CENTER = new Point(190, 190);
+            s.PLN[0].DISTANCE = 0;
+            s.PLN[0].SPEED = 0;
+            s.PLN[0].CLR = s.br.Color;
+            s.PLN[0].SIZE = 25;
+            s.PLN[0].NAME = "STAR";
+            s.PLN[0].POPULATION = 0;
+            s.PLN[0].MINERALS = 0;
+
+            for (int i = 1; i <= planets_count; i++)
+            {
+                s.PLN.Add(new PLANET());
+                s.PLN[i].CENTER = new Point(s.PLN[0].GetPoint().X, s.PLN[0].GetPoint().Y);
+                s.PLN[i].DISTANCE = dist;
+                s.PLN[i].SPEED = speed;
+                s.PLN[i].CLR = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
+                s.PLN[i].SIZE = r.Next(sizemin, sizemax);
+                s.PLN[i].NAME = "Planet " + i.ToString();
+                s.PLN[i].POPULATION = r.Next(popmin, popmax);
+                s.PLN[i].MINERALS = r.Next(mineralmin, mineralmax);
+                dist = dist + 25;
+                speed = speed / 3 + 0.0001f;
+            }
+        }
+
         public void generate_spiral_galaxy(bool rotate, int galaxysize, int starscount)
         {
             Double x;
@@ -539,7 +686,7 @@ namespace GalaxyConquest
                     s.z = y;
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = (i+1).ToString();
-                    s.planets_count = s.type + 1;
+
                     switch (s.type)
                     {
                         //O - Blue, t =30 000 — 60 000 K
@@ -577,6 +724,9 @@ namespace GalaxyConquest
                             s.br = RedBrush;
                         break;
                     }
+
+                    generatePlanets(s);
+
                     galaxy.stars.Add(s);
                 }
 
@@ -657,6 +807,7 @@ namespace GalaxyConquest
                             s.br = RedBrush;
                             break;
                     }
+
                     galaxy.stars.Add(s);
                 }
             }
@@ -907,12 +1058,6 @@ namespace GalaxyConquest
             tt.ShowDialog();
         }
 
-        private void dModelsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form_3d pl = new Form_3d();
-            pl.ShowDialog();
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -920,9 +1065,7 @@ namespace GalaxyConquest
 
 
         private void galaxyImage_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            planets pl = new planets();
-
+        {            
             for (int j = 0; j < galaxy.stars.Count; j++)
             {
                 //all need to calculate the real x,y of star on the screen
@@ -960,7 +1103,12 @@ namespace GalaxyConquest
                 {
                     //if mouse clicked in the ellipce open new form
                     star_selected = j;//store type for selected star
-                    pl.ShowDialog();
+
+                    StarSystemForm ssm = new StarSystemForm(galaxy.stars[j]);
+                    ssm.ShowDialog();
+
+
+
                     return;
                 }
 
@@ -970,7 +1118,7 @@ namespace GalaxyConquest
         //-------------------------------added
         private void galaxyImage_MouseClick(object sender, MouseEventArgs e)
         {
-            for (int j = Math.Abs(star_selected - 1); j < star_selected + 2; j++)
+            for (int j = 0; j < galaxy.stars.Count; j++)
             {
                 //all need to calculate the real x,y of star on the screen
                 //(s.x ~ 10 to 30) but the real position x on the screen is ~ 100 to 600
@@ -1007,10 +1155,24 @@ namespace GalaxyConquest
                 {
                     //if mouse clicked in the ellipce open new form
                     star_selected = j;//store type for selected star
-                    player.x = (int)(s.x - 6);
-                    player.y = (int)(s.y - 6);
-                    player.z = (int)(s.z);
                     Redraw();
+
+                    if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                    {
+                        MessageBox.Show("Летим сюда");
+
+                        for (int k = 0; k < galaxy.neutrals.Count; k++)
+                        {
+                            if (galaxy.neutrals[k].s1 == s)
+                            {
+                                MessageBox.Show("Обнаружен противник!");
+
+                                CombatForm cf = new CombatForm(player.player_fleets[0], galaxy.neutrals[k]);
+                                cf.ShowDialog();
+                            }
+                        }
+                    }
+
                     return;
                 }
 

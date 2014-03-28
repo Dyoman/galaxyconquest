@@ -10,10 +10,15 @@ namespace GalaxyConquest
         public List<StarSystem> stars; //звездные системы
         public List<StarWarp> lanes;   //гиперпереходы
 
+        public List<Fleet> neutrals;
+
+        public Player player;
+
         public ModelGalaxy()
         {
             stars = new List<StarSystem>();
             lanes = new List<StarWarp>();
+            neutrals = new List<Fleet>();
         }
     }
 }

@@ -58,12 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3d.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="3d.Designer.cs">
-      <DependentUpon>3d.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Fleet.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,11 +78,12 @@
       <DependentUpon>Form_NewGameDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelGalaxy.cs" />
-    <Compile Include="planets.cs">
+    <Compile Include="Planets\Planet.cs" />
+    <Compile Include="Planets\StarSystemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="planets.Designer.cs">
-      <DependentUpon>planets.cs</DependentUpon>
+    <Compile Include="Planets\StarSystemForm.Designer.cs">
+      <DependentUpon>StarSystemForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
@@ -99,15 +95,32 @@
     </Compile>
     <Compile Include="StarSystem.cs" />
     <Compile Include="StarWarp.cs" />
+    <Compile Include="TacticCombat\Box.cs" />
+    <Compile Include="TacticCombat\CombatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TacticCombat\CombatForm.Designer.cs">
+      <DependentUpon>CombatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TacticCombat\combatMap.cs" />
+    <Compile Include="TacticCombat\Constants.cs" />
+    <Compile Include="TacticCombat\Meteor.cs" />
+    <Compile Include="TacticCombat\ObjectManager.cs" />
+    <Compile Include="TacticCombat\Ship.cs" />
+    <Compile Include="TacticCombat\ShipAssaulter.cs" />
+    <Compile Include="TacticCombat\ShipScout.cs" />
+    <Compile Include="TacticCombat\SpaceObject.cs" />
+    <Compile Include="TacticCombat\Weapons\Weapon.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnHeavyLaser.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnLightIon.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnLightIonGun.cs" />
+    <Compile Include="TacticCombat\Weapons\wpnLightLaser.cs" />
     <Compile Include="Tech_Tree.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tech_Tree.Designer.cs">
       <DependentUpon>Tech_Tree.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="3d.resx">
-      <DependentUpon>3d.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,13 +130,16 @@
     <EmbeddedResource Include="Form_NewGameDialog.resx">
       <DependentUpon>Form_NewGameDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="planets.resx">
-      <DependentUpon>planets.cs</DependentUpon>
+    <EmbeddedResource Include="Planets\StarSystemForm.resx">
+      <DependentUpon>StarSystemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TacticCombat\CombatForm.resx">
+      <DependentUpon>CombatForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tech_Tree.resx">
       <DependentUpon>Tech_Tree.cs</DependentUpon>

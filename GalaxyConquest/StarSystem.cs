@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
+
+using GalaxyConquest.StarSystems;
 
 namespace GalaxyConquest
 {
@@ -14,6 +17,9 @@ namespace GalaxyConquest
         public double y;
         public double z;
         public SolidBrush br; //brush for stars
+
         public int planets_count;//num of planets
+
+        public List<PLANET> PLN = new List<PLANET>();
     }
 }

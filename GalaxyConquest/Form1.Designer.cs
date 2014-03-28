@@ -142,13 +142,6 @@
             this.MainMenuTechTree.Text = "Tech tree";
             this.MainMenuTechTree.Click += new System.EventHandler(this.MainMenuTechTree_Click);
             // 
-            // dModelsToolStripMenuItem
-            // 
-            this.dModelsToolStripMenuItem.Name = "dModelsToolStripMenuItem";
-            this.dModelsToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.dModelsToolStripMenuItem.Text = "3d models";
-            this.dModelsToolStripMenuItem.Click += new System.EventHandler(this.dModelsToolStripMenuItem_Click);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 484);

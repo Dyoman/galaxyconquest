@@ -52,7 +52,7 @@ namespace GalaxyConquest.Tactics
             currentHealth = maxHealth;
             maxActions = 2;
             actionsLeft = maxActions;
-            staticDescription = "Лёгкий корабль\nкласса Scout";
+            staticDescription = "Средний боевой корабль\nкласса Assaulter";
 
             xpoints.Add(-16); // координаты точек относительно центра ячейки
             xpoints.Add(6);
@@ -60,7 +60,7 @@ namespace GalaxyConquest.Tactics
             xpoints.Add(6);
             xpoints.Add(-16);
 
-            // лишние точки
+            
 
             ypoints.Add(-15);
             ypoints.Add(-10);
@@ -68,7 +68,7 @@ namespace GalaxyConquest.Tactics
             ypoints.Add(10);
             ypoints.Add(15);
 
-            if (player == 2)
+            if (player != 1)
             {
                 shipRotate(180);
             }

@@ -66,7 +66,7 @@ namespace GalaxyConquest.Tactics
      
             // лишние точки
 
-            if (player == 2)
+            if (player != 1)
             {
                 shipRotate(180);
             }

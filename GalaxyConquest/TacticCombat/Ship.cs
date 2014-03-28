@@ -78,7 +78,7 @@ namespace GalaxyConquest.Tactics
                     }
                 }
             }
-            else if (this.player == 2)
+            else if (this.player != 1)
             {
                 while (true)
                 {

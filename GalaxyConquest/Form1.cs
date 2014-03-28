@@ -252,7 +252,7 @@ namespace GalaxyConquest
 
             for (int i = 0; i < size; i++)
             {
-                int ship_type = r.Next(0, 1);
+                int ship_type = (r.Next(0, 100))%2;
                 int weapon_type = r.Next(0, 2);
 
                 Weapon w = null;
@@ -266,8 +266,8 @@ namespace GalaxyConquest
 
                 switch (ship_type)
                 {
-                    case 0: sh = new ShipScout(0, w); break;
-                    case 1: sh = new ShipAssaulter(0, w); break;
+                    case 0: sh = new ShipScout(player, w); break;
+                    case 1: sh = new ShipAssaulter(player, w); break;
                 }
 
                 sh.player = player;

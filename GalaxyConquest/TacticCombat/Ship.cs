@@ -40,7 +40,7 @@ namespace GalaxyConquest.Tactics
         {
             int dmg;
 
-            if (actionsLeft >= equippedWeapon.energyСonsumption)
+            if (actionsLeft >= equippedWeapon.energyСonsumption && equippedWeapon.shotsleft > 0)
             {
                 equippedWeapon.drawAttack(cMap.boxes[boxId].xcenter + weaponPointX, cMap.boxes[boxId].ycenter + weaponPointY,
                     cMap.boxes[pointB].xcenter, cMap.boxes[pointB].ycenter,
@@ -50,7 +50,12 @@ namespace GalaxyConquest.Tactics
                 Random rand = new Random();
                 dmg = rand.Next(-equippedWeapon.attackPower / 10, equippedWeapon.attackPower / 10) + equippedWeapon.attackPower;
                 cMap.boxes[pointB].spaceObject.currentHealth -= dmg;
-                actionsLeft -= 1;
+
+                actionsLeft -= equippedWeapon.energyСonsumption;
+                equippedWeapon.shotsleft -= 1;
+
+                
+
                 if (cMap.boxes[pointB].spaceObject.currentHealth <= 0)
                 {
                     cMap.boxes[pointB].spaceObject.player = -1;
@@ -112,6 +117,7 @@ namespace GalaxyConquest.Tactics
         public void refill()
         {
             actionsLeft = maxActions;
+            equippedWeapon.shotsleft = equippedWeapon.cage;
         }
     }
 }

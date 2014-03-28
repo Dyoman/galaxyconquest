@@ -13,7 +13,7 @@ namespace GalaxyConquest.Tactics
         public override string description()
         {
             return "" + staticDescription + "\nhp - " + currentHealth + "/" + maxHealth + "\nactions - "
-                            + actionsLeft + "/" + maxActions + "\nAP - " + equippedWeapon.attackPower + "\nRange - " + equippedWeapon.attackRange;
+                            + actionsLeft + "/" + maxActions + equippedWeapon.description() + "\nAP - " + equippedWeapon.attackPower + "\nRange - " + equippedWeapon.attackRange;
         }
 
 

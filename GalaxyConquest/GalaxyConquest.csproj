@@ -113,8 +113,7 @@
     <Compile Include="TacticCombat\Weapons\Weapon.cs" />
     <Compile Include="TacticCombat\Weapons\WpnHeavyLaser.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightIon.cs" />
-    <Compile Include="TacticCombat\Weapons\WpnLightIonGun.cs" />
-    <Compile Include="TacticCombat\Weapons\wpnLightLaser.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnLightLaser.cs" />
     <Compile Include="Tech_Tree.cs">
       <SubType>Form</SubType>
     </Compile>

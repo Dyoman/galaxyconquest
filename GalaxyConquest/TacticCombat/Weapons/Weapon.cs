@@ -14,6 +14,8 @@ namespace GalaxyConquest.Tactics
         public int attackRange;
         public int attackPower;
         public int energyСonsumption;
+        public int cage; // сколько можно делать выстрелов за ход
+        public int shotsleft; // сколько выстрелов осталось
     }
     
 }

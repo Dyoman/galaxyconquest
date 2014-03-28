@@ -12,13 +12,15 @@ namespace GalaxyConquest.Tactics
     {
         public WpnLightIon()
         {
-            attackPower = 18;
+            attackPower = 15;
             attackRange = 4;
             energyСonsumption = 1;
+            cage = 2;
+            shotsleft = cage;
         }
         public override string description()
         {
-            return "";
+            return "\nЛёгкая ионная пушка\nВыстрелов: " + shotsleft;
         }
         public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap)
         {

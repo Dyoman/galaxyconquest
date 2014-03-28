@@ -12,13 +12,15 @@ namespace GalaxyConquest.Tactics
     {
         public wpnLightLaser()
         {
-            attackPower = 25;
+            attackPower = 30;
             attackRange = 3;
             energyСonsumption = 1;
+            cage = 1;
+            shotsleft = cage;
         }
         public override string description()
         {
-            return "";
+            return "\nЛёгкий лазер\nВыстрелов: " + shotsleft; 
         }
         public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap)
         {

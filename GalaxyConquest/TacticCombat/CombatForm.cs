@@ -33,6 +33,8 @@ namespace GalaxyConquest.Tactics
         {
             player.SoundLocation = @"../../Sounds/laser1.wav";
 
+            allShips.Clear();
+
             allShips.AddRange(left.ships);
             allShips.AddRange(right.ships);
 
@@ -58,7 +60,11 @@ namespace GalaxyConquest.Tactics
             // расставляем корабли по полю, синие - слева, красные - справа
             for (int count = 0; count < allShips.Count; count++ )
             {
-                allShips[count].placeShip(ref cMap);
+                if (allShips[count].currentHealth > 0)
+                {
+                    allShips[count].actionsLeft = allShips[count].maxActions;
+                    allShips[count].placeShip(ref cMap);
+                }
             }
 
             InitializeComponent();
@@ -68,6 +74,8 @@ namespace GalaxyConquest.Tactics
     
         }
 
+        /*  создание кораблей
+          
         Ship shipCreate(int type, int p, int wpn)
         {
             Weapon weapon = null;
@@ -96,6 +104,7 @@ namespace GalaxyConquest.Tactics
             return newShip;
         } 
 
+        */
         public void shipsCount()
         {
             blueShipsCount = 0;
@@ -474,7 +483,8 @@ namespace GalaxyConquest.Tactics
                                 }
                                 if (flag == 1)
                                 {
-                                    if(activeShip.actionsLeft >= activeShip.equippedWeapon.energyСonsumption)  // если у корабля остались очки действий
+                                    if(activeShip.actionsLeft >= activeShip.equippedWeapon.energyСonsumption
+                                        && activeShip.equippedWeapon.shotsleft > 0)  // если у корабля остались очки действий
                                     {
                                         double angle, targetx, targety;
 
@@ -491,6 +501,9 @@ namespace GalaxyConquest.Tactics
 
                                         if (activeShip.attack(cMap, cMap.boxes[select].id, ref combatBitmap, player, ref pictureMap) == 1)
                                             shipsCount();
+
+                                        boxDescription.Text = activeShip.description();
+
                                         Draw();
 
                                         // возвращаем корабль в исходное положение

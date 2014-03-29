@@ -118,7 +118,7 @@ namespace GalaxyConquest
                 Random r = new Random((int)DateTime.Now.Ticks);
 
                 //флот игрока
-                Fleet fl = generateFleet(r.Next(3, 5), 1);
+                Fleet fl = generateFleet(r.Next(5, 7), 1);
 
                 player.player_stars.Add(galaxy.stars[r.Next(0, galaxy.stars.Count - 1)]);
 

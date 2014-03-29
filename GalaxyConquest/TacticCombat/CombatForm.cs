@@ -16,9 +16,9 @@ namespace GalaxyConquest.Tactics
     {
         public Bitmap combatBitmap;
 
-        combatMap cMap = new combatMap(8, 6);  // создаем поле боя с указанной размерностью
+        combatMap cMap = new combatMap(12, 7);  // создаем поле боя с указанной размерностью
         ObjectManager objectManager = new ObjectManager();
-        int select = -1; // служебная переменная, пока сам не знаю на кой хер она мне, но пусть будет. да.
+        int select = -1; 
         int activePlayer = 1; // ход 1-ого или 2-ого игрока
         Ship activeShip = null; // выделенное судно
         List<Ship> allShips = new List<Ship>();
@@ -62,15 +62,17 @@ namespace GalaxyConquest.Tactics
             {
                 if (allShips[count].currentHealth > 0)
                 {
-                    allShips[count].actionsLeft = allShips[count].maxActions;
+                    allShips[count].refill();
                     allShips[count].placeShip(ref cMap);
                 }
             }
 
             InitializeComponent();
-            Draw();
 
             shipsCount();
+            Draw();
+
+            
     
         }
 
@@ -111,11 +113,19 @@ namespace GalaxyConquest.Tactics
             redShipsCount = 0;
             for (int count = 0; count < allShips.Count; count++)
             {
-
-                if (allShips[count].player == 1)
-                    blueShipsCount++;
-                else if (allShips[count].player == 2)
-                    redShipsCount++;
+                if (allShips[count] == null) continue;
+                if (allShips[count].currentHealth <= 0)
+                {
+                    allShips.Remove(allShips[count]);
+                    count--;
+                }
+                else
+                {
+                    if (allShips[count].player == 1)
+                        blueShipsCount++;
+                    else if (allShips[count].player != 1)
+                        redShipsCount++;
+                }
             }
             txtBlueShips.Text = "" + blueShipsCount;
             txtRedShips.Text = "" + redShipsCount;
@@ -213,7 +223,7 @@ namespace GalaxyConquest.Tactics
 
                 }
 
-                //g.DrawString(cMap.boxes[i].id.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 20, cMap.boxes[i].ypoint1 + 10));
+                g.DrawString(cMap.boxes[i].id.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 20, cMap.boxes[i].ypoint1 + 10));
                 //g.DrawString(cMap.boxes[i].x.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 10, cMap.boxes[i].ypoint1 + 10));
                 //g.DrawString(cMap.boxes[i].y.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 40, cMap.boxes[i].ypoint1 + 10));
 
@@ -305,6 +315,183 @@ namespace GalaxyConquest.Tactics
                 Draw();
             }
         }
+
+        public int findDirection(int x1, int x2, int y1, int y2)
+        {
+            int direction = 0;
+            if (x2 == x1 && y2 - y1 < 0) direction = Constants.MOVE_TOP;
+            else if (x2 - x1 > 0 && y2 - y1 <= 0) direction = Constants.MOVE_RIGHT_TOP;
+            else if (x2 - x1 > 0 && y2 - y1 > 0) direction = Constants.MOVE_RIGHT_BOTTOM;
+            else if (x2 == x1 && y2 - y1 > 0) direction = Constants.MOVE_BOTTOM;
+            else if (x2 - x1 < 0 && y2 - y1 > 0) direction = Constants.MOVE_LEFT_BOTTOM;
+            else if (x2 - x1 < 0 && y2 - y1 <= 0) direction = Constants.MOVE_LEFT_TOP;
+            return direction;
+        }
+
+        public void findPriority(int direction, ref List<int> priority)
+        {
+            //if (priority != null) priority.RemoveRange(0, 6);
+            switch (direction)
+            {
+                case Constants.MOVE_TOP:
+                    priority.Add(Constants.MOVE_TOP);
+                    priority.Add(Constants.MOVE_LEFT_TOP);
+                    priority.Add(Constants.MOVE_RIGHT_TOP);
+                    priority.Add(Constants.MOVE_LEFT_BOTTOM);
+                    priority.Add(Constants.MOVE_RIGHT_BOTTOM);
+                    priority.Add(Constants.MOVE_BOTTOM);
+                    break;
+                case Constants.MOVE_RIGHT_TOP:
+                    priority.Add(Constants.MOVE_RIGHT_TOP);
+                    priority.Add(Constants.MOVE_TOP);
+                    priority.Add(Constants.MOVE_RIGHT_BOTTOM);
+                    priority.Add(Constants.MOVE_LEFT_TOP);
+                    priority.Add(Constants.MOVE_BOTTOM);
+                    priority.Add(Constants.MOVE_LEFT_BOTTOM);
+                    break;
+                case Constants.MOVE_RIGHT_BOTTOM:
+                    priority.Add(Constants.MOVE_RIGHT_BOTTOM);
+                    priority.Add(Constants.MOVE_RIGHT_TOP);
+                    priority.Add(Constants.MOVE_BOTTOM);
+                    priority.Add(Constants.MOVE_TOP);
+                    priority.Add(Constants.MOVE_LEFT_BOTTOM);
+                    priority.Add(Constants.MOVE_LEFT_TOP);
+                    break;
+                case Constants.MOVE_BOTTOM:
+                    priority.Add(Constants.MOVE_BOTTOM);
+                    priority.Add(Constants.MOVE_RIGHT_BOTTOM);
+                    priority.Add(Constants.MOVE_LEFT_BOTTOM);
+                    priority.Add(Constants.MOVE_RIGHT_TOP);
+                    priority.Add(Constants.MOVE_LEFT_TOP);
+                    priority.Add(Constants.MOVE_TOP);
+                    break;
+                case Constants.MOVE_LEFT_BOTTOM:
+                    priority.Add(Constants.MOVE_LEFT_BOTTOM);
+                    priority.Add(Constants.MOVE_BOTTOM);
+                    priority.Add(Constants.MOVE_LEFT_TOP);
+                    priority.Add(Constants.MOVE_RIGHT_BOTTOM);
+                    priority.Add(Constants.MOVE_TOP);
+                    priority.Add(Constants.MOVE_RIGHT_TOP);
+                    break;
+                case Constants.MOVE_LEFT_TOP:
+                    priority.Add(Constants.MOVE_LEFT_TOP);
+                    priority.Add(Constants.MOVE_LEFT_BOTTOM);
+                    priority.Add(Constants.MOVE_TOP);
+                    priority.Add(Constants.MOVE_BOTTOM);
+                    priority.Add(Constants.MOVE_RIGHT_TOP);
+                    priority.Add(Constants.MOVE_RIGHT_BOTTOM);
+                    break;
+            }
+        }
+
+        public Box getNextWaybox(Box currentBox, Box baseBox, ref List<int> priority, ref List<Box> previousBoxes)
+        {
+            Box nextWaybox = null;
+            int j;
+            for (int i = 0; i < 6; i++ )
+            {
+                switch (priority[i])
+                {
+                    case Constants.MOVE_TOP:
+                        if (currentBox.y <= 1) continue;
+                        nextWaybox = cMap.boxes[currentBox.id - 1];
+                        break;
+                    case Constants.MOVE_RIGHT_TOP:
+                        if (currentBox.y == 0 || currentBox.x == cMap.width - 1) continue;
+                        nextWaybox = cMap.getBoxByCoords(currentBox.x + 1, currentBox.y -1);
+                        break;
+                    case Constants.MOVE_RIGHT_BOTTOM:
+                        if (currentBox.x == cMap.width - 1 || currentBox.y == cMap.height * 2 - 1) continue;
+                        nextWaybox = cMap.getBoxByCoords(currentBox.x + 1, currentBox.y + 1);
+                        break;
+                    case Constants.MOVE_BOTTOM:
+                        if (currentBox.y >= cMap.height * 2 - 2) continue;
+                        nextWaybox = cMap.boxes[currentBox.id + 1];
+                        break;
+                    case Constants.MOVE_LEFT_BOTTOM:
+                        if (currentBox.x == 0 || currentBox.y == cMap.height * 2 - 1) continue;
+                        nextWaybox = cMap.getBoxByCoords(currentBox.x - 1, currentBox.y + 1);
+                        break;
+                    case Constants.MOVE_LEFT_TOP:
+                        if (currentBox.x == 0 || currentBox.y == 0) continue;
+                        nextWaybox = cMap.getBoxByCoords(currentBox.x - 1, currentBox.y - 1);
+                        break;
+                }
+                //if (nextWaybox != null && nextWaybox.id != previousBox.id && nextWaybox.spaceObject == null)
+                if (nextWaybox != null && nextWaybox.id != baseBox.id && nextWaybox.spaceObject == null)
+                {
+                    for(j = 0; j < previousBoxes.Count; j++)
+                    {
+                        if(nextWaybox.id == previousBoxes[j].id)break;
+                    }
+                    if(j == previousBoxes.Count)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (nextWaybox.spaceObject != null) nextWaybox = null;
+            return nextWaybox;
+        }
+
+        public int getBoxway(Box currentBox, Box baseBox, Box targetBox, ref List<Box> boxWay, int maxLength, int k)
+        {
+            if (maxLength > 0
+                && (int)Math.Sqrt((targetBox.x - currentBox.x) * (targetBox.x - currentBox.x) + ((targetBox.y - currentBox.y) * (targetBox.y - currentBox.y)) * 0.35) <= maxLength)
+            {
+                //boxDescription.Text = "" + currentBox.id;
+                int currentDirection = findDirection(currentBox.x, targetBox.x, currentBox.y, targetBox.y);
+
+                if (k != 0)
+                {
+                    currentDirection = (currentDirection + k)%6;
+                    if (currentDirection == 0) currentDirection = 6;
+                }
+
+                List<int> currentPriority = new List<int>();
+                findPriority(currentDirection, ref currentPriority);
+                Box nextWaybox = getNextWaybox(currentBox, baseBox, ref currentPriority, ref boxWay);
+
+                if (nextWaybox == null) return -1;
+
+                boxWay.Add(nextWaybox);
+                if (nextWaybox.id == targetBox.id)
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (getBoxway(nextWaybox, baseBox, targetBox, ref boxWay, maxLength - 1, 0) == -1)
+                    {
+                        int i = 1;
+                        for (i = 1; i < 6; i++)
+                        {
+                            if (getBoxway(nextWaybox, baseBox, targetBox, ref boxWay, maxLength - 1, i) == -1)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                return 0;
+                            }
+                        }
+                        boxWay.Remove(boxWay[boxWay.Count - 1]);
+                        //txtRedShips.Text = txtRedShips.Text + "\nоп\n";
+                        return -1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            else
+            {
+                
+                return -1;
+            }
+        }
+
         private void pictureMap_MouseClick(object sender, MouseEventArgs e)
         {
 
@@ -344,11 +531,46 @@ namespace GalaxyConquest.Tactics
                     {
 
                         // если выбранная клетка пуста - определяем возможность перемещения 
+                        
                         if (activeShip.actionsLeft > 0 && cMap.boxes[select].spaceObject == null)
                         {
                             int flag = 0;
                             // перемещение на одну клетку вверх
                             int a = activeShip.boxId;
+                            int x1, x2, y1, y2;
+                            x1 = cMap.boxes[a].x;
+                            x2 = cMap.boxes[select].x;
+                            y1 = cMap.boxes[a].y;
+                            y2 = cMap.boxes[select].y;
+
+                            int lineRange = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + ((y2 - y1) * (y2 - y1)) * 0.35);
+                            List<Box> completeBoxWay = new List<Box>();
+
+                            if (lineRange <= activeShip.actionsLeft)
+                            {
+                                // запоминаю начальную клетку
+                                Box baseBox = cMap.boxes[a];
+                                
+                                // определяю направление, в котором находится целевая клетка
+                                int direction = findDirection(x1,x2,y1,y2);
+                                // определяю приоритет
+                                List<int> priority = new List<int>();
+                                findPriority(direction, ref priority);
+
+                                for (int k = 0; k < 6; k++)
+                                {
+                                    if( getBoxway(baseBox, baseBox, cMap.boxes[select], ref completeBoxWay, activeShip.actionsLeft, k) == 0)break;
+                                    //if(completeBoxWay.Count > 0) completeBoxWay.Remove(completeBoxWay[completeBoxWay.Count-1]); 
+                                }
+                                /*boxDescription.Text = "";
+                                for (int n = 0; n < completeBoxWay.Count; n++)
+                                {
+                                    boxDescription.Text = boxDescription.Text + "\n" + completeBoxWay[n].id;
+                                } */
+
+                                if (completeBoxWay.Count > 0) flag = 1;
+                            }
+                            /*
                             if (a + 1 == select && a % cMap.height != cMap.height - 1)
                             {
                                 flag = 1;
@@ -385,66 +607,74 @@ namespace GalaxyConquest.Tactics
                                 && cMap.boxes[a].y + 1 == cMap.boxes[select].y)
                             {
                                 flag = 1;
-                            }
+                            } */
                             if (flag == 1)
                             {
                                 double rotateAngle;
-
-                                rotateAngle = attackAngleSearch(cMap.boxes[select].x, cMap.boxes[select].y);
-
-                                doShipRotate(rotateAngle);
-
-                                int range, dx, x1, x2, y1, y2;
-
-                                x1 = cMap.boxes[activeShip.boxId].xcenter;
-                                y1 = cMap.boxes[activeShip.boxId].ycenter;
-                                x2 = cMap.boxes[select].xcenter;
-                                y2 = cMap.boxes[select].ycenter;
-
-                                List<int> xold = new List<int>();
-                                List<int> yold = new List<int>();
-
-                                // запоминаем координаты
-                                for (int n = 0; n < activeShip.xpoints.Count; n++ )
-                                {
-                                    xold.Add(activeShip.xpoints[n]);
-                                    yold.Add(activeShip.ypoints[n]);
-                                }
-
-                                range = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-                                dx = range / 15;
-                                int deltax;
-                                int deltay;
-                                int step = 15;
-
-                                deltax = (x2 - x1) / step;
-                                deltay = (y2 - y1) / step;
+                                int range, dx;
                                 
-                                for (int count1 = 0; count1 < range - 10; count1 += dx)
+
+                                for (int cnt = 0; cnt < completeBoxWay.Count; cnt++)
                                 {
-                                    for (int j = 0; j < activeShip.xpoints.Count; j++)
+                                    if (activeShip == null) break;
+                                    rotateAngle = attackAngleSearch(cMap.boxes[completeBoxWay[cnt].id].x, cMap.boxes[completeBoxWay[cnt].id].y);
+
+                                    doShipRotate(rotateAngle);
+
+                                    x1 = cMap.boxes[activeShip.boxId].xcenter;
+                                    y1 = cMap.boxes[activeShip.boxId].ycenter;
+                                    x2 = cMap.boxes[completeBoxWay[cnt].id].xcenter;
+                                    y2 = cMap.boxes[completeBoxWay[cnt].id].ycenter;
+
+                                    int stepLineRange = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + ((y2 - y1) * (y2 - y1)) * 0.35);
+
+                                    List<int> xold = new List<int>();
+                                    List<int> yold = new List<int>();
+
+                                    // запоминаем координаты
+                                    for (int n = 0; n < activeShip.xpoints.Count; n++ )
                                     {
-                                        activeShip.xpoints[j] += deltax;
-                                        activeShip.ypoints[j] += deltay;
+                                        xold.Add(activeShip.xpoints[n]);
+                                        yold.Add(activeShip.ypoints[n]);
                                     }
-                                    Thread.Sleep(5);
-                                    Draw(); 
-                                } 
-                                // восстанавливаем исходные координаты (смещение корабля по х и y, если быть точнее)
-                                for (int n = 0; n < activeShip.xpoints.Count; n++)
-                                {
-                                    activeShip.xpoints[n] = xold[n];
-                                    activeShip.ypoints[n] = yold[n];
+
+                                    range = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+                                    //int step = 15 * stepLineRange;
+                                    dx = range / 15;
+                                    int deltax;
+                                    int deltay;
+                                
+
+                                    deltax = (x2 - x1) / 15;
+                                    deltay = (y2 - y1) / 15;
+                                
+                                    for (int count1 = 0; count1 < range - 10; count1 += dx)
+                                    {
+                                        for (int j = 0; j < activeShip.xpoints.Count; j++)
+                                        {
+                                            activeShip.xpoints[j] += deltax;
+                                            activeShip.ypoints[j] += deltay;
+                                        }
+                                        Thread.Sleep(5);
+                                        Draw(); 
+                                    } 
+                                    // восстанавливаем исходные координаты (смещение корабля по х и y, если быть точнее)
+                                    for (int n = 0; n < activeShip.xpoints.Count; n++)
+                                    {
+                                        activeShip.xpoints[n] = xold[n];
+                                        activeShip.ypoints[n] = yold[n];
+                                    }
+
+                                    activeShip.moveShip(cMap, activeShip.boxId, completeBoxWay[cnt].id, 1);
+
+                                    resetShipRotate(rotateAngle);
+
+                                    boxDescription.Text = activeShip.description();
+
+                                    if (activeShip.actionsLeft == 0) activeShip = null;
+                                    Draw();
+
                                 }
-
-                                activeShip.moveShip(cMap, a, select);
-
-                                resetShipRotate(rotateAngle);
-
-                                boxDescription.Text = activeShip.description();
-
-                                if (activeShip.actionsLeft == 0) activeShip = null;
-                                Draw();
 
                                 break;
                             }

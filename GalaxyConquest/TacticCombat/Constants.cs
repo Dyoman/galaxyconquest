@@ -18,7 +18,7 @@ namespace GalaxyConquest.Tactics
         public const int LIGHT_LASER = 1;
         public const int HEAVY_LASER = 2;
         public const int LIGHT_ION = 3;
-        // направления
+        // направления, относительно координат
         public const int NORMAL = 0;
         public const int LEFT = -1;
         public const int RIGHT = 1;
@@ -26,5 +26,12 @@ namespace GalaxyConquest.Tactics
         public const int MEDIUM_TOP = -1;
         public const int BOTTOM = 2;
         public const int MEDIUM_BOTTOM = 1;
+        // еще одни направления
+        public const int MOVE_TOP = 1;
+        public const int MOVE_RIGHT_TOP = 2;
+        public const int MOVE_RIGHT_BOTTOM = 3;
+        public const int MOVE_BOTTOM = 4;
+        public const int MOVE_LEFT_BOTTOM = 5;
+        public const int MOVE_LEFT_TOP = 6;
     }
 }

@@ -50,7 +50,7 @@ namespace GalaxyConquest.Tactics
             player = p;
             maxHealth = 50;
             currentHealth = maxHealth;
-            maxActions = 3;
+            maxActions = 7;
             actionsLeft = maxActions;
             staticDescription = "Лёгкий корабль\nкласса Scout";
 

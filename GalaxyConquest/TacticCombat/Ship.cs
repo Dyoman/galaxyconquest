@@ -23,16 +23,16 @@ namespace GalaxyConquest.Tactics
             
         }
 
-        public void moveShip(combatMap cMap, int pointAId, int pointBId)
+        public void moveShip(combatMap cMap, int pointAId, int pointBId, int range)
         {
 
-            if (actionsLeft > 0)
+            if (actionsLeft >= range)
             {
 
                 boxId = pointBId;
                 cMap.boxes[pointAId].spaceObject = null;
                 cMap.boxes[pointBId].spaceObject = this;
-                actionsLeft -= 1;
+                actionsLeft -= range;
 
             }
         }

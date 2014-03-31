@@ -6,7 +6,7 @@ namespace GalaxyConquest
     public partial class Form_NewGameDialog : Form
     {
         int galaxytype = 0;
-        int galaxysize = 0;
+        int galaxysize = 4;
         
         public Form_NewGameDialog()
         {

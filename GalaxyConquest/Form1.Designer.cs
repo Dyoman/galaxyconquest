@@ -57,6 +57,9 @@
             this.label_planets = new System.Windows.Forms.Label();
             this.textBox_planets = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.button3 = new System.Windows.Forms.Button();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.SuspendLayout();
@@ -141,6 +144,11 @@
             this.MainMenuTechTree.Size = new System.Drawing.Size(65, 20);
             this.MainMenuTechTree.Text = "Tech tree";
             this.MainMenuTechTree.Click += new System.EventHandler(this.MainMenuTechTree_Click);
+            // 
+            // dModelsToolStripMenuItem
+            // 
+            this.dModelsToolStripMenuItem.Name = "dModelsToolStripMenuItem";
+            this.dModelsToolStripMenuItem.Size = new System.Drawing.Size(12, 20);
             // 
             // statusStrip1
             // 
@@ -336,6 +344,7 @@
             this.label_planets.Size = new System.Drawing.Size(42, 13);
             this.label_planets.TabIndex = 16;
             this.label_planets.Text = "Planets";
+            this.label_planets.Visible = false;
             // 
             // textBox_planets
             // 
@@ -344,6 +353,7 @@
             this.textBox_planets.ReadOnly = true;
             this.textBox_planets.Size = new System.Drawing.Size(39, 20);
             this.textBox_planets.TabIndex = 17;
+            this.textBox_planets.Visible = false;
             // 
             // button1
             // 
@@ -353,12 +363,47 @@
             this.button1.TabIndex = 18;
             this.button1.Text = "STEP";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(20, 340);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(122, 23);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "Захватить систему";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(20, 369);
+            this.progressBar1.Maximum = 5;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 20;
+            this.progressBar1.Visible = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(20, 398);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(122, 23);
+            this.button3.TabIndex = 21;
+            this.button3.Text = "Отменить захват";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 506);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox_planets);
             this.Controls.Add(this.label_planets);
@@ -422,6 +467,9 @@
         private System.Windows.Forms.Label label_planets;
         private System.Windows.Forms.TextBox textBox_planets;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button button3;
     }
 }
 

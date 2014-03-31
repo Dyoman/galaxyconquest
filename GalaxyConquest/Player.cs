@@ -8,7 +8,7 @@ namespace GalaxyConquest
     [Serializable]
     public class Player
     {
-        public string name;
+        
         public static List<int> technologies = new List<int>();
 
         public Color player_color;
@@ -24,7 +24,7 @@ namespace GalaxyConquest
             player_fleets = new List<Fleet>();
             player_color = Color.Red;
 
-            name = "KosmoPlayer";
+            
             /*if (Form1.SelfRef != null)
             {
                 player_stars.Add(Form1.SelfRef.galaxy.stars[3]);

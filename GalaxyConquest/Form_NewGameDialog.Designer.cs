@@ -312,7 +312,7 @@
             this.labelGalaxySize.Name = "labelGalaxySize";
             this.labelGalaxySize.Size = new System.Drawing.Size(65, 13);
             this.labelGalaxySize.TabIndex = 9;
-            this.labelGalaxySize.Text = "0";
+            this.labelGalaxySize.Text = "4";
             this.labelGalaxySize.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // buttonGalaxySizeRight

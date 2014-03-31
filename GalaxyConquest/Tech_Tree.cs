@@ -4,13 +4,10 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
 
-using GalaxyConquest;
-
 namespace GalaxyConquest
 {
     public partial class Tech_Tree : Form
     {
-        public Tech t = new Tech();
 
         public Bitmap TechTreeBitmap;
         public List<string> tech = new List<string>();
@@ -28,7 +25,16 @@ namespace GalaxyConquest
         {
             InitializeComponent();
             
-            
+            StreamReader tech_str = new StreamReader("Tech.txt");
+            int counter = 0;
+            string line;
+
+            while ((line = tech_str.ReadLine()) != null)
+            {
+                tech.Add(line);
+                counter++;
+            }
+            tech_str.Close();
 
             Redraw();
         }

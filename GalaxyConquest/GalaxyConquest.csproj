@@ -114,10 +114,6 @@
     <Compile Include="TacticCombat\Weapons\WpnHeavyLaser.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightIon.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightLaser.cs" />
-    <Compile Include="Tech.cs" />
-    <Compile Include="Tech.Designer.cs">
-      <DependentUpon>Tech.cs</DependentUpon>
-    </Compile>
     <Compile Include="Tech_Tree.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,9 +139,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TacticCombat\CombatForm.resx">
       <DependentUpon>CombatForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tech.resx">
-      <DependentUpon>Tech.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tech_Tree.resx">
       <DependentUpon>Tech_Tree.cs</DependentUpon>

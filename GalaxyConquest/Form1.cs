@@ -12,13 +12,14 @@ using Tao.FreeGlut;
 
 namespace GalaxyConquest
 {
+    [Serializable]
     public partial class Form1 : Form
     {
         public ModelGalaxy galaxy;
         public Bitmap galaxyBitmap;
 
         public double spinX = 0.0;
-        public double spinY = Math.PI/2;
+        public double spinY = Math.PI/4;
 
         public float scaling = 1f;
         public int horizontal = 0;  //for moving galaxy
@@ -84,7 +85,6 @@ namespace GalaxyConquest
                 galaxy = new ModelGalaxy();
                 galaxy.name = "Млечный путь";
                 galaxy.player = player;
-                player.name = nd.namePlayer;
 
                 switch (nd.getGalaxyType())
                 {
@@ -125,19 +125,23 @@ namespace GalaxyConquest
 
                 player.player_fleets.Add(fl);
                 fl.s1 = player.player_stars[0];
-
-
+                player.player_fleets[0].x = player.player_fleets[0].s1.x;
+                player.player_fleets[0].y = player.player_fleets[0].s1.y;
+                player.player_fleets[0].z = player.player_fleets[0].s1.z;
+                fl.name = nd.namePlayer;
                 for (int i = 0; i < 3; i++)
                 {
                     StarSystem sr = galaxy.stars[r.Next(0, galaxy.stars.Count - 1)];
-                    while(sr == player.player_stars[0])
-                        sr = galaxy.stars[r.Next(0, galaxy.stars.Count - 1)];
+                    while (sr == player.player_stars[0])
+                    {
 
+                        sr = galaxy.stars[r.Next(0, galaxy.stars.Count - 1)];
+                    }
                     Fleet flneutrals = generateFleet(r.Next(2, 4), 2);
                     flneutrals.s1 = sr;
+                    flneutrals.name="Neutrals "+(i+1);
                     galaxy.neutrals.Add(flneutrals);
                 }
-
                 Redraw();
             }
 
@@ -401,6 +405,7 @@ namespace GalaxyConquest
 
             double screenX;
             double screenY;
+            double screenZ;
             //-------------------------------added
 /*            double ttX, ttY, ttZ;
             ttX = player.x * Math.Cos(spinX) - player.z * Math.Sin(spinX);
@@ -424,6 +429,7 @@ namespace GalaxyConquest
 
                 screenX = tX;
                 screenY = tY;
+                screenZ = tZ;
 
                 starSize = s.type + dynamicStarSize;
                 //-------------------------------added
@@ -445,7 +451,7 @@ namespace GalaxyConquest
                     if (j + 1 + 1 <= 3) g.DrawLine(pen, points[j].X, points[j].Y, points[j + 1].X, points[j + 1].Y);
                     else g.DrawLine(pen, points[j].X, points[j].Y, points[j + 1 - 3].X, points[j + 1 - 3].Y);
                 }
-*/                if (star_selected != galaxy.stars.Count-1 & star_selected != 0)
+                if (star_selected != galaxy.stars.Count-1 & star_selected != 0)
                 {
                     if (s == galaxy.stars[star_selected - 1] | s == galaxy.stars[star_selected + 1])
                     {
@@ -467,8 +473,8 @@ namespace GalaxyConquest
                         g.FillEllipse(Brushes.Pink, centerX - 1 + (int)screenX - starSize / 2, centerY - 1 + (int)screenY - starSize / 2, starSize + 2, starSize + 2);
                     }
                 }
-
-
+*/
+                
                   Rectangle rectan = new Rectangle((int)(centerX - 5 + (int)screenX - starSize / 2), (int)(centerY - 5 + (int)screenY - starSize / 2), (int)(starSize + 11), (int)(starSize + 11));
 
                   
@@ -482,17 +488,17 @@ namespace GalaxyConquest
                 {
                     g.DrawEllipse(Pens.Red, rectan);
                 }
-
                 if (player.player_fleets[0].s1 == s)
                 {
-                    int screenXfl = (int)screenX - 10;
-                    int screenYfl = (int)screenY - 10;
+                    double screenXfl = player.player_fleets[0].x * Math.Cos(spinX) - player.player_fleets[0].z * Math.Sin(spinX)-10;
+                    double screenZfl = player.player_fleets[0].x * Math.Sin(spinX) + player.player_fleets[0].z * Math.Cos(spinX);
+                    double screenYfl = player.player_fleets[0].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY)-10; 
                     Point[] compPointArrayShip = {  //точки для рисование корабля
                                     new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
                                     new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
                                     new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
                     g.FillPolygon(GoldBrush, compPointArrayShip);
-                    g.DrawString(player.name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                    g.DrawString(player.player_fleets[0].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
                 }
 
 
@@ -501,13 +507,14 @@ namespace GalaxyConquest
                     if (s == galaxy.neutrals[k].s1)
                     {
                         int screenXfl = (int)screenX - 10;
+
                         int screenYfl = (int)screenY - 10;
                         Point[] compPointArrayShip = {  //точки для рисование корабля
                                     new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
                                     new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
                                     new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
                         g.FillPolygon(Brushes.Lime, compPointArrayShip);
-                        g.DrawString(player.name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                        g.DrawString(galaxy.neutrals[k].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
                     }
                 }
 
@@ -1154,25 +1161,12 @@ namespace GalaxyConquest
                     e.Y / scaling < (centerY + (int)screenY + starSize / 2))
                 {
                     //if mouse clicked in the ellipce open new form
-                    star_selected = j;//store type for selected star
-                    Redraw();
-
-                    if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                    if (progressBar1.Visible == false)
                     {
-                        MessageBox.Show("Летим сюда");
-
-                        for (int k = 0; k < galaxy.neutrals.Count; k++)
-                        {
-                            if (galaxy.neutrals[k].s1 == s)
-                            {
-                                MessageBox.Show("Обнаружен противник!");
-
-                                CombatForm cf = new CombatForm(player.player_fleets[0], galaxy.neutrals[k]);
-                                cf.ShowDialog();
-                            }
-                        }
+                        star_selected = j;//store type for selected star
                     }
 
+                    Redraw();
                     return;
                 }
 
@@ -1245,6 +1239,77 @@ namespace GalaxyConquest
         private void galaxyImage_Click(object sender, EventArgs e)
         {
 
+        }
+        public void animationFleets(Fleet fl, StarSystem stars)
+        {
+            double x = stars.x - fl.x;
+            double y = stars.y - fl.y;
+            double z = stars.z - fl.z;
+            double dx = x / 100;
+            double dy = y / 100;
+            double dz = z / 100;
+
+            for (int i = 0; i < 100; i++)
+            {
+                fl.x += dx;
+                fl.y += dy;
+                fl.z += dz;
+                Redraw();
+            }
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StarSystem s = galaxy.stars[star_selected];
+
+
+
+            if (progressBar1.Visible == true)
+            {
+                if (progressBar1.Value == progressBar1.Maximum - 1)
+                {
+                    player.player_stars.Add(galaxy.stars[star_selected]);
+                    progressBar1.Visible = false;
+                    button3.Visible = false;
+                    progressBar1.Value = progressBar1.Minimum;
+                }
+                else
+                {
+                    progressBar1.Value = progressBar1.Value + 1;
+                }
+            }
+            else
+            {
+                animationFleets(player.player_fleets[0], s);
+            }
+                                  
+            for (int k = 0; k < galaxy.neutrals.Count; k++)
+            {
+                if (galaxy.neutrals[k].s1 == s)
+                {
+                    //MessageBox.Show("Обнаружен противник!");
+
+                    CombatForm cf = new CombatForm(player.player_fleets[0], galaxy.neutrals[k]);
+                    cf.ShowDialog();
+                }
+            }
+            Redraw();
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            progressBar1.Visible = true;
+            button3.Visible = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            progressBar1.Visible = false;
+            progressBar1.Value = progressBar1.Minimum;
+            button3.Visible = false;
         }
 
         

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Media;
+using System.Drawing.Imaging;
 
 namespace GalaxyConquest.Tactics
 {
@@ -26,17 +27,21 @@ namespace GalaxyConquest.Tactics
         int blueShipsCount;
         int redShipsCount;
         System.Media.SoundPlayer player = new System.Media.SoundPlayer();
-        
 
+        public int boxWidth;
+        public int boxHeight;
         
         public CombatForm(Fleet left, Fleet right)
         {
-            player.SoundLocation = @"../../Sounds/laser1.wav";
+            player.SoundLocation = @"Sounds/laser1.wav";
 
             allShips.Clear();
 
             allShips.AddRange(left.ships);
             allShips.AddRange(right.ships);
+
+            boxWidth = cMap.boxes[0].xpoint3 - cMap.boxes[0].xpoint2;
+            boxHeight = cMap.boxes[0].ypoint6 - cMap.boxes[0].ypoint2;
 
             /*
             Ship penumbra = shipCreate(Constants.SCOUT, 1, Constants.LIGHT_ION);
@@ -211,23 +216,59 @@ namespace GalaxyConquest.Tactics
 
                 }
 
-                if (cMap.boxes[i].spaceObject != null)
+                if(cMap.boxes[i].spaceObject != null && cMap.boxes[i].spaceObject.objectType == Constants.METEOR)
                 {
-                    if (cMap.boxes[i].spaceObject.player == 1)
+                    brush = grayBrush;
+                    cMap.boxes[i].spaceObject.drawSpaceShit(ref cMap, ref combatBitmap);
+                }
+                else if (cMap.boxes[i].spaceObject != null && cMap.boxes[i].spaceObject.objectImg != null)
+                {
+                    /* if (cMap.boxes[i].spaceObject.player == 1)
                         brush = blueBrush;
                     else if (cMap.boxes[i].spaceObject.player == 2)
                         brush = redBrush;
-                    else brush = grayBrush;
+                    else */
 
-                    cMap.boxes[i].spaceObject.drawSpaceShit(ref cMap, ref combatBitmap);
+                    
+                    
+                    //qwerty
+
+                    if (cMap.boxes[i].spaceObject.objectImg.Width >= boxWidth)
+                    {
+                        g.DrawImage(cMap.boxes[i].spaceObject.objectImg,
+                            new Rectangle(cMap.boxes[i].spaceObject.x - boxWidth/2,
+                                cMap.boxes[i].spaceObject.y - boxHeight/2,
+                                boxWidth, boxHeight));
+                    }
+                    else
+                    {
+                        //g.DrawImage(cMap.boxes[i].spaceObject.objectImg,
+                            //new Rectangle(cMap.boxes[i].xcenter - cMap.boxes[i].spaceObject.objectImg.Width/2, 
+                            //    cMap.boxes[i].ycenter cMap.boxes[i].spaceObject.objectImg.Height/2, 
+                            //    boxWidth, boxHeight));
+                        g.DrawImage(cMap.boxes[i].spaceObject.objectImg,
+                            new Rectangle(cMap.boxes[i].spaceObject.x - cMap.boxes[i].spaceObject.objectImg.Width / 2,
+                                cMap.boxes[i].spaceObject.y - cMap.boxes[i].spaceObject.objectImg.Height / 2,
+                                cMap.boxes[i].spaceObject.objectImg.Width,
+                                cMap.boxes[i].spaceObject.objectImg.Height));
+
+                        g.DrawString(cMap.boxes[i].spaceObject.actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(cMap.boxes[i].xpoint1 + 25, cMap.boxes[i].ypoint1 + 15));
+                        g.DrawString(cMap.boxes[i].spaceObject.currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[i].xpoint1 + 20, cMap.boxes[i].ypoint1 - 25));
+                    }
 
                 }
 
-                g.DrawString(cMap.boxes[i].id.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 20, cMap.boxes[i].ypoint1 + 10));
+                //image
+                //g.DrawImage
+
+                //g.DrawString(cMap.boxes[i].id.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 20, cMap.boxes[i].ypoint1 + 10));
                 //g.DrawString(cMap.boxes[i].x.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 10, cMap.boxes[i].ypoint1 + 10));
                 //g.DrawString(cMap.boxes[i].y.ToString(), new Font("Arial", 8.0F), Brushes.Green, new PointF(cMap.boxes[i].xpoint1 + 40, cMap.boxes[i].ypoint1 + 10));
 
             }
+            //Image image = Image.FromFile("Cruiser2.png");
+            //g.DrawImage(image, new Rectangle(100, 100, 60, 40));
+            
                 pictureMap.Image = combatBitmap;
                 pictureMap.Refresh();
             
@@ -570,44 +611,7 @@ namespace GalaxyConquest.Tactics
 
                                 if (completeBoxWay.Count > 0) flag = 1;
                             }
-                            /*
-                            if (a + 1 == select && a % cMap.height != cMap.height - 1)
-                            {
-                                flag = 1;
-                            }
-                            // перемещение на одну клетку вниз
-                            else if (a - 1 == select && a % cMap.height != 0)
-                            {
-                                flag = 1;
-                            }
-                            // перемещение на клетку справа вверху
-                            else if (cMap.boxes[a].y != 0 && cMap.boxes[a].x != cMap.width
-                                && cMap.boxes[a].x + 1 == cMap.boxes[select].x
-                                && cMap.boxes[a].y - 1 == cMap.boxes[select].y)
-                            {
-                                flag = 1;
-                            }
-                            // перемещение на клетку справа внизу
-                            else if (cMap.boxes[a].y + 1 != cMap.height * 2 && cMap.boxes[a].x != cMap.width
-                                && cMap.boxes[a].x + 1 == cMap.boxes[select].x
-                                && cMap.boxes[a].y + 1 == cMap.boxes[select].y)
-                            {
-                                flag = 1;
-                            }
-                            // перемещение на клетку слева вверху
-                            else if (cMap.boxes[a].y != 0 && cMap.boxes[a].x != 0
-                                && cMap.boxes[a].x - 1 == cMap.boxes[select].x
-                                && cMap.boxes[a].y - 1 == cMap.boxes[select].y)
-                            {
-                                flag = 1;
-                            }
-                            // перемещение на клетку слева внизу
-                            else if (cMap.boxes[a].y + 1 != cMap.height * 2 && cMap.boxes[a].x != 0
-                                && cMap.boxes[a].x - 1 == cMap.boxes[select].x
-                                && cMap.boxes[a].y + 1 == cMap.boxes[select].y)
-                            {
-                                flag = 1;
-                            } */
+                            
                             if (flag == 1)
                             {
                                 double rotateAngle;
@@ -619,7 +623,7 @@ namespace GalaxyConquest.Tactics
                                     if (activeShip == null) break;
                                     rotateAngle = attackAngleSearch(cMap.boxes[completeBoxWay[cnt].id].x, cMap.boxes[completeBoxWay[cnt].id].y);
 
-                                    doShipRotate(rotateAngle);
+                                    //doShipRotate(rotateAngle);
 
                                     x1 = cMap.boxes[activeShip.boxId].xcenter;
                                     y1 = cMap.boxes[activeShip.boxId].ycenter;
@@ -650,11 +654,14 @@ namespace GalaxyConquest.Tactics
                                 
                                     for (int count1 = 0; count1 < range - 10; count1 += dx)
                                     {
+                                        /*
                                         for (int j = 0; j < activeShip.xpoints.Count; j++)
                                         {
                                             activeShip.xpoints[j] += deltax;
                                             activeShip.ypoints[j] += deltay;
-                                        }
+                                        } */
+                                        activeShip.x += deltax;
+                                        activeShip.y += deltay;
                                         Thread.Sleep(5);
                                         Draw(); 
                                     } 
@@ -667,7 +674,7 @@ namespace GalaxyConquest.Tactics
 
                                     activeShip.moveShip(cMap, activeShip.boxId, completeBoxWay[cnt].id, 1);
 
-                                    resetShipRotate(rotateAngle);
+                                    //resetShipRotate(rotateAngle);
 
                                     boxDescription.Text = activeShip.description();
 

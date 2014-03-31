@@ -10,10 +10,11 @@ namespace GalaxyConquest.Tactics
     {
         public int width;
         public int height;
-        public int scale = 3;
+        public int scale = 4;
         public List<Box> boxes = new List<Box>();
         public int deltax; 
-        public int deltay; 
+        public int deltay;
+
         public combatMap(int w, int h) 
         {
             width = w;

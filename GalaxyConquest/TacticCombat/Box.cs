@@ -15,6 +15,7 @@ namespace GalaxyConquest.Tactics
         public int xcenter;
         public int ycenter;
 
+        
         public int xpoint1 = 15;
         public int xpoint2 = 20;
         public int xpoint3 = 55;

@@ -25,7 +25,7 @@ namespace GalaxyConquest.Tactics
         public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap)
         {
             System.Threading.Thread.Sleep(150);
-            player.SoundLocation = @"../../Sounds/laser1.wav";
+            player.SoundLocation = @"Sounds/laser1.wav";
 
             Graphics g = Graphics.FromImage(bmap);
             

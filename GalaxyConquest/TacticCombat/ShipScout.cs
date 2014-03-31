@@ -16,8 +16,6 @@ namespace GalaxyConquest.Tactics
                             + actionsLeft + "/" + maxActions + equippedWeapon.description() + "\nAP - " + equippedWeapon.attackPower + "\nRange - " + equippedWeapon.attackRange;
         }
 
-
-
         public override void drawSpaceShit(ref combatMap cMap, ref System.Drawing.Bitmap bmap)
         {
             Graphics g = Graphics.FromImage(bmap);
@@ -47,6 +45,8 @@ namespace GalaxyConquest.Tactics
 
             equippedWeapon = weapon;
 
+            objectImg = Image.FromFile(@"Sprites/ships/player/Bomber2.png");
+
             player = p;
             maxHealth = 50;
             currentHealth = maxHealth;
@@ -66,11 +66,13 @@ namespace GalaxyConquest.Tactics
      
             // лишние точки
 
+            
             if (player != 1)
             {
                 shipRotate(180);
+                objectImg.RotateFlip(RotateFlipType.RotateNoneFlipX);
             }
-
+            
             weaponPointX = xpoints[2];
             weaponPointY = ypoints[2];
 

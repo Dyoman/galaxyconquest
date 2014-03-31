@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace GalaxyConquest.Tactics
 {
@@ -13,6 +15,7 @@ namespace GalaxyConquest.Tactics
         public Weapon equippedWeapon;
         public int weaponPointX;
         public int weaponPointY;
+
         public override string description()
         {
             return "";
@@ -30,6 +33,10 @@ namespace GalaxyConquest.Tactics
             {
 
                 boxId = pointBId;
+
+                x = cMap.boxes[boxId].xcenter;
+                y = cMap.boxes[boxId].ycenter;
+
                 cMap.boxes[pointAId].spaceObject = null;
                 cMap.boxes[pointBId].spaceObject = this;
                 actionsLeft -= range;
@@ -79,6 +86,9 @@ namespace GalaxyConquest.Tactics
                     {
                         cMap.boxes[randomBox].spaceObject = this;
                         boxId = randomBox;
+
+                        
+
                         break;
                     }
                 }
@@ -98,6 +108,8 @@ namespace GalaxyConquest.Tactics
                     }
                 }
             }
+            x = cMap.boxes[boxId].xcenter;
+            y = cMap.boxes[boxId].ycenter;
         }
 
         public void shipRotate(double angle)

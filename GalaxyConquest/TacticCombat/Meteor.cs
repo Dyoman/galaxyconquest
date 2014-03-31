@@ -13,7 +13,7 @@ namespace GalaxyConquest.Tactics
         public string staticDescription = "Движущийся метеор";
         public int xdirection;
         public int ydirection;
-        public Meteor(int box, int health, int dmg, int x, int y)
+        public Meteor(int box, int health, int dmg, int xdirect, int ydirect)
         {
             boxId = box;
             objectType = Constants.METEOR;
@@ -21,8 +21,10 @@ namespace GalaxyConquest.Tactics
             maxHealth = health;
             currentHealth = maxHealth;
             explodeDmg = dmg;
-            xdirection = x;
-            ydirection = y;
+            xdirection = xdirect;
+            ydirection = ydirect;
+
+            objectImg = Image.FromFile(@"Sprites/ships/neutral/10.png");
             
         }
 

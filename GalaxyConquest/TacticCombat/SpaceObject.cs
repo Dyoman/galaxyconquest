@@ -15,6 +15,9 @@ namespace GalaxyConquest.Tactics
         public int maxHealth; // hit points
         public int currentHealth;
         public abstract string description(); // описание объекта
+        public Image objectImg;
+        public int x;
+        public int y;
 
         public abstract void drawSpaceShit(ref combatMap cMap, ref System.Drawing.Bitmap bmap);
 

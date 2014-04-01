@@ -22,14 +22,6 @@ namespace GalaxyConquest
             player_stars = new List<StarSystem>();
             player_fleets = new List<Fleet>();
             player_color = Color.Red;
-
-            
-            /*if (Form1.SelfRef != null)
-            {
-                player_stars.Add(Form1.SelfRef.galaxy.stars[3]);
-                Form1.SelfRef.galaxy.stars[3].name = "Player";
-            }
-            */
         }
 
     }

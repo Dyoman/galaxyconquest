@@ -58,8 +58,10 @@
             this.textBox_planets = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.conquer_progressBar = new System.Windows.Forms.ProgressBar();
             this.button3 = new System.Windows.Forms.Button();
+            this.tech_progressBar = new System.Windows.Forms.ProgressBar();
+            this.tech_label = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.SuspendLayout();
@@ -321,9 +323,9 @@
             // 
             // galaxyImage
             // 
-            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.galaxyImage.BackColor = System.Drawing.Color.Black;
             this.galaxyImage.Location = new System.Drawing.Point(174, 27);
             this.galaxyImage.Name = "galaxyImage";
@@ -375,15 +377,15 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // progressBar1
+            // conquer_progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(20, 369);
-            this.progressBar1.Maximum = 5;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
-            this.progressBar1.Step = 1;
-            this.progressBar1.TabIndex = 20;
-            this.progressBar1.Visible = false;
+            this.conquer_progressBar.Location = new System.Drawing.Point(20, 369);
+            this.conquer_progressBar.Maximum = 5;
+            this.conquer_progressBar.Name = "conquer_progressBar";
+            this.conquer_progressBar.Size = new System.Drawing.Size(100, 23);
+            this.conquer_progressBar.Step = 1;
+            this.conquer_progressBar.TabIndex = 20;
+            this.conquer_progressBar.Visible = false;
             // 
             // button3
             // 
@@ -396,13 +398,34 @@
             this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // tech_progressBar
+            // 
+            this.tech_progressBar.Location = new System.Drawing.Point(370, 27);
+            this.tech_progressBar.Maximum = 5;
+            this.tech_progressBar.Name = "tech_progressBar";
+            this.tech_progressBar.Size = new System.Drawing.Size(100, 23);
+            this.tech_progressBar.Step = 1;
+            this.tech_progressBar.TabIndex = 22;
+            this.tech_progressBar.Visible = false;
+            // 
+            // tech_label
+            // 
+            this.tech_label.AutoSize = true;
+            this.tech_label.Location = new System.Drawing.Point(322, 32);
+            this.tech_label.Name = "tech_label";
+            this.tech_label.Size = new System.Drawing.Size(35, 13);
+            this.tech_label.TabIndex = 23;
+            this.tech_label.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 506);
+            this.Controls.Add(this.tech_label);
+            this.Controls.Add(this.tech_progressBar);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.conquer_progressBar);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox_planets);
@@ -468,8 +491,10 @@
         private System.Windows.Forms.TextBox textBox_planets;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar conquer_progressBar;
         private System.Windows.Forms.Button button3;
+        public System.Windows.Forms.ProgressBar tech_progressBar;
+        public System.Windows.Forms.Label tech_label;
     }
 }
 

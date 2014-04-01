@@ -94,6 +94,7 @@
             this.Controls.Add(this.TechTreeImage);
             this.Name = "Tech_Tree";
             this.Text = "Tech_Tree";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Tech_Tree_FormClosed);
             this.Resize += new System.EventHandler(this.Tech_Tree_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.TechTreeImage)).EndInit();
             this.ResumeLayout(false);

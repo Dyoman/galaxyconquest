@@ -54,7 +54,8 @@ namespace GalaxyConquest
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH);
             SelfRef = this;
-            
+            tech_progressBar.Visible = false;
+            tech_label.Visible = false;
             this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
         }
 
@@ -1160,7 +1161,7 @@ namespace GalaxyConquest
                     e.Y / scaling < (centerY + (int)screenY + starSize / 2))
                 {
                     //if mouse clicked in the ellipce open new form
-                    if (progressBar1.Visible == false)
+                    if (conquer_progressBar.Visible == false)
                     {
                         star_selected = j;//store type for selected star
                     }
@@ -1265,18 +1266,18 @@ namespace GalaxyConquest
 
 
 
-            if (progressBar1.Visible == true)
+            if (conquer_progressBar.Visible == true)
             {
-                if (progressBar1.Value == progressBar1.Maximum - 1)
+                if (conquer_progressBar.Value == conquer_progressBar.Maximum - 1)
                 {
                     player.player_stars.Add(galaxy.stars[star_selected]);
-                    progressBar1.Visible = false;
+                    conquer_progressBar.Visible = false;
                     button3.Visible = false;
-                    progressBar1.Value = progressBar1.Minimum;
+                    conquer_progressBar.Value = conquer_progressBar.Minimum;
                 }
                 else
                 {
-                    progressBar1.Value = progressBar1.Value + 1;
+                    conquer_progressBar.Value = conquer_progressBar.Value + 1;
                 }
             }
             else
@@ -1300,14 +1301,14 @@ namespace GalaxyConquest
 
         private void button2_Click(object sender, EventArgs e)
         {
-            progressBar1.Visible = true;
+            conquer_progressBar.Visible = true;
             button3.Visible = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            progressBar1.Visible = false;
-            progressBar1.Value = progressBar1.Minimum;
+            conquer_progressBar.Visible = false;
+            conquer_progressBar.Value = conquer_progressBar.Minimum;
             button3.Visible = false;
         }
 

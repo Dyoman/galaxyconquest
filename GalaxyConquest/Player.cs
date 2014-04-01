@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GalaxyConquest.Tactics;
 using System.Drawing;
 
 namespace GalaxyConquest

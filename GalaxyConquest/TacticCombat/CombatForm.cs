@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using System.Media;
-using System.Drawing.Imaging;
 
 namespace GalaxyConquest.Tactics
 {
@@ -180,7 +173,7 @@ namespace GalaxyConquest.Tactics
                                 // рисовать ли рамку вокруг нейтральных объектов
                                 // в зоне досягаемости? пока решили что нет,
                                 // но заглушка осталась
-                                int x1;
+                                //int x1;
                             }
                             else
                             {

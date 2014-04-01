@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
-using System.Collections.ObjectModel;
 
 
 namespace GalaxyConquest.StarSystems
@@ -19,9 +13,9 @@ namespace GalaxyConquest.StarSystems
         public static string minerals1;
 
         Random rand = new Random();
-        int maxpln=4;
-        int dist = 100;
-        float speed = 0.001f;
+        //int maxpln=4;
+        //int dist = 100;
+        //float speed = 0.001f;
 
        public StarSystem s;
 

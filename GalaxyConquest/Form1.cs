@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using GalaxyConquest.StarSystems;

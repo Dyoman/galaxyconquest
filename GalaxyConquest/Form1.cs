@@ -59,7 +59,7 @@ namespace GalaxyConquest
             tech_label.Visible = false;
             this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
             waveOutDevice = new WaveOut();
-            audioFileReader = new AudioFileReader("Untitled45.mp3");
+            audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
         }

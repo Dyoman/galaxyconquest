@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio">
+      <HintPath>.\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WindowsMediaFormat">
+      <HintPath>.\NAudio.WindowsMediaFormat.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -172,90 +178,6 @@
     <Content Include="freeglut.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Sounds\laser1.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sprites\background\bg1.jpg" />
-    <Content Include="Sprites\background\bg10.jpg" />
-    <Content Include="Sprites\background\bg11.jpg" />
-    <Content Include="Sprites\background\bg12.jpg" />
-    <Content Include="Sprites\background\bg13.jpg" />
-    <Content Include="Sprites\background\bg14.jpg" />
-    <Content Include="Sprites\background\bg2.jpg" />
-    <Content Include="Sprites\background\bg3.jpg" />
-    <Content Include="Sprites\background\bg4.jpg" />
-    <Content Include="Sprites\background\bg5.jpg" />
-    <Content Include="Sprites\background\bg6.jpg" />
-    <Content Include="Sprites\background\bg7.jpg" />
-    <Content Include="Sprites\background\bg8.jpg" />
-    <Content Include="Sprites\background\bg9.jpg" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_1.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_10.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_11.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_12.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_13.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_14.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_15.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_16.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_17.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_18.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_19.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_2.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_20.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_21.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_22.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_23.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_24.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_25.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_26.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_27.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_28.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_29.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_3.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_30.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_31.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_32.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_4.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_5.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_6.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_7.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_8.png" />
-    <Content Include="Sprites\fx\shield\aura_test_1_32_9.png" />
-    <Content Include="Sprites\fx\smoke1\particlefx_03.png" />
-    <Content Include="Sprites\ships\neutral\1.png" />
-    <Content Include="Sprites\ships\neutral\10.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sprites\ships\neutral\11.png" />
-    <Content Include="Sprites\ships\neutral\12.png" />
-    <Content Include="Sprites\ships\neutral\13.png" />
-    <Content Include="Sprites\ships\neutral\2.png" />
-    <Content Include="Sprites\ships\neutral\3.png" />
-    <Content Include="Sprites\ships\neutral\4.png" />
-    <Content Include="Sprites\ships\neutral\5.png" />
-    <Content Include="Sprites\ships\neutral\6.png" />
-    <Content Include="Sprites\ships\neutral\7.png" />
-    <Content Include="Sprites\ships\neutral\8.png" />
-    <Content Include="Sprites\ships\neutral\9.png" />
-    <Content Include="Sprites\ships\player\Assaultboat.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sprites\ships\player\Battleship.png" />
-    <Content Include="Sprites\ships\player\Bomber.png" />
-    <Content Include="Sprites\ships\player\Bomber2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sprites\ships\player\Corvette.png" />
-    <Content Include="Sprites\ships\player\Cruiser.png" />
-    <Content Include="Sprites\ships\player\Cruiser2.png" />
-    <Content Include="Sprites\ships\player\Destroyer.png" />
-    <Content Include="Sprites\ships\player\Fighter1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sprites\ships\player\Fighter2.png" />
-    <Content Include="Sprites\ships\player\Fighter3.png" />
-    <Content Include="Sprites\ships\player\Frigate.png" />
-    <Content Include="Sprites\ships\player\License.txt" />
     <None Include="Resources\btn_rotateright.png" />
     <None Include="Resources\btn_rotateleft.png" />
     <None Include="Resources\btn_spindown.png" />

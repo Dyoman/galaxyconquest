@@ -18,6 +18,10 @@ namespace GalaxyConquest
 
         public int mouseX;
         public int mouseY;
+        public int tech_clicked = 1000;
+
+        float centerX;
+        float centerY;
 
         public Brush br;
 
@@ -46,8 +50,8 @@ namespace GalaxyConquest
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);
 
-            float centerX = TechTreeBitmap.Width / 2 / scaling;
-            float centerY = TechTreeBitmap.Height / 2 / scaling;
+            centerX = TechTreeBitmap.Width / 2 / scaling;
+            centerY = TechTreeBitmap.Height / 2 / scaling;
 
             centerX += horizontal;
             centerY += vertical;
@@ -69,6 +73,7 @@ namespace GalaxyConquest
                         br = Brushes.White;
                     }
                 }
+                
                 g.DrawString(tech[i], new Font("Arial", 10.0F), br,
                         new PointF(centerX, centerY + 300 - 30 * i));
             }
@@ -145,6 +150,30 @@ namespace GalaxyConquest
                 Redraw();
             }
         }
+
+        private void TechTreeImage_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int i=0; i < tech.Count; i++)
+            {
+                if (e.X < centerX + 50 && e.X > centerX - 50
+                && e.Y < centerY + 300 - 30 * i + 10 && e.Y > centerY + 300 - 30 * i - 10)
+                {
+                    label1.Text = i.ToString();
+                    tech_clicked = i;
+                }
+            }
+        }
+
+        private void Tech_Tree_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (tech_clicked != 1000)
+            {
+                Form1.SelfRef.tech_label.Visible = true;
+                Form1.SelfRef.tech_progressBar.Visible = true;
+                Form1.SelfRef.tech_label.Text = tech[tech_clicked];
+            }
+        }
+
 
     }
 }

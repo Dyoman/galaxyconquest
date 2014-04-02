@@ -179,9 +179,11 @@
     <Content Include="freeglut.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sounds\iongun2.wav" />
     <Content Include="Sounds\laser1.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sounds\laser3.wav" />
     <Content Include="Sprites\background\bg1.jpg" />
     <Content Include="Sprites\background\bg10.jpg" />
     <Content Include="Sprites\background\bg11.jpg" />

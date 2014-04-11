@@ -27,7 +27,7 @@ namespace GalaxyConquest
         public int horizontal = 0;  //for moving galaxy
         public int vertical = 0;    //for moving galaxy
         public float dynamicStarSize = 5; //Variable for dynamic of fix scale 
-
+        public int selectFleet=0;
         public int star_selected;
         public int mouseX;
         public int mouseY;
@@ -62,6 +62,7 @@ namespace GalaxyConquest
             audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
+            statusStrip1.Items[0].Text = "Выбран 1 флот";
         }
 
         public void PlayMusic()
@@ -126,17 +127,34 @@ namespace GalaxyConquest
                 }
                 
                 //флот игрока
-                Fleet fl = generateFleet(rand.Next(5, 7), 1);
+          /*      Fleet fl = generateFleet(rand.Next(5, 7), 1);
 
                 player.player_stars.Add(galaxy.stars[rand.Next(0, galaxy.stars.Count - 1)]);
 
+               
+                    player.player_fleets.Add(fl);
+                    fl.s1 = player.player_stars[0];
+                    player.player_fleets[0].x = player.player_fleets[0].s1.x;
+                    player.player_fleets[0].y = player.player_fleets[0].s1.y;
+                    player.player_fleets[0].z = player.player_fleets[0].s1.z;
+                    fl.name = nd.namePlayer+1;
+                */
 
-                player.player_fleets.Add(fl);
-                fl.s1 = player.player_stars[0];
-                player.player_fleets[0].x = player.player_fleets[0].s1.x;
-                player.player_fleets[0].y = player.player_fleets[0].s1.y;
-                player.player_fleets[0].z = player.player_fleets[0].s1.z;
-                fl.name = nd.namePlayer;
+                
+
+                for (int i = 0; i < 2; i++)
+                {
+                    Fleet fl = generateFleet(rand.Next(5, 7), 1);
+                    player.player_stars.Add(galaxy.stars[rand.Next(0, galaxy.stars.Count - 1)]);
+                    fl.s1 = player.player_stars[i];
+                    fl.name = nd.namePlayer + (i+1);
+                    player.player_fleets.Add(fl);
+                    player.player_fleets[i].x = player.player_fleets[i].s1.x;
+                    player.player_fleets[i].y = player.player_fleets[i].s1.y;
+                    player.player_fleets[i].z = player.player_fleets[i].s1.z;
+                }
+                  
+              
                 for (int i = 0; i < 3; i++)
                 {
                     StarSystem sr = galaxy.stars[rand.Next(0, galaxy.stars.Count - 1)];
@@ -489,20 +507,49 @@ namespace GalaxyConquest
                 {
                     g.DrawEllipse(Pens.Red, rectan);
                 }
-                
-                if (player.player_fleets[0].s1 == s)
+
+                for (int k = 0; k < 2; k++)
                 {
-                    double screenXfl = player.player_fleets[0].x * Math.Cos(spinX) - player.player_fleets[0].z * Math.Sin(spinX)-10;
-                    double screenZfl = player.player_fleets[0].x * Math.Sin(spinX) + player.player_fleets[0].z * Math.Cos(spinX);
-                    double screenYfl = player.player_fleets[0].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY)-10; 
-                    Point[] compPointArrayShip = {  //точки для рисование корабля
-                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
-                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
-                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
-                    g.FillPolygon(GoldBrush, compPointArrayShip);
-                    g.DrawString(player.player_fleets[0].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                    if (player.player_fleets[k].s1 == s)
+                    {
+                        double screenXfl = player.player_fleets[k].x * Math.Cos(spinX) - player.player_fleets[k].z * Math.Sin(spinX) - 10;
+                        double screenZfl = player.player_fleets[k].x * Math.Sin(spinX) + player.player_fleets[k].z * Math.Cos(spinX);
+                        double screenYfl = player.player_fleets[k].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
+                        Point[] compPointArrayShip = {  //точки для рисование корабля
+                                        new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                                        new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                                        new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                        g.FillPolygon(GoldBrush, compPointArrayShip);
+                        g.DrawString(player.player_fleets[k].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                    }
                 }
 
+                //if (player.player_fleets[0].s1 == s)
+                //{
+                //    double screenXfl = player.player_fleets[0].x * Math.Cos(spinX) - player.player_fleets[0].z * Math.Sin(spinX) - 10;
+                //    double screenZfl = player.player_fleets[0].x * Math.Sin(spinX) + player.player_fleets[0].z * Math.Cos(spinX);
+                //    double screenYfl = player.player_fleets[0].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
+                //    Point[] compPointArrayShip = {  //точки для рисование корабля
+                //                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                //                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                //                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                //    g.FillPolygon(GoldBrush, compPointArrayShip);
+                //    g.DrawString(player.player_fleets[0].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                //}
+
+                //if (player.player_fleets[1].s1 == s)
+                //{
+                //    double screenXfl = player.player_fleets[1].x * Math.Cos(spinX) - player.player_fleets[1].z * Math.Sin(spinX) - 10;
+                //    double screenZfl = player.player_fleets[1].x * Math.Sin(spinX) + player.player_fleets[1].z * Math.Cos(spinX);
+                //    double screenYfl = player.player_fleets[1].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
+                //    Point[] compPointArrayShip = {  //точки для рисование корабля
+                //                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                //                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                //                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                //    g.FillPolygon(GoldBrush, compPointArrayShip);
+                //    g.DrawString(player.player_fleets[1].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                //}
+             
 
                 for (int k = 0; k < galaxy.neutrals.Count; k++)
                 {
@@ -1158,6 +1205,7 @@ namespace GalaxyConquest
                     //if mouse clicked in the ellipce open new form
                     if (conquer_progressBar.Visible == false)
                     {
+                        player.player_fleets[selectFleet].s2 = s;
                         star_selected = j;//store type for selected star
                     }
 
@@ -1165,6 +1213,32 @@ namespace GalaxyConquest
                     return;
                 }
 
+
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                double screenXfl = player.player_fleets[i].x * Math.Cos(spinX) - player.player_fleets[i].z * Math.Sin(spinX) - 10;
+                double screenZfl = player.player_fleets[i].x * Math.Sin(spinX) + player.player_fleets[i].z * Math.Cos(spinX);
+                double screenYfl = player.player_fleets[i].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
+                
+                float centerX = galaxyBitmap.Width / 2 / scaling;
+                float centerY = galaxyBitmap.Height / 2 / scaling;
+                
+                               
+                centerX += horizontal;  //move galaxy left/right
+                centerY += vertical;    //move galaxy up/down
+
+                if (e.X / scaling > (centerX + (int)screenXfl - 15/2) &&
+                    e.X / scaling < (centerX + (int)screenXfl + 15/2) &&
+                    e.Y / scaling > (centerY + (int)screenYfl - 15/2) &&
+                    e.Y / scaling < (centerY + (int)screenYfl + 15/2))
+                {
+                    selectFleet = i;
+
+                    statusStrip1.Items[0].Text = "Выбран " +(i+1)+" флот";
+                    //MessageBox.Show("вы выбрали "+(i+1)+" флот");
+                }
             }
         }
         //-------------------------------added
@@ -1277,7 +1351,16 @@ namespace GalaxyConquest
             }
             else
             {
-                animationFleets(player.player_fleets[0], s);
+                for (int k=0;k<2;k++)
+                {
+                    if (player.player_fleets[k].s2 != null)
+                    {
+                        animationFleets(player.player_fleets[k], player.player_fleets[k].s2);
+                        player.player_fleets[k].s2 = null;
+                    }
+                }
+                
+                //animationFleets(player.player_fleets[1], s);
             }
                                   
             for (int k = 0; k < galaxy.neutrals.Count; k++)

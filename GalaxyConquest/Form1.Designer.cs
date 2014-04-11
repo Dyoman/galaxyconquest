@@ -62,7 +62,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.tech_progressBar = new System.Windows.Forms.ProgressBar();
             this.tech_label = new System.Windows.Forms.Label();
+            this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,6 +156,8 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusSelectFleet});
             this.statusStrip1.Location = new System.Drawing.Point(0, 484);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1028, 22);
@@ -323,9 +327,9 @@
             // 
             // galaxyImage
             // 
-            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.galaxyImage.BackColor = System.Drawing.Color.Black;
             this.galaxyImage.Location = new System.Drawing.Point(174, 27);
             this.galaxyImage.Name = "galaxyImage";
@@ -417,6 +421,12 @@
             this.tech_label.TabIndex = 23;
             this.tech_label.Text = "label1";
             // 
+            // toolStripStatusSelectFleet
+            // 
+            this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,6 +463,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -495,6 +507,7 @@
         private System.Windows.Forms.Button button3;
         public System.Windows.Forms.ProgressBar tech_progressBar;
         public System.Windows.Forms.Label tech_label;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusSelectFleet;
     }
 }
 

@@ -63,7 +63,7 @@ namespace GalaxyConquest
             tech_progressBar.Visible = false;
             tech_label.Visible = false;
             this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
-            waveOutDevice = new WaveOut();
+            waveOutDevice = new WaveOutEvent();
             audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
@@ -1398,7 +1398,7 @@ namespace GalaxyConquest
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void step_button_Click(object sender, EventArgs e)
         {
 
             if (galaxy == null)
@@ -1450,7 +1450,7 @@ namespace GalaxyConquest
                 }
             }
 
-            if (tech_progressBar.Value < tt.learning_tech_time)
+            if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000)
             {
                 tech_progressBar.Value += 1;
             }
@@ -1461,6 +1461,7 @@ namespace GalaxyConquest
                 tech_progressBar.Value = 0;
                 tech_progressBar.Visible = false;
                 tech_label.Visible = false;
+                tt.tech_clicked = 1000;
             }
 
             Redraw();
@@ -1478,6 +1479,19 @@ namespace GalaxyConquest
             conquer_progressBar.Visible = false;
             conquer_progressBar.Value = conquer_progressBar.Minimum;
             button3.Visible = false;
+        }
+
+        private void sound_button_Click(object sender, EventArgs e)
+        {
+            if (waveOutDevice.PlaybackState == PlaybackState.Playing)
+            {
+                waveOutDevice.Pause();
+            }
+            else
+            {
+                waveOutDevice.Play();
+            }
+
         }
 
         

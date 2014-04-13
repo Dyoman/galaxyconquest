@@ -47,6 +47,7 @@ namespace GalaxyConquest
         public SolidBrush GoldBrush = new SolidBrush(Color.Gold);
 
         public Player player = new Player();//contain player staff
+        public Tech_Tree tt = new Tech_Tree();
         IWavePlayer waveOutDevice;
         AudioFileReader audioFileReader;
         public static Form1 SelfRef         //need for get var from other classes
@@ -1169,7 +1170,6 @@ namespace GalaxyConquest
 
         private void MainMenuTechTree_Click(object sender, EventArgs e)
         {
-            Tech_Tree tt = new Tech_Tree();
             tt.ShowDialog();
         }
 
@@ -1400,6 +1400,12 @@ namespace GalaxyConquest
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            if (galaxy == null)
+            {
+                return;
+            }
+
             StarSystem s = galaxy.stars[star_selected];
 
 
@@ -1443,6 +1449,20 @@ namespace GalaxyConquest
                     cf.ShowDialog();
                 }
             }
+
+            if (tech_progressBar.Value < tt.learning_tech_time)
+            {
+                tech_progressBar.Value += 1;
+            }
+
+            if (tech_progressBar.Value == tt.learning_tech_time)
+            {
+                Player.technologies.Add(tt.tech_clicked);
+                tech_progressBar.Value = 0;
+                tech_progressBar.Visible = false;
+                tech_label.Visible = false;
+            }
+
             Redraw();
 
         }

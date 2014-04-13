@@ -40,6 +40,7 @@
             this.MainMenuTechTree = new System.Windows.Forms.ToolStripMenuItem();
             this.dModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDraw = new System.Windows.Forms.Button();
             this.buttonSpinLeft = new System.Windows.Forms.Button();
             this.buttonSpinRight = new System.Windows.Forms.Button();
@@ -62,7 +63,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.tech_progressBar = new System.Windows.Forms.ProgressBar();
             this.tech_label = new System.Windows.Forms.Label();
-            this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
@@ -157,12 +158,19 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusSelectFleet});
+            this.toolStripStatusSelectFleet,
+            this.toolStripStatusXY});
             this.statusStrip1.Location = new System.Drawing.Point(0, 484);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1028, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusSelectFleet
+            // 
+            this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
             // 
             // buttonDraw
             // 
@@ -421,11 +429,11 @@
             this.tech_label.TabIndex = 23;
             this.tech_label.Text = "label1";
             // 
-            // toolStripStatusSelectFleet
+            // toolStripStatusXY
             // 
-            this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
-            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
-            this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
+            this.toolStripStatusXY.Name = "toolStripStatusXY";
+            this.toolStripStatusXY.Size = new System.Drawing.Size(90, 17);
+            this.toolStripStatusXY.Text = "toolStripStatusXY";
             // 
             // Form1
             // 
@@ -508,6 +516,7 @@
         public System.Windows.Forms.ProgressBar tech_progressBar;
         public System.Windows.Forms.Label tech_label;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusSelectFleet;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusXY;
     }
 }
 

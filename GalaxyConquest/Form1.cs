@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using System.IO;
@@ -27,7 +28,10 @@ namespace GalaxyConquest
         public int horizontal = 0;  //for moving galaxy
         public int vertical = 0;    //for moving galaxy
         public float dynamicStarSize = 5; //Variable for dynamic of fix scale 
-
+        public int selectFleet=0;
+        public double starDistanse;
+        public double s2x, s2y, s2z;
+        public double warp;
         public int star_selected;
         public int mouseX;
         public int mouseY;
@@ -43,6 +47,7 @@ namespace GalaxyConquest
         public SolidBrush GoldBrush = new SolidBrush(Color.Gold);
 
         public Player player = new Player();//contain player staff
+        public Tech_Tree tt = new Tech_Tree();
         IWavePlayer waveOutDevice;
         AudioFileReader audioFileReader;
         public static Form1 SelfRef         //need for get var from other classes
@@ -58,10 +63,11 @@ namespace GalaxyConquest
             tech_progressBar.Visible = false;
             tech_label.Visible = false;
             this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
-            waveOutDevice = new WaveOut();
+            waveOutDevice = new WaveOutEvent();
             audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
+            statusStrip1.Items[0].Text = "Выбран 1 флот";
         }
 
         public void PlayMusic()
@@ -126,17 +132,34 @@ namespace GalaxyConquest
                 }
                 
                 //флот игрока
-                Fleet fl = generateFleet(rand.Next(5, 7), 1);
+          /*      Fleet fl = generateFleet(rand.Next(5, 7), 1);
 
                 player.player_stars.Add(galaxy.stars[rand.Next(0, galaxy.stars.Count - 1)]);
 
+               
+                    player.player_fleets.Add(fl);
+                    fl.s1 = player.player_stars[0];
+                    player.player_fleets[0].x = player.player_fleets[0].s1.x;
+                    player.player_fleets[0].y = player.player_fleets[0].s1.y;
+                    player.player_fleets[0].z = player.player_fleets[0].s1.z;
+                    fl.name = nd.namePlayer+1;
+                */
 
-                player.player_fleets.Add(fl);
-                fl.s1 = player.player_stars[0];
-                player.player_fleets[0].x = player.player_fleets[0].s1.x;
-                player.player_fleets[0].y = player.player_fleets[0].s1.y;
-                player.player_fleets[0].z = player.player_fleets[0].s1.z;
-                fl.name = nd.namePlayer;
+                
+
+                for (int i = 0; i < 2; i++)
+                {
+                    Fleet fl = generateFleet(rand.Next(5, 7), 1);
+                    player.player_stars.Add(galaxy.stars[rand.Next(0, galaxy.stars.Count - 1)]);
+                    fl.s1 = player.player_stars[i];
+                    fl.name = nd.namePlayer + (i+1);
+                    player.player_fleets.Add(fl);
+                    player.player_fleets[i].x = player.player_fleets[i].s1.x;
+                    player.player_fleets[i].y = player.player_fleets[i].s1.y;
+                    player.player_fleets[i].z = player.player_fleets[i].s1.z;
+                }
+                  
+              
                 for (int i = 0; i < 3; i++)
                 {
                     StarSystem sr = galaxy.stars[rand.Next(0, galaxy.stars.Count - 1)];
@@ -489,20 +512,96 @@ namespace GalaxyConquest
                 {
                     g.DrawEllipse(Pens.Red, rectan);
                 }
-                
-                if (player.player_fleets[0].s1 == s)
+
+                for (int k = 0; k < 2; k++)
                 {
-                    double screenXfl = player.player_fleets[0].x * Math.Cos(spinX) - player.player_fleets[0].z * Math.Sin(spinX)-10;
-                    double screenZfl = player.player_fleets[0].x * Math.Sin(spinX) + player.player_fleets[0].z * Math.Cos(spinX);
-                    double screenYfl = player.player_fleets[0].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY)-10; 
-                    Point[] compPointArrayShip = {  //точки для рисование корабля
-                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
-                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
-                                    new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
-                    g.FillPolygon(GoldBrush, compPointArrayShip);
-                    g.DrawString(player.player_fleets[0].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                    if (player.player_fleets[k].s1 == s)
+                    {
+                        double screenXfl = player.player_fleets[k].x * Math.Cos(spinX) - player.player_fleets[k].z * Math.Sin(spinX) - 10;
+                        double screenZfl = player.player_fleets[k].x * Math.Sin(spinX) + player.player_fleets[k].z * Math.Cos(spinX);
+                        double screenYfl = player.player_fleets[k].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
+                        Point[] compPointArrayShip = {  //точки для рисование корабля
+                                        new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-1 * ugol))),
+                                        new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-2 * ugol))),
+                                        new Point((int)centerX + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol)))};
+                        g.FillPolygon(GoldBrush, compPointArrayShip);
+                        if (k == selectFleet)
+                        {
+                            g.DrawString(player.player_fleets[k].name, new Font("Arial", 8.0F), Brushes.Blue, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+
+                        }
+                        else
+                        {
+                            g.DrawString(player.player_fleets[k].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                        }
+                        
+                        if (warp == 1 && k == selectFleet)
+                        {
+                            //pen.Color = Color.Red;
+                            //pen.DashStyle = DashStyle.Dash; 
+                            //rectan = new Rectangle((int)(centerX - 150 + (int)screenX - starSize / 2), (int)(centerY - 150 + (int)screenY - starSize / 2), (int)(starSize + 300), (int)(starSize + 300));
+                            //g.DrawEllipse(pen, rectan);
+                            string dis = ""+(int)starDistanse;
+
+                            double ts2X, ts2Y, ts2Z;
+                            double screens2X;
+                            double screens2Y;
+                            double screens2Z;
+
+
+                            ts2X = s2x * Math.Cos(spinX) - s2z * Math.Sin(spinX);
+                            ts2Z = s2x * Math.Sin(spinX) + s2z * Math.Cos(spinX);
+                            ts2Y = s2y * Math.Cos(spinY) - ts2Z * Math.Sin(spinY);
+
+                            screens2X = ts2X;
+                            screens2Y = ts2Y;
+                            screens2Z = ts2Z;
+
+                            if (starDistanse < 150)
+                            {
+                                pen.Color = Color.Lime;
+                                g.DrawString(dis, new Font("Arial", 8.0F), Brushes.Lime, 
+                                    new Point((int)centerX - 3 + (int)screens2X + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + 12 + (int)screens2Y + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                            }
+                            else
+                            {
+                                pen.Color = Color.Red;
+                                g.DrawString(dis, new Font("Arial", 8.0F), Brushes.Red, 
+                                    new Point((int)centerX - 3 + (int)screens2X + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY + 12 + (int)screens2Y + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
+                            }
+                            //pen.DashStyle = DashStyle.DashDot;
+                            g.DrawLine(pen,
+                                new Point(((int)centerX + (int)screenX), ((int)centerY + (int)screenY)),
+                                new Point(((int)centerX + (int)screens2X), ((int)centerY + (int)screens2Y)));
+                        
+
+                         }
+                    }
+
+                    if (player.player_fleets[k].s2!=null)
+                    {
+                        double screenXflS1 = player.player_fleets[k].s1.x * Math.Cos(spinX) - player.player_fleets[k].s1.z * Math.Sin(spinX) - 10;
+                        double screenZflS1 = player.player_fleets[k].s1.x * Math.Sin(spinX) + player.player_fleets[k].s1.z * Math.Cos(spinX);
+                        double screenYflS1 = player.player_fleets[k].s1.y * Math.Cos(spinY) - screenZflS1 * Math.Sin(spinY) - 10;
+
+                        double screenXflS2 = player.player_fleets[k].s2.x * Math.Cos(spinX) - player.player_fleets[k].s2.z * Math.Sin(spinX) - 10;
+                        double screenZflS2 = player.player_fleets[k].s2.x * Math.Sin(spinX) + player.player_fleets[k].s2.z * Math.Cos(spinX);
+                        double screenYflS2 = player.player_fleets[k].s2.y * Math.Cos(spinY) - screenZflS2 * Math.Sin(spinY) - 10;
+                        
+                        pen.Color = Color.Red;
+                        pen.DashStyle = DashStyle.Dash;
+                        g.DrawLine(pen,
+                                new Point(((int)centerX + (int)screenXflS1+9), ((int)centerY + (int)screenYflS1)+10),
+                                new Point(((int)centerX + (int)screenXflS2+9), ((int)centerY + (int)screenYflS2)+10));
+                        
+                        //g.DrawLine(pen, new Point((int)centerX + (int)screenXflS1 + Convert.ToInt32(r * Math.Cos(-1 * ugol)), (int)centerX + (int)screenYflS1 + Convert.ToInt32(r * Math.Cos(-1 * ugol))), new Point((int)centerX + (int)screenXflS2 + Convert.ToInt32(r * Math.Cos(-2 * ugol)), (int)centerX + (int)screenYflS2 + Convert.ToInt32(r * Math.Cos(-2 * ugol))));
+                        //g.DrawLine(pen, new Point((int)player.player_fleets[k].s1.x, (int)player.player_fleets[k].s1.y), new Point((int)player.player_fleets[k].s2.x, (int)player.player_fleets[k].s2.y));
+                    }
+                    pen.Color = Color.Gold;
+                    pen.DashStyle = DashStyle.Solid;
                 }
 
+             
 
                 for (int k = 0; k < galaxy.neutrals.Count; k++)
                 {
@@ -973,6 +1072,7 @@ namespace GalaxyConquest
         {
             mouseX = e.X;   //start x
             mouseY = e.Y;   //start y
+
         }
 
         //mouse move listener
@@ -1001,7 +1101,11 @@ namespace GalaxyConquest
                     tX = s.x * Math.Cos(spinX) - s.z * Math.Sin(spinX);
                     tZ = s.x * Math.Sin(spinX) + s.z * Math.Cos(spinX);
                     tY = s.y * Math.Cos(spinY) - tZ * Math.Sin(spinY);
-
+                    
+                    s2x = s.x;
+                    s2y = s.y;
+                    s2z = s.z;
+                
                     screenX = tX;
                     screenY = tY;
 
@@ -1015,8 +1119,18 @@ namespace GalaxyConquest
                         e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
                         e.Y / scaling < (centerY + (int)screenY + starSize / 2))
                     {
-                        textBox_planets.Text = s.planets_count.ToString();
+                        warp = 1;
+                        starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectFleet].s1.z), 2));
+                        statusStrip1.Items[1].Text = "x: " + s.x + " y: " + s.y;
+                        Redraw();
                         return;
+                    }
+                    else
+                    {
+                        warp = 0;
+                        statusStrip1.Items[1].Text = "";
+                        Redraw();
+                        //return;
                     }
 
 
@@ -1056,7 +1170,6 @@ namespace GalaxyConquest
 
         private void MainMenuTechTree_Click(object sender, EventArgs e)
         {
-            Tech_Tree tt = new Tech_Tree();
             tt.ShowDialog();
         }
 
@@ -1155,16 +1268,46 @@ namespace GalaxyConquest
                     e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
                     e.Y / scaling < (centerY + (int)screenY + starSize / 2))
                 {
-                    //if mouse clicked in the ellipce open new form
                     if (conquer_progressBar.Visible == false)
                     {
-                        star_selected = j;//store type for selected star
+                        starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectFleet].s1.z), 2));
+                        if (starDistanse < 150)
+                        {
+                            player.player_fleets[selectFleet].s2 = s;
+                            star_selected = j;//store type for selected star
+                        }
                     }
 
                     Redraw();
                     return;
                 }
 
+
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                double screenXfl = player.player_fleets[i].x * Math.Cos(spinX) - player.player_fleets[i].z * Math.Sin(spinX) - 10;
+                double screenZfl = player.player_fleets[i].x * Math.Sin(spinX) + player.player_fleets[i].z * Math.Cos(spinX);
+                double screenYfl = player.player_fleets[i].y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
+                
+                float centerX = galaxyBitmap.Width / 2 / scaling;
+                float centerY = galaxyBitmap.Height / 2 / scaling;
+                
+                               
+                centerX += horizontal;  //move galaxy left/right
+                centerY += vertical;    //move galaxy up/down
+
+                if (e.X / scaling > (centerX + (int)screenXfl - 15/2) &&
+                    e.X / scaling < (centerX + (int)screenXfl + 15/2) &&
+                    e.Y / scaling > (centerY + (int)screenYfl - 15/2) &&
+                    e.Y / scaling < (centerY + (int)screenYfl + 15/2))
+                {
+                    selectFleet = i;
+
+                    statusStrip1.Items[0].Text = "Выбран " +(i+1)+" флот";
+                    //MessageBox.Show("вы выбрали "+(i+1)+" флот");
+                }
             }
         }
         //-------------------------------added
@@ -1255,8 +1398,14 @@ namespace GalaxyConquest
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void step_button_Click(object sender, EventArgs e)
         {
+
+            if (galaxy == null)
+            {
+                return;
+            }
+
             StarSystem s = galaxy.stars[star_selected];
 
 
@@ -1277,7 +1426,17 @@ namespace GalaxyConquest
             }
             else
             {
-                animationFleets(player.player_fleets[0], s);
+                for (int k=0;k<2;k++)
+                {
+                    if (player.player_fleets[k].s2 != null)
+                    {
+                        animationFleets(player.player_fleets[k], player.player_fleets[k].s2);
+                        player.player_fleets[k].s1 = player.player_fleets[k].s2;
+                        player.player_fleets[k].s2 = null;
+                    }
+                }
+                
+                //animationFleets(player.player_fleets[1], s);
             }
                                   
             for (int k = 0; k < galaxy.neutrals.Count; k++)
@@ -1290,6 +1449,21 @@ namespace GalaxyConquest
                     cf.ShowDialog();
                 }
             }
+
+            if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000)
+            {
+                tech_progressBar.Value += 1;
+            }
+
+            if (tech_progressBar.Value == tt.learning_tech_time)
+            {
+                Player.technologies.Add(tt.tech_clicked);
+                tech_progressBar.Value = 0;
+                tech_progressBar.Visible = false;
+                tech_label.Visible = false;
+                tt.tech_clicked = 1000;
+            }
+
             Redraw();
 
         }
@@ -1305,6 +1479,19 @@ namespace GalaxyConquest
             conquer_progressBar.Visible = false;
             conquer_progressBar.Value = conquer_progressBar.Minimum;
             button3.Visible = false;
+        }
+
+        private void sound_button_Click(object sender, EventArgs e)
+        {
+            if (waveOutDevice.PlaybackState == PlaybackState.Playing)
+            {
+                waveOutDevice.Pause();
+            }
+            else
+            {
+                waveOutDevice.Play();
+            }
+
         }
 
         

@@ -40,6 +40,8 @@
             this.MainMenuTechTree = new System.Windows.Forms.ToolStripMenuItem();
             this.dModelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDraw = new System.Windows.Forms.Button();
             this.buttonSpinLeft = new System.Windows.Forms.Button();
             this.buttonSpinRight = new System.Windows.Forms.Button();
@@ -56,14 +58,18 @@
             this.galaxyImage = new System.Windows.Forms.PictureBox();
             this.label_planets = new System.Windows.Forms.Label();
             this.textBox_planets = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.step_button = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.conquer_progressBar = new System.Windows.Forms.ProgressBar();
             this.button3 = new System.Windows.Forms.Button();
             this.tech_progressBar = new System.Windows.Forms.ProgressBar();
             this.tech_label = new System.Windows.Forms.Label();
+            this.sound_button = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.mainMenu.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -154,21 +160,35 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusSelectFleet,
+            this.toolStripStatusXY});
             this.statusStrip1.Location = new System.Drawing.Point(0, 484);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1028, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripStatusSelectFleet
+            // 
+            this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
+            // 
+            // toolStripStatusXY
+            // 
+            this.toolStripStatusXY.Name = "toolStripStatusXY";
+            this.toolStripStatusXY.Size = new System.Drawing.Size(90, 17);
+            this.toolStripStatusXY.Text = "toolStripStatusXY";
+            // 
             // buttonDraw
             // 
-            this.buttonDraw.Location = new System.Drawing.Point(12, 27);
+            this.buttonDraw.Location = new System.Drawing.Point(42, 4);
             this.buttonDraw.Name = "buttonDraw";
             this.buttonDraw.Size = new System.Drawing.Size(75, 23);
             this.buttonDraw.TabIndex = 3;
             this.buttonDraw.Text = "Draw";
             this.buttonDraw.UseVisualStyleBackColor = true;
-            this.buttonDraw.Visible = false;
             this.buttonDraw.Click += new System.EventHandler(this.buttonDraw_Click);
             // 
             // buttonSpinLeft
@@ -228,7 +248,7 @@
             this.buttonMoveDown.FlatAppearance.BorderSize = 0;
             this.buttonMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMoveDown.Image = global::GalaxyConquest.Properties.Resources.btn_arrowdown;
-            this.buttonMoveDown.Location = new System.Drawing.Point(38, 119);
+            this.buttonMoveDown.Location = new System.Drawing.Point(68, 84);
             this.buttonMoveDown.Name = "buttonMoveDown";
             this.buttonMoveDown.Size = new System.Drawing.Size(21, 21);
             this.buttonMoveDown.TabIndex = 13;
@@ -240,7 +260,7 @@
             this.buttonMoveRight.FlatAppearance.BorderSize = 0;
             this.buttonMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMoveRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.buttonMoveRight.Location = new System.Drawing.Point(56, 93);
+            this.buttonMoveRight.Location = new System.Drawing.Point(94, 57);
             this.buttonMoveRight.Name = "buttonMoveRight";
             this.buttonMoveRight.Size = new System.Drawing.Size(21, 21);
             this.buttonMoveRight.TabIndex = 12;
@@ -252,7 +272,7 @@
             this.buttonMoveLeft.FlatAppearance.BorderSize = 0;
             this.buttonMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMoveLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.buttonMoveLeft.Location = new System.Drawing.Point(20, 94);
+            this.buttonMoveLeft.Location = new System.Drawing.Point(42, 57);
             this.buttonMoveLeft.Name = "buttonMoveLeft";
             this.buttonMoveLeft.Size = new System.Drawing.Size(21, 21);
             this.buttonMoveLeft.TabIndex = 11;
@@ -264,7 +284,7 @@
             this.buttonScalingDown.FlatAppearance.BorderSize = 0;
             this.buttonScalingDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScalingDown.Image = global::GalaxyConquest.Properties.Resources.btn_minus;
-            this.buttonScalingDown.Location = new System.Drawing.Point(38, 207);
+            this.buttonScalingDown.Location = new System.Drawing.Point(68, 138);
             this.buttonScalingDown.Name = "buttonScalingDown";
             this.buttonScalingDown.Size = new System.Drawing.Size(21, 21);
             this.buttonScalingDown.TabIndex = 9;
@@ -276,7 +296,7 @@
             this.buttonScalingUp.FlatAppearance.BorderSize = 0;
             this.buttonScalingUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScalingUp.Image = global::GalaxyConquest.Properties.Resources.btn_plus;
-            this.buttonScalingUp.Location = new System.Drawing.Point(38, 165);
+            this.buttonScalingUp.Location = new System.Drawing.Point(68, 111);
             this.buttonScalingUp.Name = "buttonScalingUp";
             this.buttonScalingUp.Size = new System.Drawing.Size(21, 21);
             this.buttonScalingUp.TabIndex = 8;
@@ -314,7 +334,7 @@
             this.buttonMoveUp.FlatAppearance.BorderSize = 0;
             this.buttonMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMoveUp.Image = global::GalaxyConquest.Properties.Resources.btn_arrowup;
-            this.buttonMoveUp.Location = new System.Drawing.Point(38, 70);
+            this.buttonMoveUp.Location = new System.Drawing.Point(68, 33);
             this.buttonMoveUp.Name = "buttonMoveUp";
             this.buttonMoveUp.Size = new System.Drawing.Size(21, 21);
             this.buttonMoveUp.TabIndex = 10;
@@ -341,7 +361,7 @@
             // label_planets
             // 
             this.label_planets.AutoSize = true;
-            this.label_planets.Location = new System.Drawing.Point(6, 305);
+            this.label_planets.Location = new System.Drawing.Point(8, 203);
             this.label_planets.Name = "label_planets";
             this.label_planets.Size = new System.Drawing.Size(42, 13);
             this.label_planets.TabIndex = 16;
@@ -350,26 +370,26 @@
             // 
             // textBox_planets
             // 
-            this.textBox_planets.Location = new System.Drawing.Point(54, 302);
+            this.textBox_planets.Location = new System.Drawing.Point(56, 200);
             this.textBox_planets.Name = "textBox_planets";
             this.textBox_planets.ReadOnly = true;
             this.textBox_planets.Size = new System.Drawing.Size(39, 20);
             this.textBox_planets.TabIndex = 17;
             this.textBox_planets.Visible = false;
             // 
-            // button1
+            // step_button
             // 
-            this.button1.Location = new System.Drawing.Point(20, 254);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(84, 23);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "STEP";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.step_button.Location = new System.Drawing.Point(36, 165);
+            this.step_button.Name = "step_button";
+            this.step_button.Size = new System.Drawing.Size(84, 23);
+            this.step_button.TabIndex = 18;
+            this.step_button.Text = "STEP";
+            this.step_button.UseVisualStyleBackColor = true;
+            this.step_button.Click += new System.EventHandler(this.step_button_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(20, 340);
+            this.button2.Location = new System.Drawing.Point(18, 226);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(122, 23);
             this.button2.TabIndex = 19;
@@ -379,7 +399,7 @@
             // 
             // conquer_progressBar
             // 
-            this.conquer_progressBar.Location = new System.Drawing.Point(20, 369);
+            this.conquer_progressBar.Location = new System.Drawing.Point(28, 255);
             this.conquer_progressBar.Maximum = 5;
             this.conquer_progressBar.Name = "conquer_progressBar";
             this.conquer_progressBar.Size = new System.Drawing.Size(100, 23);
@@ -389,7 +409,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(20, 398);
+            this.button3.Location = new System.Drawing.Point(18, 284);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(122, 23);
             this.button3.TabIndex = 21;
@@ -417,32 +437,51 @@
             this.tech_label.TabIndex = 23;
             this.tech_label.Text = "label1";
             // 
+            // sound_button
+            // 
+            this.sound_button.Location = new System.Drawing.Point(40, 336);
+            this.sound_button.Name = "sound_button";
+            this.sound_button.Size = new System.Drawing.Size(75, 23);
+            this.sound_button.TabIndex = 24;
+            this.sound_button.Text = "mute on/off";
+            this.sound_button.UseVisualStyleBackColor = true;
+            this.sound_button.Click += new System.EventHandler(this.sound_button_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.buttonDraw);
+            this.panel1.Controls.Add(this.sound_button);
+            this.panel1.Controls.Add(this.buttonMoveUp);
+            this.panel1.Controls.Add(this.buttonMoveRight);
+            this.panel1.Controls.Add(this.buttonMoveLeft);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.buttonMoveDown);
+            this.panel1.Controls.Add(this.conquer_progressBar);
+            this.panel1.Controls.Add(this.buttonScalingUp);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.buttonScalingDown);
+            this.panel1.Controls.Add(this.textBox_planets);
+            this.panel1.Controls.Add(this.step_button);
+            this.panel1.Controls.Add(this.label_planets);
+            this.panel1.Location = new System.Drawing.Point(9, 27);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(159, 396);
+            this.panel1.TabIndex = 25;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 506);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tech_label);
             this.Controls.Add(this.tech_progressBar);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.conquer_progressBar);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox_planets);
-            this.Controls.Add(this.label_planets);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
-            this.Controls.Add(this.buttonMoveDown);
-            this.Controls.Add(this.buttonMoveRight);
-            this.Controls.Add(this.buttonMoveLeft);
-            this.Controls.Add(this.buttonMoveUp);
-            this.Controls.Add(this.buttonScalingDown);
-            this.Controls.Add(this.buttonScalingUp);
             this.Controls.Add(this.buttonSpinDown);
             this.Controls.Add(this.buttonSpinUp);
             this.Controls.Add(this.buttonSpinRight);
             this.Controls.Add(this.buttonSpinLeft);
-            this.Controls.Add(this.buttonDraw);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.galaxyImage);
             this.Controls.Add(this.mainMenu);
@@ -453,7 +492,11 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -489,12 +532,16 @@
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Label label_planets;
         private System.Windows.Forms.TextBox textBox_planets;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button step_button;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ProgressBar conquer_progressBar;
         private System.Windows.Forms.Button button3;
         public System.Windows.Forms.ProgressBar tech_progressBar;
         public System.Windows.Forms.Label tech_label;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusSelectFleet;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusXY;
+        private System.Windows.Forms.Button sound_button;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

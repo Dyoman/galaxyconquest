@@ -7,7 +7,7 @@ namespace GalaxyConquest
     [Serializable]
     public class Player
     {
-        
+
         public static List<int> technologies = new List<int>();
 
         public Color player_color;
@@ -17,8 +17,7 @@ namespace GalaxyConquest
         public Player()
         {
             technologies.Add(0);
-            technologies.Add(2);
-            
+
             player_stars = new List<StarSystem>();
             player_fleets = new List<Fleet>();
             player_color = Color.Red;

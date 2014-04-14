@@ -11,6 +11,7 @@ namespace GalaxyConquest
 
         public Bitmap TechTreeBitmap;
         public List<string> tech = new List<string>();
+        public List<string> tech_desc = new List<string>();
 
         public float scaling = 1f;
         public int horizontal = 0;
@@ -19,6 +20,7 @@ namespace GalaxyConquest
         public int mouseX;
         public int mouseY;
         public int tech_clicked = 1000;
+        public int learning_tech_time = 2;
 
         float centerX;
         float centerY;
@@ -28,14 +30,16 @@ namespace GalaxyConquest
         public Tech_Tree()
         {
             InitializeComponent();
-            
+
             StreamReader tech_str = new StreamReader("Tech.txt");
             int counter = 0;
             string line;
 
             while ((line = tech_str.ReadLine()) != null)
             {
-                tech.Add(line);
+                string[] words = line.Split('#');
+                tech.Add(words[0]);
+                //tech_desc.Add(words[1]);
                 counter++;
             }
             tech_str.Close();
@@ -73,7 +77,7 @@ namespace GalaxyConquest
                         br = Brushes.White;
                     }
                 }
-                
+
                 g.DrawString(tech[i], new Font("Arial", 10.0F), br,
                         new PointF(centerX, centerY + 300 - 30 * i));
             }
@@ -99,19 +103,19 @@ namespace GalaxyConquest
                 int dy = mouseY - e.Y;
                 if (dx > 0)
                 {
-                    horizontal -= (5+(int)(1/scaling)*10);
+                    horizontal -= (5 + (int)(1 / scaling) * 10);
                 }
                 if (dx < 0)
                 {
-                    horizontal += (5+(int)(1/scaling)*10);
+                    horizontal += (5 + (int)(1 / scaling) * 10);
                 }
                 if (dy > 0)
                 {
-                    vertical -= (5+(int)(1/scaling)*10);
+                    vertical -= (5 + (int)(1 / scaling) * 10);
                 }
                 if (dy < 0)
                 {
-                    vertical += (5+(int)(1/scaling)*10);
+                    vertical += (5 + (int)(1 / scaling) * 10);
                 }
                 mouseX = e.X;
                 mouseY = e.Y;
@@ -153,25 +157,69 @@ namespace GalaxyConquest
 
         private void TechTreeImage_MouseClick(object sender, MouseEventArgs e)
         {
-            for (int i=0; i < tech.Count; i++)
+            for (int i = 0; i < tech.Count; i++)
             {
                 if (e.X < centerX + 50 && e.X > centerX - 50
                 && e.Y < centerY + 300 - 30 * i + 10 && e.Y > centerY + 300 - 30 * i - 10)
                 {
-                    label1.Text = i.ToString();
+                    properties_tech_textBox.Text = tech_desc[i] + (i + 1).ToString();
                     tech_clicked = i;
+                    groupBox1.Visible = true;
+                    groupBox1.Text = tech[i];
                 }
             }
         }
 
+
         private void Tech_Tree_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (tech_clicked != 1000)
+
+        }
+
+        private void learn_tech_button_Click(object sender, EventArgs e)
+        {
+            bool tech_logic = true;
+            bool tech_logic2 = false;
+            for (int i = 0; i < Player.technologies.Count; i++)
             {
-                Form1.SelfRef.tech_label.Visible = true;
-                Form1.SelfRef.tech_progressBar.Visible = true;
-                Form1.SelfRef.tech_label.Text = tech[tech_clicked];
+                if (tech_clicked == Player.technologies[i])
+                {
+                    tech_logic = false;
+                    //break;
+                }
+                if (tech_clicked == Player.technologies[i] + 1)
+                {
+                    tech_logic2 = true;
+                    //break;
+                }
             }
+            if (tech_logic == false)
+            {
+                MessageBox.Show("You alrady have this tech!");
+            }
+            else
+            {
+
+                if (tech_logic2 == true)
+                {
+                    Form1.SelfRef.tech_label.Visible = true;
+                    Form1.SelfRef.tech_progressBar.Visible = true;
+                    Form1.SelfRef.tech_label.Text = tech[tech_clicked];
+                    Form1.SelfRef.tech_progressBar.Maximum = learning_tech_time;
+
+                    Redraw();
+                }
+                else
+                {
+                    MessageBox.Show("Learn previos tech before!");
+                }
+            }
+
+        }
+
+        private void Tech_Tree_VisibleChanged(object sender, EventArgs e)
+        {
+            Redraw();
         }
 
 

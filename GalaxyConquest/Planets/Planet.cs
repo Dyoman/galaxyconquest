@@ -9,14 +9,17 @@ namespace GalaxyConquest.StarSystems
     [Serializable]
     public class PLANET
     {
-     
+
         public Point CENTER = new Point(0, 0);
         public float SPEED = 0.01f;
         public float DISTANCE = 100f;
         public float ROT = 0f;
-        public float POPULATION = 1;
+        public float POPULATIONMAX = 0;
+        public double POPULATION = 0;
         public float MINERALS = 10;
         public float SIZE = 10;
+        public string OWNERNAME = "None";
+        public double PROFIT = 0;
         public Color CLR = Color.FromArgb(255, 255, 255);
 
         public String NAME = "DEFAULT";
@@ -44,6 +47,11 @@ namespace GalaxyConquest.StarSystems
             return P2;
         }
 
+        public double Inc(double p, double f)
+        {
+            p = p + (p / 2.75) - (p / (f * 200));
+            return p;
+        }
     }
 
 }

@@ -17,7 +17,7 @@ namespace GalaxyConquest.Tactics
         {
             return "\nЛёгкая ионная пушка\nВыстрелов: " + shotsleft;
         }
-        public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap)
+        public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)
         {
             System.Threading.Thread.Sleep(150);
             player.SoundLocation = @"Sounds/iongun2.wav";

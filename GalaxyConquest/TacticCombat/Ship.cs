@@ -43,15 +43,16 @@ namespace GalaxyConquest.Tactics
 
             }
         }
-        public int attack(combatMap cMap, int pointB, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap)
+        public int attack(combatMap cMap, int pointB, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref  Bitmap bmBackground, ref Bitmap bmFull)
         {
             int dmg;
+            int flag = 0;
 
             if (actionsLeft >= equippedWeapon.energyСonsumption && equippedWeapon.shotsleft > 0)
             {
                 equippedWeapon.drawAttack(cMap.boxes[boxId].xcenter + weaponPointX, cMap.boxes[boxId].ycenter + weaponPointY,
                     cMap.boxes[pointB].xcenter, cMap.boxes[pointB].ycenter,
-                    ref bmap, player, ref pictureMap
+                    ref bmap, player, ref pictureMap, ref bmBackground, ref bmFull
                 );
 
                 Random rand = new Random();
@@ -62,16 +63,29 @@ namespace GalaxyConquest.Tactics
                 equippedWeapon.shotsleft -= 1;
 
                 
-
                 if (cMap.boxes[pointB].spaceObject.currentHealth <= 0)
                 {
-                    cMap.boxes[pointB].spaceObject.player = -1;
-                    cMap.boxes[pointB].spaceObject.boxId = -1;
-                    cMap.boxes[pointB].spaceObject = null;
-                    return 1;
+                    cMap.clearBox(pointB, ref bmBackground, ref bmFull);
+                    flag = 1;
                 }
+                else
+                {
+                    cMap.boxes[pointB].spaceObject.statusRefresh(ref bmBackground, ref bmFull);
+                }
+
+                pictureMap.Image = bmFull;
+                pictureMap.Refresh();
             }
-            return 0;
+            return flag;
+        }
+        public override void statusRefresh(ref Bitmap bmBg, ref Bitmap bmFull)
+        {
+            Graphics g = Graphics.FromImage(bmFull);
+            Image bg = bmBg.Clone(new Rectangle(x - 25, y + 28, 50, 10), bmBg.PixelFormat);
+            g.DrawImage(bg, x - 25, y + 28);
+
+            g.DrawString(actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(x + 10, y + 26));
+            g.DrawString(currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(x - 20, y + 26));
         }
         public void placeShip(ref combatMap cMap)
         {

@@ -10,7 +10,7 @@ namespace GalaxyConquest.Tactics
     {
         public Bitmap combatBitmap;
 
-        combatMap cMap = new combatMap(12, 7);  // создаем поле боя с указанной размерностью
+        combatMap cMap = new combatMap(7, 5);  // создаем поле боя с указанной размерностью
         ObjectManager objectManager = new ObjectManager();
         int select = -1; 
         int activePlayer = 1; // ход 1-ого или 2-ого игрока
@@ -21,11 +21,19 @@ namespace GalaxyConquest.Tactics
         int redShipsCount;
         System.Media.SoundPlayer player = new System.Media.SoundPlayer();
 
+        Bitmap bmBackground;
+        Bitmap bmShips;
+        Bitmap bmFull;
+
+        List<SavedImage> savedImages = new List<SavedImage>();
+
+
         public int boxWidth;
         public int boxHeight;
         
         public CombatForm(Fleet left, Fleet right)
         {
+
             player.SoundLocation = @"Sounds/laser1.wav";
 
             allShips.Clear();
@@ -35,23 +43,6 @@ namespace GalaxyConquest.Tactics
 
             boxWidth = cMap.boxes[0].xpoint3 - cMap.boxes[0].xpoint2;
             boxHeight = cMap.boxes[0].ypoint6 - cMap.boxes[0].ypoint2;
-
-            /*
-            Ship penumbra = shipCreate(Constants.SCOUT, 1, Constants.LIGHT_ION);
-            allShips.Add(penumbra);
-            Ship holycow = shipCreate(Constants.SCOUT, 1, Constants.LIGHT_ION);
-            allShips.Add(holycow);
-            Ship leroy = shipCreate(Constants.ASSAULTER, 1, Constants.HEAVY_LASER);
-            allShips.Add(leroy);
-
-
-            Ship pandorum = shipCreate(Constants.SCOUT, 2, Constants.LIGHT_LASER);
-            allShips.Add(pandorum);
-            Ship exodar = shipCreate(Constants.SCOUT, 2, Constants.LIGHT_LASER);
-            allShips.Add(exodar);
-            Ship neveria = shipCreate(Constants.ASSAULTER, 2, Constants.HEAVY_LASER);
-            allShips.Add(neveria);    
-            */
 
             objectManager.meteorCreate(cMap);
 
@@ -68,43 +59,15 @@ namespace GalaxyConquest.Tactics
             InitializeComponent();
 
             shipsCount();
-            Draw();
 
-            
+            bmBackground = drawBackground();
+            bmShips = drawShips();
+            bmFull = imageRefrash(bmBackground, bmShips);
+
+            //Draw();
     
         }
 
-        /*  создание кораблей
-          
-        Ship shipCreate(int type, int p, int wpn)
-        {
-            Weapon weapon = null;
-            switch(wpn)
-            {
-                case Constants.LIGHT_LASER:
-                    weapon = new wpnLightLaser();
-                    break;
-                case Constants.HEAVY_LASER:
-                    weapon = new WpnHeavyLaser();
-                    break;
-                case Constants.LIGHT_ION:
-                    weapon = new WpnLightIon();
-                    break;
-            }
-            Ship newShip = null;
-            switch (type)
-            {
-                case Constants.SCOUT:
-                    newShip = new ShipScout(p, weapon);
-                    break;
-                case Constants.ASSAULTER:
-                    newShip = new ShipAssaulter(p, weapon);
-                    break;
-            }
-            return newShip;
-        } 
-
-        */
         public void shipsCount()
         {
             blueShipsCount = 0;
@@ -129,11 +92,205 @@ namespace GalaxyConquest.Tactics
             txtRedShips.Text = "" + redShipsCount;
         }
 
+
+        // ************************************
+        //     НОВАЯ ОТРИСОВКА 
+        // ************************************
+
+        // выводит на экран сетку и задний фон, возвращает эти два слоя склеенными
+        public Bitmap imageRefrash(Bitmap bm, Bitmap ships)
+        {
+            Bitmap tmpBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(tmpBitmap);
+
+            Image.FromHbitmap(bm.GetHbitmap());
+            Image.FromHbitmap(ships.GetHbitmap());
+
+            g.DrawImage(bm, 0, 0);
+            g.DrawImage(ships, 0, 0);
+
+            pictureMap.Image = tmpBitmap;
+            pictureMap.Refresh();
+
+            return tmpBitmap;
+        }
+
+        // отрисовывает рамку вокруг активного корабля и вражеских кораблей в зоне поражения
+        public void drawActiveShipFrames()
+        {
+            Bitmap tmpBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(bmFull);
+
+            Rectangle rect;  // размер части изображения, которую нужно сохранить
+            Image oldImage;  // часть изображения, которую нужно сохранить
+
+            rect = new Rectangle(
+                cMap.boxes[activeShip.boxId].xpoint1,
+                cMap.boxes[activeShip.boxId].ypoint2, 
+                cMap.boxes[activeShip.boxId].xpoint4 - cMap.boxes[activeShip.boxId].xpoint1, 
+                cMap.boxes[activeShip.boxId].ypoint6 - cMap.boxes[activeShip.boxId].ypoint2
+            );
+
+            oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
+            
+
+            savedImages.Add(new SavedImage(oldImage, cMap.boxes[activeShip.boxId].xpoint1, cMap.boxes[activeShip.boxId].ypoint2, activeShip));
+
+            /*
+            Point[] myPointArrayHex = {  //точки для отрисовки шестиугольника
+                        new Point(cMap.boxes[activeShip.boxId].xpoint1 + 2, cMap.boxes[activeShip.boxId].ypoint1),
+                        new Point(cMap.boxes[activeShip.boxId].xpoint2 + 2, cMap.boxes[activeShip.boxId].ypoint2 + 2),
+                        new Point(cMap.boxes[activeShip.boxId].xpoint3 - 2, cMap.boxes[activeShip.boxId].ypoint3 + 2),
+                        new Point(cMap.boxes[activeShip.boxId].xpoint4 - 2, cMap.boxes[activeShip.boxId].ypoint4),
+                        new Point(cMap.boxes[activeShip.boxId].xpoint5 - 2, cMap.boxes[activeShip.boxId].ypoint5 - 2),
+                        new Point(cMap.boxes[activeShip.boxId].xpoint6 + 2, cMap.boxes[activeShip.boxId].ypoint6 - 2)
+                };
+
+            Pen activeShipBoxPen = new Pen(Color.Purple, 4);
+
+            g.DrawPolygon(activeShipBoxPen, myPointArrayHex);
+            */
+
+            g.DrawEllipse(new Pen(Color.Yellow, 2), activeShip.x - 27, activeShip.y - 27, 54, 54);
+
+            for (int shipCount = 0; shipCount < allShips.Count; shipCount++ )
+            {
+                if(allShips[shipCount] != null && allShips[shipCount].player != activePlayer)
+                {
+                    double x1 = cMap.boxes[activeShip.boxId].x;
+                    double y1 = cMap.boxes[activeShip.boxId].y;
+                    double x2 = cMap.boxes[allShips[shipCount].boxId].x;
+                    double y2 = cMap.boxes[allShips[shipCount].boxId].y;
+                    double range;
+                    range = Math.Sqrt((x2 - x1) * (x2 - x1) + ((y2 - y1) * (y2 - y1)) * 0.35);
+
+                    if ((int)range <= activeShip.equippedWeapon.attackRange)
+                    {
+                        rect = new Rectangle(
+                            cMap.boxes[allShips[shipCount].boxId].xpoint1,
+                            cMap.boxes[allShips[shipCount].boxId].ypoint2,
+                            cMap.boxes[allShips[shipCount].boxId].xpoint4 - cMap.boxes[allShips[shipCount].boxId].xpoint1,
+                            cMap.boxes[allShips[shipCount].boxId].ypoint6 - cMap.boxes[allShips[shipCount].boxId].ypoint2
+                        );
+
+                        oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
+                        savedImages.Add(new SavedImage(oldImage, cMap.boxes[allShips[shipCount].boxId].xpoint1, cMap.boxes[allShips[shipCount].boxId].ypoint2, allShips[shipCount]));
+
+                        /*
+                        Point[] myPointArrayHex99 = {  //точки для отрисовки шестиугольника
+                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint1 + 2, cMap.boxes[allShips[shipCount].boxId].ypoint1),
+                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint2 + 2, cMap.boxes[allShips[shipCount].boxId].ypoint2 + 2),
+                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint3 - 2, cMap.boxes[allShips[shipCount].boxId].ypoint3 + 2),
+                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint4 - 2, cMap.boxes[allShips[shipCount].boxId].ypoint4),
+                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint5 - 2, cMap.boxes[allShips[shipCount].boxId].ypoint5 - 2),
+                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint6 + 2, cMap.boxes[allShips[shipCount].boxId].ypoint6 - 2)
+                                     };
+                        g.DrawPolygon(new Pen(Color.Red, 4), myPointArrayHex99);
+                         */
+                        g.DrawEllipse(new Pen(Color.Red, 2), allShips[shipCount].x - 27, allShips[shipCount].y - 27, 54, 54);
+                    }
+                }
+            }
+
+            pictureMap.Image = bmFull;
+            pictureMap.Refresh();
+
+        }
+
+        // восстанавливает сохраненные куски изображения
+        public void drawSavedImages()
+        {
+            if(savedImages != null)
+            {
+                for (int i = 0; i < savedImages.Count; i++)
+                {
+                    if (savedImages[i].spaceObject != null && savedImages[i].spaceObject.currentHealth >= 0)
+                    {
+                        Graphics g = Graphics.FromImage(bmFull);
+                        g.DrawImage(savedImages[i].img, savedImages[i].x, savedImages[i].y);
+                    }
+                   
+                }
+                savedImages.Clear();
+                pictureMap.Image = bmFull;
+                pictureMap.Refresh();
+            }
+        }
+
+        // возвращает битмап с задним фоном
+        public Bitmap drawBackground()
+        {
+            Bitmap tmpBitmap;
+            tmpBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            Graphics g = Graphics.FromImage(tmpBitmap);
+
+            g.DrawImage(Image.FromFile(@"Sprites/background/bg1.jpg"),
+                            new Rectangle(0,
+                                0,
+                                pictureMap.Width,
+                                pictureMap.Height)); 
+
+            Pen boxPen = new Pen(Color.Purple, 1);
+
+            for (int i = 0; i < cMap.boxes.Count; i++)
+            {
+                Point[] myPointArrayHex = {  //точки для отрисовки шестиугольника
+                        new Point(cMap.boxes[i].xpoint1, cMap.boxes[i].ypoint1),
+                        new Point(cMap.boxes[i].xpoint2, cMap.boxes[i].ypoint2),
+                        new Point(cMap.boxes[i].xpoint3, cMap.boxes[i].ypoint3),
+                        new Point(cMap.boxes[i].xpoint4, cMap.boxes[i].ypoint4),
+                        new Point(cMap.boxes[i].xpoint5, cMap.boxes[i].ypoint5),
+                        new Point(cMap.boxes[i].xpoint6, cMap.boxes[i].ypoint6)
+                };
+
+                g.DrawPolygon(boxPen, myPointArrayHex);
+            }
+
+            return tmpBitmap;
+        }
+
+        // возвращает битмап с кораблями и косм. объектами
+        public Bitmap drawShips()
+        {
+            Bitmap tmpBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            
+            Graphics g = Graphics.FromImage(tmpBitmap);
+
+            for (int i = 0; i < allShips.Count; i++ )
+            {
+                g.DrawImage(allShips[i].objectImg,
+                           new Rectangle(allShips[i].x - allShips[i].objectImg.Width / 2,
+                               allShips[i].y - allShips[i].objectImg.Height / 2,
+                               allShips[i].objectImg.Width,
+                               allShips[i].objectImg.Height));
+
+                g.DrawString(allShips[i].actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(allShips[i].x + 10, allShips[i].y + 26));
+                g.DrawString(allShips[i].currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(allShips[i].x - 20, allShips[i].y + 26));
+                //g.DrawString(allShips[i].actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(cMap.boxes[allShips[i].boxId].xpoint1 + 25, cMap.boxes[allShips[i].boxId].ypoint1 + 15));
+                //g.DrawString(allShips[i].currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[allShips[i].boxId].xpoint1 + 20, cMap.boxes[allShips[i].boxId].ypoint1 - 25));
+            }
+
+            for (int i = 0; i < objectManager.meteors.Count; i++ )
+            {
+                g.DrawImage(objectManager.meteors[i].objectImg,
+                    new Rectangle(objectManager.meteors[i].x - boxWidth / 6,
+                        objectManager.meteors[i].y - boxHeight / 6,
+                        boxWidth/3, 
+                        boxHeight/3));
+                g.DrawString(objectManager.meteors[i].currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[objectManager.meteors[i].boxId].xpoint1 + 20, cMap.boxes[objectManager.meteors[i].boxId].ypoint1 - 25));
+            }
+
+            return tmpBitmap;
+        }
+
+
+
         public void Draw()
         {
             combatBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(combatBitmap);
-            g.FillRectangle(Brushes.Black, 0, 0, combatBitmap.Width, combatBitmap.Height); //рисуем фон окна
+            //g.FillRectangle(Brushes.Black, 0, 0, combatBitmap.Width, combatBitmap.Height); //рисуем фон окна
 
             Pen generalPen;
             Pen redPen = new Pen(Color.Red, 3);
@@ -245,8 +402,7 @@ namespace GalaxyConquest.Tactics
                                 cMap.boxes[i].spaceObject.objectImg.Width,
                                 cMap.boxes[i].spaceObject.objectImg.Height));
 
-                        g.DrawString(cMap.boxes[i].spaceObject.actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(cMap.boxes[i].xpoint1 + 25, cMap.boxes[i].ypoint1 + 15));
-                        g.DrawString(cMap.boxes[i].spaceObject.currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[i].xpoint1 + 20, cMap.boxes[i].ypoint1 - 25));
+                        cMap.boxes[i].spaceObject.statusRefresh(ref bmBackground, ref bmFull);
                     }
 
                 }
@@ -546,14 +702,16 @@ namespace GalaxyConquest.Tactics
                         {
                             if (activePlayer == cMap.boxes[select].spaceObject.player)
                             {
+                                // отрисовываем рамку вокруг активного корабля
                                 boxDescription.Text = cMap.boxes[select].spaceObject.description();
                                 activeShip = (Ship)cMap.boxes[select].spaceObject;
 
-                                Draw();
+                                drawSavedImages();
+                                drawActiveShipFrames();
+
                             }
                             else
                             {
-                                Draw();
                                 boxDescription.Text = cMap.boxes[i].spaceObject.description();
                             }
                         }
@@ -569,9 +727,9 @@ namespace GalaxyConquest.Tactics
                         if (activeShip.actionsLeft > 0 && cMap.boxes[select].spaceObject == null)
                         {
                             int flag = 0;
-                            // перемещение на одну клетку вверх
                             int a = activeShip.boxId;
                             int x1, x2, y1, y2;
+
                             x1 = cMap.boxes[a].x;
                             x2 = cMap.boxes[select].x;
                             y1 = cMap.boxes[a].y;
@@ -594,13 +752,7 @@ namespace GalaxyConquest.Tactics
                                 for (int k = 0; k < 6; k++)
                                 {
                                     if( getBoxway(baseBox, baseBox, cMap.boxes[select], ref completeBoxWay, activeShip.actionsLeft, k) == 0)break;
-                                    //if(completeBoxWay.Count > 0) completeBoxWay.Remove(completeBoxWay[completeBoxWay.Count-1]); 
                                 }
-                                /*boxDescription.Text = "";
-                                for (int n = 0; n < completeBoxWay.Count; n++)
-                                {
-                                    boxDescription.Text = boxDescription.Text + "\n" + completeBoxWay[n].id;
-                                } */
 
                                 if (completeBoxWay.Count > 0) flag = 1;
                             }
@@ -609,7 +761,9 @@ namespace GalaxyConquest.Tactics
                             {
                                 double rotateAngle;
                                 int range, dx;
-                                
+                                Graphics g = Graphics.FromImage(bmFull);
+
+                                drawSavedImages();
 
                                 for (int cnt = 0; cnt < completeBoxWay.Count; cnt++)
                                 {
@@ -625,58 +779,109 @@ namespace GalaxyConquest.Tactics
 
                                     int stepLineRange = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + ((y2 - y1) * (y2 - y1)) * 0.35);
 
-                                    List<int> xold = new List<int>();
-                                    List<int> yold = new List<int>();
+                                    //List<int> xold = new List<int>();
+                                    //List<int> yold = new List<int>();
 
                                     // запоминаем координаты
+                                    /*
                                     for (int n = 0; n < activeShip.xpoints.Count; n++ )
                                     {
                                         xold.Add(activeShip.xpoints[n]);
                                         yold.Add(activeShip.ypoints[n]);
                                     }
+                                    */
 
                                     range = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-                                    //int step = 15 * stepLineRange;
+                                    
                                     dx = range / 15;
                                     int deltax;
                                     int deltay;
                                 
-
                                     deltax = (x2 - x1) / 15;
                                     deltay = (y2 - y1) / 15;
-                                
+
+                                    Image bg;
+                                    Rectangle rect;
+                                    
+                                    int halfBoxWidth = (cMap.boxes[0].xpoint3 - cMap.boxes[0].xpoint2)/2;
+                                    int halfBoxHeight = (cMap.boxes[0].ypoint6 - cMap.boxes[0].ypoint2)/2;
+
+                                    //закрашиваем выделенный корабль
+
+                                    rect = new Rectangle(
+                                            activeShip.x - halfBoxWidth,
+                                            activeShip.y - halfBoxHeight,
+                                            halfBoxWidth + halfBoxWidth,
+                                            halfBoxHeight + halfBoxHeight
+                                        );
+
+                                    bg = bmBackground.Clone(rect, bmBackground.PixelFormat);
+                                    g.DrawImage(bg, activeShip.x - halfBoxWidth, activeShip.y - halfBoxHeight);
+
+                                    pictureMap.Refresh();
+
+                                    //Thread.Sleep(250);
+
                                     for (int count1 = 0; count1 < range - 10; count1 += dx)
                                     {
-                                        /*
-                                        for (int j = 0; j < activeShip.xpoints.Count; j++)
-                                        {
-                                            activeShip.xpoints[j] += deltax;
-                                            activeShip.ypoints[j] += deltay;
-                                        } */
                                         activeShip.x += deltax;
                                         activeShip.y += deltay;
+
+                                        // запоминаем кусок картинки, на которой уже нет активного корабля
+                                        rect = new Rectangle(
+                                            activeShip.x - halfBoxWidth,
+                                            activeShip.y - halfBoxHeight,
+                                            halfBoxWidth + halfBoxWidth,
+                                            halfBoxHeight + halfBoxHeight
+                                        );
+
+                                        bg = bmFull.Clone(rect, bmFull.PixelFormat);
+                                      
+                                        // рисуем корабль по новым координатам
+
+                                        g.DrawImage(activeShip.objectImg,
+                                               new Rectangle(activeShip.x - activeShip.objectImg.Width / 2,
+                                                   activeShip.y - activeShip.objectImg.Height / 2,
+                                                   activeShip.objectImg.Width,
+                                                   activeShip.objectImg.Height)
+                                        );
+
+                                        pictureMap.Image = bmFull;
+                                        pictureMap.Refresh();
+
                                         Thread.Sleep(5);
-                                        Draw(); 
+                                        g.DrawImage(bg, activeShip.x - halfBoxWidth, activeShip.y - halfBoxHeight);
                                     } 
-                                    // восстанавливаем исходные координаты (смещение корабля по х и y, если быть точнее)
-                                    for (int n = 0; n < activeShip.xpoints.Count; n++)
-                                    {
-                                        activeShip.xpoints[n] = xold[n];
-                                        activeShip.ypoints[n] = yold[n];
-                                    }
 
                                     activeShip.moveShip(cMap, activeShip.boxId, completeBoxWay[cnt].id, 1);
+
+                                    g.DrawImage(activeShip.objectImg,
+                                        new Rectangle(activeShip.x - activeShip.objectImg.Width / 2, 
+                                            activeShip.y - activeShip.objectImg.Height / 2,
+                                            activeShip.objectImg.Width,
+                                            activeShip.objectImg.Height));
+
+                                    pictureMap.Refresh();
 
                                     //resetShipRotate(rotateAngle);
 
                                     boxDescription.Text = activeShip.description();
 
-                                    if (activeShip.actionsLeft == 0) activeShip = null;
-                                    Draw();
-
                                 }
+                                activeShip.statusRefresh(ref bmBackground, ref bmFull);
 
-                                break;
+                                if (activeShip.actionsLeft != 0)
+                                {
+                                    drawSavedImages();
+                                    drawActiveShipFrames();
+                                }
+                                else
+                                {
+                                    drawSavedImages();
+                                    activeShip = null;
+                                }
+                                
+                                //break;
                             }
                         }
                         else if (cMap.boxes[select].spaceObject != null)
@@ -686,7 +891,9 @@ namespace GalaxyConquest.Tactics
                                 boxDescription.Text = cMap.boxes[select].spaceObject.description();
                                 activeShip = (Ship)cMap.boxes[select].spaceObject;
 
-                                Draw();
+                                drawSavedImages();
+                                drawActiveShipFrames();
+                                //Draw();
                                 break;
                             }
 
@@ -724,26 +931,26 @@ namespace GalaxyConquest.Tactics
                                         angle = attackAngleSearch(targetx, targety);
 
                                         // поворачиваем корабль на угол angle
-                                        doShipRotate(angle);
+                                        //doShipRotate(angle);
                                         
                                         // отрисовка атаки
                                         Thread.Sleep(150);
 
-                                        if (activeShip.attack(cMap, cMap.boxes[select].id, ref combatBitmap, player, ref pictureMap) == 1)
+                                        if (activeShip.attack(cMap, cMap.boxes[select].id, ref combatBitmap, player, ref pictureMap, ref bmBackground, ref bmFull) == 1)
                                             shipsCount();
 
                                         boxDescription.Text = activeShip.description();
 
-                                        Draw();
+                                        //Draw();
 
                                         // возвращаем корабль в исходное положение
-                                        resetShipRotate(angle);
+                                        //resetShipRotate(angle);
 
                                         // убираем подсветку с корабля, если у него не осталось очков передвижений
                                         if (activeShip.actionsLeft == 0)
                                         {
                                             activeShip = null;
-                                            Draw();
+                                            //Draw();
                                         }
                                         flag = 0;
 
@@ -768,33 +975,42 @@ namespace GalaxyConquest.Tactics
 
             activeShip = null;
 
+            drawSavedImages();
+
             for (int count = 0; count < allShips.Count; count++)
             {
+                //if(allShips[count].player < 0)
+                //{
+                //    allShips.Remove(allShips[count]);
+                //}
                 allShips[count].refill();
+                allShips[count].statusRefresh(ref bmBackground, ref bmFull);
             }
 
-            /*  for (int i = 0; i < 15; i++)
-            {
-                int deltax = Math.Abs(cMap.getBoxByCoords(0, 0).xcenter - cMap.getBoxByCoords(1, 0).xcenter);
-                int deltay = Math.Abs(cMap.getBoxByCoords(0, 0).ycenter - cMap.getBoxByCoords(0, 1).ycenter);
-
-                for (int j = 0; j < meteors.Count; j++)
-                {
-                    if (meteors[j].xdirection == Constants.LEFT && meteors[j].ydirection == Constants.TOP)
-                    {
-                        
-                    }
-                }
-            } */
-
-            objectManager.moveMeteors(cMap);
+            objectManager.moveMeteors(cMap, bmBackground, bmFull);
             
             if(objectManager.whether2createMeteor() == 1)
             {
-                objectManager.meteorCreate(cMap);
+                Meteor newMeteor = objectManager.meteorCreate(cMap);
+
+                if (newMeteor != null)
+                {
+                    Graphics g = Graphics.FromImage(bmFull);
+                    g.DrawImage(newMeteor.objectImg,
+                        new Rectangle(newMeteor.x - boxWidth / 6,
+                            newMeteor.y - boxHeight / 6,
+                            boxWidth / 3,
+                            boxHeight / 3));
+                    g.DrawString(newMeteor.currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[newMeteor.boxId].xpoint1 + 20, cMap.boxes[newMeteor.boxId].ypoint1 - 25));
+                }
             }
 
-            Draw();
+
+            shipsCount();
+            
+            pictureMap.Refresh();
+            
+            //Draw();
         }
 
     }

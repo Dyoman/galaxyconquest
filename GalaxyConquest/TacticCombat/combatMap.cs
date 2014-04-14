@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace GalaxyConquest.Tactics
 {
@@ -39,7 +40,20 @@ namespace GalaxyConquest.Tactics
             }
             return targetBox;
         }
-       
+
+        public void clearBox(int box, ref Bitmap bmBg, ref Bitmap bmFull)
+        {
+            boxes[box].spaceObject.player = -1;
+            boxes[box].spaceObject.boxId = -1;
+            boxes[box].spaceObject = null;
+
+            Graphics g = Graphics.FromImage(bmFull);
+            Image bg = bmBg.Clone(new Rectangle(boxes[box].xpoint1 - 3, boxes[box].ypoint2 - 3,
+                boxes[box].xpoint4 - boxes[box].xpoint1 + 6,
+                boxes[box].ypoint5 - boxes[box].ypoint3 + 6), bmBg.PixelFormat);
+            g.DrawImage(bg, boxes[box].xpoint1 - 3, boxes[box].ypoint2 - 3);
+
+        }
         public void iniBasicPoints()
         {
             int xcoord = -1;

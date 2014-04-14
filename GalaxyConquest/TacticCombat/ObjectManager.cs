@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace GalaxyConquest.Tactics
 {
@@ -11,17 +12,17 @@ namespace GalaxyConquest.Tactics
         public List<Meteor> meteors = new List<Meteor>();
         public int meteorAppearanceChance = 20;
 
-        public void moveMeteors(combatMap cMap)
+        public void moveMeteors(combatMap cMap, Bitmap bmBackground, Bitmap bmFull)
         {
             for(int i = 0; i < meteors.Count; i++)
             {
                 if (meteors[i].boxId >= 0)
                 {
-                    meteors[i].move(cMap);
+                    meteors[i].move(cMap, bmBackground, bmFull);
                 }
             }
         }
-        public void meteorCreate(combatMap cMap)
+        public Meteor meteorCreate(combatMap cMap)
         {
             int flag = 1;
             int box4meteor = 0;
@@ -29,17 +30,15 @@ namespace GalaxyConquest.Tactics
             int meteorDmg;
             int xWay = Constants.RIGHT;
             int yWay = Constants.MEDIUM_TOP;
-            Meteor newMeteor;
+            Meteor newMeteor = null;
             int i;
 
             Random rand = new Random();
             int randomNum = rand.Next(1, 100) % 4;
             
-
             // место появления и направление полёта
             switch(randomNum)
             {
-                
                 case 1:  // left
                     box4meteor = rand.Next(0, cMap.height);
                     for (i = 0; i < 10; i++ )
@@ -93,7 +92,7 @@ namespace GalaxyConquest.Tactics
                         if (cMap.boxes[box4meteor].spaceObject != null)
                         {
                             box4meteor += 1;
-                            if (box4meteor > cMap.boxes.Count)
+                            if (box4meteor > cMap.boxes.Count - 1)
                                 box4meteor = cMap.boxes.Count - cMap.height;
                         }
                         else break;
@@ -139,10 +138,11 @@ namespace GalaxyConquest.Tactics
                 meteorHealth = rand.Next(1, 150);
                 meteorDmg = meteorHealth / 4;
 
-                newMeteor = new Meteor(box4meteor, meteorHealth, meteorDmg, xWay, yWay);
+                newMeteor = new Meteor(cMap, box4meteor, meteorHealth, meteorDmg, xWay, yWay);
                 meteors.Add(newMeteor);
                 cMap.boxes[box4meteor].spaceObject = newMeteor;
             }
+            return newMeteor;
             
         }
         public int whether2createMeteor()

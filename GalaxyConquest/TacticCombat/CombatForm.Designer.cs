@@ -103,7 +103,7 @@
             this.txtRedShips.Size = new System.Drawing.Size(0, 13);
             this.txtRedShips.TabIndex = 7;
             // 
-            // Form1
+            // CombatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -117,7 +117,7 @@
             this.Controls.Add(this.boxDescription);
             this.Controls.Add(this.pictureMap);
             this.MinimumSize = new System.Drawing.Size(640, 480);
-            this.Name = "Form1";
+            this.Name = "CombatForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.pictureMap)).EndInit();

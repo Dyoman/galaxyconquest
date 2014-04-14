@@ -43,8 +43,8 @@ namespace GalaxyConquest
         public SolidBrush GoldBrush = new SolidBrush(Color.Gold);
 
         public Player player = new Player();//contain player staff
-        IWavePlayer waveOutDevice;
-        AudioFileReader audioFileReader;
+        //IWavePlayer waveOutDevice;
+        //AudioFileReader audioFileReader;
         public static Form1 SelfRef         //need for get var from other classes
         {
             get;
@@ -58,10 +58,10 @@ namespace GalaxyConquest
             tech_progressBar.Visible = false;
             tech_label.Visible = false;
             this.MouseWheel += new MouseEventHandler(this_MouseWheel); // for resizing of galaxy at event change wheel mouse
-            waveOutDevice = new WaveOut();
-            audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
-            waveOutDevice.Init(audioFileReader);
-            waveOutDevice.Play();
+            //waveOutDevice = new WaveOut();
+            //audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
+            //waveOutDevice.Init(audioFileReader);
+            //waveOutDevice.Play();
         }
 
         public void PlayMusic()
@@ -264,15 +264,15 @@ namespace GalaxyConquest
             for (int i = 0; i < size; i++)
             {
                 int ship_type = (rand.Next(0, 100))%2;
-                int weapon_type = rand.Next(0, 2);
+                int weapon_type = (rand.Next(0, 100))%2;
 
                 Weapon weapon = null;
                 Ship ship = null;
                 switch (weapon_type)
                 {
                     case 0: weapon = new wpnLightLaser(); break;
-                    case 1: weapon = new WpnLightIon(); break;
-                    case 2: weapon = new WpnHeavyLaser(); break;
+                    //case 1: weapon = new WpnLightIon(); break;
+                    case 1: weapon = new WpnHeavyLaser(); break;
                 }
 
                 switch (ship_type)

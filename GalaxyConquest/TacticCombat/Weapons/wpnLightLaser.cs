@@ -22,14 +22,25 @@ namespace GalaxyConquest.Tactics
         {
             return "\nЛёгкий лазер\nВыстрелов: " + shotsleft; 
         }
-        public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap)
+        public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)
         {
             System.Threading.Thread.Sleep(150);
             player.SoundLocation = @"Sounds/laser1.wav";
 
-            Graphics g = Graphics.FromImage(bmap);
-            //Rectangle rect;  //  --- размер изображения
-            //Bitmap oldImage;  //  --- переменная, в которую его засунем
+            int xmin, ymin, xmax, ymax;
+
+            if (x <= targetx) { xmin = x - 5; xmax = targetx + 5; }
+            else { xmin = targetx - 5; xmax = x + 3; }
+            if (y <= targety) { ymin = y - 5; ymax = targety + 5; }
+            else { ymin = targety - 5; ymax = y + 5; }
+
+            Graphics g = Graphics.FromImage(bmFull);
+            Rectangle rect;
+            Image oldImage;
+
+            rect = new Rectangle(xmin, ymin, xmax - xmin, ymax - ymin);
+           
+            oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
 
             Pen laserPen1 = new Pen(Color.GreenYellow, 2);
 
@@ -43,7 +54,7 @@ namespace GalaxyConquest.Tactics
 
                 g.DrawLine(laserPen1, new Point(x, y), new Point(targetx + i, targety));
 
-                pictureMap.Image = bmap;
+                pictureMap.Image = bmFull;
                 pictureMap.Refresh();
 
                 // --- 3) отрисовываем тот битмам, который сохранили выше
@@ -52,6 +63,8 @@ namespace GalaxyConquest.Tactics
 
                 System.Threading.Thread.Sleep(35);
             }
+            g.DrawImage(oldImage, xmin, ymin);
+            pictureMap.Refresh();
         }
     }
 }

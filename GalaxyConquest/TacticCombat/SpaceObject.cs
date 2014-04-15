@@ -16,6 +16,7 @@ namespace GalaxyConquest.Tactics
         public int currentHealth;
         public abstract string description(); // описание объекта
         public Image objectImg;
+        public Image baseObjectImg;
         public int x;
         public int y;
 

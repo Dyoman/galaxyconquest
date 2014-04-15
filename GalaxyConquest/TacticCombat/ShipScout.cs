@@ -40,7 +40,9 @@ namespace GalaxyConquest.Tactics
 
             equippedWeapon = weapon;
 
+            
             objectImg = Image.FromFile(@"Sprites/ships/player/Bomber2.png");
+            baseObjectImg = objectImg;
 
             player = p;
             maxHealth = 50;
@@ -61,15 +63,17 @@ namespace GalaxyConquest.Tactics
      
             // лишние точки
 
-            
+            weaponR = 12;
+
             if (player != 1)
             {
-                shipRotate(180);
+                weaponR *= -1;
                 objectImg.RotateFlip(RotateFlipType.RotateNoneFlipX);
             }
             
-            weaponPointX = xpoints[2];
-            weaponPointY = ypoints[2];
+            
+            weaponPointX = weaponR;
+            weaponPointY = 0;
 
         }
     }

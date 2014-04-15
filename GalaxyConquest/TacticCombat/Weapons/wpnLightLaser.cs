@@ -47,19 +47,10 @@ namespace GalaxyConquest.Tactics
             player.Play();
             for (int i = 0; i < 5; i++)
             {
-                // --- 1) находим размер изображения
-                //rect = new Rectangle(0, 0, combatBitmap.Width, combatBitmap.Height); 
-                // --- 2) клонируем наш битмап
-                //oldImage = combatBitmap.Clone(rect, combatBitmap.PixelFormat);
-
                 g.DrawLine(laserPen1, new Point(x, y), new Point(targetx + i, targety));
 
                 pictureMap.Image = bmFull;
                 pictureMap.Refresh();
-
-                // --- 3) отрисовываем тот битмам, который сохранили выше
-                //g.DrawImage(oldImage, 0, 0);
-
 
                 System.Threading.Thread.Sleep(35);
             }

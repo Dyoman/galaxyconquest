@@ -41,6 +41,7 @@ namespace GalaxyConquest.Tactics
             objectType = Constants.SHIP;
             //Sprites\ships\player
             objectImg = Image.FromFile(@"Sprites/ships/player/Assaultboat.png");
+            baseObjectImg = objectImg;
 
             equippedWeapon = weapon;
 
@@ -65,15 +66,16 @@ namespace GalaxyConquest.Tactics
             ypoints.Add(10);
             ypoints.Add(15);
 
-            
+            weaponR = 22;
+
             if (player != 1)
             {
-                shipRotate(180);
+                weaponR *= -1;
                 objectImg.RotateFlip(RotateFlipType.RotateNoneFlipX);
-            } 
-            
-            weaponPointX = xpoints[2];
-            weaponPointY = ypoints[2];
+            }
+
+            weaponPointX = weaponR;
+            weaponPointY = 0;
         }
     }
 }

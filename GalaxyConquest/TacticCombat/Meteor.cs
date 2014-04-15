@@ -122,10 +122,10 @@ namespace GalaxyConquest.Tactics
         public override void statusRefresh(ref Bitmap bmBg, ref Bitmap bmFull)
         {
             Graphics g = Graphics.FromImage(bmFull);
-            Image bg = bmBg.Clone(new Rectangle(x - 15, y - 25, 30, 10), bmBg.PixelFormat);
-            g.DrawImage(bg, x - 15, y - 25);
+            Image bg = bmBg.Clone(new Rectangle(x - 30, y - 30, 40, 18), bmBg.PixelFormat);
+            g.DrawImage(bg, x - 30, y - 30);
 
-            g.DrawString(currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(x - 10, y - 20));
+            g.DrawString(currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(x - 10, y - 28));
         }
         public override string description()
         {

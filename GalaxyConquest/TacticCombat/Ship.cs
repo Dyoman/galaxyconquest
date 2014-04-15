@@ -15,6 +15,7 @@ namespace GalaxyConquest.Tactics
         public Weapon equippedWeapon;
         public int weaponPointX;
         public int weaponPointY;
+        public int weaponR;
 
         public override string description()
         {
@@ -62,7 +63,6 @@ namespace GalaxyConquest.Tactics
                 actionsLeft -= equippedWeapon.energyСonsumption;
                 equippedWeapon.shotsleft -= 1;
 
-                
                 if (cMap.boxes[pointB].spaceObject.currentHealth <= 0)
                 {
                     cMap.clearBox(pointB, ref bmBackground, ref bmFull);

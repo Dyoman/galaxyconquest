@@ -33,9 +33,6 @@ namespace GalaxyConquest.Tactics
         
         public CombatForm(Fleet left, Fleet right)
         {
-
-            player.SoundLocation = @"Sounds/laser1.wav";
-
             allShips.Clear();
 
             allShips.AddRange(left.ships);
@@ -64,8 +61,6 @@ namespace GalaxyConquest.Tactics
             bmShips = drawShips();
             bmFull = imageRefrash(bmBackground, bmShips);
 
-            //Draw();
-    
         }
 
         public void shipsCount()
@@ -133,23 +128,7 @@ namespace GalaxyConquest.Tactics
 
             oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
             
-
             savedImages.Add(new SavedImage(oldImage, cMap.boxes[activeShip.boxId].xpoint1, cMap.boxes[activeShip.boxId].ypoint2, activeShip));
-
-            /*
-            Point[] myPointArrayHex = {  //точки для отрисовки шестиугольника
-                        new Point(cMap.boxes[activeShip.boxId].xpoint1 + 2, cMap.boxes[activeShip.boxId].ypoint1),
-                        new Point(cMap.boxes[activeShip.boxId].xpoint2 + 2, cMap.boxes[activeShip.boxId].ypoint2 + 2),
-                        new Point(cMap.boxes[activeShip.boxId].xpoint3 - 2, cMap.boxes[activeShip.boxId].ypoint3 + 2),
-                        new Point(cMap.boxes[activeShip.boxId].xpoint4 - 2, cMap.boxes[activeShip.boxId].ypoint4),
-                        new Point(cMap.boxes[activeShip.boxId].xpoint5 - 2, cMap.boxes[activeShip.boxId].ypoint5 - 2),
-                        new Point(cMap.boxes[activeShip.boxId].xpoint6 + 2, cMap.boxes[activeShip.boxId].ypoint6 - 2)
-                };
-
-            Pen activeShipBoxPen = new Pen(Color.Purple, 4);
-
-            g.DrawPolygon(activeShipBoxPen, myPointArrayHex);
-            */
 
             g.DrawEllipse(new Pen(Color.Yellow, 2), activeShip.x - 27, activeShip.y - 27, 54, 54);
 
@@ -176,17 +155,6 @@ namespace GalaxyConquest.Tactics
                         oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
                         savedImages.Add(new SavedImage(oldImage, cMap.boxes[allShips[shipCount].boxId].xpoint1, cMap.boxes[allShips[shipCount].boxId].ypoint2, allShips[shipCount]));
 
-                        /*
-                        Point[] myPointArrayHex99 = {  //точки для отрисовки шестиугольника
-                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint1 + 2, cMap.boxes[allShips[shipCount].boxId].ypoint1),
-                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint2 + 2, cMap.boxes[allShips[shipCount].boxId].ypoint2 + 2),
-                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint3 - 2, cMap.boxes[allShips[shipCount].boxId].ypoint3 + 2),
-                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint4 - 2, cMap.boxes[allShips[shipCount].boxId].ypoint4),
-                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint5 - 2, cMap.boxes[allShips[shipCount].boxId].ypoint5 - 2),
-                                        new Point(cMap.boxes[allShips[shipCount].boxId].xpoint6 + 2, cMap.boxes[allShips[shipCount].boxId].ypoint6 - 2)
-                                     };
-                        g.DrawPolygon(new Pen(Color.Red, 4), myPointArrayHex99);
-                         */
                         g.DrawEllipse(new Pen(Color.Red, 2), allShips[shipCount].x - 27, allShips[shipCount].y - 27, 54, 54);
                     }
                 }
@@ -254,7 +222,7 @@ namespace GalaxyConquest.Tactics
         public Bitmap drawShips()
         {
             Bitmap tmpBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            
+
             Graphics g = Graphics.FromImage(tmpBitmap);
 
             for (int i = 0; i < allShips.Count; i++ )
@@ -266,9 +234,7 @@ namespace GalaxyConquest.Tactics
                                allShips[i].objectImg.Height));
 
                 g.DrawString(allShips[i].actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(allShips[i].x + 10, allShips[i].y + 26));
-                g.DrawString(allShips[i].currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(allShips[i].x - 20, allShips[i].y + 26));
-                //g.DrawString(allShips[i].actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(cMap.boxes[allShips[i].boxId].xpoint1 + 25, cMap.boxes[allShips[i].boxId].ypoint1 + 15));
-                //g.DrawString(allShips[i].currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[allShips[i].boxId].xpoint1 + 20, cMap.boxes[allShips[i].boxId].ypoint1 - 25));
+                g.DrawString(allShips[i].currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(allShips[i].x - 20, allShips[i].y + 26));               
             }
 
             for (int i = 0; i < objectManager.meteors.Count; i++ )
@@ -285,7 +251,7 @@ namespace GalaxyConquest.Tactics
         }
 
 
-
+        /*
         public void Draw()
         {
             combatBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -373,11 +339,11 @@ namespace GalaxyConquest.Tactics
                 }
                 else if (cMap.boxes[i].spaceObject != null && cMap.boxes[i].spaceObject.objectImg != null)
                 {
-                    /* if (cMap.boxes[i].spaceObject.player == 1)
+                     if (cMap.boxes[i].spaceObject.player == 1)
                         brush = blueBrush;
                     else if (cMap.boxes[i].spaceObject.player == 2)
                         brush = redBrush;
-                    else */
+                    else 
 
                     
                     
@@ -422,7 +388,7 @@ namespace GalaxyConquest.Tactics
                 pictureMap.Refresh();
             
         }
-
+        */
         public double attackAngleSearch(double targetx, double targety)
         {
             double angle = 0;
@@ -443,7 +409,7 @@ namespace GalaxyConquest.Tactics
                     {
                         angle = 90;
                     }
-                    if (activePlayer == 2) angle = -angle;
+                    if (activePlayer != 1) angle = -angle;
 
                 }
                 else // находим угол, на который нужно повернуть корабль (если он не равен 90 градусов)
@@ -466,7 +432,7 @@ namespace GalaxyConquest.Tactics
                         angle = angle - 180;
                     }
                 }
-                else if (activePlayer == 2)
+                else if (activePlayer != 1)
                 {
                     if (shipy == targety && shipx < targetx)
                     {
@@ -482,19 +448,83 @@ namespace GalaxyConquest.Tactics
                     }
                 }
 
-                if (angle > 150) angle = 150;
-                else if (angle < -150) angle = -150;
+                //if (angle > 150) angle = 150;
+                //else if (angle < -150) angle = -150;
             }
             return angle;
         }
 
-        public void doShipRotate(double angle)
+        
+        public void doShipRotate(double angle, int reset, bool saveImage)
         {
+            Graphics g;// = Graphics.FromImage(bmFull);
+            Rectangle rect = new Rectangle(
+                activeShip.x - boxWidth/2,
+                activeShip.y - boxHeight/2,
+                boxWidth,
+                boxHeight);
+            Image bg = bmBackground.Clone(rect, bmBackground.PixelFormat);
+            Bitmap tmpBitmap = new Bitmap(pictureMap.Width, pictureMap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            g = Graphics.FromImage(tmpBitmap);
+            g.FillRectangle(new SolidBrush(Color.FromArgb(0,255,255,255)), new Rectangle(0,0,pictureMap.Width,pictureMap.Height));
+            g = Graphics.FromImage(bmFull);
+
+            int xold = activeShip.x;
+            int yold = activeShip.y;
+
+            int sign;
+
+            if (angle >= 0) sign = 1;
+            else sign = -1;
+
             for (int count = 0; count < (int)Math.Abs(angle); count += 5)
             {
-                activeShip.shipRotate(5 * (int)(angle / Math.Abs(angle)));
-                Draw();
+                g.DrawImage(bg, rect);
+
+                g.TranslateTransform(xold, yold);
+                g.RotateTransform(sign * count * reset);
+
+                g.DrawImage(activeShip.objectImg, new Rectangle(
+                    0 - activeShip.objectImg.Width/2,
+                    0 - activeShip.objectImg.Height/2,
+                    activeShip.objectImg.Width,
+                    activeShip.objectImg.Height));
+
+                pictureMap.Refresh();
+
+                if(count + 5 >= (int)Math.Abs(angle))
+                {
+                    g = Graphics.FromImage(tmpBitmap);
+                    g.TranslateTransform(xold, yold);
+                    g.RotateTransform(sign * count * reset);
+                   
+                    g.DrawImage(activeShip.objectImg, new Rectangle(
+                            0 - activeShip.objectImg.Width / 2,
+                            0 - activeShip.objectImg.Height / 2,
+                            activeShip.objectImg.Width,
+                            activeShip.objectImg.Height));
+                    
+                    g = Graphics.FromImage(bmFull);
+
+                    
+
+                }
+                //angle = angle * Math.PI / 180;
+                
+                Thread.Sleep(15);
+                g.ResetTransform();
             }
+
+            if (activeShip.player == 1) sign = 1;
+            else sign = - 1;
+
+            activeShip.weaponPointX = (int)Math.Round((double)activeShip.weaponR * sign * Math.Cos(angle * reset * Math.PI / 180));
+            activeShip.weaponPointY = (int)Math.Round((double)activeShip.weaponR * sign * Math.Sin(angle * reset * Math.PI / 180));
+
+            if (reset == 1) activeShip.objectImg = tmpBitmap.Clone(rect, tmpBitmap.PixelFormat);
+            else activeShip.objectImg = activeShip.baseObjectImg;
+            if(!saveImage) g.DrawImage(bg, rect);
         }
         public void resetShipRotate(double angle)
         {
@@ -502,10 +532,10 @@ namespace GalaxyConquest.Tactics
             {
                 
                 activeShip.shipRotate(-5 * (int)(angle / Math.Abs(angle)));
-                Draw();
+                //Draw();
             }
         }
-
+        
         public int findDirection(int x1, int x2, int y1, int y2)
         {
             int direction = 0;
@@ -695,7 +725,6 @@ namespace GalaxyConquest.Tactics
                 {
                     select = i;
 
-
                     if (activeShip == null && cMap.boxes[select].spaceObject != null)
                     {
                         if (cMap.boxes[select].spaceObject != null)
@@ -742,7 +771,6 @@ namespace GalaxyConquest.Tactics
                             {
                                 // запоминаю начальную клетку
                                 Box baseBox = cMap.boxes[a];
-                                
                                 // определяю направление, в котором находится целевая клетка
                                 int direction = findDirection(x1,x2,y1,y2);
                                 // определяю приоритет
@@ -770,26 +798,12 @@ namespace GalaxyConquest.Tactics
                                     if (activeShip == null) break;
                                     rotateAngle = attackAngleSearch(cMap.boxes[completeBoxWay[cnt].id].x, cMap.boxes[completeBoxWay[cnt].id].y);
 
-                                    //doShipRotate(rotateAngle);
-
                                     x1 = cMap.boxes[activeShip.boxId].xcenter;
                                     y1 = cMap.boxes[activeShip.boxId].ycenter;
                                     x2 = cMap.boxes[completeBoxWay[cnt].id].xcenter;
                                     y2 = cMap.boxes[completeBoxWay[cnt].id].ycenter;
 
                                     int stepLineRange = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + ((y2 - y1) * (y2 - y1)) * 0.35);
-
-                                    //List<int> xold = new List<int>();
-                                    //List<int> yold = new List<int>();
-
-                                    // запоминаем координаты
-                                    /*
-                                    for (int n = 0; n < activeShip.xpoints.Count; n++ )
-                                    {
-                                        xold.Add(activeShip.xpoints[n]);
-                                        yold.Add(activeShip.ypoints[n]);
-                                    }
-                                    */
 
                                     range = (int)Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
                                     
@@ -819,8 +833,8 @@ namespace GalaxyConquest.Tactics
                                     g.DrawImage(bg, activeShip.x - halfBoxWidth, activeShip.y - halfBoxHeight);
 
                                     pictureMap.Refresh();
-
-                                    //Thread.Sleep(250);
+                                    
+                                    doShipRotate(rotateAngle, 1, false);
 
                                     for (int count1 = 0; count1 < range - 10; count1 += dx)
                                     {
@@ -863,8 +877,8 @@ namespace GalaxyConquest.Tactics
 
                                     pictureMap.Refresh();
 
-                                    //resetShipRotate(rotateAngle);
-
+                                    doShipRotate(rotateAngle, -1, true);
+                                    
                                     boxDescription.Text = activeShip.description();
 
                                 }
@@ -893,7 +907,6 @@ namespace GalaxyConquest.Tactics
 
                                 drawSavedImages();
                                 drawActiveShipFrames();
-                                //Draw();
                                 break;
                             }
 
@@ -930,9 +943,10 @@ namespace GalaxyConquest.Tactics
 
                                         angle = attackAngleSearch(targetx, targety);
 
-                                        // поворачиваем корабль на угол angle
-                                        //doShipRotate(angle);
                                         
+                                        doShipRotate(angle, 1, true);
+                                        
+
                                         // отрисовка атаки
                                         Thread.Sleep(150);
 
@@ -940,17 +954,22 @@ namespace GalaxyConquest.Tactics
                                             shipsCount();
 
                                         boxDescription.Text = activeShip.description();
-
+                                        pictureMap.Refresh();
                                         //Draw();
 
                                         // возвращаем корабль в исходное положение
-                                        //resetShipRotate(angle);
+                                        doShipRotate(angle, -1, false);
 
                                         // убираем подсветку с корабля, если у него не осталось очков передвижений
                                         if (activeShip.actionsLeft == 0)
                                         {
                                             activeShip = null;
                                             //Draw();
+                                        }
+                                        else
+                                        {
+                                            drawSavedImages();
+                                            drawActiveShipFrames();
                                         }
                                         flag = 0;
 
@@ -979,10 +998,6 @@ namespace GalaxyConquest.Tactics
 
             for (int count = 0; count < allShips.Count; count++)
             {
-                //if(allShips[count].player < 0)
-                //{
-                //    allShips.Remove(allShips[count]);
-                //}
                 allShips[count].refill();
                 allShips[count].statusRefresh(ref bmBackground, ref bmFull);
             }
@@ -1010,7 +1025,6 @@ namespace GalaxyConquest.Tactics
             
             pictureMap.Refresh();
             
-            //Draw();
         }
 
     }

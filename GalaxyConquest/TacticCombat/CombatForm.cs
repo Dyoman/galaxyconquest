@@ -790,6 +790,9 @@ namespace GalaxyConquest.Tactics
                                 double rotateAngle;
                                 int range, dx;
                                 Graphics g = Graphics.FromImage(bmFull);
+                                int actualDeltaX0, actualDeltaY0, actualDeltaX1, actualDeltaY1;
+                                actualDeltaX0 = actualDeltaY0 = 0;
+                                int savedAngle = 0;
 
                                 drawSavedImages();
 
@@ -833,8 +836,27 @@ namespace GalaxyConquest.Tactics
                                     g.DrawImage(bg, activeShip.x - halfBoxWidth, activeShip.y - halfBoxHeight);
 
                                     pictureMap.Refresh();
-                                    
-                                    doShipRotate(rotateAngle, 1, false);
+
+                                    actualDeltaX1 = completeBoxWay[cnt].x - cMap.boxes[activeShip.boxId].x;
+                                    actualDeltaY1 = completeBoxWay[cnt].y - cMap.boxes[activeShip.boxId].y;
+
+                                    if (cnt > 0)
+                                    {
+                                        if(actualDeltaX1 != actualDeltaX0 || actualDeltaY1 != actualDeltaY0)
+                                        {
+                                            if(savedAngle != 0)
+                                            {
+                                                doShipRotate(savedAngle, -1, false);
+                                            }
+                                            doShipRotate(rotateAngle, 1, false);
+                                            savedAngle = (int)rotateAngle;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        doShipRotate(rotateAngle, 1, false);
+                                        savedAngle = (int)rotateAngle;
+                                    }
 
                                     for (int count1 = 0; count1 < range - 10; count1 += dx)
                                     {
@@ -877,9 +899,15 @@ namespace GalaxyConquest.Tactics
 
                                     pictureMap.Refresh();
 
-                                    doShipRotate(rotateAngle, -1, true);
+                                    if (cnt == completeBoxWay.Count - 1)
+                                    {
+                                        doShipRotate(rotateAngle, -1, true);
+                                    }
                                     
                                     boxDescription.Text = activeShip.description();
+
+                                    actualDeltaX0 = actualDeltaX1;
+                                    actualDeltaY0 = actualDeltaY1;
 
                                 }
                                 activeShip.statusRefresh(ref bmBackground, ref bmFull);

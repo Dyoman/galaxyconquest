@@ -17,7 +17,7 @@ namespace GalaxyConquest
         public double x;
         public double y;
         public double z;
-
+        public double starDistanse;
         public Fleet()
         {
             ships = new List<Ship>();

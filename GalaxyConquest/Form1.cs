@@ -30,6 +30,7 @@ namespace GalaxyConquest
         public float dynamicStarSize = 5; //Variable for dynamic of fix scale 
         public int selectFleet = 0;
         public double starDistanse;
+        public double maxDistanse = 150;
         public double s2x, s2y, s2z;
         public double warp;
         public int star_selected;
@@ -535,7 +536,7 @@ namespace GalaxyConquest
                             g.DrawString(player.player_fleets[k].name, new Font("Arial", 8.0F), Brushes.White, new Point((int)centerX - 3 + (int)screenXfl + Convert.ToInt32(r * Math.Cos(-3 * ugol)), (int)centerY - 12 + (int)screenYfl + Convert.ToInt32(r * Math.Sin(-3 * ugol))));
                         }
 
-                        if (warp == 1 && k == selectFleet)
+                        if (warp == 1 && k == selectFleet && player.player_fleets[selectFleet].starDistanse == 0)
                         {
                             //pen.Color = Color.Red;
                             //pen.DashStyle = DashStyle.Dash; 
@@ -557,7 +558,7 @@ namespace GalaxyConquest
                             screens2Y = ts2Y;
                             screens2Z = ts2Z;
 
-                            if (starDistanse < 150)
+                            if (starDistanse < maxDistanse)
                             {
                                 pen.Color = Color.Lime;
                                 g.DrawString(dis, new Font("Arial", 8.0F), Brushes.Lime,
@@ -1273,12 +1274,13 @@ namespace GalaxyConquest
                     e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
                     e.Y / scaling < (centerY + (int)screenY + starSize / 2))
                 {
-                    if (conquer_progressBar.Visible == false)
+                    if ((conquer_progressBar.Visible == false)&&(player.player_fleets[selectFleet].starDistanse==0))
                     {
                         starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectFleet].s1.z), 2));
-                        if (starDistanse < 150)
+                        if (starDistanse < maxDistanse)
                         {
                             player.player_fleets[selectFleet].s2 = s;
+                            player.player_fleets[selectFleet].starDistanse = starDistanse;
                             star_selected = j;//store type for selected star
                         }
                     }
@@ -1383,16 +1385,16 @@ namespace GalaxyConquest
         {
 
         }
-        public void animationFleets(Fleet fl, StarSystem stars)
+        public void animationFleets(Fleet fl, StarSystem stars, int fly)
         {
             double x = stars.x - fl.x;
             double y = stars.y - fl.y;
             double z = stars.z - fl.z;
-            double dx = x / 100;
-            double dy = y / 100;
-            double dz = z / 100;
+            double dx = x / fl.starDistanse;
+            double dy = y / fl.starDistanse;
+            double dz = z / fl.starDistanse;
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < fly; i++)
             {
                 fl.x += dx;
                 fl.y += dy;
@@ -1433,11 +1435,22 @@ namespace GalaxyConquest
             {
                 for (int k = 0; k < 2; k++)
                 {
+                    int fly = 50;
                     if (player.player_fleets[k].s2 != null)
                     {
-                        animationFleets(player.player_fleets[k], player.player_fleets[k].s2);
-                        player.player_fleets[k].s1 = player.player_fleets[k].s2;
-                        player.player_fleets[k].s2 = null;
+                        if (player.player_fleets[k].starDistanse > 50)
+                        {
+                            animationFleets(player.player_fleets[k], player.player_fleets[k].s2, fly);
+                            player.player_fleets[k].starDistanse -= fly;
+                        }
+                        else
+                        {
+                            fly = (int)player.player_fleets[k].starDistanse;
+                            animationFleets(player.player_fleets[k], player.player_fleets[k].s2, fly);
+                            player.player_fleets[k].s1 = player.player_fleets[k].s2;
+                            player.player_fleets[k].s2 = null;
+                            player.player_fleets[k].starDistanse = 0;
+                        }
                     }
                 }
 
@@ -1446,7 +1459,7 @@ namespace GalaxyConquest
 
             for (int k = 0; k < galaxy.neutrals.Count; k++)
             {
-                if (galaxy.neutrals[k].s1 == s)
+                if (galaxy.neutrals[k].s1 == s && player.player_fleets[selectFleet].starDistanse==0)
                 {
                     //MessageBox.Show("Обнаружен противник!");
 

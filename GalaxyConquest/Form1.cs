@@ -1468,18 +1468,19 @@ namespace GalaxyConquest
                 }
             }
 
-            if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000)
+            if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000 && tt.subtech_clicked != 1000)
             {
                 tech_progressBar.Value += 1;
             }
 
             if (tech_progressBar.Value == tt.learning_tech_time)
             {
-                Player.technologies.Add(tt.tech_clicked);
+                Player.technologies.Add(new int[] { tt.tech_clicked, tt.subtech_clicked });
                 tech_progressBar.Value = 0;
                 tech_progressBar.Visible = false;
                 tech_label.Visible = false;
                 tt.tech_clicked = 1000;
+                tt.subtech_clicked = 1000;
             }
 
             Redraw();

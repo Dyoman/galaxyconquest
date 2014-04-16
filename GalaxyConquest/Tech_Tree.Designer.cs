@@ -81,7 +81,7 @@
             // 
             // learn_tech_button
             // 
-            this.learn_tech_button.Location = new System.Drawing.Point(12, 225);
+            this.learn_tech_button.Location = new System.Drawing.Point(9, 343);
             this.learn_tech_button.Name = "learn_tech_button";
             this.learn_tech_button.Size = new System.Drawing.Size(75, 23);
             this.learn_tech_button.TabIndex = 13;
@@ -97,15 +97,15 @@
             this.panel1.Controls.Add(this.buttonScalingDown);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(100, 260);
+            this.panel1.Size = new System.Drawing.Size(100, 369);
             this.panel1.TabIndex = 14;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.properties_tech_textBox);
-            this.groupBox1.Location = new System.Drawing.Point(3, 104);
+            this.groupBox1.Location = new System.Drawing.Point(3, 57);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(94, 100);
+            this.groupBox1.Size = new System.Drawing.Size(94, 280);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -113,10 +113,10 @@
             // 
             // properties_tech_textBox
             // 
-            this.properties_tech_textBox.Location = new System.Drawing.Point(6, 19);
+            this.properties_tech_textBox.Location = new System.Drawing.Point(6, 32);
             this.properties_tech_textBox.Multiline = true;
             this.properties_tech_textBox.Name = "properties_tech_textBox";
-            this.properties_tech_textBox.Size = new System.Drawing.Size(82, 75);
+            this.properties_tech_textBox.Size = new System.Drawing.Size(82, 242);
             this.properties_tech_textBox.TabIndex = 13;
             // 
             // Tech_Tree

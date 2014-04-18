@@ -94,8 +94,13 @@ namespace GalaxyConquest
                             br = Brushes.White;
                         }
                     }
-                    g.DrawString(tech_subtech[i][z], new Font("Arial", 10.0F), br,
-                                new PointF(centerX + 300 * z, centerY + 300 - 30 * i));
+                    float string_lenght = tech_subtech[i][z].Length * 9; 
+                    g.DrawString(tech_subtech[i][z], new Font("Consolas", 10.0F), br,
+                                new PointF(centerX + 300 * z - string_lenght/2.25f, centerY + 300 - 30 * i));
+
+                    g.DrawRectangle(Pens.AliceBlue, centerX + 300 * z - 
+                        (tech_subtech[i][z].Length * 1.25f) / 2 - string_lenght / 2.25f,
+                        centerY + 300 - 30 * i - 2, string_lenght, 20);
                 }
 
             }
@@ -177,12 +182,12 @@ namespace GalaxyConquest
         {
             for (int i = 0; i < tech_subtech.Count; i++)
             {
-                // (centerX + 300 * z, centerY + 300 - 30 * i));
-                if (e.Y < centerY + 300 - 30 * i + 10 && e.Y > centerY + 300 - 30 * i - 10)
+                // , centerY + 300 - 30 * i - 2, tech_subtech[i][z].Length * 9, 20);
+                if (e.Y < centerY + 300 - 30 * i - 2 + 20 && e.Y > centerY + 300 - 30 * i - 2)
                 {
                     for (int j = 0; j < tech_subtech[i].Count; j++)
                     {
-                        if (e.X < centerX + 300 * j + 50 && e.X > centerX + 300 * j - 50)
+                        if (e.X < centerX + 300 * j - (tech_subtech[i][j].Length * 1.25f) / 2 + tech_subtech[i][j].Length * 9 - tech_subtech[i][j].Length * 9 / 2.25f && e.X > centerX + 300 * j - (tech_subtech[i][j].Length * 1.25f) / 2 - tech_subtech[i][j].Length * 9 / 2.25f)
                         {
                             tech_clicked = i;
                             subtech_clicked = j;

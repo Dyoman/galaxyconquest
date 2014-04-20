@@ -846,25 +846,16 @@ namespace GalaxyConquest
         {
             Double x;
             Double y;
-            Double r;
-            Double t;
+            Double t = Math.PI;
             Double z = 0;
-            Double curve = 0;
             Random rand = new Random();
 
-            for (int j = 0; j < (starscount / 2); j++)
-            {
-                r = 0;
-                t = Math.PI;
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < starscount/2; i++)
                 {
-                    r += rand.Next(4) + 2 + galaxysize;
-                    curve = Math.Pow((r - 2), 2);
-                    curve = curve / 150;
 
-                    z = t + (rand.NextDouble() - 0.5) * Math.PI;
-                    x = 1.5 * curve * Math.Cos(z) + rand.Next(30) - 15;
-                    y = curve * Math.Sin(z) + rand.Next(30) - 15;
+                    x = 100 * (galaxysize + 1) * Math.Cos(t) + rand.Next(200);
+                    y = 100 * (galaxysize + 1) * Math.Sin(t) + rand.Next(200);
+                    z = 0;
 
                     if (rotate == true)
                     {
@@ -874,7 +865,7 @@ namespace GalaxyConquest
 
                     StarSystem s = new StarSystem();
                     s.x = x;
-                    s.y = -10.0 + rand.NextDouble() * 20.0;
+                    s.y = z;
                     s.z = y;
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = "";
@@ -917,9 +908,11 @@ namespace GalaxyConquest
                             break;
                     }
 
+                    generatePlanets(s);
                     galaxy.stars.Add(s);
+                    t += 0.2;
                 }
-            }
+            
         }
 
         public void generate_irregular_galaxy(bool rotate, int galaxysize, int starscount)//fix

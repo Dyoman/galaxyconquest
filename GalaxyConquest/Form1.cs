@@ -33,7 +33,7 @@ namespace GalaxyConquest
         public double maxDistanse = 150;
         public double s2x, s2y, s2z;
         public double warp;
-        public int star_selected;
+        public static int star_selected;
         public int mouseX;
         public int mouseY;
         //Brushes for stars colors
@@ -60,6 +60,7 @@ namespace GalaxyConquest
         public Form1()
         {
             InitializeComponent();
+            Buildings builds = new Buildings();
             SelfRef = this;
             tech_progressBar.Visible = false;
             tech_label.Visible = false;

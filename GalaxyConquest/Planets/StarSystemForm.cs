@@ -184,6 +184,16 @@ namespace GalaxyConquest.StarSystems
                     Populn.Text = s.PLN[j].POPULATION.ToString();
                     ownername.Text = s.PLN[j].OWNERNAME;
                     profit.Text = s.PLN[j].PROFIT.ToString();
+                    buildings.Text = "";//set buildings textbox to empty string
+                    for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
+                    {
+                        if (Player.buildings[z][0] == Form1.star_selected &&//check current starsystem
+                            Player.buildings[z][1] == j)                    //check current planet
+                        {
+                            //if ok add builds to text box
+                            buildings.AppendText(Buildings.buildings[Player.buildings[z][2]] + "\n");
+                        }
+                    }
                 }
             }
 

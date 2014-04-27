@@ -94,13 +94,13 @@ namespace GalaxyConquest
                             br = Brushes.White;
                         }
                     }
-                    float string_lenght = tech_subtech[i][z].Length * 9; 
-                    g.DrawString(tech_subtech[i][z], new Font("Consolas", 10.0F), br,
-                                new PointF(centerX + 300 * z - string_lenght/2.25f, centerY + 300 - 30 * i));
+                    Font fnt = new Font("Consolas", 10.0F);
+                    Size string_lenght = TextRenderer.MeasureText(tech_subtech[i][z], fnt);
+                    g.DrawString(tech_subtech[i][z], fnt, br,
+                                new PointF(centerX + 300 * z, centerY + 300 - 30 * i));
 
-                    g.DrawRectangle(Pens.AliceBlue, centerX + 300 * z - 
-                        (tech_subtech[i][z].Length * 1.25f) / 2 - string_lenght / 2.25f,
-                        centerY + 300 - 30 * i - 2, string_lenght, 20);
+                    g.DrawRectangle(Pens.AliceBlue, centerX + 300 * z-2,
+                        centerY + 300 - 30 * i-2, string_lenght.Width+2,string_lenght.Height+2);
                 }
 
             }
@@ -180,14 +180,18 @@ namespace GalaxyConquest
 
         private void TechTreeImage_MouseClick(object sender, MouseEventArgs e)
         {
+            Font fnt = new Font("Consolas", 10.0F);
+
             for (int i = 0; i < tech_subtech.Count; i++)
             {
-                // , centerY + 300 - 30 * i - 2, tech_subtech[i][z].Length * 9, 20);
-                if (e.Y < centerY + 300 - 30 * i - 2 + 20 && e.Y > centerY + 300 - 30 * i - 2)
-                {
                     for (int j = 0; j < tech_subtech[i].Count; j++)
                     {
-                        if (e.X < centerX + 300 * j - (tech_subtech[i][j].Length * 1.25f) / 2 + tech_subtech[i][j].Length * 9 - tech_subtech[i][j].Length * 9 / 2.25f && e.X > centerX + 300 * j - (tech_subtech[i][j].Length * 1.25f) / 2 - tech_subtech[i][j].Length * 9 / 2.25f)
+                        Size string_lenght = TextRenderer.MeasureText(tech_subtech[i][j], fnt);
+                        
+                        if (e.X < centerX + 300 * j + (string_lenght.Width + 2) && 
+                            e.X > centerX + 300 * j - 2 &&
+                            e.Y < centerY + 300 - 30 * i + (string_lenght.Height + 2) && 
+                            e.Y > centerY + 300 - 30 * i - 2)
                         {
                             tech_clicked = i;
                             subtech_clicked = j;
@@ -200,7 +204,7 @@ namespace GalaxyConquest
 
 
 
-                }
+                
             }
         }
 

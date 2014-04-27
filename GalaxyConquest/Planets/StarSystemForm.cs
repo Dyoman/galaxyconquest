@@ -67,8 +67,8 @@ namespace GalaxyConquest.StarSystems
                   } */
 
                 // int rad = (int)Math.Sqrt(s.PLN[i].GetPoint().X * s.PLN[i].GetPoint().X + s.PLN[i].GetPoint().Y * s.PLN[i].GetPoint().Y);
-                GBIT.DrawEllipse(new Pen(Color.White), s.PLN[0].GetPoint().X - s.PLN[i].DISTANCE, s.PLN[0].GetPoint().Y - s.PLN[i].DISTANCE, s.PLN[i].DISTANCE * 2, s.PLN[i].DISTANCE * 2);
-                RectangleF rect = new RectangleF(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
+               GBIT.DrawEllipse(new Pen(Color.White), s.PLN[0].GetPoint().X - s.PLN[i].DISTANCE, s.PLN[0].GetPoint().Y - s.PLN[i].DISTANCE, s.PLN[i].DISTANCE * 2, s.PLN[i].DISTANCE * 2);
+               // RectangleF rect = new RectangleF(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
 
                 /* for (int j = s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2; j < (s.PLN[i].GetPoint().X + (int)s.PLN[i].SIZE / 2) && j > (s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2); j++)
                  {
@@ -78,12 +78,12 @@ namespace GalaxyConquest.StarSystems
                      }
                  }
                  */
-                GBIT.DrawImage(newImage, rect);
+               // GBIT.DrawImage(newImage, rect);
 
                 //BIT.GetPixel(300, 300);
 
 
-                BIT.SetPixel(300, 300, Color.White);
+              //  BIT.SetPixel(300, 300, Color.White);
 
 
 
@@ -107,8 +107,8 @@ namespace GalaxyConquest.StarSystems
 
 
                 // /////////////////////////
-                //GBIT.FillEllipse(new SolidBrush(s.PLN[i].CLR), new Rectangle(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE));
-                // GBIT.DrawString(s.PLN[i].NAME, new Font("arial", 10), new SolidBrush(Color.White), new Point(s.PLN[i].GetPoint().X, s.PLN[i].GetPoint().Y));
+                GBIT.FillEllipse(new SolidBrush(s.PLN[i].CLR), new Rectangle(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE));
+                 GBIT.DrawString(s.PLN[i].NAME, new Font("arial", 10), new SolidBrush(Color.White), new Point(s.PLN[i].GetPoint().X, s.PLN[i].GetPoint().Y));
 
             }
             // int rad = (int)Math.Sqrt(PLN[4].GetPoint().X * PLN[4].GetPoint().X + PLN[4].GetPoint().Y * PLN[4].GetPoint().Y);
@@ -141,7 +141,7 @@ namespace GalaxyConquest.StarSystems
                     else
                         if (s.PLN[j].SIZE > 25)
                         {
-                            sizeText = "Large";
+                            sizeText = "Big";
                         }
 
 
@@ -153,17 +153,17 @@ namespace GalaxyConquest.StarSystems
                 else
                     if ((s.PLN[j].MINERALS > 0) && (s.PLN[j].MINERALS <= 10))
                     {
-                        mineralsText = "Meager";
+                        mineralsText = "Small";
                     }
                     else
                         if ((s.PLN[j].MINERALS > 10) && (s.PLN[j].MINERALS <= 20))
                         {
-                            mineralsText = "Saturated";
+                            mineralsText = "Medium";
                         }
                         else
                             if (s.PLN[j].MINERALS > 20)
                             {
-                                mineralsText = "Rich";
+                                mineralsText = "Big";
                             }
                 string playername111 = "Kolobok";
                 if (playername111 != "")
@@ -202,6 +202,15 @@ namespace GalaxyConquest.StarSystems
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void localstepbutton_Click(object sender, EventArgs e)
+        {
+            Random r = new Random(DateTime.Now.Millisecond);
+            for (int i = 0; i < s.PLN.Count; i++)
+            {
+                s.PLN[i].POPULATION = s.PLN[i].Inc(s.PLN[i].POPULATION, r.NextDouble());
+            }
         }
     }
 }

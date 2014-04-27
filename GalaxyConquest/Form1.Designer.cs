@@ -66,10 +66,14 @@
             this.tech_label = new System.Windows.Forms.Label();
             this.sound_button = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Credits = new System.Windows.Forms.Label();
+            this.CreditsStatus = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -94,7 +98,7 @@
             this.toolStripSeparator1,
             this.mainMenuQuit});
             this.mainMenuFile.Name = "mainMenuFile";
-            this.mainMenuFile.Size = new System.Drawing.Size(35, 20);
+            this.mainMenuFile.Size = new System.Drawing.Size(37, 20);
             this.mainMenuFile.Text = "File";
             // 
             // mainMenuNew
@@ -136,20 +140,20 @@
             this.mainMenuText.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainMenuAbout});
             this.mainMenuText.Name = "mainMenuText";
-            this.mainMenuText.Size = new System.Drawing.Size(40, 20);
+            this.mainMenuText.Size = new System.Drawing.Size(44, 20);
             this.mainMenuText.Text = "Help";
             // 
             // mainMenuAbout
             // 
             this.mainMenuAbout.Name = "mainMenuAbout";
-            this.mainMenuAbout.Size = new System.Drawing.Size(115, 22);
+            this.mainMenuAbout.Size = new System.Drawing.Size(116, 22);
             this.mainMenuAbout.Text = "About...";
             this.mainMenuAbout.Click += new System.EventHandler(this.mainMenuAbout_Click);
             // 
             // MainMenuTechTree
             // 
             this.MainMenuTechTree.Name = "MainMenuTechTree";
-            this.MainMenuTechTree.Size = new System.Drawing.Size(65, 20);
+            this.MainMenuTechTree.Size = new System.Drawing.Size(68, 20);
             this.MainMenuTechTree.Text = "Tech tree";
             this.MainMenuTechTree.Click += new System.EventHandler(this.MainMenuTechTree_Click);
             // 
@@ -172,13 +176,13 @@
             // toolStripStatusSelectFleet
             // 
             this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
-            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(140, 17);
             this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
             // 
             // toolStripStatusXY
             // 
             this.toolStripStatusXY.Name = "toolStripStatusXY";
-            this.toolStripStatusXY.Size = new System.Drawing.Size(90, 17);
+            this.toolStripStatusXY.Size = new System.Drawing.Size(98, 17);
             this.toolStripStatusXY.Text = "toolStripStatusXY";
             // 
             // buttonDraw
@@ -343,9 +347,9 @@
             // 
             // galaxyImage
             // 
-            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.galaxyImage.BackColor = System.Drawing.Color.Black;
             this.galaxyImage.Location = new System.Drawing.Point(174, 27);
             this.galaxyImage.Name = "galaxyImage";
@@ -468,11 +472,44 @@
             this.panel1.Size = new System.Drawing.Size(159, 396);
             this.panel1.TabIndex = 25;
             // 
+            // Credits
+            // 
+            this.Credits.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Credits.AutoSize = true;
+            this.Credits.Location = new System.Drawing.Point(15, 12);
+            this.Credits.Name = "Credits";
+            this.Credits.Size = new System.Drawing.Size(39, 13);
+            this.Credits.TabIndex = 40;
+            this.Credits.Text = "Credits";
+            // 
+            // CreditsStatus
+            // 
+            this.CreditsStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CreditsStatus.AutoSize = true;
+            this.CreditsStatus.Location = new System.Drawing.Point(96, 12);
+            this.CreditsStatus.Name = "CreditsStatus";
+            this.CreditsStatus.Size = new System.Drawing.Size(35, 13);
+            this.CreditsStatus.TabIndex = 41;
+            this.CreditsStatus.Text = "label1";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.groupBox1.Controls.Add(this.CreditsStatus);
+            this.groupBox1.Controls.Add(this.Credits);
+            this.groupBox1.Location = new System.Drawing.Point(500, 387);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(147, 35);
+            this.groupBox1.TabIndex = 42;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 506);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tech_label);
             this.Controls.Add(this.tech_progressBar);
@@ -497,6 +534,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -542,6 +581,9 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusXY;
         private System.Windows.Forms.Button sound_button;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label Credits;
+        private System.Windows.Forms.Label CreditsStatus;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

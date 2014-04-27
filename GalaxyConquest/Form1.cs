@@ -1408,8 +1408,24 @@ namespace GalaxyConquest
             }
 
             StarSystem s = galaxy.stars[star_selected];
+            Random r = new Random(DateTime.Now.Millisecond);
+            for (int j = 0; j < galaxy.stars.Count; j++)
+            {
+                for (int i = 0; i < galaxy.stars[j].planets_count; i++)
+                {
+                    galaxy.stars[j].PLN[i].POPULATION = galaxy.stars[j].PLN[i].Inc(galaxy.stars[j].PLN[i].POPULATION, r.NextDouble());
+                }
+            }
 
-
+            double credit = 0;
+            for (int j = 0; j < galaxy.stars.Count; j++)
+            {
+                for (int i = 0; i < galaxy.stars[j].planets_count; i++)
+                {
+                    credit = credit + galaxy.stars[j].PLN[i].PROFIT;
+                }
+            }
+            CreditsStatus.Text = credit.ToString();
 
             if (conquer_progressBar.Visible == true)
             {
@@ -1504,6 +1520,16 @@ namespace GalaxyConquest
             {
                 waveOutDevice.Play();
             }
+
+        }
+
+        private void buildings_TextChanged(object sender, EventArgs e)
+        { 
+            
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
         }
 

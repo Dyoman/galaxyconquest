@@ -32,6 +32,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buildings = new System.Windows.Forms.TextBox();
             this.labelPlanetMinerals = new System.Windows.Forms.Label();
             this.labelPlanetSize = new System.Windows.Forms.Label();
             this.Populn = new System.Windows.Forms.Label();
@@ -45,7 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.labelPlanetPopulation = new System.Windows.Forms.Label();
-            this.buildings = new System.Windows.Forms.TextBox();
+            this.localstepbutton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +69,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.localstepbutton);
             this.panel1.Controls.Add(this.buildings);
             this.panel1.Controls.Add(this.labelPlanetMinerals);
             this.panel1.Controls.Add(this.labelPlanetSize);
@@ -86,6 +88,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(162, 350);
             this.panel1.TabIndex = 1;
+            // 
+            // buildings
+            // 
+            this.buildings.Location = new System.Drawing.Point(16, 192);
+            this.buildings.Multiline = true;
+            this.buildings.Name = "buildings";
+            this.buildings.ReadOnly = true;
+            this.buildings.Size = new System.Drawing.Size(133, 114);
+            this.buildings.TabIndex = 38;
             // 
             // labelPlanetMinerals
             // 
@@ -205,14 +216,15 @@
             this.labelPlanetPopulation.TabIndex = 29;
             this.labelPlanetPopulation.Text = "label7";
             // 
-            // buildings
+            // localstepbutton
             // 
-            this.buildings.Location = new System.Drawing.Point(16, 192);
-            this.buildings.Multiline = true;
-            this.buildings.Name = "buildings";
-            this.buildings.ReadOnly = true;
-            this.buildings.Size = new System.Drawing.Size(133, 151);
-            this.buildings.TabIndex = 38;
+            this.localstepbutton.Location = new System.Drawing.Point(43, 312);
+            this.localstepbutton.Name = "localstepbutton";
+            this.localstepbutton.Size = new System.Drawing.Size(75, 23);
+            this.localstepbutton.TabIndex = 39;
+            this.localstepbutton.Text = "step";
+            this.localstepbutton.UseVisualStyleBackColor = true;
+            this.localstepbutton.Click += new System.EventHandler(this.localstepbutton_Click);
             // 
             // StarSystemForm
             // 
@@ -252,6 +264,7 @@
         private System.Windows.Forms.Label labelPlanetMinerals;
         private System.Windows.Forms.Label labelPlanetSize;
         private System.Windows.Forms.TextBox buildings;
+        private System.Windows.Forms.Button localstepbutton;
     }
 }
 

@@ -20,7 +20,7 @@ namespace GalaxyConquest
     {
         public ModelGalaxy galaxy;
         public Bitmap galaxyBitmap;
-
+        public double credit = 0;
         public double spinX = 0.0;
         public double spinY = Math.PI / 4;
 
@@ -1417,7 +1417,7 @@ namespace GalaxyConquest
                 }
             }
 
-            double credit = 0;
+           
             for (int j = 0; j < galaxy.stars.Count; j++)
             {
                 for (int i = 0; i < galaxy.stars[j].planets_count; i++)

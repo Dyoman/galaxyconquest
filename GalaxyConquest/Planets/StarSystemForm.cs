@@ -212,5 +212,15 @@ namespace GalaxyConquest.StarSystems
                 s.PLN[i].POPULATION = s.PLN[i].Inc(s.PLN[i].POPULATION, r.NextDouble());
             }
         }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void build_button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

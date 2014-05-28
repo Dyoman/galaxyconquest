@@ -43,19 +43,8 @@
             this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonDraw = new System.Windows.Forms.Button();
-            this.buttonSpinLeft = new System.Windows.Forms.Button();
-            this.buttonSpinRight = new System.Windows.Forms.Button();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.buttonMoveDown = new System.Windows.Forms.Button();
-            this.buttonMoveRight = new System.Windows.Forms.Button();
-            this.buttonMoveLeft = new System.Windows.Forms.Button();
-            this.buttonScalingDown = new System.Windows.Forms.Button();
-            this.buttonScalingUp = new System.Windows.Forms.Button();
-            this.buttonSpinDown = new System.Windows.Forms.Button();
-            this.buttonSpinUp = new System.Windows.Forms.Button();
-            this.buttonMoveUp = new System.Windows.Forms.Button();
-            this.galaxyImage = new System.Windows.Forms.PictureBox();
             this.label_planets = new System.Windows.Forms.Label();
             this.textBox_planets = new System.Windows.Forms.TextBox();
             this.step_button = new System.Windows.Forms.Button();
@@ -69,11 +58,23 @@
             this.Credits = new System.Windows.Forms.Label();
             this.CreditsStatus = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Shop_button = new System.Windows.Forms.Button();
+            this.buttonMoveUp = new System.Windows.Forms.Button();
+            this.buttonMoveRight = new System.Windows.Forms.Button();
+            this.buttonMoveLeft = new System.Windows.Forms.Button();
+            this.buttonMoveDown = new System.Windows.Forms.Button();
+            this.buttonScalingUp = new System.Windows.Forms.Button();
+            this.buttonScalingDown = new System.Windows.Forms.Button();
+            this.buttonSpinDown = new System.Windows.Forms.Button();
+            this.buttonSpinUp = new System.Windows.Forms.Button();
+            this.buttonSpinRight = new System.Windows.Forms.Button();
+            this.buttonSpinLeft = new System.Windows.Forms.Button();
+            this.galaxyImage = new System.Windows.Forms.PictureBox();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -98,39 +99,39 @@
             this.toolStripSeparator1,
             this.mainMenuQuit});
             this.mainMenuFile.Name = "mainMenuFile";
-            this.mainMenuFile.Size = new System.Drawing.Size(37, 20);
+            this.mainMenuFile.Size = new System.Drawing.Size(35, 20);
             this.mainMenuFile.Text = "File";
             // 
             // mainMenuNew
             // 
             this.mainMenuNew.Name = "mainMenuNew";
-            this.mainMenuNew.Size = new System.Drawing.Size(112, 22);
+            this.mainMenuNew.Size = new System.Drawing.Size(123, 22);
             this.mainMenuNew.Text = "New";
             this.mainMenuNew.Click += new System.EventHandler(this.mainMenuNew_Click);
             // 
             // mainMenuOpen
             // 
             this.mainMenuOpen.Name = "mainMenuOpen";
-            this.mainMenuOpen.Size = new System.Drawing.Size(112, 22);
+            this.mainMenuOpen.Size = new System.Drawing.Size(123, 22);
             this.mainMenuOpen.Text = "Open...";
             this.mainMenuOpen.Click += new System.EventHandler(this.mainMenuOpen_Click);
             // 
             // mainMenuSave
             // 
             this.mainMenuSave.Name = "mainMenuSave";
-            this.mainMenuSave.Size = new System.Drawing.Size(112, 22);
+            this.mainMenuSave.Size = new System.Drawing.Size(123, 22);
             this.mainMenuSave.Text = "Save...";
             this.mainMenuSave.Click += new System.EventHandler(this.mainMenuSave_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(120, 6);
             // 
             // mainMenuQuit
             // 
             this.mainMenuQuit.Name = "mainMenuQuit";
-            this.mainMenuQuit.Size = new System.Drawing.Size(112, 22);
+            this.mainMenuQuit.Size = new System.Drawing.Size(123, 22);
             this.mainMenuQuit.Text = "Quit";
             this.mainMenuQuit.Click += new System.EventHandler(this.mainMenuQuit_Click);
             // 
@@ -140,20 +141,20 @@
             this.mainMenuText.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainMenuAbout});
             this.mainMenuText.Name = "mainMenuText";
-            this.mainMenuText.Size = new System.Drawing.Size(44, 20);
+            this.mainMenuText.Size = new System.Drawing.Size(40, 20);
             this.mainMenuText.Text = "Help";
             // 
             // mainMenuAbout
             // 
             this.mainMenuAbout.Name = "mainMenuAbout";
-            this.mainMenuAbout.Size = new System.Drawing.Size(116, 22);
+            this.mainMenuAbout.Size = new System.Drawing.Size(126, 22);
             this.mainMenuAbout.Text = "About...";
             this.mainMenuAbout.Click += new System.EventHandler(this.mainMenuAbout_Click);
             // 
             // MainMenuTechTree
             // 
             this.MainMenuTechTree.Name = "MainMenuTechTree";
-            this.MainMenuTechTree.Size = new System.Drawing.Size(68, 20);
+            this.MainMenuTechTree.Size = new System.Drawing.Size(65, 20);
             this.MainMenuTechTree.Text = "Tech tree";
             this.MainMenuTechTree.Click += new System.EventHandler(this.MainMenuTechTree_Click);
             // 
@@ -176,13 +177,13 @@
             // toolStripStatusSelectFleet
             // 
             this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
-            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(140, 17);
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
             this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
             // 
             // toolStripStatusXY
             // 
             this.toolStripStatusXY.Name = "toolStripStatusXY";
-            this.toolStripStatusXY.Size = new System.Drawing.Size(98, 17);
+            this.toolStripStatusXY.Size = new System.Drawing.Size(90, 17);
             this.toolStripStatusXY.Text = "toolStripStatusXY";
             // 
             // buttonDraw
@@ -194,32 +195,6 @@
             this.buttonDraw.Text = "Draw";
             this.buttonDraw.UseVisualStyleBackColor = true;
             this.buttonDraw.Click += new System.EventHandler(this.buttonDraw_Click);
-            // 
-            // buttonSpinLeft
-            // 
-            this.buttonSpinLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinLeft.FlatAppearance.BorderSize = 0;
-            this.buttonSpinLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSpinLeft.Image = global::GalaxyConquest.Properties.Resources.btn_rotateright;
-            this.buttonSpinLeft.Location = new System.Drawing.Point(325, 429);
-            this.buttonSpinLeft.Name = "buttonSpinLeft";
-            this.buttonSpinLeft.Size = new System.Drawing.Size(91, 40);
-            this.buttonSpinLeft.TabIndex = 4;
-            this.buttonSpinLeft.UseVisualStyleBackColor = true;
-            this.buttonSpinLeft.Click += new System.EventHandler(this.buttonSpinLeft_Click);
-            // 
-            // buttonSpinRight
-            // 
-            this.buttonSpinRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinRight.FlatAppearance.BorderSize = 0;
-            this.buttonSpinRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSpinRight.Image = global::GalaxyConquest.Properties.Resources.btn_rotateleft;
-            this.buttonSpinRight.Location = new System.Drawing.Point(483, 429);
-            this.buttonSpinRight.Name = "buttonSpinRight";
-            this.buttonSpinRight.Size = new System.Drawing.Size(91, 40);
-            this.buttonSpinRight.TabIndex = 5;
-            this.buttonSpinRight.UseVisualStyleBackColor = true;
-            this.buttonSpinRight.Click += new System.EventHandler(this.buttonSpinRight_Click);
             // 
             // vScrollBar1
             // 
@@ -246,121 +221,6 @@
             this.hScrollBar1.SmallChange = 50;
             this.hScrollBar1.TabIndex = 14;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
-            // 
-            // buttonMoveDown
-            // 
-            this.buttonMoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMoveDown.Image = global::GalaxyConquest.Properties.Resources.btn_arrowdown;
-            this.buttonMoveDown.Location = new System.Drawing.Point(68, 84);
-            this.buttonMoveDown.Name = "buttonMoveDown";
-            this.buttonMoveDown.Size = new System.Drawing.Size(21, 21);
-            this.buttonMoveDown.TabIndex = 13;
-            this.buttonMoveDown.UseVisualStyleBackColor = true;
-            this.buttonMoveDown.Click += new System.EventHandler(this.buttonMoveDown_Click);
-            // 
-            // buttonMoveRight
-            // 
-            this.buttonMoveRight.FlatAppearance.BorderSize = 0;
-            this.buttonMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMoveRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.buttonMoveRight.Location = new System.Drawing.Point(94, 57);
-            this.buttonMoveRight.Name = "buttonMoveRight";
-            this.buttonMoveRight.Size = new System.Drawing.Size(21, 21);
-            this.buttonMoveRight.TabIndex = 12;
-            this.buttonMoveRight.UseVisualStyleBackColor = true;
-            this.buttonMoveRight.Click += new System.EventHandler(this.buttonMoveRight_Click);
-            // 
-            // buttonMoveLeft
-            // 
-            this.buttonMoveLeft.FlatAppearance.BorderSize = 0;
-            this.buttonMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMoveLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.buttonMoveLeft.Location = new System.Drawing.Point(42, 57);
-            this.buttonMoveLeft.Name = "buttonMoveLeft";
-            this.buttonMoveLeft.Size = new System.Drawing.Size(21, 21);
-            this.buttonMoveLeft.TabIndex = 11;
-            this.buttonMoveLeft.UseVisualStyleBackColor = true;
-            this.buttonMoveLeft.Click += new System.EventHandler(this.buttonMoveLeft_Click);
-            // 
-            // buttonScalingDown
-            // 
-            this.buttonScalingDown.FlatAppearance.BorderSize = 0;
-            this.buttonScalingDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonScalingDown.Image = global::GalaxyConquest.Properties.Resources.btn_minus;
-            this.buttonScalingDown.Location = new System.Drawing.Point(68, 138);
-            this.buttonScalingDown.Name = "buttonScalingDown";
-            this.buttonScalingDown.Size = new System.Drawing.Size(21, 21);
-            this.buttonScalingDown.TabIndex = 9;
-            this.buttonScalingDown.UseVisualStyleBackColor = true;
-            this.buttonScalingDown.Click += new System.EventHandler(this.buttonScalingDown_Click);
-            // 
-            // buttonScalingUp
-            // 
-            this.buttonScalingUp.FlatAppearance.BorderSize = 0;
-            this.buttonScalingUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonScalingUp.Image = global::GalaxyConquest.Properties.Resources.btn_plus;
-            this.buttonScalingUp.Location = new System.Drawing.Point(68, 111);
-            this.buttonScalingUp.Name = "buttonScalingUp";
-            this.buttonScalingUp.Size = new System.Drawing.Size(21, 21);
-            this.buttonScalingUp.TabIndex = 8;
-            this.buttonScalingUp.UseVisualStyleBackColor = true;
-            this.buttonScalingUp.Click += new System.EventHandler(this.buttonScalingUp_Click);
-            // 
-            // buttonSpinDown
-            // 
-            this.buttonSpinDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinDown.FlatAppearance.BorderSize = 0;
-            this.buttonSpinDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSpinDown.Image = global::GalaxyConquest.Properties.Resources.btn_spindown;
-            this.buttonSpinDown.Location = new System.Drawing.Point(968, 165);
-            this.buttonSpinDown.Name = "buttonSpinDown";
-            this.buttonSpinDown.Size = new System.Drawing.Size(40, 91);
-            this.buttonSpinDown.TabIndex = 7;
-            this.buttonSpinDown.UseVisualStyleBackColor = true;
-            this.buttonSpinDown.Click += new System.EventHandler(this.buttonSpinDown_Click);
-            // 
-            // buttonSpinUp
-            // 
-            this.buttonSpinUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSpinUp.FlatAppearance.BorderSize = 0;
-            this.buttonSpinUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSpinUp.Image = global::GalaxyConquest.Properties.Resources.btn_spinup;
-            this.buttonSpinUp.Location = new System.Drawing.Point(969, 49);
-            this.buttonSpinUp.Name = "buttonSpinUp";
-            this.buttonSpinUp.Size = new System.Drawing.Size(40, 91);
-            this.buttonSpinUp.TabIndex = 6;
-            this.buttonSpinUp.UseVisualStyleBackColor = true;
-            this.buttonSpinUp.Click += new System.EventHandler(this.buttonSpinUp_Click);
-            // 
-            // buttonMoveUp
-            // 
-            this.buttonMoveUp.FlatAppearance.BorderSize = 0;
-            this.buttonMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMoveUp.Image = global::GalaxyConquest.Properties.Resources.btn_arrowup;
-            this.buttonMoveUp.Location = new System.Drawing.Point(68, 33);
-            this.buttonMoveUp.Name = "buttonMoveUp";
-            this.buttonMoveUp.Size = new System.Drawing.Size(21, 21);
-            this.buttonMoveUp.TabIndex = 10;
-            this.buttonMoveUp.UseVisualStyleBackColor = true;
-            this.buttonMoveUp.Click += new System.EventHandler(this.buttonMoveUp_Click);
-            // 
-            // galaxyImage
-            // 
-            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.galaxyImage.BackColor = System.Drawing.Color.Black;
-            this.galaxyImage.Location = new System.Drawing.Point(174, 27);
-            this.galaxyImage.Name = "galaxyImage";
-            this.galaxyImage.Size = new System.Drawing.Size(788, 396);
-            this.galaxyImage.TabIndex = 1;
-            this.galaxyImage.TabStop = false;
-            this.galaxyImage.Click += new System.EventHandler(this.galaxyImage_Click);
-            this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
-            this.galaxyImage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDoubleClick);
-            this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
-            this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
             // 
             // label_planets
             // 
@@ -453,6 +313,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.Shop_button);
             this.panel1.Controls.Add(this.buttonDraw);
             this.panel1.Controls.Add(this.sound_button);
             this.panel1.Controls.Add(this.buttonMoveUp);
@@ -504,6 +365,157 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // Shop_button
+            // 
+            this.Shop_button.Location = new System.Drawing.Point(40, 367);
+            this.Shop_button.Name = "Shop_button";
+            this.Shop_button.Size = new System.Drawing.Size(75, 23);
+            this.Shop_button.TabIndex = 25;
+            this.Shop_button.Text = "Магазин";
+            this.Shop_button.UseVisualStyleBackColor = true;
+            this.Shop_button.Click += new System.EventHandler(this.Shop_button_Click);
+            // 
+            // buttonMoveUp
+            // 
+            this.buttonMoveUp.FlatAppearance.BorderSize = 0;
+            this.buttonMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMoveUp.Image = global::GalaxyConquest.Properties.Resources.btn_arrowup;
+            this.buttonMoveUp.Location = new System.Drawing.Point(68, 33);
+            this.buttonMoveUp.Name = "buttonMoveUp";
+            this.buttonMoveUp.Size = new System.Drawing.Size(21, 21);
+            this.buttonMoveUp.TabIndex = 10;
+            this.buttonMoveUp.UseVisualStyleBackColor = true;
+            this.buttonMoveUp.Click += new System.EventHandler(this.buttonMoveUp_Click);
+            // 
+            // buttonMoveRight
+            // 
+            this.buttonMoveRight.FlatAppearance.BorderSize = 0;
+            this.buttonMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMoveRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
+            this.buttonMoveRight.Location = new System.Drawing.Point(94, 57);
+            this.buttonMoveRight.Name = "buttonMoveRight";
+            this.buttonMoveRight.Size = new System.Drawing.Size(21, 21);
+            this.buttonMoveRight.TabIndex = 12;
+            this.buttonMoveRight.UseVisualStyleBackColor = true;
+            this.buttonMoveRight.Click += new System.EventHandler(this.buttonMoveRight_Click);
+            // 
+            // buttonMoveLeft
+            // 
+            this.buttonMoveLeft.FlatAppearance.BorderSize = 0;
+            this.buttonMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMoveLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
+            this.buttonMoveLeft.Location = new System.Drawing.Point(42, 57);
+            this.buttonMoveLeft.Name = "buttonMoveLeft";
+            this.buttonMoveLeft.Size = new System.Drawing.Size(21, 21);
+            this.buttonMoveLeft.TabIndex = 11;
+            this.buttonMoveLeft.UseVisualStyleBackColor = true;
+            this.buttonMoveLeft.Click += new System.EventHandler(this.buttonMoveLeft_Click);
+            // 
+            // buttonMoveDown
+            // 
+            this.buttonMoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMoveDown.Image = global::GalaxyConquest.Properties.Resources.btn_arrowdown;
+            this.buttonMoveDown.Location = new System.Drawing.Point(68, 84);
+            this.buttonMoveDown.Name = "buttonMoveDown";
+            this.buttonMoveDown.Size = new System.Drawing.Size(21, 21);
+            this.buttonMoveDown.TabIndex = 13;
+            this.buttonMoveDown.UseVisualStyleBackColor = true;
+            this.buttonMoveDown.Click += new System.EventHandler(this.buttonMoveDown_Click);
+            // 
+            // buttonScalingUp
+            // 
+            this.buttonScalingUp.FlatAppearance.BorderSize = 0;
+            this.buttonScalingUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonScalingUp.Image = global::GalaxyConquest.Properties.Resources.btn_plus;
+            this.buttonScalingUp.Location = new System.Drawing.Point(68, 111);
+            this.buttonScalingUp.Name = "buttonScalingUp";
+            this.buttonScalingUp.Size = new System.Drawing.Size(21, 21);
+            this.buttonScalingUp.TabIndex = 8;
+            this.buttonScalingUp.UseVisualStyleBackColor = true;
+            this.buttonScalingUp.Click += new System.EventHandler(this.buttonScalingUp_Click);
+            // 
+            // buttonScalingDown
+            // 
+            this.buttonScalingDown.FlatAppearance.BorderSize = 0;
+            this.buttonScalingDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonScalingDown.Image = global::GalaxyConquest.Properties.Resources.btn_minus;
+            this.buttonScalingDown.Location = new System.Drawing.Point(68, 138);
+            this.buttonScalingDown.Name = "buttonScalingDown";
+            this.buttonScalingDown.Size = new System.Drawing.Size(21, 21);
+            this.buttonScalingDown.TabIndex = 9;
+            this.buttonScalingDown.UseVisualStyleBackColor = true;
+            this.buttonScalingDown.Click += new System.EventHandler(this.buttonScalingDown_Click);
+            // 
+            // buttonSpinDown
+            // 
+            this.buttonSpinDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSpinDown.FlatAppearance.BorderSize = 0;
+            this.buttonSpinDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinDown.Image = global::GalaxyConquest.Properties.Resources.btn_spindown;
+            this.buttonSpinDown.Location = new System.Drawing.Point(968, 165);
+            this.buttonSpinDown.Name = "buttonSpinDown";
+            this.buttonSpinDown.Size = new System.Drawing.Size(40, 91);
+            this.buttonSpinDown.TabIndex = 7;
+            this.buttonSpinDown.UseVisualStyleBackColor = true;
+            this.buttonSpinDown.Click += new System.EventHandler(this.buttonSpinDown_Click);
+            // 
+            // buttonSpinUp
+            // 
+            this.buttonSpinUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSpinUp.FlatAppearance.BorderSize = 0;
+            this.buttonSpinUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinUp.Image = global::GalaxyConquest.Properties.Resources.btn_spinup;
+            this.buttonSpinUp.Location = new System.Drawing.Point(969, 49);
+            this.buttonSpinUp.Name = "buttonSpinUp";
+            this.buttonSpinUp.Size = new System.Drawing.Size(40, 91);
+            this.buttonSpinUp.TabIndex = 6;
+            this.buttonSpinUp.UseVisualStyleBackColor = true;
+            this.buttonSpinUp.Click += new System.EventHandler(this.buttonSpinUp_Click);
+            // 
+            // buttonSpinRight
+            // 
+            this.buttonSpinRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSpinRight.FlatAppearance.BorderSize = 0;
+            this.buttonSpinRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinRight.Image = global::GalaxyConquest.Properties.Resources.btn_rotateleft;
+            this.buttonSpinRight.Location = new System.Drawing.Point(483, 429);
+            this.buttonSpinRight.Name = "buttonSpinRight";
+            this.buttonSpinRight.Size = new System.Drawing.Size(91, 40);
+            this.buttonSpinRight.TabIndex = 5;
+            this.buttonSpinRight.UseVisualStyleBackColor = true;
+            this.buttonSpinRight.Click += new System.EventHandler(this.buttonSpinRight_Click);
+            // 
+            // buttonSpinLeft
+            // 
+            this.buttonSpinLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSpinLeft.FlatAppearance.BorderSize = 0;
+            this.buttonSpinLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSpinLeft.Image = global::GalaxyConquest.Properties.Resources.btn_rotateright;
+            this.buttonSpinLeft.Location = new System.Drawing.Point(325, 429);
+            this.buttonSpinLeft.Name = "buttonSpinLeft";
+            this.buttonSpinLeft.Size = new System.Drawing.Size(91, 40);
+            this.buttonSpinLeft.TabIndex = 4;
+            this.buttonSpinLeft.UseVisualStyleBackColor = true;
+            this.buttonSpinLeft.Click += new System.EventHandler(this.buttonSpinLeft_Click);
+            // 
+            // galaxyImage
+            // 
+            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyImage.BackColor = System.Drawing.Color.Black;
+            this.galaxyImage.Location = new System.Drawing.Point(174, 27);
+            this.galaxyImage.Name = "galaxyImage";
+            this.galaxyImage.Size = new System.Drawing.Size(788, 396);
+            this.galaxyImage.TabIndex = 1;
+            this.galaxyImage.TabStop = false;
+            this.galaxyImage.Click += new System.EventHandler(this.galaxyImage_Click);
+            this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
+            this.galaxyImage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDoubleClick);
+            this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
+            this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -531,11 +543,11 @@
             this.mainMenu.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -584,6 +596,7 @@
         private System.Windows.Forms.Label Credits;
         private System.Windows.Forms.Label CreditsStatus;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button Shop_button;
     }
 }
 

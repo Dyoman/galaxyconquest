@@ -47,6 +47,8 @@ namespace GalaxyConquest
         public SolidBrush SuperWhiteBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 0));
         public SolidBrush GoldBrush = new SolidBrush(Color.Gold);
 
+        public static Shop shop_form;
+
         public Player player = new Player();//contain player staff
         public Tech_Tree tt = new Tech_Tree();
         IWavePlayer waveOutDevice;
@@ -60,6 +62,7 @@ namespace GalaxyConquest
         public Form1()
         {
             InitializeComponent();
+            shop_form = new Shop();
             Buildings builds = new Buildings();
             SelfRef = this;
             tech_progressBar.Visible = false;
@@ -503,7 +506,7 @@ namespace GalaxyConquest
 
                 Rectangle rectan = new Rectangle((int)(centerX - 5 + (int)screenX - starSize / 2), (int)(centerY - 5 + (int)screenY - starSize / 2), (int)(starSize + 11), (int)(starSize + 11));
 
-                if (s == galaxy.stars[star_selected])
+                 if (s == galaxy.stars[star_selected])
                 {
                     g.DrawEllipse(pen, rectan);
                 }
@@ -1418,13 +1421,12 @@ namespace GalaxyConquest
             }
 
            
-            for (int j = 0; j < galaxy.stars.Count; j++)
-            {
-                for (int i = 0; i < galaxy.stars[j].planets_count; i++)
+           
+                for (int i = 0; i < Player.player_planets.Count; i++)
                 {
-                    credit = credit + galaxy.stars[j].PLN[i].PROFIT;
+                    credit = credit + Player.player_planets[i].PROFIT;//StarSystem.PLN[i].PROFIT;
                 }
-            }
+            
             CreditsStatus.Text = credit.ToString();
 
             if (conquer_progressBar.Visible == true)
@@ -1531,6 +1533,11 @@ namespace GalaxyConquest
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void Shop_button_Click(object sender, EventArgs e)
+        {
+            shop_form.ShowDialog();
         }
 
 

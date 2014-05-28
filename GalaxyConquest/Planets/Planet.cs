@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace GalaxyConquest.StarSystems
 {
-    [Serializable]
+   
     public class PLANET
     {
 

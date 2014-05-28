@@ -17,18 +17,19 @@ namespace GalaxyConquest.StarSystems
         public static int pln_selected;
         public static string size1;
         public static string minerals1;
-
+        public int planet_selected;
         Random rand = new Random();
         int maxpln = 4;
         int dist = 100;
         float speed = 0.001f;
-
+       // public PLANET sp;
         public StarSystem s;
 
         public StarSystemForm(StarSystem system)
         {
             InitializeComponent();
             s = system;
+            //sp = PLN;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -103,7 +104,11 @@ namespace GalaxyConquest.StarSystems
                 */
                 //RectangleF rect = new RectangleF(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
                 //GBIT.DrawImage(newImage, rect);
-
+              // Rectangle rectan = new Rectangle((int)(centerX - 5 + (int)screenX - starSize / 2), (int)(centerY - 5 + (int)screenY - starSize / 2), (int)(starSize + 11), (int)(starSize + 11));
+              //  if (s == s.PLN[planet_selected])
+             //  {
+             //      g.DrawEllipse(pen, rectan);
+             //  }
 
 
                 // /////////////////////////
@@ -177,6 +182,8 @@ namespace GalaxyConquest.StarSystems
                     (e.Y > s.PLN[j].GetPoint().Y - (s.PLN[j].SIZE / 2)) &&
                     (e.Y < s.PLN[j].GetPoint().Y + (s.PLN[j].SIZE / 2)))
                 {
+                    
+                    planet_selected = j;
                     labelPlanetName.Text = s.PLN[j].NAME;
                     labelPlanetSize.Text = sizeText;
                     labelPlanetMinerals.Text = mineralsText;
@@ -221,6 +228,28 @@ namespace GalaxyConquest.StarSystems
         private void build_button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Capture_Click(object sender, EventArgs e)
+        {
+            bool planet_consist = false;
+            for (int i = 0; i < Player.player_planets.Count; i++)
+            {
+                if (Player.player_planets[i] == s.PLN[planet_selected])
+                {
+                    planet_consist = true;
+                }
+            }
+            if (planet_consist == false)
+            {
+                Player.player_planets.Add(s.PLN[planet_selected]);
+                Form1.shop_form.set_listbox_planet(s.PLN[planet_selected]);
+                
+            }
+            else
+            {
+                MessageBox.Show("Conqest");
+            }
         }
     }
 }

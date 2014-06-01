@@ -32,7 +32,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.localstepbutton = new System.Windows.Forms.Button();
             this.buildings = new System.Windows.Forms.TextBox();
             this.labelPlanetMinerals = new System.Windows.Forms.Label();
             this.labelPlanetSize = new System.Windows.Forms.Label();
@@ -70,7 +69,6 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.localstepbutton);
             this.panel1.Controls.Add(this.buildings);
             this.panel1.Controls.Add(this.labelPlanetMinerals);
             this.panel1.Controls.Add(this.labelPlanetSize);
@@ -89,16 +87,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(162, 350);
             this.panel1.TabIndex = 1;
-            // 
-            // localstepbutton
-            // 
-            this.localstepbutton.Location = new System.Drawing.Point(43, 312);
-            this.localstepbutton.Name = "localstepbutton";
-            this.localstepbutton.Size = new System.Drawing.Size(75, 23);
-            this.localstepbutton.TabIndex = 39;
-            this.localstepbutton.Text = "step";
-            this.localstepbutton.UseVisualStyleBackColor = true;
-            this.localstepbutton.Click += new System.EventHandler(this.localstepbutton_Click);
             // 
             // buildings
             // 
@@ -276,7 +264,6 @@
         private System.Windows.Forms.Label labelPlanetMinerals;
         private System.Windows.Forms.Label labelPlanetSize;
         private System.Windows.Forms.TextBox buildings;
-        private System.Windows.Forms.Button localstepbutton;
         private System.Windows.Forms.Button Capture;
     }
 }

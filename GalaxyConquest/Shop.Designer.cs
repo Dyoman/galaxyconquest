@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Shop));
-            this.build_button3 = new System.Windows.Forms.Button();
             this.build_button2 = new System.Windows.Forms.Button();
             this.build_button1 = new System.Windows.Forms.Button();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
@@ -49,7 +47,6 @@
             this.pictureBox15 = new System.Windows.Forms.PictureBox();
             this.listBox_Planet = new System.Windows.Forms.ListBox();
             this.button_form = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
@@ -66,15 +63,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
             this.SuspendLayout();
             // 
-            // build_button3
-            // 
-            this.build_button3.Location = new System.Drawing.Point(455, 123);
-            this.build_button3.Name = "build_button3";
-            this.build_button3.Size = new System.Drawing.Size(26, 22);
-            this.build_button3.TabIndex = 19;
-            this.build_button3.Text = "button1";
-            this.build_button3.UseVisualStyleBackColor = true;
-            // 
             // build_button2
             // 
             this.build_button2.Location = new System.Drawing.Point(455, 69);
@@ -83,6 +71,7 @@
             this.build_button2.TabIndex = 18;
             this.build_button2.Text = "button1";
             this.build_button2.UseVisualStyleBackColor = true;
+            this.build_button2.Click += new System.EventHandler(this.build_button2_Click);
             // 
             // build_button1
             // 
@@ -93,15 +82,6 @@
             this.build_button1.Text = "button1";
             this.build_button1.UseVisualStyleBackColor = true;
             this.build_button1.Click += new System.EventHandler(this.build_button1_Click);
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(487, 123);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(45, 45);
-            this.pictureBox4.TabIndex = 16;
-            this.pictureBox4.TabStop = false;
             // 
             // pictureBox3
             // 
@@ -268,16 +248,13 @@
             this.Controls.Add(this.pictureBox7);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
-            this.Controls.Add(this.build_button3);
             this.Controls.Add(this.build_button2);
             this.Controls.Add(this.build_button1);
-            this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Name = "Shop";
             this.Text = "Магазин";
             this.Load += new System.EventHandler(this.Shop_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
@@ -298,10 +275,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button build_button3;
         private System.Windows.Forms.Button build_button2;
         private System.Windows.Forms.Button build_button1;
-        private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox10;

@@ -20,7 +20,7 @@ namespace GalaxyConquest
     {
         public ModelGalaxy galaxy;
         public Bitmap galaxyBitmap;
-        public double credit = 0;
+        public static double credit = 0;
         public double spinX = 0.0;
         public double spinY = Math.PI / 4;
 

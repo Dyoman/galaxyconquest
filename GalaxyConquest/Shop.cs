@@ -41,11 +41,35 @@ namespace GalaxyConquest
 
         private void build_button1_Click(object sender, EventArgs e)
         {
-            wpnLightLaser w = new wpnLightLaser();
-            ShipAssaulter s = new ShipAssaulter(1, w);
-            Player.player_ship.Add(s);
+            if (Form1.credit > 50)
+            {
+                wpnLightLaser w = new wpnLightLaser();
+                ShipAssaulter s = new ShipAssaulter(1, w);
+                Player.player_ship.Add(s);
+                Form1.credit = Form1.credit - 50;
+                MessageBox.Show("Корабль построен");
+            }
+            else
+            {
+                MessageBox.Show("Недостаточно ресурсов");
+            }
         }
 
+        private void build_button2_Click(object sender, EventArgs e)
+        {
+            if (Form1.credit > 25)
+            {
+                wpnLightLaser w = new wpnLightLaser();
+                ShipScout s = new ShipScout(1, w);
+                Player.player_ship.Add(s);
+                Form1.credit = Form1.credit - 25;
+                MessageBox.Show("Корабль построен");
+            }
+            else
+            {
+                MessageBox.Show("Недостаточно ресурсов");
+            }
+        }
         private void button_form_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < Player.player_ship.Count; i++)
@@ -55,6 +79,10 @@ namespace GalaxyConquest
                 ship = Player.player_ship[i];
                 f.ships.Add(ship);
             }
+            MessageBox.Show("Флот сформирован");
             }
+            
+
+       
     }
 }

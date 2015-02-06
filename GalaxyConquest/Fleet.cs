@@ -18,9 +18,11 @@ namespace GalaxyConquest
         public double y;
         public double z;
         public double starDistanse;
+        public bool onWay;
         public Fleet()
         {
             ships = new List<Ship>();
+            onWay = false;
         }
     }
 }

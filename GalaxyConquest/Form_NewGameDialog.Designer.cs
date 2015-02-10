@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.galaxyNameTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textNamePlayer = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.starsCount = new System.Windows.Forms.TextBox();
             this.StarsScrollBar = new System.Windows.Forms.HScrollBar();
             this.label9 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
@@ -70,13 +71,14 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.galaxyNameTextBox);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textNamePlayer);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.starsCount);
             this.groupBox1.Controls.Add(this.StarsScrollBar);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.button7);
@@ -108,20 +110,36 @@
             this.groupBox1.Size = new System.Drawing.Size(371, 369);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(16, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(68, 13);
+            this.label11.TabIndex = 31;
+            this.label11.Text = "Galaxy name";
+            // 
+            // galaxyNameTextBox
+            // 
+            this.galaxyNameTextBox.Location = new System.Drawing.Point(90, 13);
+            this.galaxyNameTextBox.Name = "galaxyNameTextBox";
+            this.galaxyNameTextBox.Size = new System.Drawing.Size(100, 20);
+            this.galaxyNameTextBox.TabIndex = 30;
+            this.galaxyNameTextBox.Text = "New galaxy";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 159);
+            this.label3.Location = new System.Drawing.Point(22, 189);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 29;
-            this.label3.Text = "Name ";
+            this.label3.Text = "Name";
             // 
             // textNamePlayer
             // 
-            this.textNamePlayer.Location = new System.Drawing.Point(23, 175);
+            this.textNamePlayer.Location = new System.Drawing.Point(23, 205);
             this.textNamePlayer.Name = "textNamePlayer";
             this.textNamePlayer.Size = new System.Drawing.Size(100, 20);
             this.textNamePlayer.TabIndex = 28;
@@ -130,20 +148,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(180, 286);
+            this.label2.Location = new System.Drawing.Point(107, 287);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 27;
-            this.label2.Text = "stars";
-            // 
-            // starsCount
-            // 
-            this.starsCount.Location = new System.Drawing.Point(102, 283);
-            this.starsCount.Name = "starsCount";
-            this.starsCount.ReadOnly = true;
-            this.starsCount.Size = new System.Drawing.Size(72, 20);
-            this.starsCount.TabIndex = 26;
-            this.starsCount.Text = "10";
+            this.label2.Text = "10 stars";
             // 
             // StarsScrollBar
             // 
@@ -160,7 +169,7 @@
             // label9
             // 
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(22, 107);
+            this.label9.Location = new System.Drawing.Point(22, 137);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(65, 13);
             this.label9.TabIndex = 24;
@@ -172,7 +181,7 @@
             this.button7.FlatAppearance.BorderSize = 0;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.button7.Location = new System.Drawing.Point(55, 123);
+            this.button7.Location = new System.Drawing.Point(55, 153);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(21, 21);
             this.button7.TabIndex = 23;
@@ -183,7 +192,7 @@
             this.button8.FlatAppearance.BorderSize = 0;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.button8.Location = new System.Drawing.Point(30, 123);
+            this.button8.Location = new System.Drawing.Point(30, 153);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(21, 21);
             this.button8.TabIndex = 22;
@@ -192,7 +201,7 @@
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.Black;
-            this.pictureBox4.Location = new System.Drawing.Point(23, 40);
+            this.pictureBox4.Location = new System.Drawing.Point(23, 70);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(64, 64);
             this.pictureBox4.TabIndex = 21;
@@ -200,7 +209,7 @@
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(22, 24);
+            this.label10.Location = new System.Drawing.Point(22, 54);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(65, 13);
             this.label10.TabIndex = 20;
@@ -258,7 +267,7 @@
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(283, 107);
+            this.label5.Location = new System.Drawing.Point(283, 137);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 14;
@@ -270,7 +279,7 @@
             this.button5.FlatAppearance.BorderSize = 0;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.button5.Location = new System.Drawing.Point(317, 123);
+            this.button5.Location = new System.Drawing.Point(317, 153);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(21, 21);
             this.button5.TabIndex = 13;
@@ -281,7 +290,7 @@
             this.button6.FlatAppearance.BorderSize = 0;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.button6.Location = new System.Drawing.Point(290, 123);
+            this.button6.Location = new System.Drawing.Point(290, 153);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(21, 21);
             this.button6.TabIndex = 12;
@@ -290,7 +299,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Black;
-            this.pictureBox3.Location = new System.Drawing.Point(284, 40);
+            this.pictureBox3.Location = new System.Drawing.Point(284, 70);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(64, 64);
             this.pictureBox3.TabIndex = 11;
@@ -298,7 +307,7 @@
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(283, 24);
+            this.label6.Location = new System.Drawing.Point(283, 54);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 13);
             this.label6.TabIndex = 10;
@@ -308,7 +317,7 @@
             // labelGalaxySize
             // 
             this.labelGalaxySize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelGalaxySize.Location = new System.Drawing.Point(196, 107);
+            this.labelGalaxySize.Location = new System.Drawing.Point(196, 137);
             this.labelGalaxySize.Name = "labelGalaxySize";
             this.labelGalaxySize.Size = new System.Drawing.Size(65, 13);
             this.labelGalaxySize.TabIndex = 9;
@@ -320,7 +329,7 @@
             this.buttonGalaxySizeRight.FlatAppearance.BorderSize = 0;
             this.buttonGalaxySizeRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxySizeRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.buttonGalaxySizeRight.Location = new System.Drawing.Point(230, 123);
+            this.buttonGalaxySizeRight.Location = new System.Drawing.Point(230, 153);
             this.buttonGalaxySizeRight.Name = "buttonGalaxySizeRight";
             this.buttonGalaxySizeRight.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxySizeRight.TabIndex = 8;
@@ -332,7 +341,7 @@
             this.buttonGalaxySizeLeft.FlatAppearance.BorderSize = 0;
             this.buttonGalaxySizeLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxySizeLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.buttonGalaxySizeLeft.Location = new System.Drawing.Point(203, 123);
+            this.buttonGalaxySizeLeft.Location = new System.Drawing.Point(203, 153);
             this.buttonGalaxySizeLeft.Name = "buttonGalaxySizeLeft";
             this.buttonGalaxySizeLeft.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxySizeLeft.TabIndex = 7;
@@ -342,7 +351,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Black;
-            this.pictureBox2.Location = new System.Drawing.Point(197, 40);
+            this.pictureBox2.Location = new System.Drawing.Point(197, 70);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(64, 64);
             this.pictureBox2.TabIndex = 6;
@@ -350,7 +359,7 @@
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(196, 24);
+            this.label4.Location = new System.Drawing.Point(196, 54);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 5;
@@ -360,7 +369,7 @@
             // labelGalaxyType
             // 
             this.labelGalaxyType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelGalaxyType.Location = new System.Drawing.Point(109, 107);
+            this.labelGalaxyType.Location = new System.Drawing.Point(109, 137);
             this.labelGalaxyType.Name = "labelGalaxyType";
             this.labelGalaxyType.Size = new System.Drawing.Size(65, 13);
             this.labelGalaxyType.TabIndex = 4;
@@ -372,7 +381,7 @@
             this.buttonGalaxyTypeRight.FlatAppearance.BorderSize = 0;
             this.buttonGalaxyTypeRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxyTypeRight.Image = global::GalaxyConquest.Properties.Resources.btn_arrowright;
-            this.buttonGalaxyTypeRight.Location = new System.Drawing.Point(144, 123);
+            this.buttonGalaxyTypeRight.Location = new System.Drawing.Point(144, 153);
             this.buttonGalaxyTypeRight.Name = "buttonGalaxyTypeRight";
             this.buttonGalaxyTypeRight.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxyTypeRight.TabIndex = 3;
@@ -384,7 +393,7 @@
             this.buttonGalaxyTypeLeft.FlatAppearance.BorderSize = 0;
             this.buttonGalaxyTypeLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGalaxyTypeLeft.Image = global::GalaxyConquest.Properties.Resources.btn_arrowleft;
-            this.buttonGalaxyTypeLeft.Location = new System.Drawing.Point(119, 123);
+            this.buttonGalaxyTypeLeft.Location = new System.Drawing.Point(119, 153);
             this.buttonGalaxyTypeLeft.Name = "buttonGalaxyTypeLeft";
             this.buttonGalaxyTypeLeft.Size = new System.Drawing.Size(21, 21);
             this.buttonGalaxyTypeLeft.TabIndex = 2;
@@ -394,7 +403,7 @@
             // pictureBoxGalaxyType
             // 
             this.pictureBoxGalaxyType.Image = global::GalaxyConquest.Properties.Resources.icon_newgame_spiral;
-            this.pictureBoxGalaxyType.Location = new System.Drawing.Point(110, 40);
+            this.pictureBoxGalaxyType.Location = new System.Drawing.Point(110, 70);
             this.pictureBoxGalaxyType.Name = "pictureBoxGalaxyType";
             this.pictureBoxGalaxyType.Size = new System.Drawing.Size(64, 64);
             this.pictureBoxGalaxyType.TabIndex = 1;
@@ -402,7 +411,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(109, 24);
+            this.label1.Location = new System.Drawing.Point(109, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 0;
@@ -486,9 +495,10 @@
         private System.Windows.Forms.Label labelGalaxyType;
         private System.Windows.Forms.Button buttonGalaxyTypeRight;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox starsCount;
         private System.Windows.Forms.HScrollBar StarsScrollBar;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textNamePlayer;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox galaxyNameTextBox;
     }
 }

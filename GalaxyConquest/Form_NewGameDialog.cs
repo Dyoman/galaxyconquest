@@ -5,7 +5,7 @@ namespace GalaxyConquest
 {
     public partial class Form_NewGameDialog : Form
     {
-        int galaxytype = 0;
+        GalaxyType galaxytype = GalaxyType.Spiral;
         int galaxysize = 4;
         
         public Form_NewGameDialog()
@@ -20,31 +20,38 @@ namespace GalaxyConquest
                 return textNamePlayer.Text;
             }
         }
-        
+
+        public string galaxyName
+        {
+            get
+            {
+                return galaxyNameTextBox.Text;
+            }
+        }        
 
         private void buttonGalaxyTypeLeft_Click(object sender, EventArgs e)
         {
             switch (galaxytype)
             {
-                case 0:
+                case GalaxyType.Irregular:
                     pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_sphere;
                     labelGalaxyType.Text = "Sphere";
-                    galaxytype = 3;
+                    galaxytype = GalaxyType.Sphere;
                     break;
-                case 1:
-                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_spiral;
-                    labelGalaxyType.Text = "Spiral";
-                    galaxytype = 0;
-                    break;
-                case 2:
+                case GalaxyType.Sphere:
                     pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_sphere;
                     labelGalaxyType.Text = "Elliptical";
-                    galaxytype = 1;
+                    galaxytype = GalaxyType.Eliptical;
                     break;
-                case 3:
+                case GalaxyType.Eliptical:
+                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_spiral;
+                    labelGalaxyType.Text = "Spiral";
+                    galaxytype = GalaxyType.Spiral;
+                    break;
+                case GalaxyType.Spiral:
                     pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_irregular;
                     labelGalaxyType.Text = "Irregular";
-                    galaxytype = 2;
+                    galaxytype = GalaxyType.Irregular;
                     break;
             }
         }
@@ -53,25 +60,25 @@ namespace GalaxyConquest
         {
             switch (galaxytype)
             {
-                case 0:
-                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_sphere;
-                    labelGalaxyType.Text = "Elliptical";
-                    galaxytype = 1;
-                    break;
-                case 1:
-                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_irregular;
-                    labelGalaxyType.Text = "Irregular";
-                    galaxytype = 2;
-                    break;
-                case 2:
-                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_sphere;
-                    labelGalaxyType.Text = "Sphere";
-                    galaxytype = 3;
-                    break;
-                case 3:
+                case GalaxyType.Irregular:
                     pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_spiral;
                     labelGalaxyType.Text = "Spiral";
-                    galaxytype = 0;
+                    galaxytype = GalaxyType.Spiral;
+                    break;
+                case GalaxyType.Spiral:
+                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_sphere;
+                    labelGalaxyType.Text = "Elliptical";
+                    galaxytype = GalaxyType.Eliptical;
+                    break;
+                case GalaxyType.Eliptical:
+                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_sphere;
+                    labelGalaxyType.Text = "Sphere";
+                    galaxytype = GalaxyType.Sphere;
+                    break;
+                case GalaxyType.Sphere:
+                    pictureBoxGalaxyType.Image = Properties.Resources.icon_newgame_irregular;
+                    labelGalaxyType.Text = "Irregular";
+                    galaxytype = GalaxyType.Irregular;
                     break;
             }
         }
@@ -104,7 +111,7 @@ namespace GalaxyConquest
 
         private void StarsScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
-            starsCount.Text = StarsScrollBar.Value.ToString();
+            label2.Text = StarsScrollBar.Value.ToString() + " stars";
         }
 
         public int getGalaxySize()
@@ -117,7 +124,7 @@ namespace GalaxyConquest
             return (StarsScrollBar.Value);
         }
 
-        public int getGalaxyType()
+        public GalaxyType getGalaxyType()
         {
             return (galaxytype);
         }
@@ -125,16 +132,6 @@ namespace GalaxyConquest
         public bool getGalaxyRandomEvents()
         {
             return (checkBoxRandomEvents.Checked);
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        
-       
-        
-
+        }   
     }
 }

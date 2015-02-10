@@ -46,7 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.labelPlanetPopulation = new System.Windows.Forms.Label();
-            this.Capture = new System.Windows.Forms.Button();
+            this.сapture = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -217,13 +217,13 @@
             // 
             // Capture
             // 
-            this.Capture.Location = new System.Drawing.Point(57, 368);
-            this.Capture.Name = "Capture";
-            this.Capture.Size = new System.Drawing.Size(75, 23);
-            this.Capture.TabIndex = 14;
-            this.Capture.Text = "Захват";
-            this.Capture.UseVisualStyleBackColor = true;
-            this.Capture.Click += new System.EventHandler(this.Capture_Click);
+            this.сapture.Location = new System.Drawing.Point(57, 368);
+            this.сapture.Name = "Capture";
+            this.сapture.Size = new System.Drawing.Size(75, 23);
+            this.сapture.TabIndex = 14;
+            this.сapture.Text = "Захват";
+            this.сapture.UseVisualStyleBackColor = true;
+            this.сapture.Click += new System.EventHandler(this.Capture_Click);
             // 
             // StarSystemForm
             // 
@@ -231,7 +231,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(697, 441);
-            this.Controls.Add(this.Capture);
+            this.Controls.Add(this.сapture);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -264,7 +264,7 @@
         private System.Windows.Forms.Label labelPlanetMinerals;
         private System.Windows.Forms.Label labelPlanetSize;
         private System.Windows.Forms.TextBox buildings;
-        private System.Windows.Forms.Button Capture;
+        private System.Windows.Forms.Button сapture;
     }
 }
 

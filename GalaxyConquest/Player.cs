@@ -13,6 +13,7 @@ namespace GalaxyConquest
         public static List<int[]> technologies = new List<int[]>();//format {tech, subtech}
         public static List<int[]> buildings = new List<int[]>();//format {star system, planet, building}
 
+        public string name;
         public Color player_color;
         public static List<Ship> player_ship;
         public static List<PLANET> player_planets;
@@ -21,6 +22,7 @@ namespace GalaxyConquest
 
         public Player()
         {
+            name = "New player";
             technologies.Add(new int[] { 0, 1 });
             buildings.Add(new int[] { 0, 0, 0 });
             buildings.Add(new int[] { 0, 0, 1 });

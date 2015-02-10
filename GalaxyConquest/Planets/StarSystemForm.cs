@@ -128,8 +128,9 @@ namespace GalaxyConquest.StarSystems
 
             for (int j = 0; j < s.PLN.Count; j++)
             {
-                pln_selected = j;//переменная для связи планеты со формой2
-
+                //pln_selected = j;//переменная для связи планеты со формой2
+                #region old
+                /*
                 string sizeText = "";
                 string mineralsText = "";
 
@@ -202,6 +203,82 @@ namespace GalaxyConquest.StarSystems
                         }
                     }
                 }
+                */
+                #endregion
+                PLANET p = s.PLN[j];
+
+                string sizeText = "";
+                string mineralsText = "";
+
+                //ниже- определение размера планеты
+                if (p.SIZE < 15)
+                {
+                    sizeText = "Small";
+                }
+                else
+                    if ((p.SIZE >= 15) && (p.SIZE < 25))
+                    {
+                        sizeText = "Medium";
+                    }
+                    else
+                        if (p.SIZE > 25)
+                        {
+                            sizeText = "Big";
+                        }
+
+
+                //ниже - определение ресурсов
+                if (p.MINERALS == 0)
+                {
+                    mineralsText = "No Minerals";
+                }
+                else
+                    if ((p.MINERALS > 0) && (p.MINERALS <= 10))
+                    {
+                        mineralsText = "Small";
+                    }
+                    else
+                        if ((p.MINERALS > 10) && (p.MINERALS <= 20))
+                        {
+                            mineralsText = "Medium";
+                        }
+                        else
+                            if (p.MINERALS > 20)
+                            {
+                                mineralsText = "Big";
+                            }
+                string playername111 = "Kolobok";
+                if (playername111 != "")
+                {
+                    s.PLN[j].OWNERNAME = "None";
+                }
+
+
+                if ((e.X > p.GetPoint().X - (p.SIZE / 2)) &&
+                    (e.X < p.GetPoint().X + (p.SIZE / 2)) &&    //клик по планете вызывает форму с информацией
+                    (e.Y > p.GetPoint().Y - (p.SIZE / 2)) &&
+                    (e.Y < p.GetPoint().Y + (p.SIZE / 2)))
+                {
+
+                    planet_selected = j;
+                    labelPlanetName.Text = p.NAME;
+                    labelPlanetSize.Text = sizeText;
+                    labelPlanetMinerals.Text = mineralsText;
+                    labelPlanetPopulation.Text = p.POPULATIONMAX.ToString();
+                    Populn.Text = p.POPULATION.ToString();
+                    ownername.Text = p.OWNERNAME;
+                    profit.Text = p.PROFIT.ToString();
+                    buildings.Text = "";//set buildings textbox to empty string
+                    for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
+                    {
+                        if (Player.buildings[z][0] == Form1.player.player_stars.IndexOf(Form1.selectedStar) &&//check current starsystem
+                            Player.buildings[z][1] == j)                    //check current planet
+                        {
+                            //if ok add builds to text box
+                            buildings.AppendText(Buildings.buildings[Player.buildings[z][2]] + "\n");
+                        }
+                    }
+                }
             }
 
         }
@@ -233,13 +310,12 @@ namespace GalaxyConquest.StarSystems
         private void Capture_Click(object sender, EventArgs e)
         {
             bool planet_consist = false;
-            for (int i = 0; i < Player.player_planets.Count; i++)
+
+            if (Player.player_planets.Contains(s.PLN[planet_selected]))
             {
-                if (Player.player_planets[i] == s.PLN[planet_selected])
-                {
-                    planet_consist = true;
-                }
+                planet_consist = true;
             }
+
             if (planet_consist == false)
             {
                 Player.player_planets.Add(s.PLN[planet_selected]);

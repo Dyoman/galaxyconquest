@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.mainMenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,8 +43,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusXY = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label_planets = new System.Windows.Forms.Label();
-            this.textBox_planets = new System.Windows.Forms.TextBox();
             this.step_button = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.conquer_progressBar = new System.Windows.Forms.ProgressBar();
@@ -55,13 +54,20 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CreditsStatus = new System.Windows.Forms.Label();
             this.Credits = new System.Windows.Forms.Label();
-            this.Shop_button = new System.Windows.Forms.Button();
-            this.galaxyImage = new System.Windows.Forms.PictureBox();
-            this.dateLabel = new System.Windows.Forms.Label();
             this.marketButton = new System.Windows.Forms.Button();
+            this.dateLabel = new System.Windows.Forms.Label();
             this.fleetsButton = new System.Windows.Forms.Button();
             this.listView = new System.Windows.Forms.ListView();
             this.planetsButton = new System.Windows.Forms.Button();
+            this.galaxyNameLablel = new System.Windows.Forms.Label();
+            this.StepWorker = new System.ComponentModel.BackgroundWorker();
+            this.TechWorker = new System.ComponentModel.BackgroundWorker();
+            this.GameTimer = new System.Windows.Forms.Timer(this.components);
+            this.galaxyImage = new System.Windows.Forms.PictureBox();
+            this.MineralStatus = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.EnergyStatus = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -178,25 +184,6 @@
             this.toolStripStatusXY.Size = new System.Drawing.Size(98, 17);
             this.toolStripStatusXY.Text = "toolStripStatusXY";
             // 
-            // label_planets
-            // 
-            this.label_planets.AutoSize = true;
-            this.label_planets.Location = new System.Drawing.Point(14, 81);
-            this.label_planets.Name = "label_planets";
-            this.label_planets.Size = new System.Drawing.Size(42, 13);
-            this.label_planets.TabIndex = 16;
-            this.label_planets.Text = "Planets";
-            this.label_planets.Visible = false;
-            // 
-            // textBox_planets
-            // 
-            this.textBox_planets.Location = new System.Drawing.Point(62, 78);
-            this.textBox_planets.Name = "textBox_planets";
-            this.textBox_planets.ReadOnly = true;
-            this.textBox_planets.Size = new System.Drawing.Size(39, 20);
-            this.textBox_planets.TabIndex = 17;
-            this.textBox_planets.Visible = false;
-            // 
             // step_button
             // 
             this.step_button.Font = new System.Drawing.Font("Impact", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -211,7 +198,8 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(24, 104);
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(17, 109);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(122, 23);
             this.button2.TabIndex = 19;
@@ -221,7 +209,7 @@
             // 
             // conquer_progressBar
             // 
-            this.conquer_progressBar.Location = new System.Drawing.Point(34, 133);
+            this.conquer_progressBar.Location = new System.Drawing.Point(27, 138);
             this.conquer_progressBar.Maximum = 5;
             this.conquer_progressBar.Name = "conquer_progressBar";
             this.conquer_progressBar.Size = new System.Drawing.Size(100, 23);
@@ -231,7 +219,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(24, 162);
+            this.button3.Location = new System.Drawing.Point(17, 167);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(122, 23);
             this.button3.TabIndex = 21;
@@ -263,11 +251,11 @@
             // 
             // sound_button
             // 
-            this.sound_button.Location = new System.Drawing.Point(46, 214);
+            this.sound_button.Location = new System.Drawing.Point(34, 62);
             this.sound_button.Name = "sound_button";
             this.sound_button.Size = new System.Drawing.Size(75, 23);
             this.sound_button.TabIndex = 24;
-            this.sound_button.Text = "mute on/off";
+            this.sound_button.Text = "Mute";
             this.sound_button.UseVisualStyleBackColor = true;
             this.sound_button.Click += new System.EventHandler(this.sound_button_Click);
             // 
@@ -276,15 +264,12 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.Shop_button);
             this.panel1.Controls.Add(this.sound_button);
             this.panel1.Controls.Add(this.marketButton);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.conquer_progressBar);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.textBox_planets);
             this.panel1.Controls.Add(this.step_button);
-            this.panel1.Controls.Add(this.label_planets);
             this.panel1.Location = new System.Drawing.Point(9, 27);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(159, 422);
@@ -292,22 +277,28 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.EnergyStatus);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.MineralStatus);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.CreditsStatus);
             this.groupBox1.Controls.Add(this.Credits);
-            this.groupBox1.Location = new System.Drawing.Point(17, 284);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(16, 208);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(111, 35);
+            this.groupBox1.Size = new System.Drawing.Size(123, 96);
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Player";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // CreditsStatus
             // 
             this.CreditsStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CreditsStatus.AutoSize = true;
-            this.CreditsStatus.Location = new System.Drawing.Point(64, 12);
+            this.CreditsStatus.Location = new System.Drawing.Point(63, 20);
             this.CreditsStatus.Name = "CreditsStatus";
-            this.CreditsStatus.Size = new System.Drawing.Size(13, 13);
+            this.CreditsStatus.Size = new System.Drawing.Size(15, 16);
             this.CreditsStatus.TabIndex = 41;
             this.CreditsStatus.Text = "0";
             // 
@@ -315,51 +306,11 @@
             // 
             this.Credits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Credits.AutoSize = true;
-            this.Credits.Location = new System.Drawing.Point(6, 12);
+            this.Credits.Location = new System.Drawing.Point(6, 20);
             this.Credits.Name = "Credits";
-            this.Credits.Size = new System.Drawing.Size(39, 13);
+            this.Credits.Size = new System.Drawing.Size(50, 16);
             this.Credits.TabIndex = 40;
             this.Credits.Text = "Credits";
-            // 
-            // Shop_button
-            // 
-            this.Shop_button.Location = new System.Drawing.Point(46, 245);
-            this.Shop_button.Name = "Shop_button";
-            this.Shop_button.Size = new System.Drawing.Size(75, 23);
-            this.Shop_button.TabIndex = 25;
-            this.Shop_button.Text = "Магазин";
-            this.Shop_button.UseVisualStyleBackColor = true;
-            this.Shop_button.Click += new System.EventHandler(this.Shop_button_Click);
-            // 
-            // galaxyImage
-            // 
-            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.galaxyImage.BackColor = System.Drawing.Color.Black;
-            this.galaxyImage.Location = new System.Drawing.Point(174, 27);
-            this.galaxyImage.Name = "galaxyImage";
-            this.galaxyImage.Size = new System.Drawing.Size(834, 422);
-            this.galaxyImage.TabIndex = 1;
-            this.galaxyImage.TabStop = false;
-            this.galaxyImage.Paint += new System.Windows.Forms.PaintEventHandler(this.galaxyImage_Paint);
-            this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
-            this.galaxyImage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDoubleClick);
-            this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
-            this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
-            // 
-            // dateLabel
-            // 
-            this.dateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateLabel.AutoSize = true;
-            this.dateLabel.BackColor = System.Drawing.Color.Black;
-            this.dateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.dateLabel.Location = new System.Drawing.Point(841, 30);
-            this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(87, 31);
-            this.dateLabel.TabIndex = 26;
-            this.dateLabel.Text = "DATE";
             // 
             // marketButton
             // 
@@ -373,6 +324,19 @@
             this.marketButton.Text = "Market";
             this.marketButton.UseVisualStyleBackColor = false;
             this.marketButton.Click += new System.EventHandler(this.Shop_button_Click);
+            // 
+            // dateLabel
+            // 
+            this.dateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateLabel.AutoSize = true;
+            this.dateLabel.BackColor = System.Drawing.Color.Black;
+            this.dateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dateLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.dateLabel.Location = new System.Drawing.Point(841, 30);
+            this.dateLabel.Name = "dateLabel";
+            this.dateLabel.Size = new System.Drawing.Size(87, 31);
+            this.dateLabel.TabIndex = 26;
+            this.dateLabel.Text = "DATE";
             // 
             // fleetsButton
             // 
@@ -399,17 +363,20 @@
             this.listView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listView.Cursor = System.Windows.Forms.Cursors.Default;
             this.listView.Font = new System.Drawing.Font("Impact", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listView.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.listView.ForeColor = System.Drawing.Color.White;
             this.listView.Location = new System.Drawing.Point(195, 113);
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";
+            this.listView.ShowItemToolTips = true;
             this.listView.Size = new System.Drawing.Size(178, 250);
             this.listView.TabIndex = 29;
             this.listView.Tag = "-";
-            this.listView.TileSize = new System.Drawing.Size(178, 50);
+            this.listView.TileSize = new System.Drawing.Size(175, 50);
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Tile;
+            this.listView.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.listView_ItemMouseHover);
             this.listView.SelectedIndexChanged += new System.EventHandler(this.listView_SelectedIndexChanged);
+            this.listView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseClick);
             // 
             // planetsButton
             // 
@@ -426,11 +393,96 @@
             this.planetsButton.UseVisualStyleBackColor = false;
             this.planetsButton.Click += new System.EventHandler(this.planetsButton_Click);
             // 
+            // galaxyNameLablel
+            // 
+            this.galaxyNameLablel.AutoSize = true;
+            this.galaxyNameLablel.BackColor = System.Drawing.Color.Black;
+            this.galaxyNameLablel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.galaxyNameLablel.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.galaxyNameLablel.Location = new System.Drawing.Point(174, 27);
+            this.galaxyNameLablel.Name = "galaxyNameLablel";
+            this.galaxyNameLablel.Size = new System.Drawing.Size(207, 31);
+            this.galaxyNameLablel.TabIndex = 31;
+            this.galaxyNameLablel.Text = "GALAXY NAME";
+            // 
+            // StepWorker
+            // 
+            this.StepWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.StepWorker_DoWork);
+            this.StepWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.StepWorker_RunWorkerCompleted);
+            // 
+            // TechWorker
+            // 
+            this.TechWorker.WorkerReportsProgress = true;
+            this.TechWorker.WorkerSupportsCancellation = true;
+            // 
+            // GameTimer
+            // 
+            this.GameTimer.Interval = 1;
+            this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
+            // 
+            // galaxyImage
+            // 
+            this.galaxyImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyImage.BackColor = System.Drawing.Color.Black;
+            this.galaxyImage.Location = new System.Drawing.Point(174, 27);
+            this.galaxyImage.Name = "galaxyImage";
+            this.galaxyImage.Size = new System.Drawing.Size(834, 422);
+            this.galaxyImage.TabIndex = 1;
+            this.galaxyImage.TabStop = false;
+            this.galaxyImage.Paint += new System.Windows.Forms.PaintEventHandler(this.galaxyImage_Paint);
+            this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
+            this.galaxyImage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDoubleClick);
+            this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
+            this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
+            // 
+            // MineralStatus
+            // 
+            this.MineralStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.MineralStatus.AutoSize = true;
+            this.MineralStatus.Location = new System.Drawing.Point(63, 43);
+            this.MineralStatus.Name = "MineralStatus";
+            this.MineralStatus.Size = new System.Drawing.Size(15, 16);
+            this.MineralStatus.TabIndex = 43;
+            this.MineralStatus.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 16);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Minerals";
+            // 
+            // EnergyStatus
+            // 
+            this.EnergyStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.EnergyStatus.AutoSize = true;
+            this.EnergyStatus.Location = new System.Drawing.Point(63, 66);
+            this.EnergyStatus.Name = "EnergyStatus";
+            this.EnergyStatus.Size = new System.Drawing.Size(15, 16);
+            this.EnergyStatus.TabIndex = 45;
+            this.EnergyStatus.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 66);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 16);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "Energy";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 474);
+            this.Controls.Add(this.galaxyNameLablel);
             this.Controls.Add(this.planetsButton);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.fleetsButton);
@@ -452,7 +504,6 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.galaxyImage)).EndInit();
@@ -476,8 +527,6 @@
         private System.Windows.Forms.ToolStripMenuItem mainMenuAbout;
         private System.Windows.Forms.ToolStripMenuItem MainMenuTechTree;
         private System.Windows.Forms.ToolStripMenuItem dModelsToolStripMenuItem;
-        private System.Windows.Forms.Label label_planets;
-        private System.Windows.Forms.TextBox textBox_planets;
         private System.Windows.Forms.Button step_button;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ProgressBar conquer_progressBar;
@@ -491,12 +540,19 @@
         private System.Windows.Forms.Label Credits;
         private System.Windows.Forms.Label CreditsStatus;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button Shop_button;
         private System.Windows.Forms.Label dateLabel;
         private System.Windows.Forms.Button marketButton;
         private System.Windows.Forms.Button fleetsButton;
         private System.Windows.Forms.Button planetsButton;
         private System.Windows.Forms.ListView listView;
+        private System.Windows.Forms.Label galaxyNameLablel;
+        private System.ComponentModel.BackgroundWorker StepWorker;
+        private System.ComponentModel.BackgroundWorker TechWorker;
+        private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.Label EnergyStatus;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label MineralStatus;
+        private System.Windows.Forms.Label label2;
     }
 }
 

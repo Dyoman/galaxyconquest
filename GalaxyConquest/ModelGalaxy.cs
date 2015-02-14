@@ -531,7 +531,7 @@ namespace GalaxyConquest
         string GenerateRandomStarName()
         {
             Random r = new Random();
-            TextReader tr = new StreamReader("Starnames.xml");
+            TextReader tr = new StreamReader(@"Starnames.xml");
             XmlSerializer xmlser = new XmlSerializer(typeof(string[]));
 
             string[] names = (string[])xmlser.Deserialize(tr);

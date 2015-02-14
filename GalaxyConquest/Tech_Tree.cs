@@ -35,7 +35,7 @@ namespace GalaxyConquest
 
             this.MouseWheel += new MouseEventHandler(this_MouseWheel);
 
-            StreamReader tech_str = new StreamReader("Tech.txt");
+            StreamReader tech_str = new StreamReader(@"Tech.txt");
             int counter = 0;
             string line;
 

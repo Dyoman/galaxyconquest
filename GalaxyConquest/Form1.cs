@@ -103,7 +103,7 @@ namespace GalaxyConquest
             listView.Visible = false;
             this.MouseWheel += new MouseEventHandler(this.onMouseWheel); // for resizing of galaxy at event change wheel mouse
             waveOutDevice = new WaveOutEvent();
-            audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
+            audioFileReader = new AudioFileReader(@"Sounds\Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
             statusStrip1.Items[0].Text = "Выбран 1 флот";
@@ -911,15 +911,22 @@ namespace GalaxyConquest
 
             if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000 && tt.subtech_clicked != 1000)
             {
-                tech_progressBar.Value += 1;
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() => tech_progressBar.Value += 1));
+                 }
+                
             }
 
             if (tech_progressBar.Value == tt.learning_tech_time)
             {
                 Player.technologies.Add(new int[] { tt.tech_clicked, tt.subtech_clicked });
-                tech_progressBar.Value = 0;
-                tech_progressBar.Visible = false;
-                tech_label.Visible = false;
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() => tech_progressBar.Value = 0));
+                    this.Invoke(new Action(() => tech_progressBar.Visible = false));
+                    this.Invoke(new Action(() => tech_label.Visible = false));
+                }
                 tt.tech_clicked = 1000;
                 tt.subtech_clicked = 1000;
             }

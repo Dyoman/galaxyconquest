@@ -518,6 +518,11 @@ namespace GalaxyConquest
 
         private void galaxyImage_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (galaxy == null)
+            {
+                return;
+            }
+
             for (int j = 0; j < galaxy.stars.Count; j++)
             {
                 #region old
@@ -606,6 +611,11 @@ namespace GalaxyConquest
 
         private void galaxyImage_MouseClick(object sender, MouseEventArgs e)
         {
+            if (galaxy == null)
+            {
+                return;
+            }
+
             for (int j = 0; j < galaxy.stars.Count; j++)
             {
                 StarSystem s = galaxy.stars[j];
@@ -673,6 +683,11 @@ namespace GalaxyConquest
 
         private void Shop_button_Click(object sender, EventArgs e)
         {
+            if (galaxy == null)
+            {
+                return;
+            }
+
             shop_form.ShowDialog();
 
             UpdateLabels();
@@ -682,6 +697,11 @@ namespace GalaxyConquest
 
         private void fleetsButton_Click(object sender, EventArgs e)
         {
+            if (galaxy == null)
+            {
+                return;
+            }
+
             if (listView.Tag.Equals(fleetsButton.Tag))
             {
                 listView.Visible = false;
@@ -706,6 +726,11 @@ namespace GalaxyConquest
 
         private void planetsButton_Click(object sender, EventArgs e)
         {
+            if (galaxy == null)
+            {
+                return;
+            }
+
             if (listView.Tag.Equals(planetsButton.Tag))
             {
                 listView.Visible = false;

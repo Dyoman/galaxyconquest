@@ -52,22 +52,23 @@
             this.sound_button = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.EnergyStatus = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.MineralStatus = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.CreditsStatus = new System.Windows.Forms.Label();
             this.Credits = new System.Windows.Forms.Label();
             this.marketButton = new System.Windows.Forms.Button();
             this.dateLabel = new System.Windows.Forms.Label();
             this.fleetsButton = new System.Windows.Forms.Button();
             this.listView = new System.Windows.Forms.ListView();
-            this.planetsButton = new System.Windows.Forms.Button();
+            this.systemsButton = new System.Windows.Forms.Button();
             this.galaxyNameLablel = new System.Windows.Forms.Label();
             this.StepWorker = new System.ComponentModel.BackgroundWorker();
             this.TechWorker = new System.ComponentModel.BackgroundWorker();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.galaxyImage = new System.Windows.Forms.PictureBox();
-            this.MineralStatus = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.EnergyStatus = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -116,6 +117,7 @@
             // 
             // mainMenuSave
             // 
+            this.mainMenuSave.Enabled = false;
             this.mainMenuSave.Name = "mainMenuSave";
             this.mainMenuSave.Size = new System.Drawing.Size(112, 22);
             this.mainMenuSave.Text = "Save...";
@@ -151,6 +153,7 @@
             // 
             // MainMenuTechTree
             // 
+            this.MainMenuTechTree.Enabled = false;
             this.MainMenuTechTree.Name = "MainMenuTechTree";
             this.MainMenuTechTree.Size = new System.Drawing.Size(68, 20);
             this.MainMenuTechTree.Text = "Tech tree";
@@ -270,6 +273,7 @@
             this.panel1.Controls.Add(this.conquer_progressBar);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.step_button);
+            this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(9, 27);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(159, 422);
@@ -290,7 +294,46 @@
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // EnergyStatus
+            // 
+            this.EnergyStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.EnergyStatus.AutoSize = true;
+            this.EnergyStatus.Location = new System.Drawing.Point(63, 66);
+            this.EnergyStatus.Name = "EnergyStatus";
+            this.EnergyStatus.Size = new System.Drawing.Size(15, 16);
+            this.EnergyStatus.TabIndex = 45;
+            this.EnergyStatus.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 66);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 16);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "Energy";
+            // 
+            // MineralStatus
+            // 
+            this.MineralStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.MineralStatus.AutoSize = true;
+            this.MineralStatus.Location = new System.Drawing.Point(63, 43);
+            this.MineralStatus.Name = "MineralStatus";
+            this.MineralStatus.Size = new System.Drawing.Size(15, 16);
+            this.MineralStatus.TabIndex = 43;
+            this.MineralStatus.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 16);
+            this.label2.TabIndex = 42;
+            this.label2.Text = "Minerals";
             // 
             // CreditsStatus
             // 
@@ -342,6 +385,7 @@
             // 
             this.fleetsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.fleetsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.fleetsButton.Enabled = false;
             this.fleetsButton.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fleetsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.fleetsButton.Location = new System.Drawing.Point(195, 369);
@@ -378,20 +422,21 @@
             this.listView.SelectedIndexChanged += new System.EventHandler(this.listView_SelectedIndexChanged);
             this.listView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseClick);
             // 
-            // planetsButton
+            // systemsButton
             // 
-            this.planetsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.planetsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.planetsButton.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.planetsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.planetsButton.Location = new System.Drawing.Point(287, 369);
-            this.planetsButton.Name = "planetsButton";
-            this.planetsButton.Size = new System.Drawing.Size(86, 80);
-            this.planetsButton.TabIndex = 30;
-            this.planetsButton.Tag = "system";
-            this.planetsButton.Text = "Systems";
-            this.planetsButton.UseVisualStyleBackColor = false;
-            this.planetsButton.Click += new System.EventHandler(this.planetsButton_Click);
+            this.systemsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.systemsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.systemsButton.Enabled = false;
+            this.systemsButton.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.systemsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.systemsButton.Location = new System.Drawing.Point(287, 369);
+            this.systemsButton.Name = "systemsButton";
+            this.systemsButton.Size = new System.Drawing.Size(86, 80);
+            this.systemsButton.TabIndex = 30;
+            this.systemsButton.Tag = "system";
+            this.systemsButton.Text = "Systems";
+            this.systemsButton.UseVisualStyleBackColor = false;
+            this.systemsButton.Click += new System.EventHandler(this.planetsButton_Click);
             // 
             // galaxyNameLablel
             // 
@@ -417,7 +462,7 @@
             // 
             // GameTimer
             // 
-            this.GameTimer.Interval = 1;
+            this.GameTimer.Interval = 10;
             this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
             // galaxyImage
@@ -433,49 +478,15 @@
             this.galaxyImage.TabStop = false;
             this.galaxyImage.Paint += new System.Windows.Forms.PaintEventHandler(this.galaxyImage_Paint);
             this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
-            this.galaxyImage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDoubleClick);
             this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
             this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
             // 
-            // MineralStatus
+            // toolTip1
             // 
-            this.MineralStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.MineralStatus.AutoSize = true;
-            this.MineralStatus.Location = new System.Drawing.Point(63, 43);
-            this.MineralStatus.Name = "MineralStatus";
-            this.MineralStatus.Size = new System.Drawing.Size(15, 16);
-            this.MineralStatus.TabIndex = 43;
-            this.MineralStatus.Text = "0";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 43);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 16);
-            this.label2.TabIndex = 42;
-            this.label2.Text = "Minerals";
-            // 
-            // EnergyStatus
-            // 
-            this.EnergyStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.EnergyStatus.AutoSize = true;
-            this.EnergyStatus.Location = new System.Drawing.Point(63, 66);
-            this.EnergyStatus.Name = "EnergyStatus";
-            this.EnergyStatus.Size = new System.Drawing.Size(15, 16);
-            this.EnergyStatus.TabIndex = 45;
-            this.EnergyStatus.Text = "0";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 66);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 16);
-            this.label3.TabIndex = 44;
-            this.label3.Text = "Energy";
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 400;
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ReshowDelay = 400;
             // 
             // Form1
             // 
@@ -483,7 +494,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 474);
             this.Controls.Add(this.galaxyNameLablel);
-            this.Controls.Add(this.planetsButton);
+            this.Controls.Add(this.systemsButton);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.fleetsButton);
             this.Controls.Add(this.dateLabel);
@@ -543,7 +554,7 @@
         private System.Windows.Forms.Label dateLabel;
         private System.Windows.Forms.Button marketButton;
         private System.Windows.Forms.Button fleetsButton;
-        private System.Windows.Forms.Button planetsButton;
+        private System.Windows.Forms.Button systemsButton;
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.Label galaxyNameLablel;
         private System.ComponentModel.BackgroundWorker StepWorker;
@@ -553,6 +564,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label MineralStatus;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

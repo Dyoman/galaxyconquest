@@ -7,11 +7,11 @@ using System.Drawing;
 namespace GalaxyConquest.StarSystems
 {
    
-    public class PLANET
+    public class PLANET : SpaceObject
     {
 
-        public Point CENTER = new Point(0, 0);
-        public float SPEED = 0.01f;
+        public PointF CENTER = new PointF(0, 0);
+        public float SPEED = 0.1f;
         public float DISTANCE = 100f;
         public float ROT = 0f;
         public float POPULATIONMAX = 0;
@@ -24,27 +24,15 @@ namespace GalaxyConquest.StarSystems
 
         public String NAME = "DEFAULT";
 
-
-        public Point GetPoint()
+        public PointF GetPoint()
         {
-            Point P2 = new Point(0, 0);
-            ROT += SPEED;
+            return new PointF((float)x, (float)y);
+        }
 
-
-            float XX = 0, YY = 0;
-
-
-            Point PP = new Point(CENTER.X, CENTER.Y + (int)DISTANCE);
-
-
-            XX = ((float)Math.Cos(ROT) * (PP.X - CENTER.X) + (float)Math.Sin(ROT) * (PP.Y - CENTER.Y)) + CENTER.X;
-            YY = ((float)Math.Cos(ROT) * (PP.Y - CENTER.Y) + (float)Math.Sin(ROT) * (PP.X - CENTER.X)) + CENTER.Y;
-
-
-            P2 = new Point((int)XX, (int)YY);
-
-
-            return P2;
+        public override void Move(double time)
+        {
+            x = (float)Math.Sin(time * SPEED) * DISTANCE + CENTER.X;
+            y = (float)Math.Cos(time * SPEED) * DISTANCE + CENTER.Y;
         }
 
         public double Inc(double p, double f)

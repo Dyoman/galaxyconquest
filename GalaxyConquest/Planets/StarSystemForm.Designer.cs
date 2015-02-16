@@ -35,17 +35,17 @@
             this.buildings = new System.Windows.Forms.TextBox();
             this.labelPlanetMinerals = new System.Windows.Forms.Label();
             this.labelPlanetSize = new System.Windows.Forms.Label();
-            this.Populn = new System.Windows.Forms.Label();
-            this.ownername = new System.Windows.Forms.Label();
+            this.labelPlanetPopulation = new System.Windows.Forms.Label();
+            this.ownerNameLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.profit = new System.Windows.Forms.Label();
+            this.profitLabel = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.labelPlanetName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.labelPlanetPopulation = new System.Windows.Forms.Label();
+            this.labelPlanetPopulationMax = new System.Windows.Forms.Label();
             this.сapture = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -59,6 +59,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(383, 371);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // timer1
@@ -72,29 +73,30 @@
             this.panel1.Controls.Add(this.buildings);
             this.panel1.Controls.Add(this.labelPlanetMinerals);
             this.panel1.Controls.Add(this.labelPlanetSize);
-            this.panel1.Controls.Add(this.Populn);
-            this.panel1.Controls.Add(this.ownername);
+            this.panel1.Controls.Add(this.labelPlanetPopulation);
+            this.panel1.Controls.Add(this.ownerNameLabel);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.profit);
+            this.panel1.Controls.Add(this.profitLabel);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.labelPlanetName);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.labelPlanetPopulation);
+            this.panel1.Controls.Add(this.labelPlanetPopulationMax);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(162, 350);
+            this.panel1.Size = new System.Drawing.Size(176, 323);
             this.panel1.TabIndex = 1;
             // 
             // buildings
             // 
+            this.buildings.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.buildings.Location = new System.Drawing.Point(16, 192);
             this.buildings.Multiline = true;
             this.buildings.Name = "buildings";
             this.buildings.ReadOnly = true;
-            this.buildings.Size = new System.Drawing.Size(133, 114);
+            this.buildings.Size = new System.Drawing.Size(153, 114);
             this.buildings.TabIndex = 38;
             // 
             // labelPlanetMinerals
@@ -102,36 +104,32 @@
             this.labelPlanetMinerals.AutoSize = true;
             this.labelPlanetMinerals.Location = new System.Drawing.Point(114, 65);
             this.labelPlanetMinerals.Name = "labelPlanetMinerals";
-            this.labelPlanetMinerals.Size = new System.Drawing.Size(35, 13);
+            this.labelPlanetMinerals.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetMinerals.TabIndex = 37;
-            this.labelPlanetMinerals.Text = "label6";
             // 
             // labelPlanetSize
             // 
             this.labelPlanetSize.AutoSize = true;
             this.labelPlanetSize.Location = new System.Drawing.Point(114, 38);
             this.labelPlanetSize.Name = "labelPlanetSize";
-            this.labelPlanetSize.Size = new System.Drawing.Size(35, 13);
+            this.labelPlanetSize.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetSize.TabIndex = 36;
-            this.labelPlanetSize.Text = "label5";
             // 
             // Populn
             // 
-            this.Populn.AutoSize = true;
-            this.Populn.Location = new System.Drawing.Point(114, 91);
-            this.Populn.Name = "Populn";
-            this.Populn.Size = new System.Drawing.Size(35, 13);
-            this.Populn.TabIndex = 24;
-            this.Populn.Text = "label5";
+            this.labelPlanetPopulation.AutoSize = true;
+            this.labelPlanetPopulation.Location = new System.Drawing.Point(114, 91);
+            this.labelPlanetPopulation.Name = "Populn";
+            this.labelPlanetPopulation.Size = new System.Drawing.Size(0, 13);
+            this.labelPlanetPopulation.TabIndex = 24;
             // 
             // ownername
             // 
-            this.ownername.AutoSize = true;
-            this.ownername.Location = new System.Drawing.Point(114, 176);
-            this.ownername.Name = "ownername";
-            this.ownername.Size = new System.Drawing.Size(35, 13);
-            this.ownername.TabIndex = 35;
-            this.ownername.Text = "label7";
+            this.ownerNameLabel.AutoSize = true;
+            this.ownerNameLabel.Location = new System.Drawing.Point(114, 176);
+            this.ownerNameLabel.Name = "ownername";
+            this.ownerNameLabel.Size = new System.Drawing.Size(0, 13);
+            this.ownerNameLabel.TabIndex = 35;
             // 
             // label6
             // 
@@ -144,12 +142,11 @@
             // 
             // profit
             // 
-            this.profit.AutoSize = true;
-            this.profit.Location = new System.Drawing.Point(114, 147);
-            this.profit.Name = "profit";
-            this.profit.Size = new System.Drawing.Size(35, 13);
-            this.profit.TabIndex = 34;
-            this.profit.Text = "label8";
+            this.profitLabel.AutoSize = true;
+            this.profitLabel.Location = new System.Drawing.Point(114, 147);
+            this.profitLabel.Name = "profit";
+            this.profitLabel.Size = new System.Drawing.Size(0, 13);
+            this.profitLabel.TabIndex = 34;
             // 
             // label7
             // 
@@ -166,9 +163,8 @@
             this.labelPlanetName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelPlanetName.Location = new System.Drawing.Point(13, 13);
             this.labelPlanetName.Name = "labelPlanetName";
-            this.labelPlanetName.Size = new System.Drawing.Size(41, 13);
+            this.labelPlanetName.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetName.TabIndex = 9;
-            this.labelPlanetName.Text = "label1";
             // 
             // label1
             // 
@@ -208,18 +204,17 @@
             // 
             // labelPlanetPopulation
             // 
-            this.labelPlanetPopulation.AutoSize = true;
-            this.labelPlanetPopulation.Location = new System.Drawing.Point(114, 119);
-            this.labelPlanetPopulation.Name = "labelPlanetPopulation";
-            this.labelPlanetPopulation.Size = new System.Drawing.Size(35, 13);
-            this.labelPlanetPopulation.TabIndex = 29;
-            this.labelPlanetPopulation.Text = "label7";
+            this.labelPlanetPopulationMax.AutoSize = true;
+            this.labelPlanetPopulationMax.Location = new System.Drawing.Point(114, 119);
+            this.labelPlanetPopulationMax.Name = "labelPlanetPopulation";
+            this.labelPlanetPopulationMax.Size = new System.Drawing.Size(0, 13);
+            this.labelPlanetPopulationMax.TabIndex = 29;
             // 
-            // Capture
+            // сapture
             // 
-            this.сapture.Location = new System.Drawing.Point(57, 368);
-            this.сapture.Name = "Capture";
-            this.сapture.Size = new System.Drawing.Size(75, 23);
+            this.сapture.Location = new System.Drawing.Point(48, 341);
+            this.сapture.Name = "сapture";
+            this.сapture.Size = new System.Drawing.Size(75, 32);
             this.сapture.TabIndex = 14;
             this.сapture.Text = "Захват";
             this.сapture.UseVisualStyleBackColor = true;
@@ -230,7 +225,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(697, 441);
+            this.ClientSize = new System.Drawing.Size(581, 376);
             this.Controls.Add(this.сapture);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
@@ -251,16 +246,16 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label labelPlanetName;
-        private System.Windows.Forms.Label Populn;
-        private System.Windows.Forms.Label ownername;
+        private System.Windows.Forms.Label labelPlanetPopulation;
+        private System.Windows.Forms.Label ownerNameLabel;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label profit;
+        private System.Windows.Forms.Label profitLabel;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label labelPlanetPopulation;
+        private System.Windows.Forms.Label labelPlanetPopulationMax;
         private System.Windows.Forms.Label labelPlanetMinerals;
         private System.Windows.Forms.Label labelPlanetSize;
         private System.Windows.Forms.TextBox buildings;

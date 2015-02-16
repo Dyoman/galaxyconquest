@@ -1050,9 +1050,11 @@ namespace GalaxyConquest.Tactics
 
 
             shipsCount();
-            
-            pictureMap.Refresh();
-            
+
+            if (redShipsCount == 0 || blueShipsCount == 0)
+                this.Dispose();
+
+            pictureMap.Refresh();            
         }
 
     }

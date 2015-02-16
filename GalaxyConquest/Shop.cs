@@ -41,12 +41,13 @@ namespace GalaxyConquest
 
         private void build_button1_Click(object sender, EventArgs e)
         {
-            if (Form1.credit > 50)
+            if (Form1.player.credit > 50)
             {
                 wpnLightLaser w = new wpnLightLaser();
                 ShipAssaulter s = new ShipAssaulter(1, w);
                 Player.player_ship.Add(s);
-                Form1.credit = Form1.credit - 50;
+                Form1.player.player_fleets[Form1.selectedFleet].ships.Add(s);
+                Form1.player.credit = Form1.player.credit - 50;
                 MessageBox.Show("Корабль построен");
             }
             else
@@ -57,12 +58,13 @@ namespace GalaxyConquest
 
         private void build_button2_Click(object sender, EventArgs e)
         {
-            if (Form1.credit > 25)
+            if (Form1.player.credit > 25)
             {
                 wpnLightLaser w = new wpnLightLaser();
                 ShipScout s = new ShipScout(1, w);
                 Player.player_ship.Add(s);
-                Form1.credit = Form1.credit - 25;
+                Form1.player.player_fleets[Form1.selectedFleet].ships.Add(s);
+                Form1.player.credit = Form1.player.credit - 25;
                 MessageBox.Show("Корабль построен");
             }
             else

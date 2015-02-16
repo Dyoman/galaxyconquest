@@ -12,13 +12,22 @@ using NAudio.Wave;
 
 // для работы с библиотекой FreeGLUT 
 using Tao.FreeGlut;
+using System.Xml.Serialization;
 
 namespace GalaxyConquest
 {
     [Serializable]
     public partial class Form1 : Form
     {
-        //-----added
+        string tooltipcaption = "";
+
+        SaveFileDialog sfd;
+        OpenFileDialog ofd;
+
+        StarSystemForm ssf;
+
+        bool onStep = false;
+        double syncTime = 1;
 
         //Цвета для флотов
         public static Brush activeFleetBrush = Brushes.GreenYellow;
@@ -31,43 +40,34 @@ namespace GalaxyConquest
         public static Color neutralFleetColor = Color.Silver;
         public static Color enemyFleetColor = Color.OrangeRed;
 
-        private int dispersion = 7;    //Размер выделяемой области вокруг звезды
+        int dispersion = 7;    //Размер выделяемой области вокруг звезды
 
-        //Число, которое отвечает за скорость передвижения флотов во время шага (чем больше, тем медленнее)
-        //При малых значениях движение происходит мгновенно
-        //Фактически это множитель количества пересчетов координат (fly * speed раз перечсчитываются)
-        int speed = 2000000;
-
-        private float centerX;
-        private float centerY;
-        //-------------
+        float centerX;
+        float centerY;
 
         public static double credit = 0;
         public static int energy = 0;
-        public static int minerals = 0;
+        public static float minerals = 0;
 
         public ModelGalaxy galaxy;
-        public Bitmap galaxyBitmap;
-        public double spinX = 0.0;
-        public double spinY = Math.PI / 4;
+        double spinX = 0.0;
+        double spinY = Math.PI / 4;
 
-        public float scaling = 1f;
-        //---edited
-        public float horizontal = 0;  //для увеличения плавности прокручивания стал float (был int)
-        public float vertical = 0;    //
+        float scaling = 1f;
+        float horizontal = 0;  //для увеличения плавности прокручивания стал float (был int)
+        float vertical = 0;    //
 
-        public float dynamicStarSize = 5; //Variable for dynamic of fix scale 
-        public double starDistanse;
-        public int maxDistanse = 150;
-        public double s2x, s2y, s2z;
-        public double warp;
+        float dynamicStarSize = 5; //Variable for dynamic of fix scale 
+        double starDistanse;
+        double maxDistanse = 150;
+        double s2x, s2y, s2z;
+        double warp;
 
-        public int selectedFleet = 0;
-        public static int star_selected; ////-----------------попытаюсь заменить на ссылку на объект звезды
-        public static StarSystem selectedStar;  // <- ссылка на объект
+        public static int selectedFleet = 0;
+        public static StarSystem selectedStar;
 
-        public int mouseX;
-        public int mouseY;
+        int mouseX;
+        int mouseY;
         //Brushes for stars colors
         public static SolidBrush BlueBrush = new SolidBrush(Color.FromArgb(255, 123, 104, 238));
         public static SolidBrush LightBlueBrush = new SolidBrush(Color.FromArgb(180, 135, 206, 235));
@@ -103,10 +103,17 @@ namespace GalaxyConquest
             listView.Visible = false;
             this.MouseWheel += new MouseEventHandler(this.onMouseWheel); // for resizing of galaxy at event change wheel mouse
             waveOutDevice = new WaveOutEvent();
-            audioFileReader = new AudioFileReader(@"Sounds\Untitled45.mp3");
+            audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
             statusStrip1.Items[0].Text = "Выбран 1 флот";
+
+            sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "Galaxy files|*.gal|All files|*.*";
+            ofd = new OpenFileDialog();
+            ofd.InitialDirectory = Application.StartupPath;
+            ofd.Filter = "Galaxy files|*.gal|All files|*.*";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -159,7 +166,8 @@ namespace GalaxyConquest
             {
                 player = new Player();
 
-                galaxy = new ModelGalaxy(player);
+                galaxy = new ModelGalaxy();
+                galaxy.player = player;
                 galaxy.GenerateNew(nd.galaxyName, nd.namePlayer, nd.getGalaxyType(), nd.getGalaxySize(), nd.getStarsCount(), nd.getGalaxyRandomEvents());
 
                 galaxyNameLablel.Text = galaxy.name;
@@ -167,24 +175,28 @@ namespace GalaxyConquest
 
                 UpdateLabels();
 
+                panel1.Enabled = true;
+                mainMenuSave.Enabled = true;
+                MainMenuTechTree.Enabled = true;
+                systemsButton.Enabled = true;
+                fleetsButton.Enabled = true;
+
                 GameTimer.Start();
             }
         }
 
         private void mainMenuSave_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sDlg = new SaveFileDialog();
-            if (sDlg.ShowDialog() == DialogResult.OK)
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                string fileName = sDlg.FileName;
+                string fileName = sfd.FileName;
 
-                FileStream fs = new FileStream(fileName, FileMode.CreateNew);
+                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
 
-
-                //XmlSerializer xs = new XmlSerializer(typeof(ModelGalaxy));
-                //xs.Serialize(fs, galaxy);                
+                XmlSerializer xmlser = new XmlSerializer(typeof(ModelGalaxy));
                 BinaryFormatter bf = new BinaryFormatter();
-                bf.Serialize(fs, galaxy);
+
+                xmlser.Serialize(fs, galaxy);
 
                 fs.Close();
             }
@@ -192,22 +204,23 @@ namespace GalaxyConquest
 
         private void mainMenuOpen_Click(object sender, EventArgs e)
         {
-            OpenFileDialog sDlg = new OpenFileDialog();
-            if (sDlg.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                string fileName = sDlg.FileName;
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);
+                XmlSerializer xmlser = new XmlSerializer(typeof(ModelGalaxy));
 
-                FileStream fs = new FileStream(fileName, FileMode.Open);
-
-                //XmlSerializer xs = new XmlSerializer(typeof(ModelGalaxy));
-                //xs.Serialize(fs, galaxy);                
-                BinaryFormatter bf = new BinaryFormatter();
-                galaxy = (ModelGalaxy)bf.Deserialize(fs);
-
+                //BinaryFormatter bf = new BinaryFormatter();
+                galaxy = (ModelGalaxy)xmlser.Deserialize(fs);
+                player = galaxy.player;
                 fs.Close();
 
-                //Redraw();
                 galaxyNameLablel.Text = galaxy.name;
+
+                panel1.Enabled = true;
+                mainMenuSave.Enabled = true;
+                MainMenuTechTree.Enabled = true;
+                systemsButton.Enabled = true;
+                fleetsButton.Enabled = true;
             }
 
         }
@@ -286,7 +299,6 @@ namespace GalaxyConquest
             for (int k = 0; k < galaxy.neutrals.Count; k++)
             {
                 Fleet fleet = galaxy.neutrals[k];
-                //if (s == galaxy.neutrals[k].s1)
 
                 double screenXfl = fleet.x * Math.Cos(spinX) - fleet.z * Math.Sin(spinX) - 10;
                 double screenZfl = fleet.x * Math.Sin(spinX) + fleet.z * Math.Cos(spinX);
@@ -311,9 +323,7 @@ namespace GalaxyConquest
                 double screenXfl = fleet.x * Math.Cos(spinX) - fleet.z * Math.Sin(spinX) - 10;
                 double screenZfl = fleet.x * Math.Sin(spinX) + fleet.z * Math.Cos(spinX);
                 double screenYfl = fleet.y * Math.Cos(spinY) - screenZfl * Math.Sin(spinY) - 10;
-
-                //if (playerSys != null)
-
+                
                 PointF[] compPointArrayShip = {  //точки для рисование корабля
                                         new PointF(centerX + (float)screenXfl + r * (float)Math.Cos(-1 * ugol), centerY + (float)screenYfl + r * (float)Math.Sin(-1 * ugol)),
                                         new PointF(centerX + (float)screenXfl + r * (float)Math.Cos(-2 * ugol), centerY + (float)screenYfl + r * (float)Math.Sin(-2 * ugol)),
@@ -333,7 +343,7 @@ namespace GalaxyConquest
 
                 if (warp == 1 && k == selectedFleet && player.player_fleets[selectedFleet].starDistanse == 0)
                 {
-                    string dis = Math.Round(starDistanse, 3).ToString() + " св. лет\n<Ходов: " + ((int)(starDistanse / maxDistanse) + 1).ToString() + ">";//+-
+                    string dis = Math.Round(starDistanse, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistanse / maxDistanse) + 1).ToString() + ">";//+-
 
                     double screenX, screens2X;
                     double screenY, screens2Y;
@@ -402,7 +412,6 @@ namespace GalaxyConquest
         private void Form1_Resize(object sender, EventArgs e)
         {
             UpdateCenters();
-            //galaxyImage.Refresh();
         }
 
         private void galaxyImage_MouseDown(object sender, MouseEventArgs e)
@@ -410,74 +419,66 @@ namespace GalaxyConquest
             mouseX = e.X;   //start x
             mouseY = e.Y;   //start y
         }
-
+        //edited
         private void galaxyImage_MouseMove(object sender, MouseEventArgs e)
         {
-            if (galaxy != null)
+
+            if (galaxy == null)
+                return;
+
+
+            if (e.Button == MouseButtons.Left)
             {
-                if (e.Button == MouseButtons.Left)
+                if (ModifierKeys == Keys.Shift)
                 {
-                    #region old
-                    /*
-                    int dx = mouseX - e.X;
-                    int dy = mouseY - e.Y;
-                    if (dx > 0)
-                    {
-                        horizontal -= 5;
-                    }
-                    if (dx < 0)
-                    {
-                        horizontal += 5;
-                    }
-                    if (dy > 0)
-                    {
-                        vertical -= 5;
-                    }
-                    if (dy < 0)
-                    {
-                        vertical += 5;
-                    }
-                    */
-                    #endregion
-
-                    if (ModifierKeys == Keys.Shift)
-                    {
-                        spinX += (e.X - mouseX) * 0.01;
-                        spinY += (e.Y - mouseY) * 0.01;
-                    }
-                    else
-                    {
-                        horizontal += (e.X - mouseX) / scaling;
-                        vertical += (e.Y - mouseY) / scaling;
-                    }
-
-                    mouseX = e.X;   //set start x again
-                    mouseY = e.Y;   //set start y again
-
-                    UpdateCenters();
+                    spinX += (e.X - mouseX) * 0.01;
+                    spinY += (e.Y - mouseY) * 0.01;
+                }
+                else
+                {
+                    horizontal += (e.X - mouseX) / scaling;
+                    vertical += (e.Y - mouseY) / scaling;
                 }
 
-                for (int j = 0; j < galaxy.stars.Count; j++)
+                mouseX = e.X;   //set start x again
+                mouseY = e.Y;   //set start y again
+
+                UpdateCenters();
+                return;
+            }
+
+
+            for (int j = 0; j < galaxy.stars.Count; j++)
+            {
+                StarSystem s = galaxy.stars[j];
+
+                if (mouseIsInStar(e, s))
                 {
-                    StarSystem s = galaxy.stars[j];
+                    s2x = s.x;
+                    s2y = s.y;
+                    s2z = s.z;
 
-                    if (mouseIsInStar(e, s))
-                    {
-                        if (player.player_fleets[selectedFleet].s1 == s)
-                            return;
+                    tooltipcaption = s.name;//added  --- задаем текст для всплывающей подсказки
 
-                        warp = 1;
-                        starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectedFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectedFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectedFleet].s1.z), 2));
-                        statusStrip1.Items[1].Text = "x: " + s.x + " y: " + s.y;
+                    if (player.player_fleets[selectedFleet].s1 == s)
                         break;
-                    }
-                    else
-                    {
-                        warp = 0;
-                        statusStrip1.Items[1].Text = "";
-                    }
+
+                    warp = 1;
+                    starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectedFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectedFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectedFleet].s1.z), 2));
+                    statusStrip1.Items[1].Text = "x: " + s.x + " y: " + s.y;
+                    break;
+                }
+                else
+                {
+                    tooltipcaption = "";//added
+                    warp = 0;
+                    statusStrip1.Items[1].Text = "";
                 }
             }
+            //Изменяем текст всплывающей подсказки
+            if (!toolTip1.GetToolTip(galaxyImage).Equals(tooltipcaption))
+                toolTip1.SetToolTip(galaxyImage, tooltipcaption);
+
         }
 
         private void onMouseWheel(object sender, MouseEventArgs e)
@@ -492,7 +493,6 @@ namespace GalaxyConquest
                     if (dynamicStarSize >= 3) dynamicStarSize -= 0.4f;
                     else if (dynamicStarSize >= 2) dynamicStarSize -= 0.05f;
                     else if (dynamicStarSize >= 0) dynamicStarSize -= 0.01f;
-                    //Redraw();
                 }
             }
             else
@@ -508,157 +508,141 @@ namespace GalaxyConquest
                         dynamicStarSize += 0.05f;
                     else if (dynamicStarSize <= 5)
                         dynamicStarSize += 0.4f;
-                    //Redraw();
                 }
             }
             UpdateCenters();
-            //Redraw();
-            //galaxyImage.Refresh();
-        }
-
-        private void galaxyImage_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (galaxy == null)
-            {
-                return;
-            }
-
-            for (int j = 0; j < galaxy.stars.Count; j++)
-            {
-                #region old
-                /*
-                StarSystem s = galaxy.stars[j];
-                
-                double screenX;
-                double screenY;
-                double tX, tY, tZ;
-                double starSize;
-                
-                float centerX = galaxyBitmap.Width / 2 / scaling;
-                float centerY = galaxyBitmap.Height / 2 / scaling;
-
-                centerX += horizontal;  //move galaxy left/right
-                centerY += vertical;    //move galaxy up/down
-                
-                tX = s.x * Math.Cos(spinX) - s.z * Math.Sin(spinX);
-                tZ = s.x * Math.Sin(spinX) + s.z * Math.Cos(spinX);
-                tY = s.y * Math.Cos(spinY) - tZ * Math.Sin(spinY);
-
-                screenX = tX;
-                screenY = tY;
-
-                starSize = s.type + dynamicStarSize;
-
-                //--------------------------------------//
-
-                //check for mouse in the star ellipce
-                if (e.X / scaling > (centerX + (int)screenX - starSize / 2) &&
-                    e.X / scaling < (centerX + (int)screenX + starSize / 2) &&
-                    e.Y / scaling > (centerY + (int)screenY - starSize / 2) &&
-                    e.Y / scaling < (centerY + (int)screenY + starSize / 2))
-                    */
-                #endregion
-
-                if (mouseIsInStar(e, galaxy.stars[j]))
-                {
-                    selectedStar = null;     //star_selected = j;//store type for selected star
-
-                    StarSystemForm ssm = new StarSystemForm(galaxy.stars[j]);
-                    ssm.ShowDialog();
-
-                    return;
-                }
-            }
-
-            for (int i = 0; i < player.player_fleets.Count; i++)
-            {
-                if (mouseIsInFleet(e, player.player_fleets[i]))
-                {
-                    int scout = 0, assault = 0, health = 0;
-                    for (int j = 0; j < player.player_fleets[i].ships.Count; j++)
-                    {
-                        health += player.player_fleets[i].ships[j].currentHealth;
-                        if (player.player_fleets[i].ships[j] is ShipScout)
-                            scout++;
-                        else if (player.player_fleets[i].ships[j] is ShipAssaulter)
-                            assault++;
-                    }
-
-                    MessageBox.Show("\n\nШтурмовых кораблей - " + assault + "\nИстребителей - " + scout + "\n\nОбщее количество здоровья: " + health + "hp", "Флот " + (i + 1));
-                    return;
-                }
-            }
-
-            for (int i = 0; i < galaxy.neutrals.Count; i++)
-            {
-                if (mouseIsInFleet(e, galaxy.neutrals[i]))
-                {
-                    int scout = 0, assault = 0, health = 0;
-                    for (int j = 0; j < galaxy.neutrals[i].ships.Count; j++)
-                    {
-                        health += galaxy.neutrals[i].ships[j].currentHealth;
-                        if (galaxy.neutrals[i].ships[j] is ShipScout)
-                            scout++;
-                        else if (galaxy.neutrals[i].ships[j] is ShipAssaulter)
-                            assault++;
-                    }
-
-                    MessageBox.Show("\n\nШтурмовых кораблей - " + assault + "\nИстребителей - " + scout + "\n\nОбщее количество здоровья: " + health + "hp", "Нейтральный флот");
-                    return;
-                }
-            }
         }
 
         private void galaxyImage_MouseClick(object sender, MouseEventArgs e)
         {
             if (galaxy == null)
-            {
                 return;
-            }
 
-            for (int j = 0; j < galaxy.stars.Count; j++)
+            //по нажатию левой клавиши выделяем флот/звезду для активного флота
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                StarSystem s = galaxy.stars[j];
-
-                if (mouseIsInStar(e, s))
+                for (int i = 0; i < player.player_fleets.Count; i++)
                 {
-                    if ((conquer_progressBar.Visible == false) && (player.player_fleets[selectedFleet].starDistanse == 0))
+                    if (mouseIsInFleet(e, player.player_fleets[i]))
                     {
-                        starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectedFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectedFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectedFleet].s1.z), 2));
-                        //if (starDistanse <= maxDistanse)
-                        {
-                            player.player_fleets[selectedFleet].s2 = s;
-                            player.player_fleets[selectedFleet].starDistanse = starDistanse;
-                            selectedStar = s;    //star_selected = j;   //store type for selected star
-                        }
-                    }
-                    else if (player.player_fleets[selectedFleet].s2 == s)///-----new
-                    {
-                        if (player.player_fleets[selectedFleet].onWay)
-                            break;
+                        selectedFleet = i;
 
-                        player.player_fleets[selectedFleet].s2 = null;
-                        player.player_fleets[selectedFleet].starDistanse = 0;
-                        selectedStar = null;
+                        selectedStar = player.player_fleets[i].s2;//----new
+
+                        statusStrip1.Items[0].Text = "Выбран " + (i + 1) + " флот";
+
+                        if (!player.player_stars.Contains(player.player_fleets[i].s1) && !player.player_fleets[i].onWay)
+                            button2.Enabled = true;
+                        else
+                            button2.Enabled = false;
+                        return;
                     }
-                    return;
+                }
+
+                if (onStep) return;
+
+                for (int j = 0; j < galaxy.stars.Count; j++)
+                {
+                    StarSystem s = galaxy.stars[j];
+
+                    if (mouseIsInStar(e, s))
+                    {
+                        if ((conquer_progressBar.Visible == false) && (player.player_fleets[selectedFleet].starDistanse == 0))
+                        {
+                            starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectedFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectedFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectedFleet].s1.z), 2));
+                            //if (starDistanse <= maxDistanse)
+                            {
+                                player.player_fleets[selectedFleet].setTarget(s);
+                                selectedStar = s;    //star_selected = j;   //store type for selected star
+                            }
+                        }
+                        else if (player.player_fleets[selectedFleet].s2 == s)///-----new
+                        {
+                            if (player.player_fleets[selectedFleet].onWay)
+                                break;
+
+                            player.player_fleets[selectedFleet].setTarget(null);
+                            selectedStar = null;
+                        }
+                        return;
+                    }
                 }
             }
 
-            for (int i = 0; i < player.player_fleets.Count; i++)
+            //по нажатию правой клавиши просматриваем звездную систему/флот игрока/нейтральный флот
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                if (mouseIsInFleet(e, player.player_fleets[i]))
+                for (int j = 0; j < galaxy.stars.Count; j++)
                 {
-                    selectedFleet = i;
+                    if (mouseIsInStar(e, galaxy.stars[j]))
+                    {
+                        if (ssf != null && !ssf.IsDisposed)
+                        {
+                            ssf.SetSystem(galaxy.stars[j]);
+                            ssf.Focus();
+                        }
+                        else
+                        {
+                            ssf = new StarSystemForm(galaxy.stars[j]);
+                            ssf.Show();
+                        }
 
-                    selectedStar = player.player_fleets[i].s2;//----new
+                        return;
+                    }
+                }
 
-                    statusStrip1.Items[0].Text = "Выбран " + (i + 1) + " флот";
+                for (int i = 0; i < player.player_fleets.Count; i++)
+                {
+                    if (mouseIsInFleet(e, player.player_fleets[i]))
+                    {
+                        int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
+                        for (int j = 0; j < player.player_fleets[i].ships.Count; j++)
+                        {
+                            health += player.player_fleets[i].ships[j].currentHealth;
+                            if (player.player_fleets[i].ships[j] is ShipScout)
+                            {
+                                scout++;
+                                if (player.player_fleets[i].ships[j].currentHealth > 0)
+                                    aScount++;
+                            }
+                            else if (player.player_fleets[i].ships[j] is ShipAssaulter)
+                            {
+                                assault++;
+                                if (player.player_fleets[i].ships[j].currentHealth > 0)
+                                    aAssault++;
+                            }
+                        }
 
-                    if (!player.player_stars.Contains(player.player_fleets[i].s1) && !player.player_fleets[i].onWay)
-                        button2.Enabled = true;
-                    else
-                        button2.Enabled = false;
+                        MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", "Флот " + (i + 1));
+                        return;
+                    }
+                }
+
+                for (int i = 0; i < galaxy.neutrals.Count; i++)
+                {
+                    if (mouseIsInFleet(e, galaxy.neutrals[i]))
+                    {
+                        int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
+                        for (int j = 0; j < galaxy.neutrals[i].ships.Count; j++)
+                        {
+                            health += galaxy.neutrals[i].ships[j].currentHealth;
+                            if (galaxy.neutrals[i].ships[j] is ShipScout)
+                            {
+                                scout++;
+                                if (galaxy.neutrals[i].ships[j].currentHealth > 0)
+                                    aScount++;
+                            }
+                            else if (galaxy.neutrals[i].ships[j] is ShipAssaulter)
+                            {
+                                assault++;
+                                if (galaxy.neutrals[i].ships[j].currentHealth > 0)
+                                    aAssault++;
+                            }
+                        }
+
+                        MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", "Нейтральный флот");
+                        return;
+                    }
                 }
             }
         }
@@ -676,17 +660,10 @@ namespace GalaxyConquest
             button3.Visible = false;
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void Shop_button_Click(object sender, EventArgs e)
         {
             if (galaxy == null)
-            {
                 return;
-            }
 
             shop_form.ShowDialog();
 
@@ -698,9 +675,7 @@ namespace GalaxyConquest
         private void fleetsButton_Click(object sender, EventArgs e)
         {
             if (galaxy == null)
-            {
                 return;
-            }
 
             if (listView.Tag.Equals(fleetsButton.Tag))
             {
@@ -727,11 +702,9 @@ namespace GalaxyConquest
         private void planetsButton_Click(object sender, EventArgs e)
         {
             if (galaxy == null)
-            {
                 return;
-            }
 
-            if (listView.Tag.Equals(planetsButton.Tag))
+            if (listView.Tag.Equals(systemsButton.Tag))
             {
                 listView.Visible = false;
                 listView.Tag = "";
@@ -743,16 +716,15 @@ namespace GalaxyConquest
             listView.Items.Clear();
             if (listView.Visible)
             {
-                listView.Tag = planetsButton.Tag;
+                listView.Tag = systemsButton.Tag;
                 for (int i = 0; i < player.player_stars.Count; i++)
                     listView.Items.Add(player.player_stars[i].name);
             }
-        }
-        
-        //-----added ----отображает путь до системы игрока от выбранного флота
+        }        
+        // отображает путь до системы игрока от выбранного флота
         private void listView_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            if (listView.Tag.Equals(planetsButton.Tag))
+            if (listView.Tag.Equals(systemsButton.Tag))
             {
                 StarSystem star = player.player_stars[e.Item.Index];
                 s2x = star.x;
@@ -790,15 +762,15 @@ namespace GalaxyConquest
         // выбор системы игрока в качестве цели для активного флота
         private void listView_MouseClick(object sender, MouseEventArgs e)
         {
-            if (listView.Tag.Equals(planetsButton.Tag))
+            if (onStep) return;
+
+            if (listView.Tag.Equals(systemsButton.Tag))
                 if (listView.SelectedIndices.Count > 0)
                 {
                     if (player.player_fleets[selectedFleet].starDistanse == 0)
                     {
                         StarSystem s = player.player_stars[listView.SelectedIndices[0]];
-                        starDistanse = Math.Sqrt(Math.Pow((s.x - player.player_fleets[selectedFleet].s1.x), 2) + Math.Pow((s.y - player.player_fleets[selectedFleet].s1.y), 2) + Math.Pow((s.z - player.player_fleets[selectedFleet].s1.z), 2));
-                        player.player_fleets[selectedFleet].s2 = s;
-                        player.player_fleets[selectedFleet].starDistanse = starDistanse;
+                        player.player_fleets[selectedFleet].setTarget(s);
                         selectedStar = s;    //star_selected = j;   //store type for selected star
                     }
                     else if (player.player_fleets[selectedFleet].s2 == player.player_stars[listView.SelectedIndices[0]])
@@ -806,15 +778,14 @@ namespace GalaxyConquest
                         if (player.player_fleets[selectedFleet].onWay)
                             return;
 
-                        player.player_fleets[selectedFleet].s2 = null;
-                        player.player_fleets[selectedFleet].starDistanse = 0;
+                        player.player_fleets[selectedFleet].setTarget(null);
                         selectedStar = null;
                     }
                 }
         }
 
         //-------------------------- Step ----------------------------------
-        //------ шаг будем осуществлять в отдельном потоке ------------------
+        //------ все рассчеты будем осуществлять в отдельном потоке ------------------
         private void step_button_Click(object sender, EventArgs e)
         {
             if (galaxy == null)
@@ -825,12 +796,12 @@ namespace GalaxyConquest
             panel1.Enabled = false;
             button2.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
 
-            StepWorker.RunWorkerAsync();//запускаем поток
+            onStep = true;      //Устанавливаем флаг шага
         }
         // сам поток
         private void StepWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            galaxy.Time++;
+            //galaxy.Time++;
 
             StarSystem s = selectedStar;    //StarSystem s = galaxy.stars[star_selected];
             Random r = new Random(DateTime.Now.Millisecond);
@@ -844,10 +815,11 @@ namespace GalaxyConquest
                 }
             }
 
-            //---------------получение бабосиков с захваченных систем---------
+            //---------------получение бабосиков и минералов с захваченных систем---------
             for (int i = 0; i < Player.player_planets.Count; i++)
             {
-                credit += Player.player_planets[i].PROFIT;//StarSystem.PLN[i].PROFIT;
+                player.credit += Player.player_planets[i].PROFIT;//StarSystem.PLN[i].PROFIT;
+                player.minerals += Player.player_planets[i].MINERALS;
             }
 
             //---------------процесс захвата системы---------  // ! FIX !
@@ -865,68 +837,17 @@ namespace GalaxyConquest
                     conquer_progressBar.Value = conquer_progressBar.Value + 1;
                 }
 
-            int fly = maxDistanse;
-
-            //------------------движение галактики -----------------
-            for (int i = 0; i < galaxy.stars.Count; i++)
-            {
-                //to add
-            }
-
-            //-------------------- движение флотов ---------------
-            for (int k = 0; k < player.player_fleets.Count; k++)
-            {
-                Fleet fl = player.player_fleets[k];
-
-                if (fl.s2 != null)
-                {
-                    fl.onWay = true;
-
-                    if (fl.starDistanse < maxDistanse)
-                        fly = (int)fl.starDistanse;
-
-                    double dx = (fl.s2.x - fl.x) / fl.starDistanse / speed;
-                    double dy = (fl.s2.y - fl.y) / fl.starDistanse / speed;
-                    double dz = (fl.s2.z - fl.z) / fl.starDistanse / speed;
-                    int calcFly = fly * speed;
-
-                    for (int i = 0; i < calcFly; i++)
-                    {
-                        fl.x += dx;
-                        fl.y += dy;
-                        fl.z += dz;
-                    }
-
-                    fl.starDistanse -= fly;
-
-                    if (fl.starDistanse <= 1)
-                    {
-                        fl.s1 = fl.s2;
-                        fl.s2 = null;
-                        fl.starDistanse = 0;
-                        fl.onWay = false;
-                    }
-                }
-            }
-
             if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000 && tt.subtech_clicked != 1000)
             {
-                if (this.InvokeRequired)
-                {
-                    this.Invoke(new Action(() => tech_progressBar.Value += 1));
-                 }
-                
+                tech_progressBar.Value += 1;
             }
 
             if (tech_progressBar.Value == tt.learning_tech_time)
             {
                 Player.technologies.Add(new int[] { tt.tech_clicked, tt.subtech_clicked });
-                if (this.InvokeRequired)
-                {
-                    this.Invoke(new Action(() => tech_progressBar.Value = 0));
-                    this.Invoke(new Action(() => tech_progressBar.Visible = false));
-                    this.Invoke(new Action(() => tech_label.Visible = false));
-                }
+                tech_progressBar.Value = 0;
+                tech_progressBar.Visible = false;
+                tech_label.Visible = false;
                 tt.tech_clicked = 1000;
                 tt.subtech_clicked = 1000;
             }
@@ -946,28 +867,34 @@ namespace GalaxyConquest
                     if (galaxy.neutrals[k].s1 == player.player_fleets[l].s1)
                     {
                         if (player.player_fleets[l].starDistanse == 0)
-                            if (MessageBox.Show("Ваш " + (l + 1) + " флот обнаружил нейтральный флот на планете " + player.player_fleets[l].s1.name + "!\nАтаковать его?", "", MessageBoxButtons.YesNo)
+                            if (MessageBox.Show("Ваш " + (l + 1) + " флот обнаружил нейтральный флот в системе " + player.player_fleets[l].s1.name + "!\nАтаковать его?", "", MessageBoxButtons.YesNo)
                                 == System.Windows.Forms.DialogResult.Yes)
                             {
                                 Fleet fl = galaxy.neutrals[k];
 
                                 CombatForm cf = new CombatForm(player.player_fleets[l], fl);
                                 cf.ShowDialog();
-
-                                bool alive = false;
-
-                                //Удалить флот из списка, если флот уничтожен
-                                for (int i = 0; i < fl.ships.Count; i++)
-                                {
-                                    alive |= (fl.ships[i].currentHealth > 0);   
-                                    //если хотябы у одго корабля хп больше 0, alive = true
-                                }
-
-                                if (!alive)
-                                    galaxy.neutrals.RemoveAt(k);
                             }
                     }
             }
+            //проверяем нейтральные флоты
+            for (int k = 0; k < galaxy.neutrals.Count; k++)
+            {
+                bool alive = false;
+
+                //Удалить флот из списка, если флот уничтожен
+                for (int i = 0; i < galaxy.neutrals[k].ships.Count; i++)
+                {
+                    alive |= (galaxy.neutrals[k].ships[i].currentHealth > 0);
+                    //если хотябы у одго корабля хп больше 0, alive = true
+                }
+
+                if (!alive)
+                    galaxy.neutrals.RemoveAt(k);
+            }
+
+            onStep = false; //Снимаем флаг шага
+
             //включаем кнопку захвата, если система в которой находится активный флот не захвачена
             if (!player.player_stars.Contains(player.player_fleets[selectedFleet].s1) && !player.player_fleets[selectedFleet].onWay)
                 button2.Enabled = true;
@@ -981,6 +908,21 @@ namespace GalaxyConquest
         //отрисовка только по таймеру
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            if (onStep)
+            {
+                if (syncTime <= 0)
+                {
+                    syncTime = 1;
+                    StepWorker.RunWorkerAsync();
+                }
+
+                MovementsController.Process(galaxy, galaxy.Time);
+                MovementsController.Process(galaxy.neutrals.ToArray(), galaxy.Time);
+                MovementsController.Process(player.player_fleets.ToArray(), galaxy.Time);
+
+                syncTime -= SpaceObject.FIXED_DELTA_TIME;
+                galaxy.Time += SpaceObject.FIXED_DELTA_TIME;
+            }
             galaxyImage.Refresh();
         }
 
@@ -990,10 +932,6 @@ namespace GalaxyConquest
         //Проверка находится ли курсор "e" в планете "star"
         private bool mouseIsInStar(MouseEventArgs e, StarSystem star)
         {
-            s2x = star.x;
-            s2y = star.y;
-            s2z = star.z;
-
             double screenX = star.x * Math.Cos(spinX) - star.z * Math.Sin(spinX);
             double screenZ = star.x * Math.Sin(spinX) + star.z * Math.Cos(spinX);
             double screenY = star.y * Math.Cos(spinY) - screenZ * Math.Sin(spinY);
@@ -1025,9 +963,9 @@ namespace GalaxyConquest
 
         private void UpdateLabels()
         {
-            dateLabel.Text = galaxy.Time.ToString() + " г.н.э.";
-            CreditsStatus.Text = Math.Round(credit, 2).ToString() + " $";
-            MineralStatus.Text = minerals + "Т";
+            dateLabel.Text = Math.Round(galaxy.Time).ToString() + " г.н.э.";
+            CreditsStatus.Text = Math.Round(player.credit, 2).ToString() + " $";
+            MineralStatus.Text = Math.Round(player.minerals, 3) + " Т";
             EnergyStatus.Text = energy + " Wt";
         }
     }

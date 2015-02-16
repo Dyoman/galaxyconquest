@@ -7,19 +7,23 @@ using GalaxyConquest.StarSystems;
 namespace GalaxyConquest
 {
     [Serializable]
-    public class StarSystem
+    public class StarSystem : SpaceObject
     {
-        public string name;
+        public double angVel = 0.05;  //Угловая скорость
+
+        public double R = 0, timeOffset = 0, increment = 0;//Радиус движения системы, смещение фазы и смещение координат
 
         public int type; //тип звезды
-
-        public double x;
-        public double y;
-        public double z;
         public SolidBrush br; //brush for stars
 
         public int planets_count;//num of planets
 
         public List<PLANET> PLN = new List<PLANET>();
+
+        public override void Move(double time)
+        {
+            for (int i = 0; i < PLN.Count; i++)
+                PLN[i].Move(time);
+        }
     }
 }

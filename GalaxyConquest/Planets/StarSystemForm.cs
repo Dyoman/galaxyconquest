@@ -14,198 +14,53 @@ namespace GalaxyConquest.StarSystems
 {
     public partial class StarSystemForm : Form
     {
-        public static int pln_selected;
         public static string size1;
         public static string minerals1;
         public int planet_selected;
         Random rand = new Random();
-        int maxpln = 4;
-        int dist = 100;
-        float speed = 0.001f;
-       // public PLANET sp;
-        public StarSystem s;
+
+        public StarSystem starSystem;
 
         public StarSystemForm(StarSystem system)
         {
+            TopMost = true;
             InitializeComponent();
-            s = system;
-            //sp = PLN;
+            SetSystem(system);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Start();
+            planet_selected = 0;
         }
-
-        // ///////////////////////
-        static Bitmap BIT = new Bitmap(800, 800);
-        static Graphics GBIT = Graphics.FromImage(BIT);
-        // ///////////////////////
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            GBIT.Clear(Color.Black);
-            Image newImage = Image.FromFile("Sprites/PlanetImage/1.JPG");
+            pictureBox1.Refresh();
+        }
 
-            // ////////////////////////////////////////
-            for (Int32 i = 0; i < s.PLN.Count; i++)
+        //Опять же отрисовка без битмапов :)
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            for (Int32 i = 0; i < starSystem.PLN.Count; i++)
             {
-                /*Bitmap myBitmap = new Bitmap("Sprites/PlanetImage/1.JPG");
-                   for (int j=0; j < (int)s.PLN[i].SIZE; j++)
-                  {
+                g.DrawEllipse(new Pen(Color.White), starSystem.PLN[0].GetPoint().X - starSystem.PLN[i].DISTANCE, starSystem.PLN[0].GetPoint().Y - starSystem.PLN[i].DISTANCE, starSystem.PLN[i].DISTANCE * 2, starSystem.PLN[i].DISTANCE * 2);
 
-                      if (Math.Sqrt(((s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2) + j) ^ 2 + ((s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2) - j) ^ 2) < s.PLN[i].SIZE / 2)
-                      {
-                          Color pixelColor = myBitmap.GetPixel((s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2) + j, (s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2) - j);
-                          RectangleF rect = new RectangleF((s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2) + j, (s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2) - j, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
-                          GBIT.DrawImage(newImage, rect);
-                      }
-                      else
-                      {
-                          RectangleF rect = new RectangleF((s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2) + j, (s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2) - j, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
-                          GBIT.FillRectangle(Brushes.Black,rect);
-                      }
-                  } */
-
-                // int rad = (int)Math.Sqrt(s.PLN[i].GetPoint().X * s.PLN[i].GetPoint().X + s.PLN[i].GetPoint().Y * s.PLN[i].GetPoint().Y);
-               GBIT.DrawEllipse(new Pen(Color.White), s.PLN[0].GetPoint().X - s.PLN[i].DISTANCE, s.PLN[0].GetPoint().Y - s.PLN[i].DISTANCE, s.PLN[i].DISTANCE * 2, s.PLN[i].DISTANCE * 2);
-               // RectangleF rect = new RectangleF(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
-
-                /* for (int j = s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2; j < (s.PLN[i].GetPoint().X + (int)s.PLN[i].SIZE / 2) && j > (s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2); j++)
-                 {
-                     for (int j1 = s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2; j1 < (s.PLN[i].GetPoint().Y + (int)s.PLN[i].SIZE / 2) && j1 > (s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2); j1++)
-                     {
-                         BIT.SetPixel(j, j1, Color.White);
-                     }
-                 }
-                 */
-               // GBIT.DrawImage(newImage, rect);
-
-                //BIT.GetPixel(300, 300);
-
-
-              //  BIT.SetPixel(300, 300, Color.White);
-
-
-
-                /*
-                for (int j = 0; j < (int)s.PLN[i].SIZE / 2; j++)
-                {
-                    for (int j1 = 0; j1 < (int)s.PLN[i].SIZE / 2; j1++)
-                    {
-                        if (Math.Sqrt(((s.PLN[i].GetPoint().X + j - (int)s.PLN[i].SIZE / 2)) ^ 2 + ((s.PLN[i].GetPoint().Y + j1 - (int)s.PLN[i].SIZE / 2)) ^ 2) > s.PLN[i].SIZE / 2)
-                        {
-                            RectangleF rect1 = new RectangleF((s.PLN[i].GetPoint().X + j - (int)s.PLN[i].SIZE / 2), (s.PLN[i].GetPoint().Y + j1 - (int)s.PLN[i].SIZE / 2), 1, 1);
-                            GBIT.FillRectangle(Brushes.Black, rect1);
-                        }
-                       
-                     }
-                    }
-                */
-                //RectangleF rect = new RectangleF(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE);
-                //GBIT.DrawImage(newImage, rect);
-              // Rectangle rectan = new Rectangle((int)(centerX - 5 + (int)screenX - starSize / 2), (int)(centerY - 5 + (int)screenY - starSize / 2), (int)(starSize + 11), (int)(starSize + 11));
-              //  if (s == s.PLN[planet_selected])
-             //  {
-             //      g.DrawEllipse(pen, rectan);
-             //  }
-
-
-                // /////////////////////////
-                GBIT.FillEllipse(new SolidBrush(s.PLN[i].CLR), new Rectangle(s.PLN[i].GetPoint().X - (int)s.PLN[i].SIZE / 2, s.PLN[i].GetPoint().Y - (int)s.PLN[i].SIZE / 2, (int)s.PLN[i].SIZE, (int)s.PLN[i].SIZE));
-                 GBIT.DrawString(s.PLN[i].NAME, new Font("arial", 10), new SolidBrush(Color.White), new Point(s.PLN[i].GetPoint().X, s.PLN[i].GetPoint().Y));
+                g.FillEllipse(new SolidBrush(starSystem.PLN[i].CLR), new RectangleF(starSystem.PLN[i].GetPoint().X - starSystem.PLN[i].SIZE / 2, starSystem.PLN[i].GetPoint().Y - starSystem.PLN[i].SIZE / 2, starSystem.PLN[i].SIZE, starSystem.PLN[i].SIZE));
+                g.DrawString(starSystem.PLN[i].NAME, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF(starSystem.PLN[i].GetPoint().X, starSystem.PLN[i].GetPoint().Y));
 
             }
-            // int rad = (int)Math.Sqrt(PLN[4].GetPoint().X * PLN[4].GetPoint().X + PLN[4].GetPoint().Y * PLN[4].GetPoint().Y);
-            // ////////////////////////////////////////
-
-            pictureBox1.Image = BIT;
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             PLANET PL = new PLANET();
 
-            for (int j = 0; j < s.PLN.Count; j++)
+            for (int j = 0; j < starSystem.PLN.Count; j++)
             {
                 //pln_selected = j;//переменная для связи планеты со формой2
-                #region old
-                /*
-                string sizeText = "";
-                string mineralsText = "";
-
-                //ниже- определение размера планеты
-                if (s.PLN[j].SIZE < 15)
-                {
-                    sizeText = "Small";
-                }
-                else
-                    if ((s.PLN[j].SIZE >= 15) && (s.PLN[j].SIZE < 25))
-                    {
-                        sizeText = "Medium";
-                    }
-                    else
-                        if (s.PLN[j].SIZE > 25)
-                        {
-                            sizeText = "Big";
-                        }
-
-
-                //ниже - определение ресурсов
-                if (s.PLN[j].MINERALS == 0)
-                {
-                    mineralsText = "No Minerals";
-                }
-                else
-                    if ((s.PLN[j].MINERALS > 0) && (s.PLN[j].MINERALS <= 10))
-                    {
-                        mineralsText = "Small";
-                    }
-                    else
-                        if ((s.PLN[j].MINERALS > 10) && (s.PLN[j].MINERALS <= 20))
-                        {
-                            mineralsText = "Medium";
-                        }
-                        else
-                            if (s.PLN[j].MINERALS > 20)
-                            {
-                                mineralsText = "Big";
-                            }
-                string playername111 = "Kolobok";
-                if (playername111 != "")
-                {
-                    s.PLN[j].OWNERNAME = "None";
-                }
-
-
-                if ((e.X > s.PLN[j].GetPoint().X - (s.PLN[j].SIZE / 2)) &&
-                    (e.X < s.PLN[j].GetPoint().X + (s.PLN[j].SIZE / 2)) &&    //клик по планете вызывает форму с информацией
-                    (e.Y > s.PLN[j].GetPoint().Y - (s.PLN[j].SIZE / 2)) &&
-                    (e.Y < s.PLN[j].GetPoint().Y + (s.PLN[j].SIZE / 2)))
-                {
-                    
-                    planet_selected = j;
-                    labelPlanetName.Text = s.PLN[j].NAME;
-                    labelPlanetSize.Text = sizeText;
-                    labelPlanetMinerals.Text = mineralsText;
-                    labelPlanetPopulation.Text = s.PLN[j].POPULATIONMAX.ToString();
-                    Populn.Text = s.PLN[j].POPULATION.ToString();
-                    ownername.Text = s.PLN[j].OWNERNAME;
-                    profit.Text = s.PLN[j].PROFIT.ToString();
-                    buildings.Text = "";//set buildings textbox to empty string
-                    for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
-                    {
-                        if (Player.buildings[z][0] == Form1.star_selected &&//check current starsystem
-                            Player.buildings[z][1] == j)                    //check current planet
-                        {
-                            //if ok add builds to text box
-                            buildings.AppendText(Buildings.buildings[Player.buildings[z][2]] + "\n");
-                        }
-                    }
-                }
-                */
-                #endregion
-                PLANET p = s.PLN[j];
+                PLANET p = starSystem.PLN[j];
 
                 string sizeText = "";
                 string mineralsText = "";
@@ -247,12 +102,6 @@ namespace GalaxyConquest.StarSystems
                             {
                                 mineralsText = "Big";
                             }
-                string playername111 = "Kolobok";
-                if (playername111 != "")
-                {
-                    s.PLN[j].OWNERNAME = "None";
-                }
-
 
                 if ((e.X > p.GetPoint().X - (p.SIZE / 2)) &&
                     (e.X < p.GetPoint().X + (p.SIZE / 2)) &&    //клик по планете вызывает форму с информацией
@@ -264,10 +113,10 @@ namespace GalaxyConquest.StarSystems
                     labelPlanetName.Text = p.NAME;
                     labelPlanetSize.Text = sizeText;
                     labelPlanetMinerals.Text = mineralsText;
-                    labelPlanetPopulation.Text = p.POPULATIONMAX.ToString();
-                    Populn.Text = p.POPULATION.ToString();
-                    ownername.Text = p.OWNERNAME;
-                    profit.Text = p.PROFIT.ToString();
+                    labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
+                    labelPlanetPopulation.Text = p.POPULATION.ToString();
+                    ownerNameLabel.Text = p.OWNERNAME;
+                    profitLabel.Text = p.PROFIT.ToString();
                     buildings.Text = "";//set buildings textbox to empty string
                     for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
                     {
@@ -278,32 +127,9 @@ namespace GalaxyConquest.StarSystems
                             buildings.AppendText(Buildings.buildings[Player.buildings[z][2]] + "\n");
                         }
                     }
+                    break;
                 }
             }
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void localstepbutton_Click(object sender, EventArgs e)
-        {
-            Random r = new Random(DateTime.Now.Millisecond);
-            for (int i = 0; i < s.PLN.Count; i++)
-            {
-                s.PLN[i].POPULATION = s.PLN[i].Inc(s.PLN[i].POPULATION, r.NextDouble());
-            }
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void build_button1_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -311,21 +137,38 @@ namespace GalaxyConquest.StarSystems
         {
             bool planet_consist = false;
 
-            if (Player.player_planets.Contains(s.PLN[planet_selected]))
+            if (Player.player_planets.Contains(starSystem.PLN[planet_selected]))
             {
                 planet_consist = true;
             }
 
             if (planet_consist == false)
             {
-                Player.player_planets.Add(s.PLN[planet_selected]);
-                Form1.shop_form.set_listbox_planet(s.PLN[planet_selected]);
+                Player.player_planets.Add(starSystem.PLN[planet_selected]);
+                Form1.shop_form.set_listbox_planet(starSystem.PLN[planet_selected]);
                 
             }
             else
             {
                 MessageBox.Show("Conqest");
             }
+        }
+
+        public void SetSystem(StarSystem s)
+        {
+            starSystem = s;
+            this.Text = "Система " + s.name;
+
+            planet_selected = 0;
+
+            labelPlanetName.Text = "";
+            labelPlanetPopulation.Text = "";
+            labelPlanetPopulationMax.Text = "";
+            labelPlanetMinerals.Text = "";
+            labelPlanetSize.Text = "";
+            profitLabel.Text = "";
+            ownerNameLabel.Text = "";
+            buildings.Text = "";
         }
     }
 }

@@ -19,6 +19,9 @@ namespace GalaxyConquest
         public static List<PLANET> player_planets;
         public List<StarSystem> player_stars; //звездные системы игрока
         public List<Fleet> player_fleets;
+        public double credit;
+        public int energy;
+        public float minerals;
 
         public Player()
         {
@@ -33,6 +36,9 @@ namespace GalaxyConquest
             player_planets = new List<PLANET>();
             player_ship = new List<Ship>();
 
+            credit = 0;
+            minerals = 0;
+            energy = 0;
         }
 
     }

@@ -18,20 +18,19 @@ namespace GalaxyConquest
     };
 
     [Serializable]
-    public class ModelGalaxy
+    public class ModelGalaxy : SpaceObject
     {
-        public int Time;
-        public string name; //название галактики
+        public double Time;
         public List<StarSystem> stars; //звездные системы
         public List<StarWarp> lanes;   //гиперпереходы
 
         public List<Fleet> neutrals;
+        GalaxyType galaxyType;
 
         public Player player;
 
-        public ModelGalaxy(Player player)
+        public ModelGalaxy()
         {
-            this.player = player;
             stars = new List<StarSystem>();
             lanes = new List<StarWarp>();
             neutrals = new List<Fleet>();
@@ -48,27 +47,30 @@ namespace GalaxyConquest
         /// <param name="generateRandomEvent">Возможность появления идеальной планеты</param>
         public void GenerateNew(string galaxyname, string playerName, GalaxyType type, int size, int starCount, bool generateRandomEvent)
         {
-            Time = 3000;
+            Time = 3000.0;
             name = galaxyname;
             player.name = playerName;
+            galaxyType = type;
 
             switch (type)
             {
                 case GalaxyType.Spiral:
-                    generate_spiral_galaxy(true, size, starCount);
-                    generate_spiral_galaxy(false, size, starCount);
+                    generate_spiral_galaxy(0.0, size, starCount);
+                    generate_spiral_galaxy(Math.PI * 20, size, starCount);
                     break;
                 case GalaxyType.Eliptical:
-                    generate_elliptical_galaxy(true, size, starCount);
-                    generate_elliptical_galaxy(false, size, starCount);
+                    generate_elliptical_galaxy(size, starCount);
                     break;
                 case GalaxyType.Irregular:
-                    generate_irregular_galaxy(true, size, starCount);
+                    generate_irregular_galaxy(0, size, starCount);
+                    generate_irregular_galaxy(Math.PI * 20, size, starCount);
                     break;
                 case GalaxyType.Sphere:
-                    generate_sphere_galaxy(true, size, starCount);
+                    generate_sphere_galaxy(size, starCount);
                     break;
             }
+
+            Move(Time);
 
             Random rand = new Random((int)DateTime.Now.Ticks);
 
@@ -174,7 +176,7 @@ namespace GalaxyConquest
             int colormin = 0;
             int colormax = 255;
             int dist = 50;
-            float speed = 0.001f;
+            float speed = 1f;
 
             if (s.PLN.Count > 0)
             {
@@ -185,9 +187,9 @@ namespace GalaxyConquest
             Random r = new Random(DateTime.Now.Millisecond);
             PLANET pln = new PLANET();
 
-            int planets_count = s.type + r.Next(0, 2);
+            int planets_count = s.type + r.Next(1, 2);
 
-            pln.CENTER = new Point(190, 190);
+            pln.CENTER = new PointF(190f, 190f);
             pln.DISTANCE = 0;
             pln.SPEED = 0;
             pln.CLR = s.br.Color;
@@ -196,6 +198,9 @@ namespace GalaxyConquest
             pln.POPULATIONMAX = 0;
             pln.POPULATION = 0;
             pln.MINERALS = 0;
+
+            pln.Move(Time);
+
             s.PLN.Add(pln);
 
             double p = 1;
@@ -204,7 +209,7 @@ namespace GalaxyConquest
             {
                 pln = new PLANET();
 
-                pln.CENTER = new Point(s.PLN[0].GetPoint().X, s.PLN[0].GetPoint().Y);
+                pln.CENTER = new PointF(s.PLN[0].GetPoint().X, s.PLN[0].GetPoint().Y);
                 pln.DISTANCE = dist;
                 pln.SPEED = speed;
                 pln.CLR = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
@@ -217,41 +222,35 @@ namespace GalaxyConquest
                 pln.MINERALS = r.Next(mineralmin, mineralmax);
                 pln.PROFIT = pln.POPULATION * pln.MINERALS;
 
+                pln.Move(Time);
+
                 s.PLN.Add(pln);
 
                 dist = dist + 25;
-                speed = speed / 3 + 0.0001f;
+                speed = speed / 3 + 0.1f;
             }
         }
 
-        void generate_spiral_galaxy(bool rotate, int galaxysize, int starscount)
+        void generate_spiral_galaxy(double offset, int galaxysize, int starscount)
         {
-            Double x;
-            Double y;
             Double r;           //radius
             Double t;           //rotate angle
             Random rand = new Random();
 
             r = 0;
-            t = 0;
+            t = offset;
             for (int i = 0; i < starscount / 2; i++)
             {
-                r += rand.Next(4) + 10 * (galaxysize + 1);
-                t += 0.2;
-
-                x = r * Math.Cos(t) + rand.Next(5 * (galaxysize + 1));
-                y = r * Math.Sin(t) + rand.Next(5 * (galaxysize + 1));
-
-                if (rotate == true)
-                {
-                    x = -x;
-                    y = -y;
-                }
-
                 StarSystem s = new StarSystem();
-                s.x = x;
+
+                r += rand.Next(4) + 15 * (galaxysize + 1);
+                t += 0.2 - Math.PI * 2;
+                
+                s.timeOffset = t;
+                s.R = r;
+
                 s.y = -5.0 + rand.NextDouble() * 10.0;
-                s.z = y;
+
                 s.type = rand.Next(7);  //type impact on size and color
                 s.name = GenerateRandomStarName(); //s.name = (i + 1).ToString();
 
@@ -300,34 +299,26 @@ namespace GalaxyConquest
 
         }
 
-        void generate_elliptical_galaxy(bool rotate, int galaxysize, int starscount)
+        void generate_elliptical_galaxy(int galaxysize, int starscount)
         {
-            Double x;
-            Double y;
-            Double t = Math.PI;
-            Double z = 0;
-            Random rand = new Random();
+            galaxysize++;
+            double inc = Math.PI * 48 / starscount;
+            Double t = 0;
+            Random rand = new Random((int)DateTime.Now.Ticks);
 
-            for (int i = 0; i < starscount / 2; i++)
+            for (int i = 0; i < starscount; i++)
             {
-
-                x = 100 * (galaxysize + 1) * Math.Cos(t) + rand.Next(200);
-                y = 100 * (galaxysize + 1) * Math.Sin(t) + rand.Next(200);
-                z = 0;
-
-                if (rotate == true)
-                {
-                    x = -x;
-                    y = -y;
-                }
-
                 StarSystem s = new StarSystem();
-                s.x = x;
-                s.y = z;
-                s.z = y;
+
+                t += inc;
+
+                s.timeOffset = t;
+
+                s.R = 100 * galaxysize + rand.Next(200) - 100;
+
                 s.type = rand.Next(7);  //type impact on size and color
                 s.name = GenerateRandomStarName();
-                s.planets_count = s.type + 1;
+
                 switch (s.type)
                 {
                     //O - Blue, t =30 000 — 60 000 K
@@ -368,12 +359,11 @@ namespace GalaxyConquest
 
                 generatePlanets(s);
                 stars.Add(s);
-                t += 0.2;
             }
 
         }
 
-        void generate_irregular_galaxy(bool rotate, int galaxysize, int starscount)//fix
+        void generate_irregular_galaxy1(bool rotate, int galaxysize, int starscount)//fix
         {
             Double x;
             Double y;
@@ -448,38 +438,95 @@ namespace GalaxyConquest
             }
         }
 
-        void generate_sphere_galaxy(bool rotate, int galaxysize, int starscount)
+        void generate_irregular_galaxy(double offset, int galaxysize, int starscount)
         {
-            Double x;
-            Double y;
-            Double z = 1;
+            Double r;           //radius
+            Double t;           //rotate angle
+            Random rand = new Random();
+
+            r = 0;
+            t = offset;
+            for (int i = 0; i < starscount / 2; i++)
+            {
+                StarSystem s = new StarSystem();
+
+                r += rand.Next(4) + 15 * (galaxysize + 1);
+                t += 0.2 - Math.PI * 2;
+
+                s.timeOffset = t;
+                s.R = r;
+
+                s.y = -5.0 + rand.NextDouble() * 10.0;
+                s.increment = rand.Next(-starscount * 100, starscount * 100);
+
+                s.type = rand.Next(7);  //type impact on size and color
+                s.name = GenerateRandomStarName(); //s.name = (i + 1).ToString();
+
+                switch (s.type)
+                {
+                    //O - Blue, t =30 000 — 60 000 K
+                    case 0:
+                        s.br = Form1.BlueBrush;
+                        break;
+
+                    //B - Light blue, t = 10 500 — 30 000 K
+                    case 1:
+                        s.br = Form1.LightBlueBrush;
+                        break;
+
+                    //A - White, t = 7500—10 000 K
+                    case 2:
+                        s.br = Form1.WhiteBrush;
+                        break;
+
+                    //F - Light Yellow, t = 6000—7200 K
+                    case 3:
+                        s.br = Form1.LightYellowBrush;
+                        break;
+
+                    //G - Yellow, t = 5500 — 6000 K
+                    case 4:
+                        s.br = Form1.YellowBrush;
+                        break;
+
+                    //K - Orange, t = 4000 — 5250 K
+                    case 5:
+                        s.br = Form1.OrangeBrush;
+                        break;
+
+                    //M - Red, t = 2600 — 3850 K
+                    case 6:
+                        s.br = Form1.RedBrush;
+                        break;
+                }
+
+                generatePlanets(s);
+
+                stars.Add(s);
+            }
+
+        }
+
+        void generate_sphere_galaxy(int galaxysize, int starscount)
+        {
             Double r;
-            Double t;
-            Double tX;
-            Double tY;
-            Double tZ;
+            Double t = 0; ;
 
             Random rand = new Random();
-            t = 0;
+
             for (int j = 0; j < starscount / 2; j++)
             {
                 r = 0;
-                t += 5;
+                t += Math.PI * starscount / 2;
                 for (int i = 0; i < 2; i++)
                 {
-                    r += 1;
-
-                    x = Math.Cos(r) * 100 * (galaxysize + 1);
-                    y = Math.Sin(r) * 100 * (galaxysize + 1);
-
-                    tX = x * Math.Cos(t) + z * Math.Sin(t);
-                    tZ = x * Math.Sin(t) - z * Math.Cos(t);
-                    tY = y * Math.Cos(t) + tZ * Math.Sin(t);
-
+                    r = rand.Next(starscount);
                     StarSystem s = new StarSystem();
-                    s.x = tX;
-                    s.y = tZ;
-                    s.z = tY;
+
+                    s.R = r;
+                    s.increment = 100 * (galaxysize + 1);
+                    s.timeOffset = t;
+
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = GenerateRandomStarName();
                     s.planets_count = s.type + 1;
@@ -552,6 +599,51 @@ namespace GalaxyConquest
                     }
                 if (uniq)
                     return name;
+            }
+        }
+        
+        //Движение галактики
+        public override void Move(double time)
+        {
+            switch (galaxyType)
+            {
+                case GalaxyType.Spiral:
+                    for (int i = 0; i < stars.Count; i++)
+                    {
+                        stars[i].x = stars[i].R * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].z = stars[i].R * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].Move(time);
+                    }
+                    break;
+                case GalaxyType.Eliptical:
+                    for (int i = 0; i < stars.Count; i++)
+                    {
+                        stars[i].x = stars[i].R * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].z = stars[i].R * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].Move(time);
+                    }
+                    break;
+                case GalaxyType.Sphere:
+                    for (int i = 0; i < stars.Count; i++)
+                    {
+                        double x = Math.Cos(stars[i].R) * stars[i].increment;
+                        double y = Math.Sin(stars[i].R) * stars[i].increment;
+
+                        stars[i].x = x * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset)) + z * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].z = x * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset)) - z * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].y = y * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset)) + stars[i].z * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].Move(time);
+                    }
+                    break;
+                case GalaxyType.Irregular:
+                    for (int i = 0; i < stars.Count; i++)
+                    {
+                        stars[i].x = stars[i].R * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset - stars[i].increment));
+                        stars[i].z = stars[i].R * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset + stars[i].increment));
+                        stars[i].y = y * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset + stars[i].increment)) + stars[i].z * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset - stars[i].increment));
+                        stars[i].Move(time);
+                    }
+                    break;
             }
         }
     }

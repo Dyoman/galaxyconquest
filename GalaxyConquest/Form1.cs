@@ -103,7 +103,7 @@ namespace GalaxyConquest
             listView.Visible = false;
             this.MouseWheel += new MouseEventHandler(this.onMouseWheel); // for resizing of galaxy at event change wheel mouse
             waveOutDevice = new WaveOutEvent();
-            audioFileReader = new AudioFileReader("Sounds/Untitled45.mp3");
+            audioFileReader = new AudioFileReader(@"Sounds\Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
             statusStrip1.Items[0].Text = "Выбран 1 флот";
@@ -788,10 +788,8 @@ namespace GalaxyConquest
         //------ все рассчеты будем осуществлять в отдельном потоке ------------------
         private void step_button_Click(object sender, EventArgs e)
         {
-            if (galaxy == null)
-            {
-                return;
-            }
+            if (galaxy == null) return;
+
             //выключаем всю панель, пока запущен поток
             panel1.Enabled = false;
             button2.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
@@ -801,9 +799,7 @@ namespace GalaxyConquest
         // сам поток
         private void StepWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            //galaxy.Time++;
-
-            StarSystem s = selectedStar;    //StarSystem s = galaxy.stars[star_selected];
+            StarSystem s = selectedStar;
             Random r = new Random(DateTime.Now.Millisecond);
 
             //---------------изменение популяции в системах---------
@@ -811,7 +807,7 @@ namespace GalaxyConquest
             {
                 for (int i = 0; i < galaxy.stars[j].planets_count; i++)
                 {
-                    galaxy.stars[j].PLN[i].POPULATION = galaxy.stars[j].PLN[i].Inc(galaxy.stars[j].PLN[i].POPULATION, r.NextDouble());
+                    galaxy.stars[j].PLN[i].POPULATION += galaxy.stars[j].PLN[i].Inc(galaxy.stars[j].PLN[i].POPULATION, r.NextDouble());
                 }
             }
 
@@ -839,15 +835,19 @@ namespace GalaxyConquest
 
             if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000 && tt.subtech_clicked != 1000)
             {
-                tech_progressBar.Value += 1;
+                if (InvokeRequired)
+                    Invoke(new Action(() => tech_progressBar.Value += 1));
             }
 
             if (tech_progressBar.Value == tt.learning_tech_time)
             {
                 Player.technologies.Add(new int[] { tt.tech_clicked, tt.subtech_clicked });
-                tech_progressBar.Value = 0;
-                tech_progressBar.Visible = false;
-                tech_label.Visible = false;
+                if (InvokeRequired)
+                {
+                    Invoke(new Action(() => tech_progressBar.Value = 0));
+                    Invoke(new Action(() => tech_progressBar.Visible = false));
+                    Invoke(new Action(() => tech_label.Visible = false));
+                }
                 tt.tech_clicked = 1000;
                 tt.subtech_clicked = 1000;
             }
@@ -855,11 +855,6 @@ namespace GalaxyConquest
         // функция, которая вызывается после того как поток завершился
         private void StepWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            //Обновляем лейблы
-            UpdateLabels();
-            //включам панель с кнопками
-            panel1.Enabled = true;
-            step_button.Focus();//задаём фокус для кнопки шага
             //проверяем нахождение нейтральных флотов и флотов игрока в одной системе
             for (int k = 0; k < galaxy.neutrals.Count; k++)
             {
@@ -893,7 +888,11 @@ namespace GalaxyConquest
                     galaxy.neutrals.RemoveAt(k);
             }
 
-            onStep = false; //Снимаем флаг шага
+            //Обновляем лейблы
+            UpdateLabels();
+            //включам панель с кнопками
+            panel1.Enabled = true;
+            step_button.Focus();//задаём фокус для кнопки шага
 
             //включаем кнопку захвата, если система в которой находится активный флот не захвачена
             if (!player.player_stars.Contains(player.player_fleets[selectedFleet].s1) && !player.player_fleets[selectedFleet].onWay)
@@ -913,6 +912,7 @@ namespace GalaxyConquest
                 if (syncTime <= 0)
                 {
                     syncTime = 1;
+                    onStep = false; //Снимаем флаг шага
                     StepWorker.RunWorkerAsync();
                 }
 

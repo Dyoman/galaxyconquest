@@ -73,6 +73,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MovementsController.cs" />
     <Compile Include="Shop.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +108,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SpaceObject.cs" />
     <Compile Include="StarSystem.cs" />
     <Compile Include="StarWarp.cs" />
     <Compile Include="TacticCombat\Box.cs" />

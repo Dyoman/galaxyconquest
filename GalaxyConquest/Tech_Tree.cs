@@ -27,7 +27,7 @@ namespace GalaxyConquest
         float centerX;
         float centerY;
 
-        public Brush br;
+        public Brush br = Brushes.White;
 
         public Tech_Tree()
         {
@@ -66,7 +66,6 @@ namespace GalaxyConquest
 
         private void Redraw()
         {
-
             TechTreeBitmap = new Bitmap(TechTreeImage.Width, TechTreeImage.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);

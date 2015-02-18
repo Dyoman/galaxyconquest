@@ -1,4 +1,5 @@
-﻿using GalaxyConquest.StarSystems;
+﻿using GalaxyConquest.Drawing;
+using GalaxyConquest.StarSystems;
 using GalaxyConquest.Tactics;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,6 @@ namespace GalaxyConquest
         public List<Fleet> neutrals;
         GalaxyType galaxyType;
 
-        public Player player;
-
         public ModelGalaxy()
         {
             stars = new List<StarSystem>();
@@ -45,11 +44,10 @@ namespace GalaxyConquest
         /// <param name="size">Размер галактики</param>
         /// <param name="starCount">Количество звездных систем</param>
         /// <param name="generateRandomEvent">Возможность появления идеальной планеты</param>
-        public void GenerateNew(string galaxyname, string playerName, GalaxyType type, int size, int starCount, bool generateRandomEvent)
+        public void GenerateNew(string galaxyname, GalaxyType type, int size, int starCount, bool generateRandomEvent)
         {
             Time = 3000.0;
             name = galaxyname;
-            player.name = playerName;
             galaxyType = type;
 
             switch (type)
@@ -78,79 +76,6 @@ namespace GalaxyConquest
             {
                 generate_random_events();
             }
-
-            //-----generate player fleets-------
-            int fleetsCount = rand.Next(1, 3);
-            for (int i = 0; i < fleetsCount; i++)
-            {
-                StarSystem s = stars[rand.Next(0, stars.Count - 1)];
-                while (player.player_stars.Contains(s))
-                {
-                    s = stars[rand.Next(0, stars.Count - 1)];
-                }
-                player.player_stars.Add(s);
-
-                for (int j = 0; j < s.PLN.Count; j++)
-                    Player.player_planets.Add(s.PLN[j]);
-
-                Fleet fl = generateFleet(rand.Next(2, 5), 1);
-                fl.s1 = s;
-                fl.name = "Флот " + (i + 1) + " <" + player.name + ">";
-                fl.x = fl.s1.x;
-                fl.y = fl.s1.y;
-                fl.z = fl.s1.z;
-                player.player_fleets.Add(fl);
-            }
-
-            //-----generate neutral fleets-------
-            fleetsCount = rand.Next(1, 3);
-            for (int i = 0; i < fleetsCount; i++)
-            {
-                StarSystem sr = stars[rand.Next(0, stars.Count - 1)];
-                while (player.player_stars.Contains(sr))
-                {
-                    sr = stars[rand.Next(0, stars.Count - 1)];
-                }
-                Fleet flneutrals = generateFleet(rand.Next(2, 4), 2);
-                flneutrals.s1 = sr;
-                flneutrals.name = "Нейтральный флот";
-                flneutrals.x = flneutrals.s1.x;
-                flneutrals.y = flneutrals.s1.y;
-                flneutrals.z = flneutrals.s1.z;
-                neutrals.Add(flneutrals);
-            }
-        }
-
-        Fleet generateFleet(int size, int player)
-        {
-            Random rand = new Random((int)DateTime.Now.Ticks);
-            Fleet fleet = new Fleet();
-
-            for (int i = 0; i < size; i++)
-            {
-                int ship_type = (rand.Next(0, 100)) % 2;
-                int weapon_type = rand.Next(0, 2);
-
-                Weapon weapon = null;
-                Ship ship = null;
-                switch (weapon_type)
-                {
-                    case 0: weapon = new wpnLightLaser(); break;
-                    //case 1: weapon = new WpnLightIon(); break;
-                    case 1: weapon = new WpnHeavyLaser(); break;
-                }
-
-                switch (ship_type)
-                {
-                    case 0: ship = new ShipScout(player, weapon); break;
-                    case 1: ship = new ShipAssaulter(player, weapon); break;
-                }
-
-                ship.player = player;
-                fleet.ships.Add(ship);
-            }
-
-            return fleet;
         }
 
         void generate_random_events()
@@ -160,7 +85,7 @@ namespace GalaxyConquest
 
             nova.name = "Super nova";     //name for new star
             nova.type = 8;                //type for "super nova"
-            nova.br = Form1.SuperWhiteBrush;    //brush for "super nova"
+            nova.br = PlanetBrushes.SuperWhiteBrush;    //brush for "super nova"
 
             generatePlanets(nova);
         }
@@ -258,37 +183,37 @@ namespace GalaxyConquest
                 {
                     //O - Blue, t =30 000 — 60 000 K
                     case 0:
-                        s.br = Form1.BlueBrush;
+                        s.br = PlanetBrushes.BlueBrush;
                         break;
 
                     //B - Light blue, t = 10 500 — 30 000 K
                     case 1:
-                        s.br = Form1.LightBlueBrush;
+                        s.br = PlanetBrushes.LightBlueBrush;
                         break;
 
                     //A - White, t = 7500—10 000 K
                     case 2:
-                        s.br = Form1.WhiteBrush;
+                        s.br = PlanetBrushes.WhiteBrush;
                         break;
 
                     //F - Light Yellow, t = 6000—7200 K
                     case 3:
-                        s.br = Form1.LightYellowBrush;
+                        s.br = PlanetBrushes.LightYellowBrush;
                         break;
 
                     //G - Yellow, t = 5500 — 6000 K
                     case 4:
-                        s.br = Form1.YellowBrush;
+                        s.br = PlanetBrushes.YellowBrush;
                         break;
 
                     //K - Orange, t = 4000 — 5250 K
                     case 5:
-                        s.br = Form1.OrangeBrush;
+                        s.br = PlanetBrushes.OrangeBrush;
                         break;
 
                     //M - Red, t = 2600 — 3850 K
                     case 6:
-                        s.br = Form1.RedBrush;
+                        s.br = PlanetBrushes.RedBrush;
                         break;
                 }
 
@@ -323,37 +248,37 @@ namespace GalaxyConquest
                 {
                     //O - Blue, t =30 000 — 60 000 K
                     case 0:
-                        s.br = Form1.BlueBrush;
+                        s.br = PlanetBrushes.BlueBrush;
                         break;
 
                     //B - Light blue, t = 10 500 — 30 000 K
                     case 1:
-                        s.br = Form1.LightBlueBrush;
+                        s.br = PlanetBrushes.LightBlueBrush;
                         break;
 
                     //A - White, t = 7500—10 000 K
                     case 2:
-                        s.br = Form1.WhiteBrush;
+                        s.br = PlanetBrushes.WhiteBrush;
                         break;
 
                     //F - Light Yellow, t = 6000—7200 K
                     case 3:
-                        s.br = Form1.LightYellowBrush;
+                        s.br = PlanetBrushes.LightYellowBrush;
                         break;
 
                     //G - Yellow, t = 5500 — 6000 K
                     case 4:
-                        s.br = Form1.YellowBrush;
+                        s.br = PlanetBrushes.YellowBrush;
                         break;
 
                     //K - Orange, t = 4000 — 5250 K
                     case 5:
-                        s.br = Form1.OrangeBrush;
+                        s.br = PlanetBrushes.OrangeBrush;
                         break;
 
                     //M - Red, t = 2600 — 3850 K
                     case 6:
-                        s.br = Form1.RedBrush;
+                        s.br = PlanetBrushes.RedBrush;
                         break;
                 }
 
@@ -399,37 +324,37 @@ namespace GalaxyConquest
                     {
                         //O - Blue, t =30 000 — 60 000 K
                         case 0:
-                            s.br = Form1.BlueBrush;
+                            s.br = PlanetBrushes.BlueBrush;
                             break;
 
                         //B - Light blue, t = 10 500 — 30 000 K
                         case 1:
-                            s.br = Form1.LightBlueBrush;
+                            s.br = PlanetBrushes.LightBlueBrush;
                             break;
 
                         //A - White, t = 7500—10 000 K
                         case 2:
-                            s.br = Form1.WhiteBrush;
+                            s.br = PlanetBrushes.WhiteBrush;
                             break;
 
                         //F - Light Yellow, t = 6000—7200 K
                         case 3:
-                            s.br = Form1.LightYellowBrush;
+                            s.br = PlanetBrushes.LightYellowBrush;
                             break;
 
                         //G - Yellow, t = 5500 — 6000 K
                         case 4:
-                            s.br = Form1.YellowBrush;
+                            s.br = PlanetBrushes.YellowBrush;
                             break;
 
                         //K - Orange, t = 4000 — 5250 K
                         case 5:
-                            s.br = Form1.OrangeBrush;
+                            s.br = PlanetBrushes.OrangeBrush;
                             break;
 
                         //M - Red, t = 2600 — 3850 K
                         case 6:
-                            s.br = Form1.RedBrush;
+                            s.br = PlanetBrushes.RedBrush;
                             break;
                     }
                     generatePlanets(s);
@@ -466,37 +391,37 @@ namespace GalaxyConquest
                 {
                     //O - Blue, t =30 000 — 60 000 K
                     case 0:
-                        s.br = Form1.BlueBrush;
+                        s.br = PlanetBrushes.BlueBrush;
                         break;
 
                     //B - Light blue, t = 10 500 — 30 000 K
                     case 1:
-                        s.br = Form1.LightBlueBrush;
+                        s.br = PlanetBrushes.LightBlueBrush;
                         break;
 
                     //A - White, t = 7500—10 000 K
                     case 2:
-                        s.br = Form1.WhiteBrush;
+                        s.br = PlanetBrushes.WhiteBrush;
                         break;
 
                     //F - Light Yellow, t = 6000—7200 K
                     case 3:
-                        s.br = Form1.LightYellowBrush;
+                        s.br = PlanetBrushes.LightYellowBrush;
                         break;
 
                     //G - Yellow, t = 5500 — 6000 K
                     case 4:
-                        s.br = Form1.YellowBrush;
+                        s.br = PlanetBrushes.YellowBrush;
                         break;
 
                     //K - Orange, t = 4000 — 5250 K
                     case 5:
-                        s.br = Form1.OrangeBrush;
+                        s.br = PlanetBrushes.OrangeBrush;
                         break;
 
                     //M - Red, t = 2600 — 3850 K
                     case 6:
-                        s.br = Form1.RedBrush;
+                        s.br = PlanetBrushes.RedBrush;
                         break;
                 }
 
@@ -534,37 +459,37 @@ namespace GalaxyConquest
                     {
                         //O - Blue, t =30 000 — 60 000 K
                         case 0:
-                            s.br = Form1.BlueBrush;
+                            s.br = PlanetBrushes.BlueBrush;
                             break;
 
                         //B - Light blue, t = 10 500 — 30 000 K
                         case 1:
-                            s.br = Form1.LightBlueBrush;
+                            s.br = PlanetBrushes.LightBlueBrush;
                             break;
 
                         //A - White, t = 7500—10 000 K
                         case 2:
-                            s.br = Form1.WhiteBrush;
+                            s.br = PlanetBrushes.WhiteBrush;
                             break;
 
                         //F - Light Yellow, t = 6000—7200 K
                         case 3:
-                            s.br = Form1.LightYellowBrush;
+                            s.br = PlanetBrushes.LightYellowBrush;
                             break;
 
                         //G - Yellow, t = 5500 — 6000 K
                         case 4:
-                            s.br = Form1.YellowBrush;
+                            s.br = PlanetBrushes.YellowBrush;
                             break;
 
                         //K - Orange, t = 4000 — 5250 K
                         case 5:
-                            s.br = Form1.OrangeBrush;
+                            s.br = PlanetBrushes.OrangeBrush;
                             break;
 
                         //M - Red, t = 2600 — 3850 K
                         case 6:
-                            s.br = Form1.RedBrush;
+                            s.br = PlanetBrushes.RedBrush;
                             break;
                     }
                     generatePlanets(s);

@@ -120,7 +120,7 @@ namespace GalaxyConquest.StarSystems
                     buildings.Text = "";//set buildings textbox to empty string
                     for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
                     {
-                        if (Player.buildings[z][0] == Form1.player.player_stars.IndexOf(Form1.selectedStar) &&//check current starsystem
+                        if (Player.buildings[z][0] == Form1.Game.Player.stars.IndexOf(Form1.Game.Player.selectedStar) &&//check current starsystem
                             Player.buildings[z][1] == j)                    //check current planet
                         {
                             //if ok add builds to text box
@@ -137,14 +137,14 @@ namespace GalaxyConquest.StarSystems
         {
             bool planet_consist = false;
 
-            if (Player.player_planets.Contains(starSystem.PLN[planet_selected]))
+            if (Form1.Game.Player.player_planets.Contains(starSystem.PLN[planet_selected]))
             {
                 planet_consist = true;
             }
 
             if (planet_consist == false)
             {
-                Player.player_planets.Add(starSystem.PLN[planet_selected]);
+                Form1.Game.Player.player_planets.Add(starSystem.PLN[planet_selected]);
                 Form1.shop_form.set_listbox_planet(starSystem.PLN[planet_selected]);
                 
             }

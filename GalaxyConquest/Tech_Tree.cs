@@ -52,7 +52,7 @@ namespace GalaxyConquest
 
             g.ScaleTransform(scaling, scaling);
             br = Brushes.White;
-            //чтение из фала списка технологий
+            //достаем технологии из Tech.teches i - столбец(Tier); j - строка(TechLine); k - подстрока(Subtech)
             for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
                 for (int j = 0; j < Tech.teches.tiers[i].Count; j++)

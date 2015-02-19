@@ -9,7 +9,7 @@ namespace GalaxyConquest
     [Serializable]
     public class Player
     {
-        public static List<int[]> technologies = new List<int[]>();//format {tech, subtech}
+        public static List<int[]> technologies = new List<int[]>();//format {tier, techLine, subtech}
         public static List<int[]> buildings = new List<int[]>();//format {star system, planet, building}
 
         public string name;
@@ -30,7 +30,12 @@ namespace GalaxyConquest
         public Player()
         {
             name = "New player";
-            technologies.Add(new int[] { 0, 1 });
+            technologies.Add(new int[] { 0, 0, 0 });
+            technologies.Add(new int[] { 0, 1, 0 });
+            technologies.Add(new int[] { 0, 2, 0 });
+            technologies.Add(new int[] { 0, 3, 0 });
+            technologies.Add(new int[] { 0, 4, 0 });
+            technologies.Add(new int[] { 0, 5, 0 });// add the names of tech trees
             buildings.Add(new int[] { 0, 0, 0 });
             buildings.Add(new int[] { 0, 0, 1 });
 
@@ -48,7 +53,12 @@ namespace GalaxyConquest
         public Player(string name)
         {
             this.name = name;
-            technologies.Add(new int[] { 0, 1 });
+            technologies.Add(new int[] { 0, 0, 0 });
+            technologies.Add(new int[] { 0, 1, 0 });
+            technologies.Add(new int[] { 0, 2, 0 });
+            technologies.Add(new int[] { 0, 3, 0 });
+            technologies.Add(new int[] { 0, 4, 0 });
+            technologies.Add(new int[] { 0, 5, 0 });// add the names of tech trees
             buildings.Add(new int[] { 0, 0, 0 });
             buildings.Add(new int[] { 0, 0, 1 });
 

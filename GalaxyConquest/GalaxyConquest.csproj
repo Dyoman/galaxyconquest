@@ -133,6 +133,7 @@
     <Compile Include="TacticCombat\Weapons\WpnHeavyLaser.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightIon.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightLaser.cs" />
+    <Compile Include="Tech.cs" />
     <Compile Include="Tech_Tree.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -295,6 +296,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Tech.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="teches.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\btn_rotateright.png" />

@@ -561,7 +561,10 @@ namespace GalaxyConquest
                     conquer_progressBar.Value = conquer_progressBar.Value + 1;
                 }
 
-            if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000 && tt.subtech_clicked != 1000)
+            if (tech_progressBar.Value < tt.learning_tech_time &&
+                tt.tierClicked != 1000 &&
+                tt.techLineClicked != 1000 &&
+                tt.subtechClicked != 1000)
             {
                 if (InvokeRequired)
                     Invoke(new Action(() => tech_progressBar.Value += 1));
@@ -569,15 +572,16 @@ namespace GalaxyConquest
 
             if (tech_progressBar.Value == tt.learning_tech_time)
             {
-                Player.technologies.Add(new int[] { tt.tech_clicked, tt.subtech_clicked });
+                Player.technologies.Add(new int[] { tt.tierClicked, tt.techLineClicked, tt.subtechClicked });
                 if (InvokeRequired)
                 {
                     Invoke(new Action(() => tech_progressBar.Value = 0));
                     Invoke(new Action(() => tech_progressBar.Visible = false));
                     Invoke(new Action(() => tech_label.Visible = false));
                 }
-                tt.tech_clicked = 1000;
-                tt.subtech_clicked = 1000;
+                tt.tierClicked = 1000;
+                tt.techLineClicked = 1000;
+                tt.subtechClicked = 1000;
             }
         }
 

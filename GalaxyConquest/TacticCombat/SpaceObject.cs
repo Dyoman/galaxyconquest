@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace GalaxyConquest.Tactics
 {
+    [Serializable]
     public abstract class SpaceObject
     {
         public int objectType; // подробности смотри в константах

@@ -97,6 +97,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form_About";
+            this.ShowInTaskbar = false;
             this.Text = "About GalaxyConquest";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

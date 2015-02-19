@@ -58,6 +58,7 @@ namespace GalaxyConquest
             tech_label.Visible = false;
             listView.Visible = false;
             this.MouseWheel += new MouseEventHandler(this.onMouseWheel); // for resizing of galaxy at event change wheel mouse
+
             waveOutDevice = new WaveOutEvent();
             audioFileReader = new AudioFileReader(@"Sounds\Untitled45.mp3");
             waveOutDevice.Init(audioFileReader);
@@ -134,7 +135,6 @@ namespace GalaxyConquest
                 MainMenuTechTree.Enabled = true;
                 systemsButton.Enabled = true;
                 fleetsButton.Enabled = true;
-
                 GameTimer.Start();
             }
         }
@@ -204,15 +204,14 @@ namespace GalaxyConquest
 
             if (e.Button == MouseButtons.Left)
             {
-                if (ModifierKeys == Keys.Shift)
-                {
-                    DrawControl.Rotate(e.X - mouseX, e.Y - mouseY);
-                }
-                else
-                {
-                    DrawControl.Move(e.X - mouseX, e.Y - mouseY);
-                }
-
+                DrawControl.Move(e.X - mouseX, e.Y - mouseY);
+                mouseX = e.X;
+                mouseY = e.Y;
+                return;
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                DrawControl.Rotate(e.X - mouseX, e.Y - mouseY);
                 mouseX = e.X;
                 mouseY = e.Y;
                 return;
@@ -656,6 +655,7 @@ namespace GalaxyConquest
 
         private void UpdateLabels()
         {
+            galaxyNameLablel.Text = Game.Galaxy.name;
             dateLabel.Text = Math.Round(Game.Galaxy.Time).ToString() + " г.н.э.";
             CreditsStatus.Text = Math.Round(Game.Player.credit, 2).ToString() + " $";
             MineralStatus.Text = Math.Round(Game.Player.minerals, 3) + " Т";

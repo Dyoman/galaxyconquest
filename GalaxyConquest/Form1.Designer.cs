@@ -234,7 +234,7 @@
             // tech_progressBar
             // 
             this.tech_progressBar.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.tech_progressBar.Location = new System.Drawing.Point(490, 27);
+            this.tech_progressBar.Location = new System.Drawing.Point(544, 27);
             this.tech_progressBar.Maximum = 5;
             this.tech_progressBar.Name = "tech_progressBar";
             this.tech_progressBar.Size = new System.Drawing.Size(100, 23);
@@ -246,11 +246,14 @@
             // 
             this.tech_label.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tech_label.AutoSize = true;
-            this.tech_label.Location = new System.Drawing.Point(442, 32);
+            this.tech_label.BackColor = System.Drawing.Color.Black;
+            this.tech_label.Font = new System.Drawing.Font("Impact", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tech_label.ForeColor = System.Drawing.Color.White;
+            this.tech_label.Location = new System.Drawing.Point(650, 30);
             this.tech_label.Name = "tech_label";
-            this.tech_label.Size = new System.Drawing.Size(35, 13);
+            this.tech_label.Size = new System.Drawing.Size(32, 17);
             this.tech_label.TabIndex = 23;
-            this.tech_label.Text = "label1";
+            this.tech_label.Text = "tech";
             // 
             // sound_button
             // 
@@ -452,6 +455,8 @@
             // 
             // StepWorker
             // 
+            this.StepWorker.WorkerReportsProgress = true;
+            this.StepWorker.WorkerSupportsCancellation = true;
             this.StepWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.StepWorker_DoWork);
             this.StepWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.StepWorker_RunWorkerCompleted);
             // 

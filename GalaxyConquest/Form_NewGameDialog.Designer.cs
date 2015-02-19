@@ -453,6 +453,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form_NewGameDialog";
+            this.ShowInTaskbar = false;
             this.Text = "New game settings";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

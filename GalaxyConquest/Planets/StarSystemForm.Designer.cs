@@ -115,19 +115,19 @@
             this.labelPlanetSize.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetSize.TabIndex = 36;
             // 
-            // Populn
+            // labelPlanetPopulation
             // 
             this.labelPlanetPopulation.AutoSize = true;
             this.labelPlanetPopulation.Location = new System.Drawing.Point(114, 91);
-            this.labelPlanetPopulation.Name = "Populn";
+            this.labelPlanetPopulation.Name = "labelPlanetPopulation";
             this.labelPlanetPopulation.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetPopulation.TabIndex = 24;
             // 
-            // ownername
+            // ownerNameLabel
             // 
             this.ownerNameLabel.AutoSize = true;
             this.ownerNameLabel.Location = new System.Drawing.Point(114, 176);
-            this.ownerNameLabel.Name = "ownername";
+            this.ownerNameLabel.Name = "ownerNameLabel";
             this.ownerNameLabel.Size = new System.Drawing.Size(0, 13);
             this.ownerNameLabel.TabIndex = 35;
             // 
@@ -140,11 +140,11 @@
             this.label6.TabIndex = 32;
             this.label6.Text = "Owner";
             // 
-            // profit
+            // profitLabel
             // 
             this.profitLabel.AutoSize = true;
             this.profitLabel.Location = new System.Drawing.Point(114, 147);
-            this.profitLabel.Name = "profit";
+            this.profitLabel.Name = "profitLabel";
             this.profitLabel.Size = new System.Drawing.Size(0, 13);
             this.profitLabel.TabIndex = 34;
             // 
@@ -202,11 +202,11 @@
             this.label10.TabIndex = 25;
             this.label10.Text = "Minerals";
             // 
-            // labelPlanetPopulation
+            // labelPlanetPopulationMax
             // 
             this.labelPlanetPopulationMax.AutoSize = true;
             this.labelPlanetPopulationMax.Location = new System.Drawing.Point(114, 119);
-            this.labelPlanetPopulationMax.Name = "labelPlanetPopulation";
+            this.labelPlanetPopulationMax.Name = "labelPlanetPopulationMax";
             this.labelPlanetPopulationMax.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetPopulationMax.TabIndex = 29;
             // 
@@ -231,6 +231,7 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "StarSystemForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

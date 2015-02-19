@@ -253,6 +253,7 @@
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Name = "Shop";
+            this.ShowInTaskbar = false;
             this.Text = "Магазин";
             this.Load += new System.EventHandler(this.Shop_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

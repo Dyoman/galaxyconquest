@@ -108,7 +108,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(624, 441);
+            this.ClientSize = new System.Drawing.Size(641, 459);
             this.Controls.Add(this.txtRedShips);
             this.Controls.Add(this.txtBlueShips);
             this.Controls.Add(this.label1);
@@ -118,6 +118,7 @@
             this.Controls.Add(this.pictureMap);
             this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "CombatForm";
+            this.ShowInTaskbar = false;
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.pictureMap)).EndInit();

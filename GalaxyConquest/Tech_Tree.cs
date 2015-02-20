@@ -223,8 +223,16 @@ namespace GalaxyConquest
                 }
                 if (tierClicked == Player.technologies[i][0] + 1 && techLineClicked == Player.technologies[i][1])
                 {
-                    tech_logic2 = true;
-                    //break;
+                    if (Form1.Game.Player.skillPoints >= tierClicked * 100)
+                    {
+                        Form1.Game.Player.skillPoints -= tierClicked * 100;
+                        tech_logic2 = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Not enough skill popints!");
+                        return;
+                    }
                 }
             }
             if (tech_logic == false)

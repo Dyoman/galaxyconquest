@@ -68,6 +68,8 @@
             this.TechWorker = new System.ComponentModel.BackgroundWorker();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.galaxyImage = new System.Windows.Forms.PictureBox();
+            this.SkillPontsLabel = new System.Windows.Forms.Label();
+            this.SkillPointsStatus = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -97,7 +99,7 @@
             this.toolStripSeparator1,
             this.mainMenuQuit});
             this.mainMenuFile.Name = "mainMenuFile";
-            this.mainMenuFile.Size = new System.Drawing.Size(37, 20);
+            this.mainMenuFile.Size = new System.Drawing.Size(35, 20);
             this.mainMenuFile.Text = "File";
             // 
             // mainMenuNew
@@ -140,13 +142,13 @@
             this.mainMenuText.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainMenuAbout});
             this.mainMenuText.Name = "mainMenuText";
-            this.mainMenuText.Size = new System.Drawing.Size(44, 20);
+            this.mainMenuText.Size = new System.Drawing.Size(40, 20);
             this.mainMenuText.Text = "Help";
             // 
             // mainMenuAbout
             // 
             this.mainMenuAbout.Name = "mainMenuAbout";
-            this.mainMenuAbout.Size = new System.Drawing.Size(116, 22);
+            this.mainMenuAbout.Size = new System.Drawing.Size(115, 22);
             this.mainMenuAbout.Text = "About...";
             this.mainMenuAbout.Click += new System.EventHandler(this.mainMenuAbout_Click);
             // 
@@ -154,7 +156,7 @@
             // 
             this.MainMenuTechTree.Enabled = false;
             this.MainMenuTechTree.Name = "MainMenuTechTree";
-            this.MainMenuTechTree.Size = new System.Drawing.Size(68, 20);
+            this.MainMenuTechTree.Size = new System.Drawing.Size(65, 20);
             this.MainMenuTechTree.Text = "Tech tree";
             this.MainMenuTechTree.Click += new System.EventHandler(this.MainMenuTechTree_Click);
             // 
@@ -177,13 +179,13 @@
             // toolStripStatusSelectFleet
             // 
             this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
-            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(140, 17);
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
             this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
             // 
             // toolStripStatusXY
             // 
             this.toolStripStatusXY.Name = "toolStripStatusXY";
-            this.toolStripStatusXY.Size = new System.Drawing.Size(98, 17);
+            this.toolStripStatusXY.Size = new System.Drawing.Size(90, 17);
             this.toolStripStatusXY.Text = "toolStripStatusXY";
             // 
             // step_button
@@ -283,6 +285,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.SkillPointsStatus);
+            this.groupBox1.Controls.Add(this.SkillPontsLabel);
             this.groupBox1.Controls.Add(this.EnergyStatus);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.MineralStatus);
@@ -292,7 +296,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(16, 208);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(123, 96);
+            this.groupBox1.Size = new System.Drawing.Size(123, 109);
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player";
@@ -301,7 +305,7 @@
             // 
             this.EnergyStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.EnergyStatus.AutoSize = true;
-            this.EnergyStatus.Location = new System.Drawing.Point(63, 66);
+            this.EnergyStatus.Location = new System.Drawing.Point(63, 73);
             this.EnergyStatus.Name = "EnergyStatus";
             this.EnergyStatus.Size = new System.Drawing.Size(15, 16);
             this.EnergyStatus.TabIndex = 45;
@@ -311,7 +315,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 66);
+            this.label3.Location = new System.Drawing.Point(6, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 16);
             this.label3.TabIndex = 44;
@@ -321,7 +325,7 @@
             // 
             this.MineralStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.MineralStatus.AutoSize = true;
-            this.MineralStatus.Location = new System.Drawing.Point(63, 43);
+            this.MineralStatus.Location = new System.Drawing.Point(63, 50);
             this.MineralStatus.Name = "MineralStatus";
             this.MineralStatus.Size = new System.Drawing.Size(15, 16);
             this.MineralStatus.TabIndex = 43;
@@ -331,7 +335,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 43);
+            this.label2.Location = new System.Drawing.Point(6, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 16);
             this.label2.TabIndex = 42;
@@ -341,7 +345,7 @@
             // 
             this.CreditsStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.CreditsStatus.AutoSize = true;
-            this.CreditsStatus.Location = new System.Drawing.Point(63, 20);
+            this.CreditsStatus.Location = new System.Drawing.Point(63, 27);
             this.CreditsStatus.Name = "CreditsStatus";
             this.CreditsStatus.Size = new System.Drawing.Size(15, 16);
             this.CreditsStatus.TabIndex = 41;
@@ -351,7 +355,7 @@
             // 
             this.Credits.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Credits.AutoSize = true;
-            this.Credits.Location = new System.Drawing.Point(6, 20);
+            this.Credits.Location = new System.Drawing.Point(6, 27);
             this.Credits.Name = "Credits";
             this.Credits.Size = new System.Drawing.Size(50, 16);
             this.Credits.TabIndex = 40;
@@ -485,6 +489,26 @@
             this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
             this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
             // 
+            // SkillPontsLabel
+            // 
+            this.SkillPontsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.SkillPontsLabel.AutoSize = true;
+            this.SkillPontsLabel.Location = new System.Drawing.Point(7, 90);
+            this.SkillPontsLabel.Name = "SkillPontsLabel";
+            this.SkillPontsLabel.Size = new System.Drawing.Size(73, 16);
+            this.SkillPontsLabel.TabIndex = 46;
+            this.SkillPontsLabel.Text = "Skill Points";
+            // 
+            // SkillPointsStatus
+            // 
+            this.SkillPointsStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.SkillPointsStatus.AutoSize = true;
+            this.SkillPointsStatus.Location = new System.Drawing.Point(78, 90);
+            this.SkillPointsStatus.Name = "SkillPointsStatus";
+            this.SkillPointsStatus.Size = new System.Drawing.Size(15, 16);
+            this.SkillPointsStatus.TabIndex = 47;
+            this.SkillPointsStatus.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -559,6 +583,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label MineralStatus;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label SkillPointsStatus;
+        private System.Windows.Forms.Label SkillPontsLabel;
     }
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GalaxyConquest
+namespace GalaxyConquest.Game
 {
     /// <summary>
     /// "Семя" для создания игры. Включает в себя все основные параметры

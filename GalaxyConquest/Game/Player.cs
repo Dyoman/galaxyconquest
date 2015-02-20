@@ -4,7 +4,7 @@ using System.Drawing;
 using GalaxyConquest.StarSystems;
 using GalaxyConquest.Tactics;
 
-namespace GalaxyConquest
+namespace GalaxyConquest.Game
 {
     [Serializable]
     public class Player

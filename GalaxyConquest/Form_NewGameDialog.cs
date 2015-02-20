@@ -85,7 +85,7 @@ namespace GalaxyConquest
 
         private void buttonGalaxySizeLeft_Click(object sender, EventArgs e)
         {
-            if (galaxysize == 0)
+            if (galaxysize == 1)
             {
                 return;
             }

@@ -18,6 +18,8 @@ namespace GalaxyConquest
 
         public int planets_count;//num of planets
 
+        public bool Discovered = false;
+
         public List<PLANET> PLN = new List<PLANET>();
 
         public override void Move(double time)

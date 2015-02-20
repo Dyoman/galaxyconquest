@@ -68,7 +68,6 @@
             this.TechWorker = new System.ComponentModel.BackgroundWorker();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.galaxyImage = new System.Windows.Forms.PictureBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -486,13 +485,6 @@
             this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
             this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
             // 
-            // toolTip1
-            // 
-            this.toolTip1.AutoPopDelay = 5000;
-            this.toolTip1.InitialDelay = 400;
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ReshowDelay = 400;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -567,7 +559,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label MineralStatus;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

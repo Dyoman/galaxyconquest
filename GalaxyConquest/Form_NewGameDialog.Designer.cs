@@ -152,18 +152,18 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 27;
-            this.label2.Text = "10 stars";
+            this.label2.Text = "40 stars";
             // 
             // StarsScrollBar
             // 
             this.StarsScrollBar.LargeChange = 1;
             this.StarsScrollBar.Location = new System.Drawing.Point(19, 284);
-            this.StarsScrollBar.Maximum = 20;
-            this.StarsScrollBar.Minimum = 5;
+            this.StarsScrollBar.Maximum = 90;
+            this.StarsScrollBar.Minimum = 10;
             this.StarsScrollBar.Name = "StarsScrollBar";
             this.StarsScrollBar.Size = new System.Drawing.Size(80, 16);
             this.StarsScrollBar.TabIndex = 25;
-            this.StarsScrollBar.Value = 10;
+            this.StarsScrollBar.Value = 40;
             this.StarsScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.StarsScrollBar_Scroll);
             // 
             // label9

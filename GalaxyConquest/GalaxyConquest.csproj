@@ -292,6 +292,9 @@
     <Content Include="Sprites\ships\player\Fighter3.png" />
     <Content Include="Sprites\ships\player\Frigate.png" />
     <Content Include="Sprites\ships\player\License.txt" />
+    <Content Include="Starnames backup.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Starnames.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -301,6 +304,7 @@
     <Content Include="teches.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Starnames.txt" />
     <None Include="Resources\btn_rotateright.png" />
     <None Include="Resources\btn_rotateleft.png" />
     <None Include="Resources\btn_spindown.png" />

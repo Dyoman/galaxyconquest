@@ -26,6 +26,7 @@ namespace GalaxyConquest.Game
         public double credit;
         public double energy;
         public double minerals;
+        public double skillPoints;
 
         public Player()
         {

@@ -20,6 +20,7 @@ namespace GalaxyConquest.StarSystems
         public float SIZE = 10;
         public string OWNERNAME = "None";
         public double PROFIT = 0;
+        public float skillPointProduce = 10;
         public Color CLR = Color.FromArgb(255, 255, 255);
 
         public String NAME = "DEFAULT";

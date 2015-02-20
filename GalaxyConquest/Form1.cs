@@ -529,11 +529,12 @@ namespace GalaxyConquest
                 }
             }
 
-            //---------------получение бабосиков и минералов с захваченных систем---------
+            //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
             for (int i = 0; i < Game.Player.player_planets.Count; i++)
             {
                 Game.Player.credit += Game.Player.player_planets[i].PROFIT;
                 Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
+                Game.Player.skillPoints += Game.Player.player_planets[i].skillPointProduce;
             }
 
             //---------------процесс захвата систем---------
@@ -640,6 +641,7 @@ namespace GalaxyConquest
             CreditsStatus.Text = Math.Round(Game.Player.credit, 2).ToString() + " $";
             MineralStatus.Text = Math.Round(Game.Player.minerals, 3) + " Т";
             EnergyStatus.Text = Math.Round(Game.Player.energy, 2).ToString() + " Wt";
+            SkillPointsStatus.Text = Math.Round(Game.Player.skillPoints, 2).ToString() + "SP";
         }
 
         void UpdateCaptureControls()

@@ -44,9 +44,8 @@
             this.toolStripStatusSelectFleet = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusXY = new System.Windows.Forms.ToolStripStatusLabel();
             this.step_button = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.captureButton = new System.Windows.Forms.Button();
             this.conquer_progressBar = new System.Windows.Forms.ProgressBar();
-            this.button3 = new System.Windows.Forms.Button();
             this.tech_progressBar = new System.Windows.Forms.ProgressBar();
             this.tech_label = new System.Windows.Forms.Label();
             this.sound_button = new System.Windows.Forms.Button();
@@ -198,16 +197,16 @@
             this.step_button.UseVisualStyleBackColor = true;
             this.step_button.Click += new System.EventHandler(this.step_button_Click);
             // 
-            // button2
+            // captureButton
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(17, 109);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "Захватить систему";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.captureButton.Enabled = false;
+            this.captureButton.Location = new System.Drawing.Point(17, 109);
+            this.captureButton.Name = "captureButton";
+            this.captureButton.Size = new System.Drawing.Size(122, 23);
+            this.captureButton.TabIndex = 19;
+            this.captureButton.Text = "Захватить систему";
+            this.captureButton.UseVisualStyleBackColor = true;
+            this.captureButton.Click += new System.EventHandler(this.captureButton_Click);
             // 
             // conquer_progressBar
             // 
@@ -218,17 +217,6 @@
             this.conquer_progressBar.Step = 1;
             this.conquer_progressBar.TabIndex = 20;
             this.conquer_progressBar.Visible = false;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(17, 167);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(122, 23);
-            this.button3.TabIndex = 21;
-            this.button3.Text = "Отменить захват";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // tech_progressBar
             // 
@@ -271,9 +259,8 @@
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.sound_button);
             this.panel1.Controls.Add(this.marketButton);
-            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.conquer_progressBar);
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.captureButton);
             this.panel1.Controls.Add(this.step_button);
             this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(9, 27);
@@ -535,9 +522,8 @@
         private System.Windows.Forms.ToolStripMenuItem MainMenuTechTree;
         private System.Windows.Forms.ToolStripMenuItem dModelsToolStripMenuItem;
         private System.Windows.Forms.Button step_button;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button captureButton;
         private System.Windows.Forms.ProgressBar conquer_progressBar;
-        private System.Windows.Forms.Button button3;
         public System.Windows.Forms.ProgressBar tech_progressBar;
         public System.Windows.Forms.Label tech_label;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusSelectFleet;

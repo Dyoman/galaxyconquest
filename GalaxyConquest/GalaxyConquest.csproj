@@ -74,7 +74,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameState.cs" />
+    <Compile Include="Game\GameState.cs" />
     <Compile Include="MovementsController.cs" />
     <Compile Include="Shop.cs">
       <SubType>Form</SubType>
@@ -94,15 +94,15 @@
     <Compile Include="Form_NewGameDialog.Designer.cs">
       <DependentUpon>Form_NewGameDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModelGalaxy.cs" />
-    <Compile Include="Planets\Planet.cs" />
-    <Compile Include="Planets\StarSystemForm.cs">
+    <Compile Include="SpaceObjects\ModelGalaxy.cs" />
+    <Compile Include="SpaceObjects\Planet.cs" />
+    <Compile Include="SpaceObjects\StarSystemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Planets\StarSystemForm.Designer.cs">
+    <Compile Include="SpaceObjects\StarSystemForm.Designer.cs">
       <DependentUpon>StarSystemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
+    <Compile Include="Game\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -110,9 +110,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SpaceObject.cs" />
-    <Compile Include="StarSystem.cs" />
-    <Compile Include="StarWarp.cs" />
+    <Compile Include="SpaceObjects\SpaceObject.cs" />
+    <Compile Include="SpaceObjects\StarSystem.cs" />
+    <Compile Include="SpaceObjects\StarWarp.cs" />
     <Compile Include="TacticCombat\Box.cs" />
     <Compile Include="TacticCombat\CombatForm.cs">
       <SubType>Form</SubType>
@@ -152,7 +152,7 @@
     <EmbeddedResource Include="Form_NewGameDialog.resx">
       <DependentUpon>Form_NewGameDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Planets\StarSystemForm.resx">
+    <EmbeddedResource Include="SpaceObjects\StarSystemForm.resx">
       <DependentUpon>StarSystemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

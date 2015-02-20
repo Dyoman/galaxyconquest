@@ -46,7 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.labelPlanetPopulationMax = new System.Windows.Forms.Label();
-            this.сapture = new System.Windows.Forms.Button();
+            this.captureButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +86,7 @@
             this.panel1.Controls.Add(this.labelPlanetPopulationMax);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(176, 323);
+            this.panel1.Size = new System.Drawing.Size(176, 313);
             this.panel1.TabIndex = 1;
             // 
             // buildings
@@ -210,15 +210,16 @@
             this.labelPlanetPopulationMax.Size = new System.Drawing.Size(0, 13);
             this.labelPlanetPopulationMax.TabIndex = 29;
             // 
-            // сapture
+            // captureButton
             // 
-            this.сapture.Location = new System.Drawing.Point(48, 341);
-            this.сapture.Name = "сapture";
-            this.сapture.Size = new System.Drawing.Size(75, 32);
-            this.сapture.TabIndex = 14;
-            this.сapture.Text = "Захват";
-            this.сapture.UseVisualStyleBackColor = true;
-            this.сapture.Click += new System.EventHandler(this.Capture_Click);
+            this.captureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.captureButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.captureButton.Location = new System.Drawing.Point(40, 331);
+            this.captureButton.Name = "captureButton";
+            this.captureButton.Size = new System.Drawing.Size(123, 42);
+            this.captureButton.TabIndex = 14;
+            this.captureButton.Text = "Захватить систему";
+            this.captureButton.UseVisualStyleBackColor = true;
             // 
             // StarSystemForm
             // 
@@ -226,7 +227,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(581, 376);
-            this.Controls.Add(this.сapture);
+            this.Controls.Add(this.captureButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -260,7 +261,7 @@
         private System.Windows.Forms.Label labelPlanetMinerals;
         private System.Windows.Forms.Label labelPlanetSize;
         private System.Windows.Forms.TextBox buildings;
-        private System.Windows.Forms.Button сapture;
+        public System.Windows.Forms.Button captureButton;
     }
 }
 

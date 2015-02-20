@@ -13,6 +13,7 @@ using NAudio.Wave;
 // для работы с библиотекой FreeGLUT 
 using Tao.FreeGlut;
 using GalaxyConquest.Drawing;
+using GalaxyConquest.Game;
 
 namespace GalaxyConquest
 {
@@ -71,6 +72,7 @@ namespace GalaxyConquest
             ofd.Filter = "Galaxy files|*.gal|All files|*.*";
 
             DrawControl = new DrawController(galaxyImage);
+            ssf = new StarSystemForm(null);
         }
 
         public override Size MinimumSize
@@ -82,9 +84,7 @@ namespace GalaxyConquest
             set
             {
                 base.MinimumSize = new Size(this.Width, this.Height);
-
             }
-
         }
         
         //-----------------------------------Sound------------------------------------
@@ -126,7 +126,7 @@ namespace GalaxyConquest
 
                 Game.New(seed);
 
-                UpdateLabels();
+                UpdateControls();
 
                 panel1.Enabled = true;
                 mainMenuSave.Enabled = true;
@@ -163,7 +163,6 @@ namespace GalaxyConquest
                 systemsButton.Enabled = true;
                 fleetsButton.Enabled = true;
             }
-
         }
 
         private void mainMenuAbout_Click(object sender, EventArgs e)
@@ -195,10 +194,8 @@ namespace GalaxyConquest
 
         private void galaxyImage_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (Game == null)
                 return;
-
 
             if (e.Button == MouseButtons.Left)
             {
@@ -214,7 +211,6 @@ namespace GalaxyConquest
                 mouseY = e.Y;
                 return;
             }
-
 
             for (int j = 0; j < Game.Galaxy.stars.Count; j++)
             {
@@ -258,10 +254,7 @@ namespace GalaxyConquest
                         Game.Player.selectedStar = Game.Player.fleets[i].s2;
                         statusStrip1.Items[0].Text = "Выбран " + (i + 1) + " флот";
 
-                        if (!Game.Player.stars.Contains(Game.Player.fleets[i].s1) && !Game.Player.fleets[i].onWay)
-                            button2.Enabled = true;
-                        else
-                            button2.Enabled = false;
+                        UpdateCaptureControls();
                         return;
                     }
                 }
@@ -274,7 +267,7 @@ namespace GalaxyConquest
 
                     if (DrawControl.CursorIsOnObject(e, s))
                     {
-                        if ((conquer_progressBar.Visible == false) && (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0))
+                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0))
                         {
                             if (DrawControl.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
                             {
@@ -302,9 +295,10 @@ namespace GalaxyConquest
                 {
                     if (DrawControl.CursorIsOnObject(e, Game.Galaxy.stars[j]) && Game.Galaxy.stars[j].Discovered)
                     {
-                        if (ssf != null && !ssf.IsDisposed)
+                        if (!ssf.IsDisposed)
                         {
                             ssf.SetSystem(Game.Galaxy.stars[j]);
+                            ssf.Show();
                             ssf.Focus();
                         }
                         else
@@ -312,7 +306,7 @@ namespace GalaxyConquest
                             ssf = new StarSystemForm(Game.Galaxy.stars[j]);
                             ssf.Show();
                         }
-
+                        UpdateCaptureControls();
                         return;
                     }
                 }
@@ -373,17 +367,13 @@ namespace GalaxyConquest
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void captureButton_Click(object sender, EventArgs e)
         {
-            conquer_progressBar.Visible = true;
-            button3.Visible = true;
-        }
+            //  Если StartCapturing возвращает false, то прерываем захват   --- описание функции написано
+            if (!Game.Player.fleets[Game.Player.selectedFleet].StartCapturing(Game.Player.fleets[Game.Player.selectedFleet].s1))
+                Game.Player.fleets[Game.Player.selectedFleet].StopCapturing();
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            conquer_progressBar.Visible = false;
-            conquer_progressBar.Value = conquer_progressBar.Minimum;
-            button3.Visible = false;
+            UpdateCaptureControls();
         }
 
         private void Shop_button_Click(object sender, EventArgs e)
@@ -393,7 +383,7 @@ namespace GalaxyConquest
 
             shop_form.ShowDialog();
 
-            UpdateLabels();
+            UpdateControls();
         }
 
         //---------------------Fast access panel--------------------------
@@ -478,6 +468,8 @@ namespace GalaxyConquest
                     statusStrip1.Items[0].Text = "Выбран " + (Game.Player.selectedFleet + 1) + " флот";
 
                     listView.Items[Game.Player.selectedFleet].ForeColor = FleetColors.ActiveFleet;
+
+                    UpdateCaptureControls();
                 }
         }
         // выбор системы игрока в качестве цели для активного флота
@@ -517,9 +509,10 @@ namespace GalaxyConquest
 
             //выключаем всю панель, пока запущен поток
             panel1.Enabled = false;
-            button2.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
+            captureButton.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
 
             onStep = true;      //Устанавливаем флаг шага
+            UpdateCaptureControls();
         }
 
         private void StepWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -543,20 +536,11 @@ namespace GalaxyConquest
                 Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
             }
 
-            //---------------процесс захвата системы---------  // ! FIX !
-            if (conquer_progressBar.Visible == true && false)   
-                if (conquer_progressBar.Value == conquer_progressBar.Maximum - 1)
-                {
-                    //захват происходит не той системы, которая выделена, а той, в которой находится активный флот (по логике)
-                    Game.Player.stars.Add(Game.Player.fleets[Game.Player.selectedFleet].s1);
-                    conquer_progressBar.Visible = false;
-                    button3.Visible = false;
-                    conquer_progressBar.Value = conquer_progressBar.Minimum;
-                }
-                else
-                {
-                    conquer_progressBar.Value = conquer_progressBar.Value + 1;
-                }
+            //---------------процесс захвата систем---------
+            for (int i = 0; i < Game.Player.fleets.Count; i++)
+            {
+                Game.Player.fleets[i].CaptureProcess();
+            }
 
             if (tech_progressBar.Value < Tech.learning_tech_time &&
                 tt.tierClicked != 1000 &&
@@ -616,19 +600,14 @@ namespace GalaxyConquest
                 }
 
             //Обновляем лейблы
-            UpdateLabels();
+            UpdateControls();
             //включам панель с кнопками
             panel1.Enabled = true;
             step_button.Focus();//задаём фокус для кнопки шага
 
-            //включаем кнопку захвата, если система в которой находится активный флот не захвачена
-            if (!Game.Player.stars.Contains(Game.Player.fleets[Game.Player.selectedFleet].s1) && !Game.Player.fleets[Game.Player.selectedFleet].onWay)
-                button2.Enabled = true;
-            else
-                button2.Enabled = false;
+            UpdateCaptureControls();
         }
         
-
         //----------------------Timer-------------------
 
         private void GameTimer_Tick(object sender, EventArgs e)
@@ -651,17 +630,59 @@ namespace GalaxyConquest
             }
             galaxyImage.Refresh();
         }
-
-
+        
         //-------------------------------other----------------------------------
 
-        private void UpdateLabels()
+        private void UpdateControls()
         {
             galaxyNameLablel.Text = Game.Galaxy.name;
             dateLabel.Text = Math.Round(Game.Galaxy.Time).ToString() + " г.н.э.";
             CreditsStatus.Text = Math.Round(Game.Player.credit, 2).ToString() + " $";
             MineralStatus.Text = Math.Round(Game.Player.minerals, 3) + " Т";
             EnergyStatus.Text = Math.Round(Game.Player.energy, 2).ToString() + " Wt";
+        }
+
+        void UpdateCaptureControls()
+        {
+            if (onStep)//Во время шага просто выключим кнопку захвата и оставим прогрессбар, если он видим
+                captureButton.Enabled = false;
+            else
+                if (Game.Player.stars.Contains(Game.Player.fleets[Game.Player.selectedFleet].s1) || Game.Player.fleets[Game.Player.selectedFleet].onWay)
+                    SetCaptureControlsActive(-1);
+                else if (Game.Player.fleets[Game.Player.selectedFleet].Capturing)
+                    SetCaptureControlsActive(1);
+                else
+                    SetCaptureControlsActive(0);
+
+            StarSystemForm.SelfRef.UpdateCaptureControls(onStep);
+        }
+        //  Устанавливает активность кнопок захвата и их текст/ (1 - захват идёт, 0 - захват возможен, -1 - захват невозможен (флот в пути/система уже захвачена))
+        void SetCaptureControlsActive(int value)
+        {
+            switch (value)
+            {
+                case 0:
+                    {
+                        captureButton.Enabled = true;
+                        captureButton.Text = "Захватить систему";
+                        conquer_progressBar.Visible = false;
+                    } break;
+                case 1:
+                    {
+                        captureButton.Enabled = true;
+                        captureButton.Text = "Отменить захват";
+                        conquer_progressBar.Visible = true;
+                        conquer_progressBar.Value = Game.Player.fleets[Game.Player.selectedFleet].getCaptureProgress();
+                    } break;
+                case -1:
+                    {
+                        captureButton.Enabled = false;
+                        captureButton.Text = "Захватить систему";
+                        conquer_progressBar.Visible = false;
+                    } break;
+                default:
+                    return;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

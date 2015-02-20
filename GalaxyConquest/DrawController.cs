@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaxyConquest.Game;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -254,6 +255,26 @@ namespace GalaxyConquest.Drawing
         }
 
         /// <summary>
+        /// Рисует звездную систему
+        /// </summary>
+        /// <param name="state">Система, которую нужно нарисовать</param>
+        /// <param name="g">Полотно для рисования</param>
+        public void Render(StarSystem system, Graphics g)
+        {
+            Vector centerScr = getScreenCoordOf(system.PLN[0]);
+            for (int i = 0; i < system.PLN.Count; i++)
+            {
+                StarSystems.PLANET p = system.PLN[i];
+
+                Vector scr = getScreenCoordOf(p);
+
+                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.DISTANCE, (float)centerScr.Y - p.DISTANCE, p.DISTANCE * 2, p.DISTANCE * 2);
+                g.FillEllipse(new SolidBrush(p.CLR), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
+                g.DrawString(p.NAME, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
+            }
+        }
+
+        /// <summary>
         /// Двигает изображение
         /// </summary>
         /// <param name="dx">по оси абсцисс</param>
@@ -301,10 +322,10 @@ namespace GalaxyConquest.Drawing
         }
 
         /// <summary>
-        /// Проверка нахождения курсора мыши на объекте
+        /// Проверка нахождения курсора мыши на флоте
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
-        /// <param name="obj">Объект для проверки</param>
+        /// <param name="obj">Флот для проверки</param>
         /// <returns></returns>
         public bool CursorIsOnObject(MouseEventArgs e, Fleet obj)
         {
@@ -317,10 +338,10 @@ namespace GalaxyConquest.Drawing
                    (e.Y - dispersion) / scaling < (scr.Y + dispersion);
         }
         /// <summary>
-        /// Проверка нахождения курсора мыши на объекте
+        /// Проверка нахождения курсора мыши на звездной система
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
-        /// <param name="obj">Объект для проверки</param>
+        /// <param name="obj">Система для проверки</param>
         /// <returns></returns>
         public bool CursorIsOnObject(MouseEventArgs e, StarSystem obj)
         {
@@ -331,6 +352,21 @@ namespace GalaxyConquest.Drawing
                    (e.X - dispersion) / scaling < (scr.X + starSize / 2) &&
                    (e.Y + dispersion) / scaling > (scr.Y - starSize / 2) &&
                    (e.Y - dispersion) / scaling < (scr.Y + starSize / 2);
+        }
+        /// <summary>
+        /// Проверка нахождения курсора мыши на планете
+        /// </summary>
+        /// <param name="e">Представляет информацию о курсоре</param>
+        /// <param name="obj">Планета для проверки</param>
+        /// <returns></returns>
+        public bool CursorIsOnObject(MouseEventArgs e, StarSystems.PLANET obj)
+        {
+            Vector scr = getScreenCoordOf(obj);
+
+            return e.X > (scr.X - obj.SIZE / 2) &&
+                   e.X < (scr.X + obj.SIZE / 2) &&
+                   e.Y > (scr.Y - obj.SIZE / 2) &&
+                   e.Y < (scr.Y + obj.SIZE / 2);
         }
 
         /// <summary>
@@ -356,7 +392,7 @@ namespace GalaxyConquest.Drawing
         }
 
         /// <summary>
-        /// Получает значение контрола, к которому привязан
+        /// Получает контрол, к которому привязан
         /// </summary>
         public Control Target
         {

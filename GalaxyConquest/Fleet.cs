@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using GalaxyConquest.Tactics;
 using GalaxyConquest.Drawing;
+using GalaxyConquest.Game;
 
 namespace GalaxyConquest
 {
     [Serializable]
     public class Fleet : SpaceObject
     {
+        public Player Owner { get; private set; }
         public List<Ship> ships;
 
         public StarSystem s1 = null;
         public StarSystem s2 = null;
 
+        public StarSystem CaptureTarget { get; private set; }
+
         public double starDistanse;
         public bool onWay;
+
+        public bool Capturing { get; private set; }
+        int captureProgress;
 
         public static double MaxDistance = 440;
 
@@ -22,12 +29,16 @@ namespace GalaxyConquest
         {
             ships = new List<Ship>();
             onWay = false;
+            Capturing = false;
+            Owner = null;
         }
 
         public Fleet(Player player, int size, StarSystem s1)
         {
+            Owner = player;
             ships = new List<Ship>();
             onWay = false;
+            Capturing = false;
 
             int playerID = 1;
             if (player == null)
@@ -119,6 +130,59 @@ namespace GalaxyConquest
             }
         }
 
+        public void CaptureProcess()
+        {
+            if (!Capturing)
+                return;
+
+            captureProgress += 1;
+
+            if (captureProgress >= 5)
+            {
+                Owner.stars.Add(CaptureTarget);
+                for (int i = 0; i < CaptureTarget.PLN.Count; i++)
+                    Owner.player_planets.Add(CaptureTarget.PLN[i]);
+
+                CaptureTarget = null;
+                Capturing = false;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает прогресс захвата звездной системы (1 - 5)
+        /// </summary>
+        /// <returns></returns>
+        public int getCaptureProgress()
+        {
+            return (int)captureProgress;
+        }
+
+        /// <summary>
+        /// Пытается начать захват звездной системы флотом
+        /// </summary>
+        /// <param name="s">Система, которую нужно захватить</param>
+        /// <returns>true, если захват начался и false, если захват уже идёт, либо выбрана не та система, в которой находится флот</returns>
+        public bool StartCapturing(StarSystem s)
+        {
+            if (Capturing || s != s1)
+                return false;
+
+            CaptureTarget = s;
+            Capturing = true;
+            captureProgress = 0;
+            return true;
+        }
+
+        /// <summary>
+        /// Останавливает захват системы
+        /// </summary>
+        public void StopCapturing()
+        {
+            CaptureTarget = null;
+            Capturing = false;
+            captureProgress = 0;
+        }
+        
         public bool Allive
         {
             get

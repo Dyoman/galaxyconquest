@@ -513,7 +513,7 @@ namespace GalaxyConquest
 
         private void step_button_Click(object sender, EventArgs e)
         {
-            if (Game.Galaxy == null) return;
+            if (Game == null) return;
 
             //выключаем всю панель, пока запущен поток
             panel1.Enabled = false;
@@ -662,6 +662,11 @@ namespace GalaxyConquest
             CreditsStatus.Text = Math.Round(Game.Player.credit, 2).ToString() + " $";
             MineralStatus.Text = Math.Round(Game.Player.minerals, 3) + " Т";
             EnergyStatus.Text = Math.Round(Game.Player.energy, 2).ToString() + " Wt";
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            while (StepWorker.IsBusy || onStep) ;
         }
     }
 }

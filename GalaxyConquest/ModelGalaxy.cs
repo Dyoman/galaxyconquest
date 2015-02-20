@@ -167,7 +167,7 @@ namespace GalaxyConquest
                 s.y = -5.0 + rand.NextDouble() * 10.0;
 
                 s.type = rand.Next(7);  //type impact on size and color
-                s.name = GenerateRandomStarName(); //s.name = (i + 1).ToString();
+                s.name = GenerateRandomStarName();
 
                 switch (s.type)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GalaxyConquest.Tactics;
+using GalaxyConquest.Drawing;
 
 namespace GalaxyConquest
 {
@@ -15,6 +16,8 @@ namespace GalaxyConquest
         public double starDistanse;
         public bool onWay;
 
+        public static double MaxDistance = 440;
+
         public Fleet()
         {
             ships = new List<Ship>();
@@ -23,6 +26,9 @@ namespace GalaxyConquest
 
         public Fleet(Player player, int size, StarSystem s1)
         {
+            ships = new List<Ship>();
+            onWay = false;
+
             int playerID = 1;
             if (player == null)
             {
@@ -32,8 +38,6 @@ namespace GalaxyConquest
             else
                 name = "Флот <" + player.name + ">";
 
-            ships = new List<Ship>();
-            onWay = false;
             Random rand = new Random((int)DateTime.Now.Ticks);
 
             for (int i = 0; i < size; i++)
@@ -96,6 +100,8 @@ namespace GalaxyConquest
                 x = s1.x;
                 y = s1.y;
                 z = s1.z;
+
+                s1.Discovered = true;
             }
         }
 

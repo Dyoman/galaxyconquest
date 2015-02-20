@@ -143,7 +143,7 @@ namespace GalaxyConquest.Drawing
                     g.DrawEllipse(Pens.GreenYellow, new RectangleF((float)scr.X - starSize / 2 - 3, (float)scr.Y - starSize / 2 - 3, starSize + 6, starSize + 6));
                     g.DrawString(s.name, new Font("Arial", 5.5F, FontStyle.Bold), Brushes.GreenYellow, new PointF((float)scr.X + 6, (float)scr.Y + 6));
                 }
-                else
+                else if (s.Discovered)
                     g.DrawString(s.name, new Font("Arial", 5.0F), Brushes.White, new PointF((float)scr.X + 6, (float)scr.Y + 6));
             }
 
@@ -152,7 +152,8 @@ namespace GalaxyConquest.Drawing
             for (int k = 0; k < state.Galaxy.neutrals.Count; k++)
             {
                 Fleet fleet = state.Galaxy.neutrals[k];
-
+                if (!fleet.s1.Discovered)
+                    continue;
                 Vector scr = getScreenCoordOf(fleet);
                 scr.X -= 10;
                 scr.Y -= 10;
@@ -196,13 +197,13 @@ namespace GalaxyConquest.Drawing
                 if (state.Player.warpTarget != null && k == state.Player.selectedFleet && state.Player.fleets[state.Player.selectedFleet].starDistanse == 0)
                 {
                     double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
-                    string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance / 150) + 1).ToString() + ">";
+                    string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance * MovementsController.FIXED_TIME_DELTA) + 1).ToString() + ">";
 
                     Vector scrFrom, scrTo;
                     scrFrom = getScreenCoordOf(flSys);
                     scrTo = getScreenCoordOf(state.Player.warpTarget);
 
-                    if (starDistance < 150 || true)//пока тестим
+                    if (starDistance < Fleet.MaxDistance)//пока тестим
                     {
                         pen.Color = Color.Lime;
                         g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Lime,

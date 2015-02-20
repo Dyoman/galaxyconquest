@@ -20,7 +20,6 @@
   <string>Поллукс</string>
   <string>Фомальгаут</string>
   <string>Мимоза</string>
-  <string>Денеб</string>
   <string>Регул</string>
   <string>Адара</string>
   <string>Кастор</string>
@@ -28,11 +27,46 @@
   <string>Шаула</string>
   <string>Барнарда</string>
   <string>Ван Маанена</string>
-  <string>Каптейна</string>
   <string>Проксима</string>
   <string>Альферац</string>
   <string>Каф</string>
   <string>Альгениб</string>
+  <string>Анкаа</string>
+  <string>Шедар</string>
+  <string>Дифда</string>
+  <string>Ахирд</string>
+  <string>Наве</string>
+  <string>Марфак II</string>
+  <string>Мирах</string>
+  <string>Марфак</string>
+  <string>Адхил</string>
+  <string>Рукба</string>
+  <string>Полярная</string>
+  <string>Альфарг</string>
+  <string>Торкуларис Септентрионалис</string>
+  <string>Батен Кайтос</string>
+  <string>Сегин</string>
+  <string>Металлах</string>
+  <string>Мезартим</string>
+  <string>Шератан</string>
+  <string>Голова Гидры</string>
+  <string>Альриша</string>
+  <string>Альмак</string>
+  <string>Хамаль</string>
+  <string>Мира</string>
+  <string>Каффальджидхма</string>
+  <string>Мирам</string>
+  <string>Ангетенар</string>
+  <string>Азга</string>
+  <string>Горгонея Секунда</string>
+  <string>Акамар</string>
+  <string>Менкар</string>
+  <string>Горгонея Терция</string>
+  <string>Алголь</string>
+  <string>Мисам</string>
+  <string>Горгонея Кватра</string>
+  <string>Ботейн</string>
+  <string>Форнацис</string>
   <string>Шемали</string>
   <string>Анкаа</string>
   <string>Шедар</string>
@@ -59,7 +93,6 @@
   <string>Альмак</string>
   <string>Хамаль</string>
   <string>Мира</string>
-  <string>Каффальджидхма</string>
   <string>Мирам</string>
   <string>Ангетенар</string>
   <string>Азга</string>
@@ -72,4 +105,25 @@
   <string>Горгонея Кватра</string>
   <string>Ботейн</string>
   <string>Форнацис</string>
+  <string>Бахам</string>
+  <string>Курхах</string>
+  <string>Анха</string>
+  <string>Садахбия</string>
+  <string>Сеат</string>
+  <string>Ситула</string>
+  <string>Хомам</string>
+  <string>Матар</string>
+  <string>Садалбари</string>
+  <string>Скат</string>
+  <string>Фум Альсамаках</string>
+  <string>Шеат</string>
+  <string>Маркаб</string>
+  <string>Сальма</string>
+  <string>Альраи</string>
+  <string>Суалокин</string>
+  <string>Дженах</string>
+  <string>Альбали</string>
+  <string>Армус</string>
+  <string>Дорсум</string>
+  <string>Китальфа</string>
 </ArrayOfString>

@@ -23,8 +23,6 @@ namespace GalaxyConquest
 
         static public GameState Game;
 
-        string tooltipcaption = "";
-
         SaveFileDialog sfd;
         OpenFileDialog ofd;
 
@@ -224,8 +222,6 @@ namespace GalaxyConquest
 
                 if (DrawControl.CursorIsOnObject(e, s))
                 {
-                    tooltipcaption = s.name;//задаем текст для всплывающей подсказки
-
                     if (Game.Player.fleets[Game.Player.selectedFleet].s1 == s)
                         break;
 
@@ -235,15 +231,10 @@ namespace GalaxyConquest
                 }
                 else
                 {
-                    tooltipcaption = "";
                     Game.Player.warpTarget = null;
                     statusStrip1.Items[1].Text = "";
                 }
             }
-            //Изменяем текст всплывающей подсказки
-            if (!toolTip1.GetToolTip(galaxyImage).Equals(tooltipcaption))
-                toolTip1.SetToolTip(galaxyImage, tooltipcaption);
-
         }
 
         private void onMouseWheel(object sender, MouseEventArgs e)
@@ -285,8 +276,11 @@ namespace GalaxyConquest
                     {
                         if ((conquer_progressBar.Visible == false) && (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0))
                         {
-                            Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
-                            Game.Player.selectedStar = s;
+                            if (DrawControl.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
+                            {
+                                Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
+                                Game.Player.selectedStar = s;
+                            }
                         }
                         else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s)
                         {
@@ -306,7 +300,7 @@ namespace GalaxyConquest
             {
                 for (int j = 0; j < Game.Galaxy.stars.Count; j++)
                 {
-                    if (DrawControl.CursorIsOnObject(e, Game.Galaxy.stars[j]))
+                    if (DrawControl.CursorIsOnObject(e, Game.Galaxy.stars[j]) && Game.Galaxy.stars[j].Discovered)
                     {
                         if (ssf != null && !ssf.IsDisposed)
                         {
@@ -352,7 +346,7 @@ namespace GalaxyConquest
 
                 for (int i = 0; i < Game.Galaxy.neutrals.Count; i++)
                 {
-                    if (DrawControl.CursorIsOnObject(e, Game.Galaxy.neutrals[i]))
+                    if (DrawControl.CursorIsOnObject(e, Game.Galaxy.neutrals[i]) && Game.Galaxy.neutrals[i].s1.Discovered)
                     {
                         int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
                         for (int j = 0; j < Game.Galaxy.neutrals[i].ships.Count; j++)
@@ -394,7 +388,7 @@ namespace GalaxyConquest
 
         private void Shop_button_Click(object sender, EventArgs e)
         {
-            if (Game.Galaxy == null)
+            if (Game == null)
                 return;
 
             shop_form.ShowDialog();
@@ -406,7 +400,7 @@ namespace GalaxyConquest
 
         private void fleetsButton_Click(object sender, EventArgs e)
         {
-            if (Game.Galaxy == null)
+            if (Game == null)
                 return;
 
             if (listView.Tag.Equals(fleetsButton.Tag))
@@ -433,7 +427,7 @@ namespace GalaxyConquest
 
         private void planetsButton_Click(object sender, EventArgs e)
         {
-            if (Game.Galaxy == null)
+            if (Game == null)
                 return;
 
             if (listView.Tag.Equals(systemsButton.Tag))
@@ -497,8 +491,12 @@ namespace GalaxyConquest
                     if (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
                     {
                         StarSystem s = Game.Player.stars[listView.SelectedIndices[0]];
-                        Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
-                        Game.Player.selectedStar = s;
+                        if (DrawControl.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
+                        {
+
+                            Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
+                            Game.Player.selectedStar = s;
+                        }
                     }
                     else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == Game.Player.stars[listView.SelectedIndices[0]])
                     {
@@ -560,23 +558,27 @@ namespace GalaxyConquest
                     conquer_progressBar.Value = conquer_progressBar.Value + 1;
                 }
 
-            if (tech_progressBar.Value < tt.learning_tech_time && tt.tech_clicked != 1000 && tt.subtech_clicked != 1000)
+            if (tech_progressBar.Value < Tech.learning_tech_time &&
+                tt.tierClicked != 1000 &&
+                tt.techLineClicked != 1000 &&
+                tt.subtechClicked != 1000)
             {
                 if (InvokeRequired)
                     Invoke(new Action(() => tech_progressBar.Value += 1));
             }
 
-            if (tech_progressBar.Value == tt.learning_tech_time)
+            if (tech_progressBar.Value == Tech.learning_tech_time)
             {
-                Player.technologies.Add(new int[] { tt.tech_clicked, tt.subtech_clicked });
+                Player.technologies.Add(new int[] { tt.tierClicked, tt.techLineClicked, tt.subtechClicked });
                 if (InvokeRequired)
                 {
                     Invoke(new Action(() => tech_progressBar.Value = 0));
                     Invoke(new Action(() => tech_progressBar.Visible = false));
                     Invoke(new Action(() => tech_label.Visible = false));
                 }
-                tt.tech_clicked = 1000;
-                tt.subtech_clicked = 1000;
+                tt.tierClicked = 1000;
+                tt.techLineClicked = 1000;
+                tt.subtechClicked = 1000;
             }
         }
 

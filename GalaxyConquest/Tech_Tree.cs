@@ -3,16 +3,18 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace GalaxyConquest
 {
     public partial class Tech_Tree : Form
     {
-
         public Bitmap TechTreeBitmap;
-        //public List<string> tech = new List<string>();
-        public List<List<string>> tech_desc = new List<List<string>>();
-        public List<List<string>> tech_subtech = new List<List<string>>();
+
+        public int tierClicked = 1000;
+        public int techLineClicked = 1000;
+        public int subtechClicked = 1000;
 
         public float scaling = 1f;
         public float horizontal = 0;
@@ -20,52 +22,24 @@ namespace GalaxyConquest
 
         public int mouseX;
         public int mouseY;
-        public int tech_clicked = 1000;
-        public int subtech_clicked = 1000;
-        public int learning_tech_time = 2;
 
         float centerX;
         float centerY;
 
-        public Brush br = Brushes.White;
+        public Brush br;
+        public Font fnt = new Font("Consolas", 10.0F);
 
         public Tech_Tree()
         {
             InitializeComponent();
-
+            Tech.Inint();
             this.MouseWheel += new MouseEventHandler(this_MouseWheel);
-
-            StreamReader tech_str = new StreamReader(@"Tech.txt");
-            int counter = 0;
-            string line;
-
-            while ((line = tech_str.ReadLine()) != null)
-            {
-                string[] words = line.Split('~');
-
-                //tech.Add(words[0]);
-                tech_desc.Add(new List<string>());
-                tech_subtech.Add(new List<string>());
-
-
-                for (int j = 0; j < words.GetLength(0); j++)
-                {
-                    string[] desc = words[j].Split('#');
-                    tech_desc[counter].Add(desc[1]);
-
-                    tech_subtech[tech_subtech.Count - 1].Add(desc[0]);
-
-                }
-
-                counter++;
-            }
-            tech_str.Close();
-
             Redraw();
         }
 
         private void Redraw()
         {
+
             TechTreeBitmap = new Bitmap(TechTreeImage.Width, TechTreeImage.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);
@@ -77,35 +51,38 @@ namespace GalaxyConquest
             centerY += vertical;
 
             g.ScaleTransform(scaling, scaling);
-
-            //чтение из фала списка технологий
-            for (int i = 0; i < tech_subtech.Count; i++)
+            br = Brushes.White;
+            //достаем технологии из Tech.teches i - столбец(Tier); j - строка(TechLine); k - подстрока(Subtech)
+            for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
-                for (int z = 0; z < tech_subtech[i].Count; z++)
+                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
                 {
-                    for (int j = 0; j < Player.technologies.Count; j++)
+                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
                     {
-                        if (i == Player.technologies[j][0] && z <= Player.technologies[j][1])
+                        for (int z = 0; z < Player.technologies.Count; z++)
                         {
-                            br = Brushes.Yellow;
-                            break;
+                            if (i == Player.technologies[z][0] &&
+                                j == Player.technologies[z][1] &&
+                                k == Player.technologies[z][2])
+                            {
+                                br = Brushes.Yellow;
+                                break;
+                            }
+                            else
+                            {
+                                br = Brushes.White;
+                            }
                         }
-                        else
-                        {
-                            br = Brushes.White;
-                        }
+                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
+                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
+                                    new PointF(centerX + 340 * i, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2)));
+
+                        g.DrawRectangle(Pens.AliceBlue, centerX + 340 * i - 2,
+                            centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, string_lenght.Width + 2, string_lenght.Height + 2);
                     }
-                    Font fnt = new Font("Consolas", 10.0F);
-                    Size string_lenght = TextRenderer.MeasureText(tech_subtech[i][z], fnt);
-                    g.DrawString(tech_subtech[i][z], fnt, br,
-                                new PointF(centerX + 300 * z, centerY + 300 - 30 * i));
 
-                    g.DrawRectangle(Pens.AliceBlue, centerX + 300 * z - 2,
-                        centerY + 300 - 30 * i - 2, string_lenght.Width + 2, string_lenght.Height + 2);
                 }
-
             }
-
 
             TechTreeImage.Image = TechTreeBitmap;
             TechTreeImage.Refresh();
@@ -196,32 +173,33 @@ namespace GalaxyConquest
 
         private void TechTreeImage_MouseClick(object sender, MouseEventArgs e)
         {
-            Font fnt = new Font("Consolas", 10.0F);
 
-            for (int i = 0; i < tech_subtech.Count; i++)
+            for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
-                for (int j = 0; j < tech_subtech[i].Count; j++)
+                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
                 {
-                    Size string_lenght = TextRenderer.MeasureText(tech_subtech[i][j], fnt);
-
-                    if (e.X < (centerX + 300 * j + (string_lenght.Width + 2)) * scaling &&
-                        e.X > (centerX + 300 * j - 2) * scaling &&
-                        e.Y < (centerY + 300 - 30 * i + (string_lenght.Height + 2)) * scaling &&
-                        e.Y > (centerY + 300 - 30 * i - 2) * scaling)
+                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
                     {
-                        tech_clicked = i;
-                        subtech_clicked = j;
+                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
 
-                        properties_tech_textBox.Text = tech_desc[tech_clicked][subtech_clicked];
-                        groupBox1.Visible = true;
-                        groupBox1.Text = tech_subtech[tech_clicked][subtech_clicked];
+                        if (e.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
+                            e.X > (centerX + 340 * i - 2) * scaling &&
+                            e.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
+                            e.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
+                        {
+                            tierClicked = i;
+                            techLineClicked = j;
+                            subtechClicked = k;
+
+
+                            properties_tech_textBox.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description;
+                            groupBox1.Visible = true;
+                            groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                        }
                     }
                 }
-
-
-
-
             }
+
         }
 
 
@@ -236,14 +214,14 @@ namespace GalaxyConquest
             bool tech_logic2 = false;
             for (int i = 0; i < Player.technologies.Count; i++)
             {
-                if (tech_clicked == Player.technologies[i][0] &&
-                    subtech_clicked <= Player.technologies[i][1])
+                if (tierClicked == Player.technologies[i][0] &&
+                    techLineClicked == Player.technologies[i][1] &&
+                    subtechClicked == Player.technologies[i][2])
                 {
                     tech_logic = false;
                     //break;
                 }
-                if (tech_clicked == Player.technologies[i][0] + 1 && subtech_clicked == 0 ||
-                    tech_clicked == Player.technologies[i][0] && subtech_clicked <= Player.technologies[i][1] + 1)
+                if (tierClicked == Player.technologies[i][0] + 1 && techLineClicked == Player.technologies[i][1])
                 {
                     tech_logic2 = true;
                     //break;
@@ -260,8 +238,8 @@ namespace GalaxyConquest
                 {
                     Form1.SelfRef.tech_label.Visible = true;
                     Form1.SelfRef.tech_progressBar.Visible = true;
-                    Form1.SelfRef.tech_label.Text = tech_subtech[tech_clicked][subtech_clicked];
-                    Form1.SelfRef.tech_progressBar.Maximum = learning_tech_time;
+                    Form1.SelfRef.tech_label.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                    Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
 
                     Redraw();
                 }
@@ -273,6 +251,7 @@ namespace GalaxyConquest
 
         }
 
+
         private void Tech_Tree_VisibleChanged(object sender, EventArgs e)
         {
             Redraw();
@@ -280,4 +259,5 @@ namespace GalaxyConquest
 
 
     }
+
 }

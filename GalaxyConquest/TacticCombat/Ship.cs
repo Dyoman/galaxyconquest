@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 
 namespace GalaxyConquest.Tactics
 {
+    [Serializable]
     public class Ship : SpaceObject
     {
         public Weapon equippedWeapon;

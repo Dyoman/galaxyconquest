@@ -39,6 +39,7 @@ namespace GalaxyConquest
                 player.player_planets.Add(s.PLN[i]);
 
             player.fleets.Add(new Fleet(player, rand.Next(2, 5), s));
+            s.Discovered = true;
 
             int count = rand.Next(1, 3);
             for (int i = 0; i < count; i++)

@@ -33,6 +33,24 @@ namespace GalaxyConquest
             Owner = null;
         }
 
+        public Fleet(Player player, StarSystem s1)
+        {
+            Owner = player;
+            ships = new List<Ship>();
+            onWay = false;
+            Capturing = false;
+
+            if (player == null)
+                name = "Нейтральный флот";
+            else
+                name = "Флот <" + player.name + ">";
+
+            this.s1 = s1;
+            x = s1.x;
+            y = s1.y;
+            z = s1.z;
+        }
+
         public Fleet(Player player, int size, StarSystem s1)
         {
             Owner = player;

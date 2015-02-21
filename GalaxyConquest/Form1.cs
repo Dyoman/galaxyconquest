@@ -35,7 +35,8 @@ namespace GalaxyConquest
         int mouseX;
         int mouseY;
 
-        public static Shop shop_form;
+        //public static Shop shop_form;
+        public static StarShop shop_form;
 
         public Tech_Tree tt = new Tech_Tree();
         IWavePlayer waveOutDevice;
@@ -50,7 +51,7 @@ namespace GalaxyConquest
         public Form1()
         {
             InitializeComponent();
-            shop_form = new Shop();
+            shop_form = new StarShop();
             Buildings builds = new Buildings();
             SelfRef = this;
             tech_progressBar.Visible = false;

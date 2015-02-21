@@ -267,7 +267,7 @@ namespace GalaxyConquest
 
                     if (DrawControl.CursorIsOnObject(e, s))
                     {
-                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0))
+                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && (!Game.Player.fleets[Game.Player.selectedFleet].onWay))
                         {
                             if (DrawControl.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
                             {
@@ -275,11 +275,8 @@ namespace GalaxyConquest
                                 Game.Player.selectedStar = s;
                             }
                         }
-                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s)
+                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
                         {
-                            if (Game.Player.fleets[Game.Player.selectedFleet].onWay)
-                                break;
-
                             Game.Player.fleets[Game.Player.selectedFleet].setTarget(null);
                             Game.Player.selectedStar = null;
                         }

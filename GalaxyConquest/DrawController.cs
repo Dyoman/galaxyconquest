@@ -195,7 +195,7 @@ namespace GalaxyConquest.Drawing
                     g.DrawString(fleet.name, new Font("Arial", 8.0F), FleetBrushes.PassiveFleet, new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scr.Y + r * (float)Math.Sin(-3 * ugol) - 12));
                 }
 
-                if (state.Player.warpTarget != null && k == state.Player.selectedFleet && state.Player.fleets[state.Player.selectedFleet].starDistanse == 0)
+                if (state.Player.warpTarget != null && k == state.Player.selectedFleet && (!state.Player.fleets[state.Player.selectedFleet].onWay))
                 {
                     double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
                     string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance * MovementsController.FIXED_TIME_DELTA) + 1).ToString() + ">";
@@ -232,7 +232,8 @@ namespace GalaxyConquest.Drawing
                     scrTo.X -= 10;
                     scrTo.Y -= 10;
 
-                    pen.Color = Color.Red;
+                    pen.Color = Color.White;
+                    pen.Width += 2;
                     pen.DashStyle = DashStyle.Dash;
 
                     g.DrawLine(pen,
@@ -241,6 +242,7 @@ namespace GalaxyConquest.Drawing
                 }
                 pen.Color = Color.Gold;
                 pen.DashStyle = DashStyle.Solid;
+                pen.Width -= 2;
             }
 
             //рисуем гиперпереходы

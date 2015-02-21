@@ -113,6 +113,12 @@
     <Compile Include="SpaceObjects\SpaceObject.cs" />
     <Compile Include="SpaceObjects\StarSystem.cs" />
     <Compile Include="SpaceObjects\StarWarp.cs" />
+    <Compile Include="StarShop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StarShop.Designer.cs">
+      <DependentUpon>StarShop.cs</DependentUpon>
+    </Compile>
     <Compile Include="TacticCombat\Box.cs" />
     <Compile Include="TacticCombat\CombatForm.cs">
       <SubType>Form</SubType>
@@ -159,6 +165,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StarShop.resx">
+      <DependentUpon>StarShop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TacticCombat\CombatForm.resx">
       <DependentUpon>CombatForm.cs</DependentUpon>

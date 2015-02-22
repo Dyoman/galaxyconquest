@@ -52,6 +52,9 @@ namespace GalaxyConquest.Drawing
     /// </summary>
     public struct Vector
     {
+        /// <summary>
+        /// Координаты вектора
+        /// </summary>
         public double X, Y;
 
         public Vector(double x, double y)
@@ -109,32 +112,49 @@ namespace GalaxyConquest.Drawing
     /// </summary>
     public class DrawController
     {
-        Control drawTarget;
-
+        /// <summary>
+        /// Контрол, к которму привязано рисование
+        /// </summary>
+        public Control DrawTarget { get; private set; }
+        /// <summary>
+        /// Поворот по оси вертикали
+        /// </summary>
         double spinX = 0.0;
+        /// <summary>
+        /// Поворот по оси горизонтали
+        /// </summary>
         double spinY = Math.PI / 4;
-
+        /// <summary>
+        /// Масштаб
+        /// </summary>
         float scaling = 1f;
+        /// <summary>
+        /// Сдвиг по горизонтали
+        /// </summary>
         float horizontal = 0;
+        /// <summary>
+        /// Сдвиг по вертикали
+        /// </summary>
         float vertical = 0;
-
-        float centerX;
-        float centerY;
-
+        /// <summary>
+        /// Координаты центра
+        /// </summary>
+        float centerX, centerY;
+        /// <summary>
+        /// Дисперсия/разброс. Радиус области вокруг объекта, при клике на которую объект будет выбран
+        /// </summary>
         int dispersion = 7;
-
         /// <summary>
         /// Создание экземпляра класса
         /// </summary>
         /// <param name="target">Цель для рисования</param>
         public DrawController(Control target)
         {
-            drawTarget = target;
-            drawTarget.SizeChanged += drawTarget_SizeChanged;
+            DrawTarget = target;
+            DrawTarget.SizeChanged += drawTarget_SizeChanged;
 
             UpdateCenters();
         }
-
         /// <summary>
         /// Рассчитывает экранные координаты объекта
         /// </summary>
@@ -147,7 +167,6 @@ namespace GalaxyConquest.Drawing
             double y = obj.y * Math.Cos(spinY) - z * Math.Sin(spinY);
             return new Vector(centerX + x, centerY + y);
         }
-
         /// <summary>
         /// Рисует галактику
         /// </summary>
@@ -329,7 +348,6 @@ namespace GalaxyConquest.Drawing
                     new PointF((float)w.system2.x, (float)w.system2.y));
             }
         }
-
         /// <summary>
         /// Рисует звездную систему
         /// </summary>
@@ -346,15 +364,14 @@ namespace GalaxyConquest.Drawing
 
                 g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.DISTANCE, (float)centerScr.Y - p.DISTANCE, p.DISTANCE * 2, p.DISTANCE * 2);
                 g.FillEllipse(new SolidBrush(p.CLR), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
-                g.DrawString(p.NAME, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
+                g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
             }
         }
-
         /// <summary>
         /// Двигает изображение
         /// </summary>
-        /// <param name="dx">по оси абсцисс</param>
-        /// <param name="dy">по оси ординат</param>
+        /// <param name="dx">По вертикали</param>
+        /// <param name="dy">По горизонтали</param>
         public void Move(float dx, float dy)
         {
             horizontal += dx / scaling;
@@ -362,18 +379,16 @@ namespace GalaxyConquest.Drawing
 
             UpdateCenters();
         }
-
         /// <summary>
         /// Поворачивает изображение
         /// </summary>
-        /// <param name="dx">по оси 0x</param>
-        /// <param name="dy">по оси 0y</param>
+        /// <param name="dx">По вертикали</param>
+        /// <param name="dy">По горизонтали</param>
         public void Rotate(float dx, float dy)
         {
             spinX += dx * 0.01;
             spinY += dy * 0.01;
         }
-
         /// <summary>
         /// Изменяет масштаб
         /// </summary>
@@ -396,13 +411,11 @@ namespace GalaxyConquest.Drawing
             }
             UpdateCenters();
         }
-
         /// <summary>
         /// Проверка нахождения курсора мыши на флоте
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Флот для проверки</param>
-        /// <returns></returns>
         public bool CursorIsOnObject(MouseEventArgs e, Fleet obj)
         {
             Vector scr = getScreenCoordOf(obj);
@@ -414,11 +427,10 @@ namespace GalaxyConquest.Drawing
                    (e.Y - dispersion) / scaling < (scr.Y + dispersion);
         }
         /// <summary>
-        /// Проверка нахождения курсора мыши на звездной система
+        /// Проверка нахождения курсора мыши на звездной системе
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Система для проверки</param>
-        /// <returns></returns>
         public bool CursorIsOnObject(MouseEventArgs e, StarSystem obj)
         {
             Vector scr = getScreenCoordOf(obj);
@@ -434,7 +446,6 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Планета для проверки</param>
-        /// <returns></returns>
         public bool CursorIsOnObject(MouseEventArgs e, StarSystems.PLANET obj)
         {
             Vector scr = getScreenCoordOf(obj);
@@ -444,38 +455,35 @@ namespace GalaxyConquest.Drawing
                    e.Y > (scr.Y - obj.SIZE / 2) &&
                    e.Y < (scr.Y + obj.SIZE / 2);
         }
-
         /// <summary>
         /// Рассчитывает дистанцию от одного объекта до другого
         /// </summary>
         /// <param name="from">Первый объект</param>
         /// <param name="to">Второй оъект</param>
+<<<<<<< HEAD
         /// <returns></returns>
         public static double Distance(SpaceObject from, SpaceObject to)
+=======
+        public double Distance(SpaceObject from, SpaceObject to)
+>>>>>>> master
         {
             return Math.Sqrt(Math.Pow((to.x - from.x), 2) + Math.Pow((to.y - from.y), 2) + Math.Pow((to.z - from.z), 2));
         }
-
+        /// <summary>
+        /// Обновляет координаты центра
+        /// </summary>
         void UpdateCenters()
         {
-            centerX = drawTarget.Width / 2 / scaling + horizontal;
-            centerY = drawTarget.Height / 2 / scaling + vertical;
-        }
-
-        void drawTarget_SizeChanged(object sender, EventArgs e)
-        {
-            UpdateCenters();
+            centerX = DrawTarget.Width / 2 / scaling + horizontal;
+            centerY = DrawTarget.Height / 2 / scaling + vertical;
         }
 
         /// <summary>
-        /// Получает контрол, к которому привязан
+        /// Обновляем координаты центра, если размер объекта, на котором происходит рисование изменился
         /// </summary>
-        public Control Target
+        void drawTarget_SizeChanged(object sender, EventArgs e)
         {
-            get
-            {
-                return drawTarget;
-            }
+            UpdateCenters();
         }
     }
 }

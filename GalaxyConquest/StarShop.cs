@@ -10,18 +10,31 @@ using System.Windows.Forms;
 
 namespace GalaxyConquest
 {
+    /// <summary>
+    /// Форма магазина
+    /// </summary>
     public partial class StarShop : Form
     {
         public StarShop()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Имена кораблей
+        /// </summary>
         string[] names = { "Ship Assaulter", "Ship Scout", "Colonysator Ship", "Fregat" };
+        /// <summary>
+        /// Цены соответствующих кораблей
+        /// </summary>
         int[] costs = { 200, 100, 1000, 5000 };
-
+        /// <summary>
+        /// Общая стоимость
+        /// </summary>
         double totalPrice;
-        int selectedType;       //0 - assaulter, 1 - scout, 2 - colonysator, 3 - fregat, 4,5,6 ...
+        /// <summary>
+        /// Выбрнанный тип корабля: 0 - assaulter, 1 - scout, 2 - colonysator, 3 - fregat, 4,5,6 ...
+        /// </summary>
+        int selectedType;
 
         private void removeButton_Click(object sender, EventArgs e)
         {
@@ -44,28 +57,28 @@ namespace GalaxyConquest
             int selectedFleet = SelectBox.Show(this, Form1.Game.Player.fleets.ToArray(), "Выберите флот");
 
             if (selectedFleet == -1) return;
-
+            //Если выбран пункт создания нового флота, выбираем звездную систему для него и добавляем новый флот к флотам игрока.
             if (selectedFleet == Form1.Game.Player.fleets.Count)
             {
                 int selectedStar = SelectBox.Show(this, Form1.Game.Player.stars.ToArray(), "Выберите звездную систему");
                 fl = new Fleet(Form1.Game.Player, Form1.Game.Player.stars[selectedStar]);
                 Form1.Game.Player.fleets.Add(fl);
             }
-            else
+            else//Иначе добавляем корабли к выбранному флоту
                 fl = Form1.Game.Player.fleets[selectedFleet];
-
+            //Добавляем корабли во флот
             for (int i = 0; i < shipListBox.Items.Count; i++)
             {
                 if (shipListBox.Items[i].Equals(names[0]))
-                    fl.ships.Add(new ShipAssaulter(1, new WpnHeavyLaser()));
+                    fl.ships.Add(new ShipAssaulter(1, new wpnLightLaser()));
                 else if (shipListBox.Items[i].Equals(names[1]))
-                    fl.ships.Add(new ShipScout(1, new wpnLightLaser()));
+                    fl.ships.Add(new ShipScout(1, new WpnGauss()));
                 else if (shipListBox.Items[i].Equals(names[2]))
-                    continue;   //Пока таких нету кораблей
+                    fl.ships.Add(new ShipСolonizer(1));
                 else if (shipListBox.Items[i].Equals(names[3]))
                     continue;   //Пока таких нету кораблей
             }
-            Form1.Game.Player.credit -= totalPrice;
+            Form1.Game.Player.credit -= totalPrice;//рассчитываемся с игроком и экземпляр формы
 
             Dispose();
         }
@@ -111,7 +124,9 @@ namespace GalaxyConquest
                     return;
             }
         }
-
+        /// <summary>
+        /// Обновляет общую цену и устанавливает возможность покупки
+        /// </summary>
         void UpdateTotalPrice()
         {
             totalPrice = 0;

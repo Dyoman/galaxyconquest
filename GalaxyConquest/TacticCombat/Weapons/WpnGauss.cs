@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace GalaxyConquest.Tactics
 {
-    public class WpnHeavyLaser : Weapon
+    class WpnGauss : Weapon
     {
-        public WpnHeavyLaser()
+        public WpnGauss()
         {
-            attackPower = 50;
-            attackRange = 5;
+            maxAttackPower = 10;
+            minAttackPower = 5;
+            attackRange = 2;
             energyСonsumption = 1;
             cage = 1;
             shotsleft = cage;
         }
         public override string description()
         {
-            return "\nТяжелый лазер\nВыстрелов: " + shotsleft;
+            return "\nГаусс-пушка\nВыстрелов: " + shotsleft;
         }
-        public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)
+
+        public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref System.Windows.Forms.PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)
         {
             System.Threading.Thread.Sleep(150);
             player.SoundLocation = @"Sounds/laser1.wav";
@@ -42,7 +43,7 @@ namespace GalaxyConquest.Tactics
 
             oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
 
-            Pen laserPen1 = new Pen(Color.Orange, 3);
+            Pen laserPen1 = new Pen(Color.Gray, 1);
 
             player.Play();
             for (int i = -3; i < 3; i++)

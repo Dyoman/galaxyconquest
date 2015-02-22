@@ -2,26 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace GalaxyConquest.Tactics
 {
-    public class wpnLightLaser : Weapon
+    class WpnPlasma : Weapon
     {
-        public wpnLightLaser()
+        public WpnPlasma()
         {
-            maxAttackPower = 20;
-            minAttackPower = 10;
-            attackRange = 3;
+            maxAttackPower = 40;
+            minAttackPower = 15;
+            attackRange = 4;
             energyСonsumption = 1;
             cage = 1;
             shotsleft = cage;
         }
         public override string description()
         {
-            return "\nЛазер\nВыстрелов: " + shotsleft; 
+            return "\nПлазменая пушка\nВыстрелов: " + shotsleft;
         }
         public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)
         {
@@ -40,18 +39,27 @@ namespace GalaxyConquest.Tactics
             Image oldImage;
 
             rect = new Rectangle(xmin, ymin, xmax - xmin, ymax - ymin);
-           
+
             oldImage = bmFull.Clone(rect, bmFull.PixelFormat);
 
-            Pen laserPen1 = new Pen(Color.GreenYellow, 2);
+            Pen laserPen1 = new Pen(Color.Orange, 3);
 
             player.Play();
-            for (int i = 0; i < 5; i++)
+            for (int i = -3; i < 3; i++)
             {
+                // --- 1) находим размер изображения
+                //rect = new Rectangle(0, 0, combatBitmap.Width, combatBitmap.Height); 
+                // --- 2) клонируем наш битмап
+                //oldImage = combatBitmap.Clone(rect, combatBitmap.PixelFormat);
+
                 g.DrawLine(laserPen1, new Point(x, y), new Point(targetx + i, targety));
 
                 pictureMap.Image = bmFull;
                 pictureMap.Refresh();
+
+                // --- 3) отрисовываем тот битмам, который сохранили выше
+                //g.DrawImage(oldImage, 0, 0);
+
 
                 System.Threading.Thread.Sleep(35);
             }

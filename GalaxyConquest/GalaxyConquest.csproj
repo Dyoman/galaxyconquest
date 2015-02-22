@@ -128,16 +128,22 @@
     </Compile>
     <Compile Include="TacticCombat\combatMap.cs" />
     <Compile Include="TacticCombat\Constants.cs" />
+    <Compile Include="TacticCombat\FindWay.cs" />
     <Compile Include="TacticCombat\Meteor.cs" />
     <Compile Include="TacticCombat\ObjectManager.cs" />
     <Compile Include="TacticCombat\SavedImage.cs" />
     <Compile Include="TacticCombat\Ship.cs" />
     <Compile Include="TacticCombat\ShipAssaulter.cs" />
+    <Compile Include="TacticCombat\ShipsCounter.cs" />
     <Compile Include="TacticCombat\ShipScout.cs" />
+    <Compile Include="TacticCombat\ShipСolonizer.cs" />
     <Compile Include="TacticCombat\SpaceObject.cs" />
+    <Compile Include="TacticCombat\TacticState.cs" />
+    <Compile Include="TacticCombat\TacticDraw.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnNone.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnPlasma.cs" />
     <Compile Include="TacticCombat\Weapons\Weapon.cs" />
-    <Compile Include="TacticCombat\Weapons\WpnHeavyLaser.cs" />
-    <Compile Include="TacticCombat\Weapons\WpnLightIon.cs" />
+    <Compile Include="TacticCombat\Weapons\WpnGauss.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightLaser.cs" />
     <Compile Include="Tech.cs" />
     <Compile Include="Tech_Tree.cs">
@@ -285,21 +291,29 @@
     <Content Include="Sprites\ships\player\Assaultboat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Sprites\ships\player\Battleship.png" />
-    <Content Include="Sprites\ships\player\Bomber.png" />
+    <Content Include="Sprites\ships\player\Battleship.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sprites\ships\player\Bomber.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\ships\player\Bomber2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\ships\player\Corvette.png" />
     <Content Include="Sprites\ships\player\Cruiser.png" />
     <Content Include="Sprites\ships\player\Cruiser2.png" />
-    <Content Include="Sprites\ships\player\Destroyer.png" />
+    <Content Include="Sprites\ships\player\Destroyer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\ships\player\Fighter1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\ships\player\Fighter2.png" />
     <Content Include="Sprites\ships\player\Fighter3.png" />
-    <Content Include="Sprites\ships\player\Frigate.png" />
+    <Content Include="Sprites\ships\player\Frigate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\ships\player\License.txt" />
     <Content Include="Starnames backup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

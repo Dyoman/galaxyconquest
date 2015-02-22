@@ -1,9 +1,12 @@
-﻿using System.Drawing;
-using GalaxyConquest.Game;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Drawing;
 
 namespace GalaxyConquest.Tactics
 {
-    public class ShipScout : Ship
+    class ShipСolonizer : Ship
     {
         public string staticDescription;
         public override string description()
@@ -12,21 +15,21 @@ namespace GalaxyConquest.Tactics
                             + actionsLeft + "/" + maxActions + equippedWeapon.description() + "\nmax damage - " + equippedWeapon.maxAttackPower + "\nmin damage - " + equippedWeapon.minAttackPower + "\nRange - " + equippedWeapon.attackRange;
         }
 
-        public ShipScout(int p, Weapon weapon)
+        public ShipСolonizer(int p)
         {
             objectType = Constants.SHIP;
-            classShip = Constants.SCOUT;
-            objectImg = Image.FromFile(@"Sprites/ships/player/Bomber2.png");
+            classShip = Constants.COLONIZER;
+            objectImg = Image.FromFile(@"Sprites/ships/player/Assaultboat.png");
             baseObjectImg = objectImg;
-            equippedWeapon = weapon;
-            sumWeapon = 1;
+            equippedWeapon = new WpnNone();
+            sumWeapon = 0;
             player = p;
-            maxHealth = 50;
+            maxHealth = 200;
             currentHealth = maxHealth;
-            maxActions = 7;
+            maxActions = 4;
             actionsLeft = maxActions;
-            staticDescription = "Развед. корабль\nкласса Scout";
-            weaponR = 12;
+            staticDescription = "Корабль-колонизатор";
+            weaponR = 22;
             if (player != 1)
             {
                 weaponR *= -1;

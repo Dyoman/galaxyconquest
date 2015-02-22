@@ -11,60 +11,74 @@ namespace GalaxyConquest.Game
     [Serializable]
     public struct GameSeed
     {
+        /// <summary>
+        /// Имя игрока
+        /// </summary>
         public string pName;
+        /// <summary>
+        /// Имя галактики
+        /// </summary>
         public string gName;
+        /// <summary>
+        /// Тип галактики
+        /// </summary>
         public GalaxyType gType;
+        /// <summary>
+        /// Размер галактики
+        /// </summary>
         public int gSize;
+        /// <summary>
+        /// Количество звезд в галактике
+        /// </summary>
         public int gStarsCount;
+        /// <summary>
+        /// Флаг генерации случайных событий. Если true, то в галактике будут происходить случайные события
+        /// </summary>
         public bool gGenerateRandomEvent;
     }
 
+    /// <summary>
+    /// Класс объединяет игрока с галактикой
+    /// </summary>
     [Serializable]
     public class GameState
     {
-        Player player;
-        ModelGalaxy galaxy;
-
+        /// <summary>
+        /// Игрок
+        /// </summary>
+        public Player Player { get; private set; }
+        /// <summary>
+        /// Галактика, в которой находится игрок
+        /// </summary>
+        public ModelGalaxy Galaxy { get; private set; }
+        /// <summary>
+        /// Создание новой игры
+        /// </summary>
+        /// <param name="seed">Семя для создания игры, содержащее все необходимые параметры</param>
         public void New(GameSeed seed)
         {
-            galaxy = new ModelGalaxy();
-            player = new Player(seed.pName);
+            Galaxy = new ModelGalaxy();
+            Player = new Player(seed.pName);
             Random rand = new Random((int)DateTime.Now.Ticks);
 
-            galaxy.GenerateNew(seed.gName, seed.gType, seed.gSize, seed.gStarsCount, seed.gGenerateRandomEvent);
-            StarSystem s = galaxy.stars[rand.Next(galaxy.stars.Count - 1)];
+            Galaxy.GenerateNew(seed.gName, seed.gType, seed.gSize, seed.gStarsCount, seed.gGenerateRandomEvent);
+            StarSystem s = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];
 
-            player.stars.Add(s);
+            Player.stars.Add(s);
             for (int i = 0; i < s.PLN.Count; i++)
-                player.player_planets.Add(s.PLN[i]);
+                Player.player_planets.Add(s.PLN[i]);
 
-            player.fleets.Add(new Fleet(player, rand.Next(2, 5), s));
+            Player.fleets.Add(new Fleet(Player, rand.Next(2, 5), s));
             s.Discovered = true;
 
             int count = rand.Next(1, 3);
             for (int i = 0; i < count; i++)
             {
-                StarSystem ns = galaxy.stars[rand.Next(galaxy.stars.Count - 1)];
-                while (player.stars.Contains(ns))
-                    ns = galaxy.stars[rand.Next(galaxy.stars.Count - 1)];
+                StarSystem ns = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];
+                while (Player.stars.Contains(ns))
+                    ns = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];
 
-                galaxy.neutrals.Add(new Fleet(null, rand.Next(1, 4), ns));
-            }
-        }
-
-        public Player Player
-        {
-            get
-            {
-                return player;
-            }
-        }
-
-        public ModelGalaxy Galaxy
-        {
-            get
-            {
-                return galaxy;
+                Galaxy.neutrals.Add(new Fleet(null, rand.Next(1, 4), ns));
             }
         }
     

@@ -6,25 +6,57 @@ using GalaxyConquest.Game;
 
 namespace GalaxyConquest
 {
+    /// <summary>
+    /// Представляет флот
+    /// </summary>
     [Serializable]
     public class Fleet : SpaceObject
     {
+        /// <summary>
+        /// Владелец флота
+        /// </summary>
         public Player Owner { get; private set; }
+        /// <summary>
+        /// Корабли во флоте
+        /// </summary>
         public List<Ship> ships;
-
+        /// <summary>
+        /// Система в которой находится флот в данный момент
+        /// </summary>
         public StarSystem s1 = null;
+        /// <summary>
+        /// Система в которую флот полетит во время шага
+        /// </summary>
         public StarSystem s2 = null;
-
+        /// <summary>
+        /// Цель для захвата!
+        /// </summary>
         public StarSystem CaptureTarget { get; private set; }
-
+        /// <summary>
+        /// Дистанция до цели (s2)
+        /// </summary>
         public double starDistanse;
+        /// <summary>
+        /// Флаг, показывающий находится флот в пути или нет
+        /// </summary>
         public bool onWay;
-
+        /// <summary>
+        /// Флаг, показывающий находится флот в процессе захвата системы или нет
+        /// </summary>
         public bool Capturing { get; private set; }
+        /// <summary>
+        /// Прогресс захвата (0-5)
+        /// </summary>
         int captureProgress;
+<<<<<<< HEAD
 
         public Way way { get; private set; }
 
+=======
+        /// <summary>
+        /// Максимальная дистанция, на которую флот способен лететь
+        /// </summary>
+>>>>>>> master
         public static double MaxDistance = 440;
 
         public Fleet()
@@ -68,34 +100,51 @@ namespace GalaxyConquest
             {
                 playerID = 2;
                 name = "Нейтральный флот";
+                Random rand = new Random((int) DateTime.Now.Ticks);
+                for (int i = 0; i < size; i++)
+                {
+                    int ship_type = (rand.Next(0, 100))%2;
+                    int weapon_type = rand.Next(0, 3);
+                    Weapon weapon = null;
+                    Ship ship = null;
+                    switch (weapon_type)
+                    {
+                        case 0:
+                            weapon = new WpnGauss();
+                            break;
+                        case 1:
+                            weapon = new wpnLightLaser();
+                            break;
+                        case 2:
+                            weapon = new WpnPlasma();
+                            break;
+                    }
+                    switch (ship_type)
+                    {
+                        case 0:
+                            ship = new ShipScout(playerID, weapon);
+                            break;
+                        case 1:
+                            ship = new ShipAssaulter(playerID, weapon);
+                            break;
+                    }
+                    ship.player = playerID;
+                    ships.Add(ship);
+                }
             }
             else
-                name = "Флот <" + player.name + ">";
-
-            Random rand = new Random((int)DateTime.Now.Ticks);
-
-            for (int i = 0; i < size; i++)
             {
-                int ship_type = (rand.Next(0, 100)) % 2;
-                int weapon_type = rand.Next(0, 2);
-
-                Weapon weapon = null;
-                Ship ship = null;
-                switch (weapon_type)
-                {
-                    case 0: weapon = new wpnLightLaser(); break;
-                    //case 1: weapon = new WpnLightIon(); break;
-                    case 1: weapon = new WpnHeavyLaser(); break;
-                }
-
-                switch (ship_type)
-                {
-                    case 0: ship = new ShipScout(playerID, weapon); break;
-                    case 1: ship = new ShipAssaulter(playerID, weapon); break;
-                }
-
+                name = "Флот <" + player.name + ">";
+                Ship ship = new ShipСolonizer(playerID);
                 ship.player = playerID;
                 ships.Add(ship);
+                for (int i = 1; i < size; i++)
+                {
+                    Weapon weapon = new WpnNone();
+                    ship = new ShipScout(playerID, weapon);
+                    ship.player = playerID;
+                    ships.Add(ship);
+                }
             }
             this.s1 = s1;
             x = s1.x;
@@ -105,13 +154,13 @@ namespace GalaxyConquest
 
         public override void Move(double time)
         {
-            if (s2 == null)
+            if (s2 == null)//обновляем координаты флота, если во время шага он остается в своей системе
             {
                 y = s1.y;
                 z = s1.z;
                 x = s1.x;
             }
-            else if (starDistanse > 0.5)
+            else if (starDistanse > 0.5)//Обновляем координаты, если флот летит. динамический рассчет дистанции нужен для равномерного движения
             {
                 onWay = true;
 
@@ -126,7 +175,7 @@ namespace GalaxyConquest
                 //starDistanse = Math.Sqrt(Math.Pow(s2.x - x, 2) + Math.Pow(s2.y - y, 2) + Math.Pow(s2.z - z, 2));
                 starDistanse = DrawController.Distance(this, s2);
             }
-            else
+            else//Флот долетел до звезды
             {
                 s1 = s2;
                 s2 = way.Next();
@@ -147,7 +196,10 @@ namespace GalaxyConquest
                 z = s1.z;
             }
         }
-
+        /// <summary>
+        /// Устанавливает цель для флота
+        /// </summary>
+        /// <param name="s">Звездная система</param>
         public void setTarget(StarSystem s)
         {
             if (s == null)
@@ -163,7 +215,9 @@ namespace GalaxyConquest
                 starDistanse = Math.Sqrt(Math.Pow(way[0].x - x, 2) + Math.Pow(way[0].y - y, 2) + Math.Pow(way[0].z - z, 2));
             }
         }
-
+        /// <summary>
+        /// Процесс захвата системы. Если флот ничего не захватывает, метод ничего не делает
+        /// </summary>
         public void CaptureProcess()
         {
             if (!Capturing)
@@ -181,16 +235,13 @@ namespace GalaxyConquest
                 Capturing = false;
             }
         }
-
         /// <summary>
-        /// Возвращает прогресс захвата звездной системы (1 - 5)
+        /// Возвращает прогресс захвата звездной системы (0 - 5)
         /// </summary>
-        /// <returns></returns>
         public int getCaptureProgress()
         {
             return (int)captureProgress;
         }
-
         /// <summary>
         /// Пытается начать захват звездной системы флотом
         /// </summary>
@@ -206,7 +257,6 @@ namespace GalaxyConquest
             captureProgress = 0;
             return true;
         }
-
         /// <summary>
         /// Останавливает захват системы
         /// </summary>
@@ -216,7 +266,9 @@ namespace GalaxyConquest
             Capturing = false;
             captureProgress = 0;
         }
-        
+        /// <summary>
+        /// Получает информацию о жизни флота. Если хотябы один корабль имеет ненулевой запас прочности, флот считается живым
+        /// </summary>
         public bool Allive
         {
             get

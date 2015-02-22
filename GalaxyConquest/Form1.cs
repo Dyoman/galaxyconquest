@@ -24,17 +24,28 @@ namespace GalaxyConquest
         DrawController DrawControl;
 
         static public GameState Game;
-
+        /// <summary>
+        /// SaveFileDialog
+        /// </summary>
         SaveFileDialog sfd;
+        /// <summary>
+        /// OpenFileDialog
+        /// </summary>
         OpenFileDialog ofd;
 
         StarSystemForm ssf;
-
+        /// <summary>
+        /// Флаг, показывающий находится ли игра на стадии шага
+        /// </summary>
         bool onStep = false;
+        /// <summary>
+        /// Переменная для синхронизации времени во время шага
+        /// </summary>
         double syncTime = 1;
-
-        int mouseX;
-        int mouseY;
+        /// <summary>
+        /// Позиция курсора мыши
+        /// </summary>
+        int mouseX, mouseY;
 
         //public static Shop shop_form;
         public static StarShop shop_form;
@@ -128,7 +139,7 @@ namespace GalaxyConquest
 
                 Game.New(seed);
 
-                UpdateControls();
+                UpdateLabels();
 
                 panel1.Enabled = true;
                 mainMenuSave.Enabled = true;
@@ -190,7 +201,7 @@ namespace GalaxyConquest
 
         private void galaxyImage_MouseDown(object sender, MouseEventArgs e)
         {
-            mouseX = e.X;
+            mouseX = e.X;//Задаем координаты курсора
             mouseY = e.Y;
         }
 
@@ -199,14 +210,14 @@ namespace GalaxyConquest
             if (Game == null)
                 return;
 
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)  // с зажатой левой клавишей двигаем изображение
             {
                 DrawControl.Move(e.X - mouseX, e.Y - mouseY);
                 mouseX = e.X;
                 mouseY = e.Y;
                 return;
             }
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right) // с зажатой правой - вращаем
             {
                 DrawControl.Rotate(e.X - mouseX, e.Y - mouseY);
                 mouseX = e.X;
@@ -255,7 +266,7 @@ namespace GalaxyConquest
                         Game.Player.selectedFleet = i;
                         Game.Player.selectedStar = Game.Player.fleets[i].s2;
                         statusStrip1.Items[0].Text = "Выбран " + (i + 1) + " флот";
-
+                        //Обновляем кнопки захвата при смене флота
                         UpdateCaptureControls();
                         return;
                     }
@@ -305,7 +316,7 @@ namespace GalaxyConquest
                             ssf = new StarSystemForm(Game.Galaxy.stars[j]);
                             ssf.Show();
                         }
-                        UpdateCaptureControls();
+                        UpdateCaptureControls();//Обновляем кнопку захвата после выбора системы для просмотра
                         return;
                     }
                 }
@@ -371,7 +382,7 @@ namespace GalaxyConquest
             //  Если StartCapturing возвращает false, то прерываем захват   --- описание функции написано
             if (!Game.Player.fleets[Game.Player.selectedFleet].StartCapturing(Game.Player.fleets[Game.Player.selectedFleet].s1))
                 Game.Player.fleets[Game.Player.selectedFleet].StopCapturing();
-
+            //Обновляем кнопки захвата после нажатия на неё
             UpdateCaptureControls();
         }
 
@@ -380,10 +391,15 @@ namespace GalaxyConquest
             if (Game == null)
                 return;
 
+<<<<<<< HEAD
             StarShop shop = new StarShop();
             shop.ShowDialog();
+=======
+            shop_form = new StarShop();
+            shop_form.ShowDialog();
+>>>>>>> master
 
-            UpdateControls();
+            UpdateLabels();
         }
 
         //---------------------Fast access panel--------------------------
@@ -468,7 +484,7 @@ namespace GalaxyConquest
                     statusStrip1.Items[0].Text = "Выбран " + (Game.Player.selectedFleet + 1) + " флот";
 
                     listView.Items[Game.Player.selectedFleet].ForeColor = FleetColors.ActiveFleet;
-
+                    //Опять же, после выбора флота обновляем кнопки захвата
                     UpdateCaptureControls();
                 }
         }
@@ -512,9 +528,9 @@ namespace GalaxyConquest
             captureButton.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
 
             onStep = true;      //Устанавливаем флаг шага
-            UpdateCaptureControls();
+            UpdateCaptureControls();//Во время шага кнопки захвата не должны быть активны, по-этому обновляем их
         }
-
+        // Поток, в которм выполняются все рассчеты во время шага
         private void StepWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             StarSystem s = Game.Player.selectedStar;
@@ -566,7 +582,7 @@ namespace GalaxyConquest
                 tt.subtechClicked = 1000;
             }
         }
-
+        //Метод вызывается BacgroundWirker-ом после завершения действий в потоке
         private void StepWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             //проверяем нахождение нейтральных флотов и флотов игрока в одной системе
@@ -601,16 +617,16 @@ namespace GalaxyConquest
                 }
 
             //Обновляем лейблы
-            UpdateControls();
+            UpdateLabels();
             //включам панель с кнопками
             panel1.Enabled = true;
             step_button.Focus();//задаём фокус для кнопки шага
-
+            //Обновляем кнопки захвата по завершению шага
             UpdateCaptureControls();
         }
         
         //----------------------Timer-------------------
-
+        //Обновление изображения и движение во время шага строго по тику таймера
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             if (onStep)
@@ -633,8 +649,8 @@ namespace GalaxyConquest
         }
         
         //-------------------------------other----------------------------------
-
-        private void UpdateControls()
+        //Обновляет все текстовые поля
+        private void UpdateLabels()
         {
             galaxyNameLablel.Text = Game.Galaxy.name;
             dateLabel.Text = Math.Round(Game.Galaxy.Time).ToString() + " г.н.э.";
@@ -643,7 +659,7 @@ namespace GalaxyConquest
             EnergyStatus.Text = Math.Round(Game.Player.energy, 2).ToString() + " Wt";
             SkillPointsStatus.Text = Math.Round(Game.Player.skillPoints, 2).ToString() + "SP";
         }
-
+        //Обновляет кнопки захвата системы
         void UpdateCaptureControls()
         {
             if (onStep)//Во время шага просто выключим кнопку захвата и оставим прогрессбар, если он видим
@@ -686,7 +702,7 @@ namespace GalaxyConquest
                     return;
             }
         }
-
+        //Если форма закрывает в момент, когда шаг в процессе выполнения, ждем его завершения и тогда закрываемся
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             while (StepWorker.IsBusy || onStep) ;

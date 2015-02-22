@@ -15,6 +15,7 @@ using Tao.FreeGlut;
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
 
+
 namespace GalaxyConquest
 {
     [Serializable]
@@ -268,19 +269,16 @@ namespace GalaxyConquest
 
                     if (DrawControl.CursorIsOnObject(e, s))
                     {
-                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0))
+                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && (!Game.Player.fleets[Game.Player.selectedFleet].onWay))
                         {
-                            if (DrawControl.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
+                            //if (DrawController.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
                             {
                                 Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
                                 Game.Player.selectedStar = s;
                             }
                         }
-                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s)
+                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
                         {
-                            if (Game.Player.fleets[Game.Player.selectedFleet].onWay)
-                                break;
-
                             Game.Player.fleets[Game.Player.selectedFleet].setTarget(null);
                             Game.Player.selectedStar = null;
                         }
@@ -382,7 +380,8 @@ namespace GalaxyConquest
             if (Game == null)
                 return;
 
-            shop_form.ShowDialog();
+            StarShop shop = new StarShop();
+            shop.ShowDialog();
 
             UpdateControls();
         }
@@ -484,7 +483,7 @@ namespace GalaxyConquest
                     if (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
                     {
                         StarSystem s = Game.Player.stars[listView.SelectedIndices[0]];
-                        if (DrawControl.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
+                        if (DrawController.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
                         {
 
                             Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);

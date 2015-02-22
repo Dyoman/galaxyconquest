@@ -25,15 +25,7 @@ namespace GalaxyConquest.Tactics
             objectImg = Image.FromFile(@"Sprites/objects/meteor.png");
             
         }
-
-        public override void drawSpaceShit(ref combatMap cMap, ref System.Drawing.Bitmap bmap)
-        {
-            Graphics g = Graphics.FromImage(bmap);
-            SolidBrush grayBrush = new SolidBrush(Color.Gray);
-            g.FillEllipse(grayBrush, cMap.boxes[boxId].xcenter - 14, cMap.boxes[boxId].ycenter - 14, 28, 28);
-            g.DrawString(currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(cMap.boxes[boxId].xpoint1 + 20, cMap.boxes[boxId].ypoint1 - 25));
-        }
-
+        
         public void move(combatMap cMap, Bitmap bmBackground, Bitmap bmFull)
         {
             int newx;
@@ -127,6 +119,7 @@ namespace GalaxyConquest.Tactics
 
             g.DrawString(currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(x - 10, y - 28));
         }
+
         public override string description()
         {
             string x = "";
@@ -135,19 +128,19 @@ namespace GalaxyConquest.Tactics
             switch(xdirection)
             {
                 case -1:
-                    x = "left ";
+                    x = "left-";
                     break;
                 case 1:
-                    x = "right ";
+                    x = "right-";
                     break;
             }
             switch(ydirection)
             {
                 case -1:
-                    y = "top ";
+                    y = "top";
                     break;
                 case 1:
-                    y = "bottom ";
+                    y = "bottom";
                     break;
             }
 

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace GalaxyConquest.Tactics
 {
-    class SavedImage
+    public class SavedImage
     {
         public Image img;
         public int x;

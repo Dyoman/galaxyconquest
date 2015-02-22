@@ -40,7 +40,7 @@ namespace GalaxyConquest.StarSystems
             DrawControl.Rotate(0f, (float)-Math.PI / 4 * 100);  //Доворачиваем "камеру" до вертикального положения
 
             SelfRef = this;
-            captureButton.Click += Form1.SelfRef.captureButton_Click;
+            captureButton.Click += Form1.SelfRef.captureButton_Click;   //Привязываем события клика на кнопку захвата к обработчику такого же события в главной форме
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace GalaxyConquest.StarSystems
                                     }
 
                         planet_selected = j;
-                        labelPlanetName.Text = p.NAME;
+                        labelPlanetName.Text = p.name;
                         labelPlanetSize.Text = sizeText;
                         labelPlanetMinerals.Text = mineralsText;
                         labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
@@ -133,7 +133,10 @@ namespace GalaxyConquest.StarSystems
                 }
 
         }
-
+        /// <summary>
+        /// Передает звездную систему в форму
+        /// </summary>
+        /// <param name="s">Звездная система</param>
         public void SetSystem(StarSystem s)
         {
             starSystem = s;
@@ -152,10 +155,13 @@ namespace GalaxyConquest.StarSystems
             ownerNameLabel.Text = "";
             buildings.Text = "";
         }
-
+        /// <summary>
+        /// Обновляет кнопку захвата системы
+        /// </summary>
+        /// <param name="onStep"></param>
         public void UpdateCaptureControls(bool onStep)
         {
-            if (onStep) //Комментарий написан в методе в форме
+            if (onStep) //  Во время шага просто отключаем кнопку захвата
                 captureButton.Enabled = false;
             else if (Form1.Game.Player.stars.Contains(starSystem) || Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].onWay || onStep)
                 SetCaptureControlsActive(-1);
@@ -164,7 +170,10 @@ namespace GalaxyConquest.StarSystems
             else
                 SetCaptureControlsActive(0);
         }
-        //  Устанавливает активность кнопок захвата и их текст/ (1 - захват идёт, 0 - захват возможен, -1 - захват невозможен (флот в пути/система уже захвачена))
+        /// <summary>
+        /// Устанавливает активность кнопок захвата и их текст/ (1 - захват идёт, 0 - захват возможен, -1 - захват невозможен (флот в пути/система уже захвачена))
+        /// </summary>
+        /// <param name="value"></param>
         void SetCaptureControlsActive(int value)
         {
             switch (value)

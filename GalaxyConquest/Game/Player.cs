@@ -6,26 +6,59 @@ using GalaxyConquest.Tactics;
 
 namespace GalaxyConquest.Game
 {
+    /// <summary>
+    /// Представляет игрока и все его параметры
+    /// </summary>
     [Serializable]
     public class Player
     {
         public static List<int[]> technologies = new List<int[]>();//format {tier, techLine, subtech}
         public static List<int[]> buildings = new List<int[]>();//format {star system, planet, building}
-
+        /// <summary>
+        /// Имя игрока
+        /// </summary>
         public string name;
         public Color player_color;
         public List<Ship> player_ship;
+        /// <summary>
+        /// Планеты игрока (спорно)
+        /// </summary>
         public List<PLANET> player_planets;
-        public List<StarSystem> stars; //звездные системы игрока
+        /// <summary>
+        /// Звездные системы игрока
+        /// </summary>
+        public List<StarSystem> stars;
+        /// <summary>
+        /// Флоты игрока
+        /// </summary>
         public List<Fleet> fleets;
-
+        /// <summary>
+        /// Индекс выбранного флота
+        /// </summary>
         public int selectedFleet;
+        /// <summary>
+        /// Выбранная звездная система
+        /// </summary>
         public StarSystem selectedStar;
+        /// <summary>
+        /// Цель для перемещения !Не выбранная! Не путать. Изменяется при наведении курсора мыши на звезду
+        /// </summary>
         public StarSystem warpTarget;
-
+        /// <summary>
+        /// Капитал игрока
+        /// </summary>
         public double credit;
+        /// <summary>
+        /// Энергия
+        /// </summary>
         public double energy;
+        /// <summary>
+        /// Минералы
+        /// </summary>
         public double minerals;
+        /// <summary>
+        /// Очки изучения
+        /// </summary>
         public double skillPoints;
 
         public Player()

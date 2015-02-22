@@ -6,6 +6,9 @@ using GalaxyConquest.StarSystems;
 
 namespace GalaxyConquest
 {
+    /// <summary>
+    /// Представляет звездную системы
+    /// </summary>
     [Serializable]
     public class StarSystem : SpaceObject
     {

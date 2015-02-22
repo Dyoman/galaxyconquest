@@ -57,11 +57,11 @@ namespace GalaxyConquest
             for (int i = 0; i < shipListBox.Items.Count; i++)
             {
                 if (shipListBox.Items[i].Equals(names[0]))
-                    fl.ships.Add(new ShipAssaulter(1, new WpnHeavyLaser()));
+                    fl.ships.Add(new ShipAssaulter(1, new wpnLightLaser()));
                 else if (shipListBox.Items[i].Equals(names[1]))
-                    fl.ships.Add(new ShipScout(1, new wpnLightLaser()));
+                    fl.ships.Add(new ShipScout(1, new WpnGauss()));
                 else if (shipListBox.Items[i].Equals(names[2]))
-                    continue;   //Пока таких нету кораблей
+                    fl.ships.Add(new ShipСolonizer(1));
                 else if (shipListBox.Items[i].Equals(names[3]))
                     continue;   //Пока таких нету кораблей
             }

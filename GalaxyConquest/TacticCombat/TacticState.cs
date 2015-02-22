@@ -34,6 +34,36 @@ namespace GalaxyConquest.Game
             seed.activeShip = null;
             seed.allShips = new List<Ship>();
             seed.left = left;
+            for (int i = 0; i < seed.left.ships.Count; i++)
+            {
+                if (seed.left.ships[i].classShip != Constants.COLONIZER)
+                {
+                    for (int j = 0; j < Player.technologies.Count; j++)
+                    {
+                        if (Player.technologies[j][1] == 2 && Player.technologies[j][2] == 0)
+                        {
+                            switch (Player.technologies[j][0])
+                            {
+                                case 0:
+                                    seed.left.ships[i].equippedWeapon = new WpnNone();
+                                    break;
+                                case 1:
+                                    seed.left.ships[i].equippedWeapon = new WpnGauss();
+                                    break;
+                                case 2:
+                                    seed.left.ships[i].equippedWeapon = new wpnLightLaser();
+                                    break;
+                                case 3:
+                                    seed.left.ships[i].equippedWeapon = new WpnPlasma();
+                                    break;
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
             seed.meteors = new List<Meteor>();
             seed.right = right;
             seed.select = -1;

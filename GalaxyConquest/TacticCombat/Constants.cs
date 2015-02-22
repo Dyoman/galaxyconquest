@@ -13,11 +13,14 @@ namespace GalaxyConquest.Tactics
         public const int METEOR = 2;
         // классы кораблей
         public const int SCOUT = 1;
-        public const int ASSAULTER = 2;
+        public const int COLONIZER = 2;
+        public const int ASSAULTER = 3;
+
         // вооружение
-        public const int LIGHT_LASER = 1;
-        public const int HEAVY_LASER = 2;
-        public const int LIGHT_ION = 3;
+        public const int NONE = 0;
+        public const int GAUSS = 1;
+        public const int LASER = 2;
+        public const int PLASMA = 3;
         // направления, относительно координат
         public const int NORMAL = 0;
         public const int LEFT = -1;

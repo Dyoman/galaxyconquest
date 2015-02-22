@@ -63,34 +63,51 @@ namespace GalaxyConquest
             {
                 playerID = 2;
                 name = "Нейтральный флот";
+                Random rand = new Random((int) DateTime.Now.Ticks);
+                for (int i = 0; i < size; i++)
+                {
+                    int ship_type = (rand.Next(0, 100))%2;
+                    int weapon_type = rand.Next(0, 3);
+                    Weapon weapon = null;
+                    Ship ship = null;
+                    switch (weapon_type)
+                    {
+                        case 0:
+                            weapon = new WpnGauss();
+                            break;
+                        case 1:
+                            weapon = new wpnLightLaser();
+                            break;
+                        case 2:
+                            weapon = new WpnPlasma();
+                            break;
+                    }
+                    switch (ship_type)
+                    {
+                        case 0:
+                            ship = new ShipScout(playerID, weapon);
+                            break;
+                        case 1:
+                            ship = new ShipAssaulter(playerID, weapon);
+                            break;
+                    }
+                    ship.player = playerID;
+                    ships.Add(ship);
+                }
             }
             else
-                name = "Флот <" + player.name + ">";
-
-            Random rand = new Random((int)DateTime.Now.Ticks);
-
-            for (int i = 0; i < size; i++)
             {
-                int ship_type = (rand.Next(0, 100)) % 2;
-                int weapon_type = rand.Next(0, 2);
-
-                Weapon weapon = null;
-                Ship ship = null;
-                switch (weapon_type)
-                {
-                    case 0: weapon = new wpnLightLaser(); break;
-                    //case 1: weapon = new WpnLightIon(); break;
-                    case 1: weapon = new WpnHeavyLaser(); break;
-                }
-
-                switch (ship_type)
-                {
-                    case 0: ship = new ShipScout(playerID, weapon); break;
-                    case 1: ship = new ShipAssaulter(playerID, weapon); break;
-                }
-
+                name = "Флот <" + player.name + ">";
+                Ship ship = new ShipСolonizer(playerID);
                 ship.player = playerID;
                 ships.Add(ship);
+                for (int i = 1; i < size; i++)
+                {
+                    Weapon weapon = new WpnNone();
+                    ship = new ShipScout(playerID, weapon);
+                    ship.player = playerID;
+                    ships.Add(ship);
+                }
             }
             this.s1 = s1;
             x = s1.x;

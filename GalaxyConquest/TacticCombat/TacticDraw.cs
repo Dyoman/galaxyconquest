@@ -130,6 +130,8 @@ namespace GalaxyConquest.Drawing
             Graphics g = Graphics.FromImage(tmpBitmap);
             for (int i = 0; i < seed.allShips.Count; i++)
             {
+                //g.DrawImage(seed.allShips[i].objectImg,);
+
                 g.DrawImage(seed.allShips[i].objectImg,
                            new Rectangle(seed.allShips[i].x - seed.allShips[i].objectImg.Width / 2,
                                seed.allShips[i].y - seed.allShips[i].objectImg.Height / 2,

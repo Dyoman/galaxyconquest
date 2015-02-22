@@ -17,6 +17,8 @@ namespace GalaxyConquest.Tactics
         public int weaponPointX;
         public int weaponPointY;
         public int weaponR;
+        public int classShip;
+        public int sumWeapon;
 
         public override string description()
         {
@@ -47,7 +49,7 @@ namespace GalaxyConquest.Tactics
                     ref bmap, player, ref pictureMap, ref bmBackground, ref bmFull
                 );
                 Random rand = new Random();
-                dmg = rand.Next(-equippedWeapon.attackPower / 10, equippedWeapon.attackPower / 10) + equippedWeapon.attackPower;
+                dmg = sumWeapon * rand.Next(equippedWeapon.minAttackPower, equippedWeapon.maxAttackPower);
                 cMap.boxes[pointB].spaceObject.currentHealth -= dmg;
                 actionsLeft -= equippedWeapon.energyСonsumption;
                 equippedWeapon.shotsleft -= 1;

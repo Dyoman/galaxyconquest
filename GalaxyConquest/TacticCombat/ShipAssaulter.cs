@@ -7,17 +7,18 @@ namespace GalaxyConquest.Tactics
         public string staticDescription;
         public override string description()
         {
-            return "" + staticDescription + "\nhp - " + currentHealth + "/" + maxHealth + "\nactions - "
-                            + actionsLeft + "/" + maxActions + equippedWeapon.description() + "\nAP - " + equippedWeapon.attackPower + "\nRange - " + equippedWeapon.attackRange;
+            return "" + staticDescription + "\nHP - " + currentHealth + "/" + maxHealth + "\nactions - "
+                            + actionsLeft + "/" + maxActions + equippedWeapon.description() + "\nmax damage - " + equippedWeapon.maxAttackPower + "\nmin damage - " + equippedWeapon.minAttackPower + "\nRange - " + equippedWeapon.attackRange;
         }
 
         public ShipAssaulter(int p, Weapon weapon)
         {
             objectType = Constants.SHIP;
-            //Sprites\ships\player
-            objectImg = Image.FromFile(@"Sprites/ships/player/Assaultboat.png");
+            classShip = Constants.ASSAULTER;
+            objectImg = Image.FromFile(@"Sprites/ships/player/Bomber.png");
             baseObjectImg = objectImg;
             equippedWeapon = weapon;
+            sumWeapon = 3;
             player = p;
             maxHealth = 100;
             currentHealth = maxHealth;

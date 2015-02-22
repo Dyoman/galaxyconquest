@@ -48,15 +48,12 @@ namespace GalaxyConquest
         /// Прогресс захвата (0-5)
         /// </summary>
         int captureProgress;
-<<<<<<< HEAD
 
         public Way way { get; private set; }
 
-=======
         /// <summary>
         /// Максимальная дистанция, на которую флот способен лететь
         /// </summary>
->>>>>>> master
         public static double MaxDistance = 440;
 
         public Fleet()

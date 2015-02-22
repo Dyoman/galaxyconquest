@@ -391,13 +391,10 @@ namespace GalaxyConquest
             if (Game == null)
                 return;
 
-<<<<<<< HEAD
             StarShop shop = new StarShop();
             shop.ShowDialog();
-=======
             shop_form = new StarShop();
             shop_form.ShowDialog();
->>>>>>> master
 
             UpdateLabels();
         }

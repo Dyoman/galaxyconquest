@@ -460,12 +460,7 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="from">Первый объект</param>
         /// <param name="to">Второй оъект</param>
-<<<<<<< HEAD
-        /// <returns></returns>
         public static double Distance(SpaceObject from, SpaceObject to)
-=======
-        public double Distance(SpaceObject from, SpaceObject to)
->>>>>>> master
         {
             return Math.Sqrt(Math.Pow((to.x - from.x), 2) + Math.Pow((to.y - from.y), 2) + Math.Pow((to.z - from.z), 2));
         }

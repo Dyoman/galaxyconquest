@@ -122,6 +122,8 @@ namespace GalaxyConquest
             int popmax = 10;
             int mineralmin = 0;
             int mineralmax = 35;
+            int climatemin = 0;
+            int climatemax = 5;
             int colormin = 0;
             int colormax = 255;
             int dist = 50;
@@ -147,6 +149,7 @@ namespace GalaxyConquest
             pln.POPULATIONMAX = 0;
             pln.POPULATION = 0;
             pln.MINERALS = 0;
+            pln.CLIMATE = 0;
 
             pln.Move(Time);//задаем начальные координаты планете опять же методом Move с начальным временем
             int p = 1;
@@ -168,6 +171,7 @@ namespace GalaxyConquest
                 pln.POPULATIONMAX = r.Next(popmin, popmax);
                 pln.MINERALS = r.Next(mineralmin, mineralmax);
                 pln.PROFIT = pln.POPULATION * pln.MINERALS;
+                pln.CLIMATE = r.Next(climatemin, climatemax);
 
                 pln.Move(Time);
 

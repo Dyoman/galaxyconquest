@@ -13,8 +13,8 @@ namespace GalaxyConquest.Tactics
         public int objectType; // подробности смотри в константах
         public int player; // 0,1,2 ..0 - нейтральные объекты 
         public int boxId; // ячейка, в которой находится
-        public int maxHealth; // hit points
-        public int currentHealth;
+        public double maxHealth; // hit points
+        public double currentHealth;
         public abstract string description(); // описание объекта
         public Image objectImg;
         public Image baseObjectImg;

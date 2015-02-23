@@ -324,7 +324,8 @@ namespace GalaxyConquest
                 {
                     if (DrawControl.CursorIsOnObject(e, Game.Player.fleets[i]))
                     {
-                        int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
+                        int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                        double health = 0;
                         for (int j = 0; j < Game.Player.fleets[i].ships.Count; j++)
                         {
                             health += Math.Max(Game.Player.fleets[i].ships[j].currentHealth, 0);
@@ -351,7 +352,8 @@ namespace GalaxyConquest
                 {
                     if (DrawControl.CursorIsOnObject(e, Game.Galaxy.neutrals[i]) && Game.Galaxy.neutrals[i].s1.Discovered)
                     {
-                        int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
+                        int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                        double health = 0;
                         for (int j = 0; j < Game.Galaxy.neutrals[i].ships.Count; j++)
                         {
                             health += Math.Max(Game.Galaxy.neutrals[i].ships[j].currentHealth, 0);

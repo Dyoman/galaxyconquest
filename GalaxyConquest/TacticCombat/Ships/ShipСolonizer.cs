@@ -11,24 +11,27 @@ namespace GalaxyConquest.Tactics
         public string staticDescription;
         public override string description()
         {
-            return "" + staticDescription + "\nHP - " + currentHealth + "/" + maxHealth + "\nactions - "
-                            + actionsLeft + "/" + maxActions + equippedWeapon.description() + "\nmax damage - " + equippedWeapon.maxAttackPower + "\nmin damage - " + equippedWeapon.minAttackPower + "\nRange - " + equippedWeapon.attackRange;
+            return "" + staticDescription + "\n\nБроня:" + equippedArmor.description()
+                            + "\n\nВооружение:" + equippedWeapon.description();
         }
 
-        public ShipСolonizer(int p)
+        public ShipСolonizer(int p, Weapon weapon, Armor armor)
         {
             objectType = Constants.SHIP;
             classShip = Constants.COLONIZER;
             objectImg = Image.FromFile(@"Sprites/ships/player/Assaultboat.png");
             baseObjectImg = objectImg;
-            equippedWeapon = new WpnNone();
+            equippedWeapon = weapon;
+            equippedArmor = armor;
             sumWeapon = 0;
             player = p;
-            maxHealth = 200;
+            baseHealth = 200;
+            maxHealth = baseHealth * equippedArmor.factor;
             currentHealth = maxHealth;
-            maxActions = 4;
+            maxActions = 2;
             actionsLeft = maxActions;
-            staticDescription = "Корабль-колонизатор";
+            staticDescription = "Корабль-колонизатор" + "\nHP - " + currentHealth + "/" + baseHealth
+                + "\nactions - " + actionsLeft + "/" + maxActions;
             weaponR = 22;
             if (player != 1)
             {

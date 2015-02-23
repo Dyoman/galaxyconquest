@@ -21,7 +21,7 @@ namespace GalaxyConquest.Tactics
         }
         public override string description()
         {
-            return "\nЛазер\nВыстрелов: " + shotsleft; 
+            return "\nЛазер" + "\nDamage: " + minAttackPower + "-" + maxAttackPower + "\nRange: " + attackRange + "\nВыстрелов: " + shotsleft; 
         }
         public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)
         {

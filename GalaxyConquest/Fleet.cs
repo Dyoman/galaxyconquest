@@ -94,10 +94,12 @@ namespace GalaxyConquest
                 Random rand = new Random((int) DateTime.Now.Ticks);
                 for (int i = 0; i < size; i++)
                 {
-                    int ship_type = (rand.Next(0, 100))%2;
-                    int weapon_type = rand.Next(0, 3);
+                    int ship_type = rand.Next(0, 2);
+                    int weapon_type = rand.Next(0, 2);
+                    int armor_type = rand.Next(0, 3);
                     Weapon weapon = null;
                     Ship ship = null;
+                    Armor armor = null;
                     switch (weapon_type)
                     {
                         case 0:
@@ -110,13 +112,31 @@ namespace GalaxyConquest
                             weapon = new WpnPlasma();
                             break;
                     }
+                    switch (armor_type)
+                    {
+                        case 0:
+                            armor = new ArmorNone();
+                            break;
+                        case 1:
+                            armor = new ArmorTitan();
+                            break;
+                        case 2:
+                            armor = new ArmorMolibden();
+                            break;
+                        case 3:
+                            armor = new ArmorNanocom();
+                            break;
+                    }
                     switch (ship_type)
                     {
                         case 0:
-                            ship = new ShipScout(playerID, weapon);
+                            ship = new ShipScout(playerID, weapon, armor);
                             break;
                         case 1:
-                            ship = new ShipAssaulter(playerID, weapon);
+                            ship = new ShipAssaulter(playerID, weapon, armor);
+                            break;
+                        case 2:
+                            ship = new ShipСolonizer(playerID, new WpnNone(), armor);
                             break;
                     }
                     ship.player = playerID;
@@ -126,13 +146,12 @@ namespace GalaxyConquest
             else
             {
                 name = "Флот <" + player.name + ">";
-                Ship ship = new ShipСolonizer(playerID);
+                Ship ship = new ShipСolonizer(playerID, new WpnNone(), new ArmorNone());
                 ship.player = playerID;
                 ships.Add(ship);
                 for (int i = 1; i < size; i++)
                 {
-                    Weapon weapon = new WpnNone();
-                    ship = new ShipScout(playerID, weapon);
+                    ship = new ShipScout(playerID, new WpnNone(), new ArmorNone());
                     ship.player = playerID;
                     ships.Add(ship);
                 }

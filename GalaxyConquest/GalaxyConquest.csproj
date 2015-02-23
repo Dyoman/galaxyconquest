@@ -119,6 +119,11 @@
     <Compile Include="StarShop.Designer.cs">
       <DependentUpon>StarShop.cs</DependentUpon>
     </Compile>
+    <Compile Include="TacticCombat\Armor\Armor.cs" />
+    <Compile Include="TacticCombat\Armor\ArmorMolibden.cs" />
+    <Compile Include="TacticCombat\Armor\ArmorNanocom.cs" />
+    <Compile Include="TacticCombat\Armor\ArmorNone.cs" />
+    <Compile Include="TacticCombat\Armor\ArmorTitan.cs" />
     <Compile Include="TacticCombat\Box.cs" />
     <Compile Include="TacticCombat\CombatForm.cs">
       <SubType>Form</SubType>
@@ -129,14 +134,15 @@
     <Compile Include="TacticCombat\combatMap.cs" />
     <Compile Include="TacticCombat\Constants.cs" />
     <Compile Include="TacticCombat\FindWay.cs" />
+    <Compile Include="TacticCombat\Installation.cs" />
     <Compile Include="TacticCombat\Meteor.cs" />
     <Compile Include="TacticCombat\ObjectManager.cs" />
     <Compile Include="TacticCombat\SavedImage.cs" />
-    <Compile Include="TacticCombat\Ship.cs" />
-    <Compile Include="TacticCombat\ShipAssaulter.cs" />
+    <Compile Include="TacticCombat\Ships\Ship.cs" />
+    <Compile Include="TacticCombat\Ships\ShipAssaulter.cs" />
     <Compile Include="TacticCombat\ShipsCounter.cs" />
-    <Compile Include="TacticCombat\ShipScout.cs" />
-    <Compile Include="TacticCombat\ShipСolonizer.cs" />
+    <Compile Include="TacticCombat\Ships\ShipScout.cs" />
+    <Compile Include="TacticCombat\Ships\ShipСolonizer.cs" />
     <Compile Include="TacticCombat\SpaceObject.cs" />
     <Compile Include="TacticCombat\TacticState.cs" />
     <Compile Include="TacticCombat\TacticDraw.cs" />

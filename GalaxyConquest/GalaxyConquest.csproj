@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Buildings.cs" />
-    <Compile Include="DrawController.cs" />
+    <Compile Include="Drawing\DrawController.cs" />
     <Compile Include="Fleet.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -315,11 +315,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Sprites\ships\player\License.txt" />
-    <Content Include="Starnames backup.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Starnames.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tech.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -327,7 +324,6 @@
     <Content Include="teches.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Starnames.txt" />
     <None Include="Resources\btn_rotateright.png" />
     <None Include="Resources\btn_rotateleft.png" />
     <None Include="Resources\btn_spindown.png" />
@@ -338,6 +334,7 @@
     <None Include="Resources\btn_arrowup.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="obj\" />
     <Folder Include="TAO_Fremwork\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

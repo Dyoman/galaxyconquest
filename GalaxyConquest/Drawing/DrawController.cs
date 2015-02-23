@@ -287,7 +287,7 @@ namespace GalaxyConquest.Drawing
                     {
                         scrFrom = getScreenCoordOf(way[i - 1]);
                         scrTo = getScreenCoordOf(way[i]);
-                        g.DrawLine(pen,
+                        g.DrawLine(Pens.WhiteSmoke,
                             new PointF((float)scrFrom.X, (float)scrFrom.Y),
                             new PointF((float)scrTo.X, (float)scrTo.Y));
                     }
@@ -298,7 +298,7 @@ namespace GalaxyConquest.Drawing
                 if (fleet.way.Count > 0 && k == state.Player.selectedFleet)    //new 
                 {
                     pen.Color = Color.White;
-                    pen.Width += 2;
+                    pen.Width = 2;
                     pen.DashStyle = DashStyle.Dash;
 
                     for (int i = Math.Max(fleet.way.Current - 1, 0); i < fleet.way.Count - 1; i++)
@@ -315,6 +315,7 @@ namespace GalaxyConquest.Drawing
                                 new PointF((float)scrTo.X + 10, (float)scrTo.Y + 10));
                     }
                 }
+                pen.Width = 1;
 
                 if (targSys != null && false)   //old
                 {
@@ -335,7 +336,6 @@ namespace GalaxyConquest.Drawing
                 }
                 pen.Color = Color.Gold;
                 pen.DashStyle = DashStyle.Solid;
-                pen.Width -= 2;
             }
 
             //рисуем гиперпереходы

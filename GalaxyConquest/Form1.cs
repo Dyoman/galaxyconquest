@@ -21,6 +21,9 @@ namespace GalaxyConquest
     [Serializable]
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// Экземпляр класса DrawController, который будет отвечать за отрисовку в главной форме
+        /// </summary>
         DrawController DrawControl;
 
         static public GameState Game;
@@ -280,15 +283,18 @@ namespace GalaxyConquest
 
                     if (DrawControl.CursorIsOnObject(e, s))
                     {
-                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && (!Game.Player.fleets[Game.Player.selectedFleet].onWay))
+                        /// Если флот ничего не захватывает, не в пути и еще не имеет конечной цели, тогда выбираем ему цель
+                        if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && !Game.Player.fleets[Game.Player.selectedFleet].onWay
+                            && Game.Player.fleets[Game.Player.selectedFleet].s2 == null)
                         {
                             //if (DrawController.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
                             {
                                 Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
                                 Game.Player.selectedStar = s;
                             }
-                        }
-                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
+                        }   //Если мы кликаем на систему, которая выбрана для флота как конечная цель, тогда снимаем цель   -- без этого мы не сможем отменить перемещение!!!!
+                        //else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
+                        else if (Game.Player.fleets[Game.Player.selectedFleet].way.Last == s && !Game.Player.fleets[Game.Player.selectedFleet].onWay)
                         {
                             Game.Player.fleets[Game.Player.selectedFleet].setTarget(null);
                             Game.Player.selectedStar = null;
@@ -670,7 +676,7 @@ namespace GalaxyConquest
                 else
                     SetCaptureControlsActive(0);
 
-            StarSystemForm.SelfRef.UpdateCaptureControls(onStep);
+            StarSystemForm.SelfRef.UpdateCaptureControls(onStep);   //обновляем кнопку захвата в форме звездной системы
         }
         //  Устанавливает активность кнопок захвата и их текст/ (1 - захват идёт, 0 - захват возможен, -1 - захват невозможен (флот в пути/система уже захвачена))
         void SetCaptureControlsActive(int value)

@@ -1,32 +1,340 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ArrayOfString>
-  <string>Центавра</string>
-  <string>Вольф</string>
-  <string>Лаланд</string>
-  <string>Лийтен</string>
-  <string>Росс</string>
-  <string>Эридана</string>
-  <string>Порцион</string>
-  <string>Струве</string>
-  <string>Толиман</string>
-  <string>Арктур</string>
-  <string>Вега</string>
-  <string>Капелла</string>
-  <string>Бетельгейзе</string>
-  <string>Хардар</string>
-  <string>Альтаир</string>
-  <string>Акрукс</string>
-  <string>Альдебаран</string>
-  <string>Антарес</string>
-  <string>Спика</string>
-  <string>Поллукс</string>
-  <string>Фомальгаут</string>
-  <string>Мимоза</string>
-  <string>Денеб</string>
-  <string>Регул</string>
-  <string>Алара</string>
-  <string>Гарукс</string>
-  <string>Шаула</string>
-  <string>Кассиопея</string>
-  <string>Лира</string>
+<string>Барнарда</string>
+<string>Ван Маанена</string>
+<string>Каптейна</string>
+<string>Проксима</string>
+<string>Альферац</string>
+<string>Каф</string>
+<string>Альгениб</string>
+<string>Шемали</string>
+<string>Анкаа</string>
+<string>Шедар</string>
+<string>Дифда</string>
+<string>Ахирд</string>
+<string>Наве</string>
+<string>Марфак</string>
+<string>Денеб Альгенуби</string>
+<string>Мирах</string>
+<string>Адхил</string>
+<string>Рукба</string>
+<string>Полярная</string>
+<string>Альфарг</string>
+<string>Ахернар</string>
+<string>Торкуларис Септентрионалис</string>
+<string>Батен Кайтос</string>
+<string>Сегин</string>
+<string>Металлах</string>
+<string>Мезартим</string>
+<string>Шератан</string>
+<string>Голова Гидры</string>
+<string>Альриша</string>
+<string>Альмак</string>
+<string>Хамаль</string>
+<string>Мира</string>
+<string>Каффальджидхма</string>
+<string>Мирам</string>
+<string>Ангетенар</string>
+<string>Азга</string>
+<string>Горгонея Секунда</string>
+<string>Акамар</string>
+<string>Менкар</string>
+<string>Горгонея Терция</string>
+<string>Алголь</string>
+<string>Мисам</string>
+<string>Горгонея Кватра</string>
+<string>Ботейн</string>
+<string>Форнацис</string>
+<string>Зибаль</string>
+<string>Мирфак</string>
+<string>Эпсилон</string>
+<string>Атик</string>
+<string>Рана</string>
+<string>Целено</string>
+<string>Электра</string>
+<string>Тайгета</string>
+<string>Майя</string>
+<string>Астеропа</string>
+<string>Стеропа</string>
+<string>Меропа</string>
+<string>Альциона</string>
+<string>Атлас</string>
+<string>Плейона</string>
+<string>Менкхиб</string>
+<string>Заурак</string>
+<string>Бейд</string>
+<string>Кейд</string>
+<string>Аин</string>
+<string>Альдебаран</string>
+<string>Тееним</string>
+<string>Скип</string>
+<string>Табит</string>
+<string>Хассалех</string>
+<string>Аль Анз</string>
+<string>Садатони</string>
+<string>Курса</string>
+<string>Капелла</string>
+<string>Ригель</string>
+<string>Беллатрикс</string>
+<string>Натх</string>
+<string>Нихал</string>
+<string>Минтака</string>
+<string>Тхабит</string>
+<string>Арнеб</string>
+<string>Мейсса</string>
+<string>Хатиса</string>
+<string>Альнилам</string>
+<string>Альхека</string>
+<string>Альнитак</string>
+<string>Факт</string>
+<string>Саиф</string>
+<string>Вазн</string>
+<string>Цзе</string>
+<string>Бетельгейзе</string>
+<string>Приджипати</string>
+<string>Менкалинан</string>
+<string>Теят Приор</string>
+<string>Фуруд</string>
+<string>Калкс</string>
+<string>Мирцам</string>
+<string>Канопус</string>
+<string>Альхена</string>
+<string>Пласкетта</string>
+<string>Мебсута</string>
+<string>Альзирр</string>
+<string>Сириус</string>
+<string>Адара</string>
+<string>Мекбуда</string>
+<string>Мулифен</string>
+<string>Везен</string>
+<string>Васат</string>
+<string>Пропус</string>
+<string>Алюдра</string>
+<string>Гомейза</string>
+<string>Кастор</string>
+<string>Процион</string>
+<string>Поллукс</string>
+<string>Асмидиске</string>
+<string>Наос</string>
+<string>Тегмен</string>
+<string>Регор</string>
+<string>Аль Тарф</string>
+<string>Альскяукат</string>
+<string>Авиор</string>
+<string>Мусцида</string>
+<string>Аль Минлиар аль Шуйа</string>
+<string>Презепа</string>
+<string>Северный Асель</string>
+<string>Южный Асель</string>
+<string>Талитха Бореалис</string>
+<string>Акубенс</string>
+<string>Талитха Австралис</string>
+<string>Альсухайль</string>
+<string>Миаплацид</string>
+<string>Турайс</string>
+<string>Аль Минлиар аль Асад</string>
+<string>Альфард</string>
+<string>Укдах</string>
+<string>Альтерф</string>
+<string>Субра</string>
+<string>Альгенуби</string>
+<string>Расаляс</string>
+<string>Цеен Ке</string>
+<string>Минхир</string>
+<string>Аль Джабах</string>
+<string>Регул</string>
+<string>Тания Бореалис</string>
+<string>Алдхафера</string>
+<string>Альджеба</string>
+<string>Тания Австралис</string>
+<string>Преципуя</string>
+<string>Алькес</string>
+<string>Мерак</string>
+<string>Дубхе</string>
+<string>Альшарасиф</string>
+<string>Зосма</string>
+<string>Кокса</string>
+<string>Алюла Австралис</string>
+<string>Алюла Бореалис</string>
+<string>Лябрум</string>
+<string>Це Ценг</string>
+<string>Гианфар</string>
+<string>Эль Кофрах</string>
+<string>Денебола</string>
+<string>Завийява</string>
+<string>Фекда</string>
+<string>Альхита</string>
+<string>Минкар</string>
+<string>Мегрец</string>
+<string>Гиенах</string>
+<string>Заниах</string>
+<string>Акрукс</string>
+<string>Киссин</string>
+<string>Альгораб</string>
+<string>Гакрукс</string>
+<string>Хара</string>
+<string>Краз</string>
+<string>Мухлифайн</string>
+<string>Поррима</string>
+<string>Бекрукc</string>
+<string>Алиот</string>
+<string>Авва</string>
+<string>Сердце Карла</string>
+<string>Виндемиатрикс</string>
+<string>Диадема</string>
+<string>Альдафирах</string>
+<string>Маркеб</string>
+<string>Мицар</string>
+<string>Спика</string>
+<string>Алькор</string>
+<string>Хезе</string>
+<string>Бенетнаш</string>
+<string>Муфрид</string>
+<string>Хадар</string>
+<string>Менкент</string>
+<string>Тубан</string>
+<string>Азеллюс Терциус</string>
+<string>Сирма</string>
+<string>Арктур</string>
+<string>Азеллюс Секундус</string>
+<string>Хамбалия</string>
+<string>Азеллюс Примус</string>
+<string>Харис</string>
+<string>Толиман</string>
+<string>Рийл Аль Авва</string>
+<string>Ицар</string>
+<string>Зубен Эльгенуби</string>
+<string>Мерга</string>
+<string>Кохаб</string>
+<string>Ке Кван</string>
+<string>Зубен Эльакриби</string>
+<string>Неккар</string>
+<string>Брахиум</string>
+<string>Принцепс</string>
+<string>Зубенеш</string>
+<string>Малая Феркад</string>
+<string>Алькалюропк</string>
+<string>Феркад</string>
+<string>Эд-Асик</string>
+<string>Нусакан</string>
+<string>Зубен Эльакраб</string>
+<string>Гемма</string>
+<string>Цегинус</string>
+<string>Аль Хауд</string>
+<string>Унук Эльхайя</string>
+<string>Чау</string>
+<string>Зубен Хакраби</string>
+<string>Джубба</string>
+<string>Блистающая</string>
+<string>Акраб</string>
+<string>Джабхат</string>
+<string>Альакраб</string>
+<string>Марсик</string>
+<string>Джаббах</string>
+<string>Йед Приор</string>
+<string>Йед Постериор</string>
+<string>Альният</string>
+<string>Каям</string>
+<string>Антарес</string>
+<string>Корнефорос</string>
+<string>Марфик</string>
+<string>Хан</string>
+<string>Атрия</string>
+<string>Арракис</string>
+<string>Сабик</string>
+<string>Граффиас</string>
+<string>Альдхибах</string>
+<string>Рас Альгети</string>
+<string>Сарин</string>
+<string>Лесатх</string>
+<string>Хоу</string>
+<string>Маасым</string>
+<string>Шаула</string>
+<string>Растабан</string>
+<string>Саргас</string>
+<string>Кума</string>
+<string>Рас Альхаг</string>
+<string>Алахфар</string>
+<string>Цельбальрай</string>
+<string>Дзибан</string>
+<string>Грумиум</string>
+<string>Синистра</string>
+<string>Этамин</string>
+<string>Нушаба</string>
+<string>Йильдун</string>
+<string>Альталимайн</string>
+<string>Медия</string>
+<string>Каус Аустралис</string>
+<string>Альатфар</string>
+<string>Каус Бореалис</string>
+<string>Вега</string>
+<string>Шелиак</string>
+<string>Аин Аль Рами</string>
+<string>Нунки</string>
+<string>Алия</string>
+<string>Суляфат</string>
+<string>Асцелла</string>
+<string>Южнополярная</string>
+<string>Альфекка Меридиана</string>
+<string>Альбальдах</string>
+<string>Альадфар</string>
+<string>Альтаис</string>
+<string>Аркаб</string>
+<string>Рукбат</string>
+<string>Денеб Окаб</string>
+<string>Ансер</string>
+<string>Альбирео</string>
+<string>Альсафи</string>
+<string>Шам</string>
+<string>Таразед</string>
+<string>Альтаир</string>
+<string>Тиль</string>
+<string>Альшаин</string>
+<string>Греди</string>
+<string>Альшат</string>
+<string>Дабих</string>
+<string>Пикок</string>
+<string>Садр</string>
+<string>Окулус</string>
+<string>Бос</string>
+<string>Рукба Альджаджа</string>
+<string>Денеб Дулфим</string>
+<string>Ротанев</string>
+<string>Суалокин</string>
+<string>Денеб</string>
+<string>Дженах</string>
+<string>Альбали</string>
+<string>Армус</string>
+<string>Дорсум</string>
+<string>Китальфа</string>
+<string>Альдерамин</string>
+<string>Садалсууд</string>
+<string>Альфирк</string>
+<string>Кастра</string>
+<string>Нашира</string>
+<string>Азельфафага</string>
+<string>Эниф</string>
+<string>Гранатовая</string>
+<string>Шедди</string>
+<string>Аль Данаб</string>
+<string>Садалмелек</string>
+<string>Элькурхах</string>
+<string>Альнаир</string>
+<string>Бахам</string>
+<string>Курхах</string>
+<string>Анха</string>
+<string>Садахбия</string>
+<string>Сеат</string>
+<string>Ситула</string>
+<string>Хомам</string>
+<string>Матар</string>
+<string>Садалбари</string>
+<string>Скат</string>
+<string>Фомальгаут</string>
+<string>Фум Альсамаках</string>
+<string>Шеат</string>
+<string>Маркаб</string>
+<string>Сальма</string>
+<string>Альраи</string>
+<string>Алькальб Альраи</string>
 </ArrayOfString>

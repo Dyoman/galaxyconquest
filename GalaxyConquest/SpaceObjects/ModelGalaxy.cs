@@ -173,8 +173,8 @@ namespace GalaxyConquest
 
                 s.planets.Add(pln);
 
-                dist = dist + 25;//каждая следующая планета будет удалена от центра на 25 пикселей
-                speed = speed / 3 + 0.1f;//и разную скорость
+                dist = dist + 25;//каждая следующая планета будет удалена от центра на 25 пикселей дальше
+                speed = speed / 3 + 0.1f;
             }
         }
         /// <summary>
@@ -476,11 +476,14 @@ namespace GalaxyConquest
             generatePlanets(nova);
         }
 
-        //генерирует уникальное случайное имя для системы
+        /// <summary>
+        /// Генерирует уникальное случайное имя для звезды
+        /// </summary>
+        /// <returns></returns>
         string GenerateRandomStarName()
         {
             Random r = new Random();
-            TextReader tr = new StreamReader(@"Starnames backup.xml");
+            TextReader tr = new StreamReader(@"Starnames.xml");
             XmlSerializer xmlser = new XmlSerializer(typeof(string[]));
 
             string[] names = (string[])xmlser.Deserialize(tr);

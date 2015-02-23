@@ -48,7 +48,9 @@ namespace GalaxyConquest
         /// Прогресс захвата (0-5)
         /// </summary>
         int captureProgress;
-
+        /// <summary>
+        /// Путь флота
+        /// </summary>
         public Way way { get; private set; }
 
         /// <summary>

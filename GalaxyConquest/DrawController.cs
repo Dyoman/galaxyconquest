@@ -355,15 +355,15 @@ namespace GalaxyConquest.Drawing
         /// <param name="g">Полотно для рисования</param>
         public void Render(StarSystem system, Graphics g)
         {
-            Vector centerScr = getScreenCoordOf(system.PLN[0]);
-            for (int i = 0; i < system.PLN.Count; i++)
+            Vector centerScr = getScreenCoordOf(system.planets[0]);
+            for (int i = 0; i < system.planets.Count; i++)
             {
-                StarSystems.PLANET p = system.PLN[i];
+                StarSystems.Planet p = system.planets[i];
 
                 Vector scr = getScreenCoordOf(p);
 
-                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.DISTANCE, (float)centerScr.Y - p.DISTANCE, p.DISTANCE * 2, p.DISTANCE * 2);
-                g.FillEllipse(new SolidBrush(p.CLR), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
+                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.distance, (float)centerScr.Y - p.distance, p.distance * 2, p.distance * 2);
+                g.FillEllipse(new SolidBrush(p.planetColor), new RectangleF((float)scr.X - p.size / 2, (float)scr.Y - p.size / 2, p.size, p.size));
                 g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
             }
         }
@@ -446,14 +446,14 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Планета для проверки</param>
-        public bool CursorIsOnObject(MouseEventArgs e, StarSystems.PLANET obj)
+        public bool CursorIsOnObject(MouseEventArgs e, StarSystems.Planet obj)
         {
             Vector scr = getScreenCoordOf(obj);
 
-            return e.X > (scr.X - obj.SIZE / 2) &&
-                   e.X < (scr.X + obj.SIZE / 2) &&
-                   e.Y > (scr.Y - obj.SIZE / 2) &&
-                   e.Y < (scr.Y + obj.SIZE / 2);
+            return e.X > (scr.X - obj.size / 2) &&
+                   e.X < (scr.X + obj.size / 2) &&
+                   e.Y > (scr.Y - obj.size / 2) &&
+                   e.Y < (scr.Y + obj.size / 2);
         }
         /// <summary>
         /// Рассчитывает дистанцию от одного объекта до другого

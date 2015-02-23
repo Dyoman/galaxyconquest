@@ -225,8 +225,8 @@ namespace GalaxyConquest
             if (captureProgress >= 5)
             {
                 Owner.stars.Add(CaptureTarget);
-                for (int i = 0; i < CaptureTarget.PLN.Count; i++)
-                    Owner.player_planets.Add(CaptureTarget.PLN[i]);
+                for (int i = 0; i < CaptureTarget.planets.Count; i++)
+                    Owner.player_planets.Add(CaptureTarget.planets[i]);
 
                 CaptureTarget = null;
                 Capturing = false;

@@ -34,7 +34,7 @@ namespace GalaxyConquest
 
         }
 
-        public void set_listbox_planet(PLANET p)
+        public void set_listbox_planet(Planet p)
         {
             listBox_Planet.Items.Add(p);
         }

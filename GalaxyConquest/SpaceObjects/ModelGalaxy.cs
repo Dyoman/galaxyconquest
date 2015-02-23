@@ -127,51 +127,51 @@ namespace GalaxyConquest
             int dist = 50;
             float speed = 1f;
 
-            if (s.PLN.Count > 0)//Обновляем список планет
+            if (s.planets.Count > 0)//Обновляем список планет
             {
-                s.PLN.Clear();
+                s.planets.Clear();
                 //throw new Exception("Планеты уже есть");
             }
 
             Random r = new Random(DateTime.Now.Millisecond);
-            PLANET pln = new PLANET();
+            Planet pln = new Planet();
 
             int planets_count = s.type + r.Next(1, 2);//Количество планет в системе варьируется
 
-            pln.CENTER = new PointF(0, 0);  //
-            pln.DISTANCE = 0;
-            pln.SPEED = 0;
-            pln.CLR = s.br.Color;
-            pln.SIZE = 25;
+            pln.center = new PointF(0, 0);  //
+            pln.distance = 0;
+            pln.speed = 0;
+            pln.planetColor = s.br.Color;
+            pln.size = 25;
             pln.name = s.name;
-            pln.POPULATIONMAX = 0;
-            pln.POPULATION = 0;
-            pln.MINERALS = 0;
+            pln.maxPopulation = 0;
+            pln.currentPopulation = 0;
+            pln.minerals = 0;
 
             pln.Move(Time);//задаем начальные координаты планете опять же методом Move с начальным временем
             int p = 1;
-            s.PLN.Add(pln);
+            s.planets.Add(pln);
 
             for (int i = 1; i <= planets_count; i++)
             {
-                pln = new PLANET();
+                pln = new Planet();
 
-                pln.CENTER = new PointF(s.PLN[0].GetPoint().X, s.PLN[0].GetPoint().Y);
-                pln.DISTANCE = dist;
-                pln.SPEED = speed;
-                pln.CLR = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
-                pln.SIZE = r.Next(sizemin, sizemax);
+                pln.center = new PointF(s.planets[0].GetPosition().X, s.planets[0].GetPosition().Y);
+                pln.distance = dist;
+                pln.speed = speed;
+                pln.planetColor = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
+                pln.size = r.Next(sizemin, sizemax);
 
                 pln.name = s.name + " " + i.ToString();     //Имя планеты = <Имя звезды> <порядковый номер>
 
-                pln.POPULATION = pln.Inc(p, r.NextDouble());
-                pln.POPULATIONMAX = r.Next(popmin, popmax);
-                pln.MINERALS = r.Next(mineralmin, mineralmax);
-                pln.PROFIT = pln.POPULATION * pln.MINERALS;
+                pln.currentPopulation = pln.Inc(p, r.NextDouble());
+                pln.maxPopulation = r.Next(popmin, popmax);
+                pln.minerals = r.Next(mineralmin, mineralmax);
+                pln.profit = pln.currentPopulation * pln.minerals;
 
                 pln.Move(Time);
 
-                s.PLN.Add(pln);
+                s.planets.Add(pln);
 
                 dist = dist + 25;//каждая следующая планета будет удалена от центра на 25 пикселей
                 speed = speed / 3 + 0.1f;//и разную скорость

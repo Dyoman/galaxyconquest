@@ -538,15 +538,15 @@ namespace GalaxyConquest
             {
                 for (int i = 0; i < Game.Galaxy.stars[j].planets_count; i++)
                 {
-                    Game.Galaxy.stars[j].PLN[i].POPULATION *= 1.1;
+                    Game.Galaxy.stars[j].planets[i].currentPopulation *= 1.1;
                 }
             }
 
             //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
             for (int i = 0; i < Game.Player.player_planets.Count; i++)
             {
-                Game.Player.credit += Game.Player.player_planets[i].PROFIT;
-                Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
+                Game.Player.credit += Game.Player.player_planets[i].profit;
+                Game.Player.minerals += Game.Player.player_planets[i].minerals;
                 Game.Player.skillPoints += Game.Player.player_planets[i].skillPointProduce;
             }
 
@@ -662,7 +662,8 @@ namespace GalaxyConquest
             if (onStep)//Во время шага просто выключим кнопку захвата и оставим прогрессбар, если он видим
                 captureButton.Enabled = false;
             else
-                if (Game.Player.stars.Contains(Game.Player.fleets[Game.Player.selectedFleet].s1) || Game.Player.fleets[Game.Player.selectedFleet].onWay)
+                if (Game.Player.stars.Contains(Game.Player.fleets[Game.Player.selectedFleet].s1) || Game.Player.fleets[Game.Player.selectedFleet].s2 != null
+                    || Game.Player.fleets[Game.Player.selectedFleet].onWay)
                     SetCaptureControlsActive(-1);
                 else if (Game.Player.fleets[Game.Player.selectedFleet].Capturing)
                     SetCaptureControlsActive(1);

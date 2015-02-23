@@ -65,8 +65,8 @@ namespace GalaxyConquest.Game
             StarSystem s = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];
 
             Player.stars.Add(s);
-            for (int i = 0; i < s.PLN.Count; i++)
-                Player.player_planets.Add(s.PLN[i]);
+            for (int i = 0; i < s.planets.Count; i++)
+                Player.player_planets.Add(s.planets[i]);
 
             Player.fleets.Add(new Fleet(Player, rand.Next(2, 5), s));
             s.Discovered = true;

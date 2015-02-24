@@ -287,7 +287,7 @@ namespace GalaxyConquest
                         if (!Game.Player.fleets[Game.Player.selectedFleet].Capturing && !Game.Player.fleets[Game.Player.selectedFleet].onWay
                             && Game.Player.fleets[Game.Player.selectedFleet].s2 == null)
                         {
-                            //if (DrawController.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
+                            if (DrawController.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
                             {
                                 Game.Player.fleets[Game.Player.selectedFleet].setTarget(s);
                                 Game.Player.selectedStar = s;

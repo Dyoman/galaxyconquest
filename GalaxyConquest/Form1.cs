@@ -582,6 +582,7 @@ namespace GalaxyConquest
                     Invoke(new Action(() => tech_progressBar.Visible = false));
                     Invoke(new Action(() => tech_label.Visible = false));
                 }
+                Tech.CheckTechInnovaions();//Проверка, нужно ли поменять броню, добавить здание, в зависимости от выученной технологии
                 tt.tierClicked = 1000;
                 tt.techLineClicked = 1000;
                 tt.subtechClicked = 1000;

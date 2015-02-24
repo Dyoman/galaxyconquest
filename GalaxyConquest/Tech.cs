@@ -32,6 +32,17 @@ namespace GalaxyConquest
             //LoadTeches.SerializeObject(teches.tiers, ".xml");
         }
 
+        /// <summary>
+        /// Тут можно проверить, добавлять ли здание/броню, e.t.c.
+        /// Form1.SelfRef.tt.tierClicked - доступ к только что выученному поколению технологий (столбец)
+        /// Form1.SelfRef.tt.techLineClicked - доступ к только что выученной ветке технологий (строка)
+        /// Form1.SelfRef.tt.subtechClicked - доступ к только что выученной подтехнологии (один и вариантов в ветке)
+        /// teches.tiers[tierClicked][techLineClicked][subtechClicked]
+        /// </summary>
+        public static void CheckTechInnovaions()
+        {
+            
+        }
 
             public static void SerializeObject(this List<List<List<Pair>>> list, string fileName)
             {

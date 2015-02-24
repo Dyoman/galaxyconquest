@@ -220,8 +220,9 @@ namespace GalaxyConquest
                     subtechClicked == Player.technologies[i][2])
                 {
                     tech_logic = false;
-                    //break;
+                    break;
                 }
+
                 if (tierClicked == Player.technologies[i][0] + 1 && techLineClicked == Player.technologies[i][1])
                 {
                     if (Form1.Game.Player.skillPoints >= tierClicked * 100)
@@ -232,6 +233,9 @@ namespace GalaxyConquest
                     else
                     {
                         MessageBox.Show("Not enough skill popints!");
+                        tierClicked = 1000;
+                        techLineClicked = 1000;
+                        subtechClicked = 1000;
                         return;
                     }
                 }
@@ -239,10 +243,12 @@ namespace GalaxyConquest
             if (tech_logic == false)
             {
                 MessageBox.Show("You alrady have this tech!");
+                tierClicked = 1000;
+                techLineClicked = 1000;
+                subtechClicked = 1000;
             }
             else
             {
-
                 if (tech_logic2 == true)
                 {
                     Form1.SelfRef.tech_label.Visible = true;
@@ -255,6 +261,9 @@ namespace GalaxyConquest
                 else
                 {
                     MessageBox.Show("Learn previos tech before!");
+                    tierClicked = 1000;
+                    techLineClicked = 1000;
+                    subtechClicked = 1000;
                 }
             }
 

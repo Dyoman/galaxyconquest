@@ -62,9 +62,9 @@ namespace GalaxyConquest.StarSystems
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
-                for (int j = 0; j < starSystem.PLN.Count; j++)
+                for (int j = 0; j < starSystem.planets.Count; j++)
                 {
-                    PLANET p = starSystem.PLN[j];
+                    Planet p = starSystem.planets[j];
 
                     if (DrawControl.CursorIsOnObject(e, p))
                     {
@@ -76,39 +76,39 @@ namespace GalaxyConquest.StarSystems
                         double population;
                         double profit;
                         //ниже- определение размера планеты
-                        if (p.SIZE < 15)
+                        if (p.size < 15)
                         {
                             sizeText = "Small";
                         }
                         else
-                            if ((p.SIZE >= 15) && (p.SIZE < 25))
+                            if ((p.size >= 15) && (p.size < 25))
                             {
                                 sizeText = "Medium";
                             }
                             else
-                                if (p.SIZE >= 25)
+                                if (p.size >= 25)
                                 {
                                     sizeText = "Big";
                                 }
 
 
                         //ниже - определение ресурсов
-                        if (p.MINERALS == 0)
+                        if (p.minerals == 0)
                         {
                             mineralsText = "No Minerals";
                         }
                         else
-                            if ((p.MINERALS > 0) && (p.MINERALS <= 10))
+                            if ((p.minerals > 0) && (p.minerals <= 10))
                             {
                                 mineralsText = "Small";
                             }
                             else
-                                if ((p.MINERALS > 10) && (p.MINERALS <= 20))
+                                if ((p.minerals > 10) && (p.minerals <= 20))
                                 {
                                     mineralsText = "Medium";
                                 }
                                 else
-                                    if (p.MINERALS > 20)
+                                    if (p.minerals > 20)
                                     {
                                         mineralsText = "Big";
                                     }
@@ -143,20 +143,21 @@ namespace GalaxyConquest.StarSystems
                                         }
                         
                         planet_selected = j;
-                        p.POPULATION = p.POPULATION + p.POPULATION * 0.1 * climatefactor;
 
-                        population = Math.Round(p.POPULATION, 3);
-                        p.PROFIT = p.MINERALS * population;
-                        profit = Math.Round(p.PROFIT, 2);
+                        population = p.currentPopulation + p.currentPopulation * 0.1 * climatefactor;
+                        population = Math.Round(population, 3);
+
+                        profit = p.minerals * population;
+                        profit = Math.Round(p.profit, 2);
 
                         labelPlanetName.Text = p.name;
                         labelPlanetSize.Text = sizeText;
                         labelPlanetMinerals.Text = mineralsText;
-                        labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
-                        labelPlanetPopulation.Text = population.ToString();
-                        ownerNameLabel.Text = p.OWNERNAME;
-                        profitLabel.Text = profit.ToString();
                         climate1.Text = climateText;
+                        labelPlanetPopulationMax.Text = p.maxPopulation.ToString();
+                        labelPlanetPopulation.Text = p.currentPopulation.ToString();
+                        ownerNameLabel.Text = p.ownerName;
+                        profitLabel.Text = p.profit.ToString();
                         buildings.Text = "";//set buildings textbox to empty string
                         for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
                         {
@@ -203,7 +204,8 @@ namespace GalaxyConquest.StarSystems
         {
             if (onStep) //  Во время шага просто отключаем кнопку захвата
                 captureButton.Enabled = false;
-            else if (Form1.Game.Player.stars.Contains(starSystem) || Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].onWay || onStep)
+            else if (Form1.Game.Player.stars.Contains(starSystem) || Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].onWay || onStep
+                || Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].s2 != null)
                 SetCaptureControlsActive(-1);
             else if (Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].Capturing)
                 SetCaptureControlsActive(1);

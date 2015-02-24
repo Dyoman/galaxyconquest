@@ -10,48 +10,48 @@ namespace GalaxyConquest.StarSystems
     /// Представляет планету
     /// </summary>
    [Serializable]
-    public class PLANET : SpaceObject
+    public class Planet : SpaceObject
     {
        /// <summary>
        /// Координаты центрального тела
        /// </summary>
-        public PointF CENTER = new PointF(0, 0);
+        public PointF center = new PointF(0, 0);
        /// <summary>
        /// Скорость вращения вокруг центрального тела
        /// </summary>
-        public float SPEED = 0.1f;
+        public float speed = 0.1f;
        /// <summary>
        /// Дистанция от центрального тела
        /// </summary>
-        public float DISTANCE = 100f;
+        public float distance = 100f;
        /// <summary>
        /// Фаза вращения
        /// </summary>
-        public float ROT = 0f;
+        public float phase = 0f;
        /// <summary>
        /// Максимальное количество населения
        /// </summary>
-        public float POPULATIONMAX = 0;
+        public float maxPopulation = 0;
        /// <summary>
        /// Минимальное количество населения
        /// </summary>
-        public double POPULATION = 0;
+        public double currentPopulation = 0;
        /// <summary>
        /// Количество минералов на планете
        /// </summary>
-        public float MINERALS = 10;
+        public float minerals = 10;
        /// <summary>
        /// Размер планеты
        /// </summary>
-        public float SIZE = 10;
+        public float size = 10;
        /// <summary>
        /// Имя обладателя планеты
        /// </summary>
-        public string OWNERNAME = "None";
+        public string ownerName = "None";
        /// <summary>
        /// Прибыль, которую можно получить, захватив планету
        /// </summary>
-        public double PROFIT = 0;
+        public double profit = 0;
        /// <summary>
        /// Прирост очков изучения, который можно получить, захватив планету
        /// </summary>
@@ -60,20 +60,23 @@ namespace GalaxyConquest.StarSystems
         /// Прирост очков изучения, который можно получить, захватив планету
         /// </summary>
         public float skillPointProduce = 10;
-        public Color CLR = Color.FromArgb(255, 255, 255);
+       /// <summary>
+       /// Цвет планеты
+       /// </summary>
+        public Color planetColor = Color.FromArgb(255, 255, 255);
 
        /// <summary>
        /// Получает текущие координаты планеты в двухмерном пространстве
        /// </summary>
-        public PointF GetPoint()
+        public PointF GetPosition()
         {
             return new PointF((float)x, (float)y);
         }
 
         public override void Move(double time)
         {
-            x = (float)Math.Sin(time * SPEED) * DISTANCE + CENTER.X;
-            y = (float)Math.Cos(time * SPEED) * DISTANCE + CENTER.Y;
+            x = (float)Math.Sin(time * speed) * distance + center.X;
+            y = (float)Math.Cos(time * speed) * distance + center.Y;
         }
 
         public double Inc(double p, double f)

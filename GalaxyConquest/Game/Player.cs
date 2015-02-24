@@ -23,7 +23,7 @@ namespace GalaxyConquest.Game
         /// <summary>
         /// Планеты игрока (спорно)
         /// </summary>
-        public List<PLANET> player_planets;
+        public List<Planet> player_planets;
         /// <summary>
         /// Звездные системы игрока
         /// </summary>
@@ -76,7 +76,7 @@ namespace GalaxyConquest.Game
             stars = new List<StarSystem>();
             fleets = new List<Fleet>();
             player_color = Color.Red;
-            player_planets = new List<PLANET>();
+            player_planets = new List<Planet>();
             player_ship = new List<Ship>();
 
             credit = 0;
@@ -99,7 +99,7 @@ namespace GalaxyConquest.Game
             stars = new List<StarSystem>();
             fleets = new List<Fleet>();
             player_color = Color.Red;
-            player_planets = new List<PLANET>();
+            player_planets = new List<Planet>();
             player_ship = new List<Ship>();
 
             credit = 0;

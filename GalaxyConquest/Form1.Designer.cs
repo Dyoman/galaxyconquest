@@ -51,6 +51,8 @@
             this.sound_button = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SkillPointsStatus = new System.Windows.Forms.Label();
+            this.SkillPontsLabel = new System.Windows.Forms.Label();
             this.EnergyStatus = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.MineralStatus = new System.Windows.Forms.Label();
@@ -67,8 +69,6 @@
             this.TechWorker = new System.ComponentModel.BackgroundWorker();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.galaxyImage = new System.Windows.Forms.PictureBox();
-            this.SkillPontsLabel = new System.Windows.Forms.Label();
-            this.SkillPointsStatus = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -98,7 +98,7 @@
             this.toolStripSeparator1,
             this.mainMenuQuit});
             this.mainMenuFile.Name = "mainMenuFile";
-            this.mainMenuFile.Size = new System.Drawing.Size(35, 20);
+            this.mainMenuFile.Size = new System.Drawing.Size(37, 20);
             this.mainMenuFile.Text = "File";
             // 
             // mainMenuNew
@@ -141,13 +141,13 @@
             this.mainMenuText.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainMenuAbout});
             this.mainMenuText.Name = "mainMenuText";
-            this.mainMenuText.Size = new System.Drawing.Size(40, 20);
+            this.mainMenuText.Size = new System.Drawing.Size(44, 20);
             this.mainMenuText.Text = "Help";
             // 
             // mainMenuAbout
             // 
             this.mainMenuAbout.Name = "mainMenuAbout";
-            this.mainMenuAbout.Size = new System.Drawing.Size(115, 22);
+            this.mainMenuAbout.Size = new System.Drawing.Size(116, 22);
             this.mainMenuAbout.Text = "About...";
             this.mainMenuAbout.Click += new System.EventHandler(this.mainMenuAbout_Click);
             // 
@@ -155,7 +155,7 @@
             // 
             this.MainMenuTechTree.Enabled = false;
             this.MainMenuTechTree.Name = "MainMenuTechTree";
-            this.MainMenuTechTree.Size = new System.Drawing.Size(65, 20);
+            this.MainMenuTechTree.Size = new System.Drawing.Size(68, 20);
             this.MainMenuTechTree.Text = "Tech tree";
             this.MainMenuTechTree.Click += new System.EventHandler(this.MainMenuTechTree_Click);
             // 
@@ -178,13 +178,13 @@
             // toolStripStatusSelectFleet
             // 
             this.toolStripStatusSelectFleet.Name = "toolStripStatusSelectFleet";
-            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusSelectFleet.Size = new System.Drawing.Size(140, 17);
             this.toolStripStatusSelectFleet.Text = "toolStripStatusSelectFleet";
             // 
             // toolStripStatusXY
             // 
             this.toolStripStatusXY.Name = "toolStripStatusXY";
-            this.toolStripStatusXY.Size = new System.Drawing.Size(90, 17);
+            this.toolStripStatusXY.Size = new System.Drawing.Size(98, 17);
             this.toolStripStatusXY.Text = "toolStripStatusXY";
             // 
             // step_button
@@ -287,6 +287,26 @@
             this.groupBox1.TabIndex = 42;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player";
+            // 
+            // SkillPointsStatus
+            // 
+            this.SkillPointsStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.SkillPointsStatus.AutoSize = true;
+            this.SkillPointsStatus.Location = new System.Drawing.Point(78, 90);
+            this.SkillPointsStatus.Name = "SkillPointsStatus";
+            this.SkillPointsStatus.Size = new System.Drawing.Size(15, 16);
+            this.SkillPointsStatus.TabIndex = 47;
+            this.SkillPointsStatus.Text = "0";
+            // 
+            // SkillPontsLabel
+            // 
+            this.SkillPontsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.SkillPontsLabel.AutoSize = true;
+            this.SkillPontsLabel.Location = new System.Drawing.Point(5, 89);
+            this.SkillPontsLabel.Name = "SkillPontsLabel";
+            this.SkillPontsLabel.Size = new System.Drawing.Size(73, 16);
+            this.SkillPontsLabel.TabIndex = 46;
+            this.SkillPontsLabel.Text = "Skill Points";
             // 
             // EnergyStatus
             // 
@@ -475,26 +495,6 @@
             this.galaxyImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseClick);
             this.galaxyImage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseDown);
             this.galaxyImage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.galaxyImage_MouseMove);
-            // 
-            // SkillPontsLabel
-            // 
-            this.SkillPontsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.SkillPontsLabel.AutoSize = true;
-            this.SkillPontsLabel.Location = new System.Drawing.Point(7, 90);
-            this.SkillPontsLabel.Name = "SkillPontsLabel";
-            this.SkillPontsLabel.Size = new System.Drawing.Size(73, 16);
-            this.SkillPontsLabel.TabIndex = 46;
-            this.SkillPontsLabel.Text = "Skill Points";
-            // 
-            // SkillPointsStatus
-            // 
-            this.SkillPointsStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.SkillPointsStatus.AutoSize = true;
-            this.SkillPointsStatus.Location = new System.Drawing.Point(78, 90);
-            this.SkillPointsStatus.Name = "SkillPointsStatus";
-            this.SkillPointsStatus.Size = new System.Drawing.Size(15, 16);
-            this.SkillPointsStatus.TabIndex = 47;
-            this.SkillPointsStatus.Text = "0";
             // 
             // Form1
             // 

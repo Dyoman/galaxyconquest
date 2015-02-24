@@ -12,23 +12,37 @@ namespace GalaxyConquest
     [Serializable]
     public class StarSystem : SpaceObject
     {
-        public double angVel = 0.05;  //Угловая скорость
+        /// <summary>
+        /// Угловая скорость планеты
+        /// </summary>
+        public double angVel = 0.05;
 
         public double R = 0, timeOffset = 0, increment = 0;//Радиус движения системы, смещение фазы и смещение координат
-
-        public int type; //тип звезды
-        public SolidBrush br; //brush for stars
-
-        public int planets_count;//num of planets
-
+        /// <summary>
+        /// Тип звезды
+        /// </summary>
+        public int type;
+        /// <summary>
+        /// Браш, в виде которого планета будет представлена на экране
+        /// </summary>
+        public SolidBrush br;
+        /// <summary>
+        /// Количество планет (спорно)
+        /// </summary>
+        public int planets_count;
+        /// <summary>
+        /// Флаг, показывающий открыта ли система
+        /// </summary>
         public bool Discovered = false;
-
-        public List<PLANET> PLN = new List<PLANET>();
+        /// <summary>
+        /// Планеты в звездной системе
+        /// </summary>
+        public List<Planet> planets = new List<Planet>();
 
         public override void Move(double time)
         {
-            for (int i = 0; i < PLN.Count; i++)
-                PLN[i].Move(time);
+            for (int i = 0; i < planets.Count; i++)
+                planets[i].Move(time);
         }
     }
 }

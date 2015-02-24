@@ -48,7 +48,7 @@ namespace GalaxyConquest.Drawing
     }
 
     /// <summary>
-    /// Структура описывает координаты в двухмерном пространстве
+    /// Структура описывает вектор в двухмерном пространстве
     /// </summary>
     public struct Vector
     {
@@ -61,6 +61,49 @@ namespace GalaxyConquest.Drawing
         {
             X = x;
             Y = y;
+        }
+    }
+
+    /// <summary>
+    /// Структура описывает вектор в трехмерном пространстве
+    /// </summary>
+    public struct Vector3
+    {
+        public double X, Y, Z;
+
+        public Vector3(double x, double y, double z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
+        /// <summary>
+        /// Возвращает скалярное произведение вектора на второй вектор
+        /// </summary>
+        public double ScalarWith(Vector3 v2)
+        {
+            return Normalized.X * v2.Normalized.X + Normalized.Y * v2.Normalized.Y + Normalized.Z * v2.Normalized.Z;
+        }
+        /// <summary>
+        /// Длина вектора
+        /// </summary>
+        public double Length
+        {
+            get
+            {
+                return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+            }
+        }
+        /// <summary>
+        /// Нормализованный вектор (указывает направление, но длина равна 1)
+        /// </summary>
+        public Vector3 Normalized
+        {
+            get
+            {
+                return new Vector3(X / Length, Y / Length, Z / Length);
+            }
         }
     }
 
@@ -216,13 +259,17 @@ namespace GalaxyConquest.Drawing
 
                 if (state.Player.warpTarget != null && k == state.Player.selectedFleet && (!state.Player.fleets[state.Player.selectedFleet].onWay))
                 {
-                    double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
+                    Way way = new Way();
+                    way.CalculateWay(state.Player.fleets[k].s1, state.Player.warpTarget);
+                    //double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
+                    double starDistance = way.Distance;
                     string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance * MovementsController.FIXED_TIME_DELTA) + 1).ToString() + ">";
 
-                    Vector scrFrom, scrTo;
+                    Vector scrFrom = new Vector(), scrTo = new Vector();
+                    /*
                     scrFrom = getScreenCoordOf(flSys);
                     scrTo = getScreenCoordOf(state.Player.warpTarget);
-
+                    
                     if (starDistance < Fleet.MaxDistance)//пока тестим
                     {
                         pen.Color = Color.Lime;
@@ -235,14 +282,42 @@ namespace GalaxyConquest.Drawing
                         g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Red,
                             new PointF((float)scrTo.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scrTo.Y + r * (float)Math.Sin(-3 * ugol) + 12));
                     }
-
-                    g.DrawLine(pen,
-                        new PointF((float)scrFrom.X, (float)scrFrom.Y),
-                        new PointF((float)scrTo.X, (float)scrTo.Y));
+                    */
+                    for (int i = 1; i < way.Count; i++)
+                    {
+                        scrFrom = getScreenCoordOf(way[i - 1]);
+                        scrTo = getScreenCoordOf(way[i]);
+                        g.DrawLine(Pens.WhiteSmoke,
+                            new PointF((float)scrFrom.X, (float)scrFrom.Y),
+                            new PointF((float)scrTo.X, (float)scrTo.Y));
+                    }
+                    g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Lime,
+                        new PointF((float)scrTo.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scrTo.Y + r * (float)Math.Sin(-3 * ugol) + 12));
                 }
 
+                if (fleet.way.Count > 0 && k == state.Player.selectedFleet)    //new 
+                {
+                    pen.Color = Color.White;
+                    pen.Width = 2;
+                    pen.DashStyle = DashStyle.Dash;
 
-                if (targSys != null)
+                    for (int i = Math.Max(fleet.way.Current - 1, 0); i < fleet.way.Count - 1; i++)
+                    {
+                        Vector scrFrom = getScreenCoordOf(fleet.way[i]);
+                        scrFrom.X -= 10;
+                        scrFrom.Y -= 10;
+                        Vector scrTo = getScreenCoordOf(fleet.way[i + 1]);
+                        scrTo.X -= 10;
+                        scrTo.Y -= 10;
+
+                        g.DrawLine(pen,
+                                new PointF((float)scrFrom.X + 10, (float)scrFrom.Y + 10),
+                                new PointF((float)scrTo.X + 10, (float)scrTo.Y + 10));
+                    }
+                }
+                pen.Width = 1;
+
+                if (targSys != null && false)   //old
                 {
                     Vector scrFrom = getScreenCoordOf(flSys);
                     scrFrom.X -= 10;
@@ -261,7 +336,6 @@ namespace GalaxyConquest.Drawing
                 }
                 pen.Color = Color.Gold;
                 pen.DashStyle = DashStyle.Solid;
-                pen.Width -= 2;
             }
 
             //рисуем гиперпереходы
@@ -281,15 +355,15 @@ namespace GalaxyConquest.Drawing
         /// <param name="g">Полотно для рисования</param>
         public void Render(StarSystem system, Graphics g)
         {
-            Vector centerScr = getScreenCoordOf(system.PLN[0]);
-            for (int i = 0; i < system.PLN.Count; i++)
+            Vector centerScr = getScreenCoordOf(system.planets[0]);
+            for (int i = 0; i < system.planets.Count; i++)
             {
-                StarSystems.PLANET p = system.PLN[i];
+                StarSystems.Planet p = system.planets[i];
 
                 Vector scr = getScreenCoordOf(p);
 
-                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.DISTANCE, (float)centerScr.Y - p.DISTANCE, p.DISTANCE * 2, p.DISTANCE * 2);
-                g.FillEllipse(new SolidBrush(p.CLR), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
+                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.distance, (float)centerScr.Y - p.distance, p.distance * 2, p.distance * 2);
+                g.FillEllipse(new SolidBrush(p.planetColor), new RectangleF((float)scr.X - p.size / 2, (float)scr.Y - p.size / 2, p.size, p.size));
                 g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
             }
         }
@@ -372,21 +446,21 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Планета для проверки</param>
-        public bool CursorIsOnObject(MouseEventArgs e, StarSystems.PLANET obj)
+        public bool CursorIsOnObject(MouseEventArgs e, StarSystems.Planet obj)
         {
             Vector scr = getScreenCoordOf(obj);
 
-            return e.X > (scr.X - obj.SIZE / 2) &&
-                   e.X < (scr.X + obj.SIZE / 2) &&
-                   e.Y > (scr.Y - obj.SIZE / 2) &&
-                   e.Y < (scr.Y + obj.SIZE / 2);
+            return e.X > (scr.X - obj.size / 2) &&
+                   e.X < (scr.X + obj.size / 2) &&
+                   e.Y > (scr.Y - obj.size / 2) &&
+                   e.Y < (scr.Y + obj.size / 2);
         }
         /// <summary>
         /// Рассчитывает дистанцию от одного объекта до другого
         /// </summary>
         /// <param name="from">Первый объект</param>
         /// <param name="to">Второй оъект</param>
-        public double Distance(SpaceObject from, SpaceObject to)
+        public static double Distance(SpaceObject from, SpaceObject to)
         {
             return Math.Sqrt(Math.Pow((to.x - from.x), 2) + Math.Pow((to.y - from.y), 2) + Math.Pow((to.z - from.z), 2));
         }

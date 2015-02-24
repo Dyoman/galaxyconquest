@@ -20,7 +20,7 @@ namespace GalaxyConquest.Tactics
         }
         public override string description()
         {
-            return "\nГаусс-пушка\nВыстрелов: " + shotsleft;
+            return "\nГаусс-пушка" + "\nDamage: " + minAttackPower + "-" + maxAttackPower + "\nRange: " + attackRange + "\nВыстрелов: " + shotsleft;
         }
 
         public override void drawAttack(int x, int y, int targetx, int targety, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref System.Windows.Forms.PictureBox pictureMap, ref System.Drawing.Bitmap bmBackground, ref System.Drawing.Bitmap bmFull)

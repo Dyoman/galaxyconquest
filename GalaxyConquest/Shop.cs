@@ -44,7 +44,7 @@ namespace GalaxyConquest
             if (Form1.Game.Player.credit > 50)
             {
                 wpnLightLaser w = new wpnLightLaser();
-                ShipAssaulter s = new ShipAssaulter(1, w);
+                ShipAssaulter s = new ShipAssaulter(1, w, new ArmorNone());
                 Form1.Game.Player.player_ship.Add(s);
                 Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].ships.Add(s);
                 Form1.Game.Player.credit -= 50;
@@ -61,7 +61,7 @@ namespace GalaxyConquest
             if (Form1.Game.Player.credit > 25)
             {
                 wpnLightLaser w = new wpnLightLaser();
-                ShipScout s = new ShipScout(1, w);
+                ShipScout s = new ShipScout(1, w, new ArmorNone());
                 Form1.Game.Player.player_ship.Add(s);
                 Form1.Game.Player.fleets[Form1.Game.Player.selectedFleet].ships.Add(s);
                 Form1.Game.Player.credit -= 25;

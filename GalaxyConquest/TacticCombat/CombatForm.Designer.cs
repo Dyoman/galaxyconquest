@@ -52,14 +52,14 @@
             // 
             this.boxDescription.AutoSize = true;
             this.boxDescription.Enabled = false;
-            this.boxDescription.Location = new System.Drawing.Point(12, 39);
+            this.boxDescription.Location = new System.Drawing.Point(12, 29);
             this.boxDescription.Name = "boxDescription";
             this.boxDescription.Size = new System.Drawing.Size(0, 13);
             this.boxDescription.TabIndex = 1;
             // 
             // btnEndTurn
             // 
-            this.btnEndTurn.Location = new System.Drawing.Point(35, 237);
+            this.btnEndTurn.Location = new System.Drawing.Point(35, 263);
             this.btnEndTurn.Name = "btnEndTurn";
             this.btnEndTurn.Size = new System.Drawing.Size(75, 23);
             this.btnEndTurn.TabIndex = 2;
@@ -70,7 +70,7 @@
             // lblTurn
             // 
             this.lblTurn.AutoSize = true;
-            this.lblTurn.Location = new System.Drawing.Point(32, 210);
+            this.lblTurn.Location = new System.Drawing.Point(32, 236);
             this.lblTurn.Name = "lblTurn";
             this.lblTurn.Size = new System.Drawing.Size(87, 13);
             this.lblTurn.TabIndex = 3;
@@ -79,7 +79,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 272);
+            this.label1.Location = new System.Drawing.Point(12, 298);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(122, 13);
             this.label1.TabIndex = 5;
@@ -89,7 +89,7 @@
             // 
             this.txtBlueShips.AutoSize = true;
             this.txtBlueShips.ForeColor = System.Drawing.Color.Blue;
-            this.txtBlueShips.Location = new System.Drawing.Point(32, 295);
+            this.txtBlueShips.Location = new System.Drawing.Point(32, 320);
             this.txtBlueShips.Name = "txtBlueShips";
             this.txtBlueShips.Size = new System.Drawing.Size(0, 13);
             this.txtBlueShips.TabIndex = 6;
@@ -98,7 +98,7 @@
             // 
             this.txtRedShips.AutoSize = true;
             this.txtRedShips.ForeColor = System.Drawing.Color.Red;
-            this.txtRedShips.Location = new System.Drawing.Point(82, 295);
+            this.txtRedShips.Location = new System.Drawing.Point(82, 320);
             this.txtRedShips.Name = "txtRedShips";
             this.txtRedShips.Size = new System.Drawing.Size(0, 13);
             this.txtRedShips.TabIndex = 7;

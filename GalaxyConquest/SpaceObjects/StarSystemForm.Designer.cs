@@ -47,6 +47,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.labelPlanetPopulationMax = new System.Windows.Forms.Label();
             this.captureButton = new System.Windows.Forms.Button();
+            this.clamate = new System.Windows.Forms.Label();
+            this.climate1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +72,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.climate1);
+            this.panel1.Controls.Add(this.clamate);
             this.panel1.Controls.Add(this.buildings);
             this.panel1.Controls.Add(this.labelPlanetMinerals);
             this.panel1.Controls.Add(this.labelPlanetSize);
@@ -92,11 +96,11 @@
             // buildings
             // 
             this.buildings.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.buildings.Location = new System.Drawing.Point(16, 192);
+            this.buildings.Location = new System.Drawing.Point(48, 225);
             this.buildings.Multiline = true;
             this.buildings.Name = "buildings";
             this.buildings.ReadOnly = true;
-            this.buildings.Size = new System.Drawing.Size(153, 114);
+            this.buildings.Size = new System.Drawing.Size(121, 81);
             this.buildings.TabIndex = 38;
             // 
             // labelPlanetMinerals
@@ -220,6 +224,24 @@
             this.captureButton.TabIndex = 14;
             this.captureButton.Text = "Захватить систему";
             this.captureButton.UseVisualStyleBackColor = true;
+            //
+            // clamate
+            // 
+            this.clamate.AutoSize = true;
+            this.clamate.Location = new System.Drawing.Point(10, 205);
+            this.clamate.Name = "clamate";
+            this.clamate.Size = new System.Drawing.Size(41, 13);
+            this.clamate.TabIndex = 39;
+            this.clamate.Text = "Climate";
+            // 
+            // climate1
+            // 
+            this.climate1.AutoSize = true;
+            this.climate1.Location = new System.Drawing.Point(108, 205);
+            this.climate1.Name = "climate1";
+            this.climate1.Size = new System.Drawing.Size(41, 13);
+            this.climate1.TabIndex = 40;
+            this.climate1.Text = "Climate";
             // 
             // StarSystemForm
             // 
@@ -262,6 +284,8 @@
         private System.Windows.Forms.Label labelPlanetSize;
         private System.Windows.Forms.TextBox buildings;
         public System.Windows.Forms.Button captureButton;
+        private System.Windows.Forms.Label climate1;
+        private System.Windows.Forms.Label clamate;
     }
 }
 

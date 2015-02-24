@@ -31,19 +31,19 @@ namespace GalaxyConquest.StarSystems
        /// <summary>
        /// Максимальное количество населения
        /// </summary>
-        public float maxPopulation = 0;
+        public float POPULATIONMAX = 0;
        /// <summary>
        /// Минимальное количество населения
        /// </summary>
-        public double currentPopulation = 0;
+        public double POPULATION = 0;
        /// <summary>
        /// Количество минералов на планете
        /// </summary>
-        public float minerals = 10;
+        public float MINERALS = 10;
        /// <summary>
        /// Размер планеты
        /// </summary>
-        public float size = 10;
+        public float SIZE = 10;
        /// <summary>
        /// Имя обладателя планеты
        /// </summary>
@@ -51,7 +51,7 @@ namespace GalaxyConquest.StarSystems
        /// <summary>
        /// Прибыль, которую можно получить, захватив планету
        /// </summary>
-        public double profit = 0;
+        public double PROFIT = 0;
        /// <summary>
        /// Прирост очков изучения, который можно получить, захватив планету
        /// </summary>
@@ -59,6 +59,7 @@ namespace GalaxyConquest.StarSystems
        /// <summary>
        /// Цвет планеты
        /// </summary>
+        public double CLIMATE = 0;
         public Color planetColor = Color.FromArgb(255, 255, 255);
 
        /// <summary>

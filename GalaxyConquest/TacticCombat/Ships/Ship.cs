@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace GalaxyConquest.Tactics
 {
@@ -14,11 +15,13 @@ namespace GalaxyConquest.Tactics
     public class Ship : SpaceObject
     {
         public Weapon equippedWeapon;
+        public Armor equippedArmor;
         public int weaponPointX;
         public int weaponPointY;
         public int weaponR;
         public int classShip;
         public int sumWeapon;
+        public int baseHealth;
 
         public override string description()
         {
@@ -40,7 +43,7 @@ namespace GalaxyConquest.Tactics
 
         public int attack(combatMap cMap, int pointB, ref System.Drawing.Bitmap bmap, System.Media.SoundPlayer player, ref PictureBox pictureMap, ref  Bitmap bmBackground, ref Bitmap bmFull)
         {
-            int dmg;
+            double dmg;
             int flag = 0;
             if (actionsLeft >= equippedWeapon.energyСonsumption && equippedWeapon.shotsleft > 0)
             {
@@ -49,7 +52,7 @@ namespace GalaxyConquest.Tactics
                     ref bmap, player, ref pictureMap, ref bmBackground, ref bmFull
                 );
                 Random rand = new Random();
-                dmg = sumWeapon * rand.Next(equippedWeapon.minAttackPower, equippedWeapon.maxAttackPower);
+                dmg = (sumWeapon * rand.Next(equippedWeapon.minAttackPower*10, equippedWeapon.maxAttackPower*10))/10.0;
                 cMap.boxes[pointB].spaceObject.currentHealth -= dmg;
                 actionsLeft -= equippedWeapon.energyСonsumption;
                 equippedWeapon.shotsleft -= 1;
@@ -118,6 +121,18 @@ namespace GalaxyConquest.Tactics
         {
             actionsLeft = maxActions;
             equippedWeapon.shotsleft = equippedWeapon.cage;
+        }
+
+        public void InstallArmor(Armor armor)
+        {
+            equippedArmor = armor;
+            maxHealth = baseHealth * armor.factor;
+            currentHealth = maxHealth;
+        }
+
+        public void InstallWpn(Weapon weapon)
+        {
+            equippedWeapon = weapon;
         }
     }
 }

@@ -363,7 +363,7 @@ namespace GalaxyConquest.Drawing
                 Vector scr = getScreenCoordOf(p);
 
                 g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.distance, (float)centerScr.Y - p.distance, p.distance * 2, p.distance * 2);
-                g.FillEllipse(new SolidBrush(p.planetColor), new RectangleF((float)scr.X - p.size / 2, (float)scr.Y - p.size / 2, p.size, p.size));
+                g.FillEllipse(new SolidBrush(p.planetColor), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
                 g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
             }
         }
@@ -450,10 +450,10 @@ namespace GalaxyConquest.Drawing
         {
             Vector scr = getScreenCoordOf(obj);
 
-            return e.X > (scr.X - obj.size / 2) &&
-                   e.X < (scr.X + obj.size / 2) &&
-                   e.Y > (scr.Y - obj.size / 2) &&
-                   e.Y < (scr.Y + obj.size / 2);
+            return e.X > (scr.X - obj.SIZE / 2) &&
+                   e.X < (scr.X + obj.SIZE / 2) &&
+                   e.Y > (scr.Y - obj.SIZE / 2) &&
+                   e.Y < (scr.Y + obj.SIZE / 2);
         }
         /// <summary>
         /// Рассчитывает дистанцию от одного объекта до другого

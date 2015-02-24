@@ -331,7 +331,8 @@ namespace GalaxyConquest
                 {
                     if (DrawControl.CursorIsOnObject(e, Game.Player.fleets[i]))
                     {
-                        int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
+                        int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                        double health = 0;
                         for (int j = 0; j < Game.Player.fleets[i].ships.Count; j++)
                         {
                             health += Math.Max(Game.Player.fleets[i].ships[j].currentHealth, 0);
@@ -358,7 +359,8 @@ namespace GalaxyConquest
                 {
                     if (DrawControl.CursorIsOnObject(e, Game.Galaxy.neutrals[i]) && Game.Galaxy.neutrals[i].s1.Discovered)
                     {
-                        int scout = 0, aScount = 0, assault = 0, aAssault = 0, health = 0;
+                        int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                        double health = 0;
                         for (int j = 0; j < Game.Galaxy.neutrals[i].ships.Count; j++)
                         {
                             health += Math.Max(Game.Galaxy.neutrals[i].ships[j].currentHealth, 0);
@@ -544,15 +546,15 @@ namespace GalaxyConquest
             {
                 for (int i = 0; i < Game.Galaxy.stars[j].planets_count; i++)
                 {
-                    Game.Galaxy.stars[j].planets[i].currentPopulation *= 1.1;
+                    Game.Galaxy.stars[j].planets[i].POPULATION *= 1.1;
                 }
             }
 
             //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
             for (int i = 0; i < Game.Player.player_planets.Count; i++)
             {
-                Game.Player.credit += Game.Player.player_planets[i].profit;
-                Game.Player.minerals += Game.Player.player_planets[i].minerals;
+                Game.Player.credit += Game.Player.player_planets[i].PROFIT;
+                Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
                 Game.Player.skillPoints += Game.Player.player_planets[i].skillPointProduce;
             }
 

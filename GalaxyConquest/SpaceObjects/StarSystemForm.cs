@@ -163,11 +163,6 @@ namespace GalaxyConquest.StarSystems
                         ownerNameLabel.Text = p.ownerName;
                         profitLabel.Text = p.PROFIT.ToString();
 
-                        labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
-                        labelPlanetPopulation.Text = p.POPULATION.ToString();
-                        ownerNameLabel.Text = p.OWNERNAME;
-                        profitLabel.Text = p.PROFIT.ToString();
-
                         buildings.Text = "";//set buildings textbox to empty string
                         for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
                         {

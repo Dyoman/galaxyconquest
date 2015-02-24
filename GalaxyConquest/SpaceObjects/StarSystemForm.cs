@@ -75,40 +75,41 @@ namespace GalaxyConquest.StarSystems
                         float climatefactor = 1;
                         double population;
                         double profit;
+
                         //ниже- определение размера планеты
-                        if (p.size < 15)
+                        if (p.SIZE < 15)
                         {
                             sizeText = "Small";
                         }
                         else
-                            if ((p.size >= 15) && (p.size < 25))
+                            if ((p.SIZE >= 15) && (p.SIZE < 25))
                             {
                                 sizeText = "Medium";
                             }
                             else
-                                if (p.size >= 25)
+                                if (p.SIZE >= 25)
                                 {
                                     sizeText = "Big";
                                 }
 
 
                         //ниже - определение ресурсов
-                        if (p.minerals == 0)
+                        if (p.MINERALS == 0)
                         {
                             mineralsText = "No Minerals";
                         }
                         else
-                            if ((p.minerals > 0) && (p.minerals <= 10))
+                            if ((p.MINERALS > 0) && (p.MINERALS <= 10))
                             {
                                 mineralsText = "Small";
                             }
                             else
-                                if ((p.minerals > 10) && (p.minerals <= 20))
+                                if ((p.MINERALS > 10) && (p.MINERALS <= 20))
                                 {
                                     mineralsText = "Medium";
                                 }
                                 else
-                                    if (p.minerals > 20)
+                                    if (p.MINERALS > 20)
                                     {
                                         mineralsText = "Big";
                                     }
@@ -144,20 +145,29 @@ namespace GalaxyConquest.StarSystems
                         
                         planet_selected = j;
 
-                        population = p.currentPopulation + p.currentPopulation * 0.1 * climatefactor;
+                        population = p.POPULATION + p.POPULATION * 0.1 * climatefactor;
                         population = Math.Round(population, 3);
 
-                        profit = p.minerals * population;
-                        profit = Math.Round(p.profit, 2);
+                        profit = p.MINERALS * population;
+                        profit = Math.Round(p.PROFIT, 2);
 
+
+                        planet_selected = j;
                         labelPlanetName.Text = p.name;
                         labelPlanetSize.Text = sizeText;
                         labelPlanetMinerals.Text = mineralsText;
+
                         climate1.Text = climateText;
-                        labelPlanetPopulationMax.Text = p.maxPopulation.ToString();
-                        labelPlanetPopulation.Text = p.currentPopulation.ToString();
+                        labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
+                        labelPlanetPopulation.Text = p.POPULATION.ToString();
                         ownerNameLabel.Text = p.ownerName;
-                        profitLabel.Text = p.profit.ToString();
+                        profitLabel.Text = p.PROFIT.ToString();
+
+                        labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
+                        labelPlanetPopulation.Text = p.POPULATION.ToString();
+                        ownerNameLabel.Text = p.OWNERNAME;
+                        profitLabel.Text = p.PROFIT.ToString();
+
                         buildings.Text = "";//set buildings textbox to empty string
                         for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
                         {
@@ -194,7 +204,6 @@ namespace GalaxyConquest.StarSystems
             profitLabel.Text = "";
             ownerNameLabel.Text = "";
             buildings.Text = "";
-            climate1.Text = "";
         }
         /// <summary>
         /// Обновляет кнопку захвата системы

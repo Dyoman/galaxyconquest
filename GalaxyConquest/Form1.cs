@@ -546,15 +546,15 @@ namespace GalaxyConquest
             {
                 for (int i = 0; i < Game.Galaxy.stars[j].planets_count; i++)
                 {
-                    Game.Galaxy.stars[j].planets[i].currentPopulation *= 1.1;
+                    Game.Galaxy.stars[j].planets[i].POPULATION *= 1.1;
                 }
             }
 
             //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
             for (int i = 0; i < Game.Player.player_planets.Count; i++)
             {
-                Game.Player.credit += Game.Player.player_planets[i].profit;
-                Game.Player.minerals += Game.Player.player_planets[i].minerals;
+                Game.Player.credit += Game.Player.player_planets[i].PROFIT;
+                Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
                 Game.Player.skillPoints += Game.Player.player_planets[i].skillPointProduce;
             }
 

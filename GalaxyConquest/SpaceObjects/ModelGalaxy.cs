@@ -144,12 +144,12 @@ namespace GalaxyConquest
             pln.distance = 0;
             pln.speed = 0;
             pln.planetColor = s.br.Color;
-            pln.size = 25;
+            pln.SIZE = 25;
             pln.name = s.name;
             pln.CLIMATE = 0;
-            pln.maxPopulation = 0;
-            pln.currentPopulation = 0;
-            pln.minerals = 0;
+            pln.POPULATIONMAX = 0;
+            pln.POPULATION = 0;
+            pln.MINERALS = 0;
 
             pln.Move(Time);//задаем начальные координаты планете опять же методом Move с начальным временем
             int p = 1;
@@ -163,15 +163,19 @@ namespace GalaxyConquest
                 pln.distance = dist;
                 pln.speed = speed;
                 pln.planetColor = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
-                pln.size = r.Next(sizemin, sizemax);
+                pln.SIZE = r.Next(sizemin, sizemax);
 
                 pln.name = s.name + " " + i.ToString();     //Имя планеты = <Имя звезды> <порядковый номер>
 
                 pln.CLIMATE = r.Next(climatemin, climatemax);
-                pln.currentPopulation = pln.Inc(p, r.NextDouble());
-                pln.maxPopulation = r.Next(popmin, popmax);
-                pln.minerals = r.Next(mineralmin, mineralmax);
-                pln.profit = pln.currentPopulation * pln.minerals;
+                pln.POPULATION = pln.Inc(p, r.NextDouble());
+                pln.POPULATIONMAX = r.Next(popmin, popmax);
+                pln.MINERALS = r.Next(mineralmin, mineralmax);
+                pln.PROFIT = pln.POPULATION * pln.MINERALS;
+                pln.POPULATION = pln.Inc(p, r.NextDouble());
+                pln.POPULATIONMAX = r.Next(popmin, popmax);
+                pln.MINERALS = r.Next(mineralmin, mineralmax);
+                pln.PROFIT = pln.POPULATION * pln.MINERALS;
 
                 pln.Move(Time);
 

@@ -224,7 +224,7 @@
             this.captureButton.TabIndex = 14;
             this.captureButton.Text = "Захватить систему";
             this.captureButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // clamate
             // 
             this.clamate.AutoSize = true;

@@ -294,7 +294,7 @@ namespace GalaxyConquest
                             }
                         }   //Если мы кликаем на систему, которая выбрана для флота как конечная цель, тогда снимаем цель   -- без этого мы не сможем отменить перемещение!!!!
                         //else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
-                        else if (Game.Player.fleets[Game.Player.selectedFleet].way.Last == s && !Game.Player.fleets[Game.Player.selectedFleet].onWay)
+                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && !Game.Player.fleets[Game.Player.selectedFleet].onWay)
                         {
                             Game.Player.fleets[Game.Player.selectedFleet].setTarget(null);
                             Game.Player.selectedStar = null;

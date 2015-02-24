@@ -257,18 +257,13 @@ namespace GalaxyConquest.Drawing
                     g.DrawString(fleet.name, new Font("Arial", 8.0F), FleetBrushes.PassiveFleet, new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scr.Y + r * (float)Math.Sin(-3 * ugol) - 12));
                 }
 
-                if (state.Player.warpTarget != null && k == state.Player.selectedFleet && (!state.Player.fleets[state.Player.selectedFleet].onWay))
+                if (state.Player.warpTarget != null && k == state.Player.selectedFleet && !state.Player.fleets[state.Player.selectedFleet].onWay)
                 {
-                    Way way = new Way();
-                    way.CalculateWay(state.Player.fleets[k].s1, state.Player.warpTarget);
-                    //double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
-                    double starDistance = way.Distance;
+                    double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
                     string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance * MovementsController.FIXED_TIME_DELTA) + 1).ToString() + ">";
 
-                    Vector scrFrom = new Vector(), scrTo = new Vector();
-                    /*
-                    scrFrom = getScreenCoordOf(flSys);
-                    scrTo = getScreenCoordOf(state.Player.warpTarget);
+                    Vector scrFrom = getScreenCoordOf(flSys);
+                    Vector scrTo = getScreenCoordOf(state.Player.warpTarget);
                     
                     if (starDistance < Fleet.MaxDistance)//пока тестим
                     {
@@ -282,42 +277,14 @@ namespace GalaxyConquest.Drawing
                         g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Red,
                             new PointF((float)scrTo.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scrTo.Y + r * (float)Math.Sin(-3 * ugol) + 12));
                     }
-                    */
-                    for (int i = 1; i < way.Count; i++)
-                    {
-                        scrFrom = getScreenCoordOf(way[i - 1]);
-                        scrTo = getScreenCoordOf(way[i]);
-                        g.DrawLine(Pens.WhiteSmoke,
-                            new PointF((float)scrFrom.X, (float)scrFrom.Y),
-                            new PointF((float)scrTo.X, (float)scrTo.Y));
-                    }
-                    g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Lime,
-                        new PointF((float)scrTo.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scrTo.Y + r * (float)Math.Sin(-3 * ugol) + 12));
-                }
-
-                if (fleet.way.Count > 0 && k == state.Player.selectedFleet)    //new 
-                {
-                    pen.Color = Color.White;
-                    pen.Width = 2;
-                    pen.DashStyle = DashStyle.Dash;
-
-                    for (int i = Math.Max(fleet.way.Current - 1, 0); i < fleet.way.Count - 1; i++)
-                    {
-                        Vector scrFrom = getScreenCoordOf(fleet.way[i]);
-                        scrFrom.X -= 10;
-                        scrFrom.Y -= 10;
-                        Vector scrTo = getScreenCoordOf(fleet.way[i + 1]);
-                        scrTo.X -= 10;
-                        scrTo.Y -= 10;
-
-                        g.DrawLine(pen,
-                                new PointF((float)scrFrom.X + 10, (float)scrFrom.Y + 10),
-                                new PointF((float)scrTo.X + 10, (float)scrTo.Y + 10));
-                    }
+                    g.DrawLine(pen,
+                        new PointF((float)scrFrom.X, (float)scrFrom.Y),
+                        new PointF((float)scrTo.X, (float)scrTo.Y));
+                
                 }
                 pen.Width = 1;
 
-                if (targSys != null && false)   //old
+                if (targSys != null)   //old
                 {
                     Vector scrFrom = getScreenCoordOf(flSys);
                     scrFrom.X -= 10;

@@ -18,8 +18,6 @@ namespace GalaxyConquest.StarSystems
     {
         DrawController DrawControl;
 
-        public static string size1;
-        public static string minerals1;
         public int planet_selected;
         Random rand = new Random();
 
@@ -33,7 +31,6 @@ namespace GalaxyConquest.StarSystems
 
         public StarSystemForm(StarSystem system)
         {
-            TopMost = true;
             InitializeComponent();
             SetSystem(system);
             DrawControl = new DrawController(pictureBox1);
@@ -72,7 +69,6 @@ namespace GalaxyConquest.StarSystems
                         string sizeText = "";
                         string mineralsText = "";
                         string climateText = "";
-                        float climatefactor = 1;
                         double population;
                         double profit;
 
@@ -113,44 +109,31 @@ namespace GalaxyConquest.StarSystems
                                     {
                                         mineralsText = "Big";
                                     }
-                        if (p.CLIMATE == 0)
+                        //ниже - определение климата
+                        switch(p.CLIMATE)
                         {
-                            climateText = "no atmosphere";
-                            climatefactor = (float)0.3;
-                        }
-                        else
-                            if (p.CLIMATE == 1)
-                            {
+                            case 0:
+                                climateText = "no atmosphere";
+                                break;
+                            case 1:
                                 climateText = "lava";
-                                climatefactor = (float)0.5;
-                            }
-                            else
-                                if(p.CLIMATE == 2)
-                                {
-                                    climateText = "tundra";
-                                    climatefactor = (float)0.8;
-                                }
-                                else
-                                    if(p.CLIMATE == 3)
-                                    {
-                                        climateText = "temperate";
-                                        climatefactor = (float)1;
-                                    }
-                                    else
-                                        if(p.CLIMATE == 5)
-                                        {
-                                            climateText = "gaya";
-                                            climatefactor = (float)2;
-                                        }
-                        
-                        planet_selected = j;
+                                break;
+                            case 2:
+                                climateText = "tundra";
+                                break;
+                            case 3:
+                                climateText = "temperate";
+                                break;
+                            case 4:
+                                climateText = "gaya";
+                                break;
+                            default:
+                                MessageBox.Show("Error occured with climat number("+p.CLIMATE+")");
+                                break;
+                        }
 
-                        population = p.POPULATION + p.POPULATION * 0.1 * climatefactor;
-                        population = Math.Round(population, 3);
-
-                        profit = p.MINERALS * population;
+                        population = Math.Round(p.POPULATION, 3);
                         profit = Math.Round(p.PROFIT, 2);
-
 
                         planet_selected = j;
                         labelPlanetName.Text = p.name;

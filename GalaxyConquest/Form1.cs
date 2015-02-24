@@ -553,6 +553,39 @@ namespace GalaxyConquest
             //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
             for (int i = 0; i < Game.Player.player_planets.Count; i++)
             {
+                float climateFactor = 0;
+                switch (Game.Player.player_planets[i].CLIMATE)
+                {
+                    case 0:
+                        climateFactor = (float)0.3;
+                        break;
+                    case 1:
+                        climateFactor = (float)0.5;
+                        break;
+                    case 2:
+                        climateFactor = (float)0.8;
+                        break;
+                    case 3:
+                        climateFactor = (float)1;
+                        break;
+                    case 4:
+                        climateFactor = (float)2;
+                        break;
+                    default:
+                        MessageBox.Show("Error occured with climat number(" + Game.Player.player_planets[i].CLIMATE + ")");
+                        break;
+                }
+
+                if (Game.Player.player_planets[i].POPULATION < Game.Player.player_planets[i].POPULATIONMAX)
+                {
+                    Game.Player.player_planets[i].POPULATION += Game.Player.player_planets[i].POPULATION * 0.1 * climateFactor;
+                }
+                else
+                {
+                }
+
+                Game.Player.player_planets[i].PROFIT = Game.Player.player_planets[i].MINERALS * Game.Player.player_planets[i].POPULATION;
+
                 Game.Player.credit += Game.Player.player_planets[i].PROFIT;
                 Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
                 Game.Player.skillPoints += Game.Player.player_planets[i].skillPointProduce;

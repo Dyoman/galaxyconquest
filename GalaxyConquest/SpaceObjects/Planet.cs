@@ -56,10 +56,13 @@ namespace GalaxyConquest.StarSystems
        /// Прирост очков изучения, который можно получить, захватив планету
        /// </summary>
         public float skillPointProduce = 10;
-       /// <summary>
-       /// Цвет планеты
-       /// </summary>
-        public double CLIMATE = 0;
+        /// <summary>
+        /// Климат планеты
+        /// </summary>
+        public int CLIMATE = 0;
+        /// <summary>
+        /// Цвет планеты
+        /// </summary>
         public Color planetColor = Color.FromArgb(255, 255, 255);
 
        /// <summary>

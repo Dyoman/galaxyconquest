@@ -123,7 +123,7 @@ namespace GalaxyConquest
             int mineralmin = 0;
             int mineralmax = 35;
             int climatemin = 0;
-            int climatemax = 5;
+            int climatemax = 4;
             int colormin = 0;
             int colormax = 255;
             int dist = 50;

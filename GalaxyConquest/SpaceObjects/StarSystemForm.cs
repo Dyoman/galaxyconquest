@@ -37,7 +37,6 @@ namespace GalaxyConquest.StarSystems
             InitializeComponent();
             SetSystem(system);
             DrawControl = new DrawController(pictureBox1);
-            DrawControl.Rotate(0f, (float)-Math.PI / 4 * 100);  //Доворачиваем "камеру" до вертикального положения
 
             SelfRef = this;
             captureButton.Click += Form1.SelfRef.captureButton_Click;   //Привязываем события клика на кнопку захвата к обработчику такого же события в главной форме

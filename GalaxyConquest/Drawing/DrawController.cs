@@ -108,7 +108,7 @@ namespace GalaxyConquest.Drawing
     }
 
     /// <summary>
-    /// Класс отвечает за рисование
+    /// Представляет класс, отвечающий за рисование
     /// </summary>
     public class DrawController
     {
@@ -117,13 +117,13 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         public Control DrawTarget { get; private set; }
         /// <summary>
-        /// Поворот по оси вертикали
+        /// Поворот по вертикали
         /// </summary>
         double spinX = 0.0;
         /// <summary>
-        /// Поворот по оси горизонтали
+        /// Поворот по горизонтали
         /// </summary>
-        double spinY = Math.PI / 4;
+        double spinY = Math.PI / 2;
         /// <summary>
         /// Масштаб
         /// </summary>
@@ -355,16 +355,16 @@ namespace GalaxyConquest.Drawing
         /// <param name="g">Полотно для рисования</param>
         public void Render(StarSystem system, Graphics g)
         {
-            Vector centerScr = getScreenCoordOf(system.planets[0]);
             for (int i = 0; i < system.planets.Count; i++)
             {
                 StarSystems.Planet p = system.planets[i];
 
                 Vector scr = getScreenCoordOf(p);
-
-                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.distance, (float)centerScr.Y - p.distance, p.distance * 2, p.distance * 2);
-                g.FillEllipse(new SolidBrush(p.planetColor), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
-                g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
+                float distX = p.distance * (float)Math.Cos(spinX);
+                float distY = p.distance * (float)Math.Sin(spinY);
+                g.DrawEllipse(new Pen(Color.White, 0.5f), centerX - distX, centerY - distY, distX * 2, distY * 2);
+                g.FillEllipse(new SolidBrush(p.planetColor), (float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE);
+                g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X + 5f, (float)scr.Y + 5f));
             }
         }
         /// <summary>

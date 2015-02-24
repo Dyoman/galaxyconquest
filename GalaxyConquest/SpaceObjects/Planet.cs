@@ -72,8 +72,8 @@ namespace GalaxyConquest.StarSystems
 
         public override void Move(double time)
         {
-            x = (float)Math.Sin(time * speed) * distance + center.X;
-            y = (float)Math.Cos(time * speed) * distance + center.Y;
+            x = (float)Math.Sin(time * speed) * distance;
+            z = (float)Math.Cos(time * speed) * distance;
         }
 
         public double Inc(double p, double f)

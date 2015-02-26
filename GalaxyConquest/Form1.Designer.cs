@@ -224,7 +224,7 @@
             // 
             this.tech_progressBar.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tech_progressBar.Location = new System.Drawing.Point(544, 27);
-            this.tech_progressBar.Maximum = 5;
+            this.tech_progressBar.Maximum = 4;
             this.tech_progressBar.Name = "tech_progressBar";
             this.tech_progressBar.Size = new System.Drawing.Size(100, 23);
             this.tech_progressBar.Step = 1;

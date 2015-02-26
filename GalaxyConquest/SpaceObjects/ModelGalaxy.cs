@@ -110,6 +110,8 @@ namespace GalaxyConquest
             {
                 generate_random_events();
             }
+
+            PathFinding.PathFinder.FillDistancesFrom(stars);    //заносим дистанции в массив для дальнейшего поиска пути
         }
         /// <summary>
         /// Генерирует планеты для звездной системы
@@ -253,7 +255,6 @@ namespace GalaxyConquest
                 }
 
                 generatePlanets(s);
-
                 stars.Add(s);
             }
 
@@ -353,7 +354,6 @@ namespace GalaxyConquest
 
                     s.type = rand.Next(7);  //type impact on size and color
                     s.name = GenerateRandomStarName();
-                    s.planets_count = s.type + 1;
                     switch (s.type)
                     {
                         //O - Blue, t =30 000 — 60 000 K
@@ -514,8 +514,10 @@ namespace GalaxyConquest
                     return name;
             }
         }
-        
-        //Движение галактики
+        /// <summary>
+        /// Осуществляет движение галактики.
+        /// </summary>
+        /// <param name="time">Время галактики</param>
         public override void Move(double time)
         {
             switch (galaxyType)
@@ -536,7 +538,7 @@ namespace GalaxyConquest
                         double y = Math.Sin(stars[i].R) * stars[i].increment;
 
                         stars[i].x = x * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset)) + y * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset));
-                        stars[i].z = x * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset)) - y * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset));
+                        stars[i].z = x * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset)) + y * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset));
                         stars[i].y = x * Math.Cos(stars[i].angVel * (time + stars[i].timeOffset)) + stars[i].z * Math.Sin(stars[i].angVel * (time + stars[i].timeOffset));
                         stars[i].Move(time);
                     }
@@ -551,6 +553,14 @@ namespace GalaxyConquest
                     }
                     break;
             }
+        }
+        /// <summary>
+        /// Осуществляет все изменения, которые должны происходить с галактикой во время шага.
+        /// </summary>
+        public override void Process()
+        {
+            for (int i = 0; i < stars.Count; i++)
+                stars[i].Process();
         }
     }
 }

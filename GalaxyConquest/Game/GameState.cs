@@ -38,7 +38,7 @@ namespace GalaxyConquest.Game
     }
 
     /// <summary>
-    /// Класс объединяет игрока с галактикой
+    /// Класс определяет игровой процесс. Объединяет игрока с галактикой, в которой он находится.
     /// </summary>
     [Serializable]
     public class GameState
@@ -65,13 +65,11 @@ namespace GalaxyConquest.Game
             StarSystem s = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];
 
             Player.stars.Add(s);
-            for (int i = 0; i < s.planets.Count; i++)
-                Player.player_planets.Add(s.planets[i]);
 
             Player.fleets.Add(new Fleet(Player, rand.Next(2, 5), s));
             s.Discovered = true;
 
-            int count = rand.Next(1, 3);
+            int count = rand.Next(1, seed.gStarsCount / 3);
             for (int i = 0; i < count; i++)
             {
                 StarSystem ns = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];

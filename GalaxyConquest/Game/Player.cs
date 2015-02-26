@@ -19,11 +19,6 @@ namespace GalaxyConquest.Game
         /// </summary>
         public string name;
         public Color player_color;
-        public List<Ship> player_ship;
-        /// <summary>
-        /// Планеты игрока (спорно)
-        /// </summary>
-        public List<Planet> player_planets;
         /// <summary>
         /// Звездные системы игрока
         /// </summary>
@@ -44,6 +39,7 @@ namespace GalaxyConquest.Game
         /// Цель для перемещения !Не выбранная! Не путать. Изменяется при наведении курсора мыши на звезду
         /// </summary>
         public StarSystem warpTarget;
+
         /// <summary>
         /// Капитал игрока
         /// </summary>
@@ -61,6 +57,25 @@ namespace GalaxyConquest.Game
         /// </summary>
         public double skillPoints;
 
+        /// <summary>
+        /// Свойство возвращает true, если игрок изучает какую-то технологию в данный момент.
+        /// </summary>
+        public bool Learning
+        {
+            get
+            {
+                return !learningTech.isNone();
+            }
+        }
+        /// <summary>
+        /// Прогресс изучения.
+        /// </summary>
+        int learningProgress = 0;
+        /// <summary>
+        /// Данные об изучаемой технологии.
+        /// </summary>
+        public TechData learningTech { get; private set; }
+
         public Player()
         {
             name = "New player";
@@ -73,11 +88,10 @@ namespace GalaxyConquest.Game
             buildings.Add(new int[] { 0, 0, 0 });
             buildings.Add(new int[] { 0, 0, 1 });
 
+            learningTech = new TechData();
             stars = new List<StarSystem>();
             fleets = new List<Fleet>();
             player_color = Color.Red;
-            player_planets = new List<Planet>();
-            player_ship = new List<Ship>();
 
             credit = 0;
             minerals = 0;
@@ -96,15 +110,67 @@ namespace GalaxyConquest.Game
             buildings.Add(new int[] { 0, 0, 0 });
             buildings.Add(new int[] { 0, 0, 1 });
 
+            learningTech = new TechData();
             stars = new List<StarSystem>();
             fleets = new List<Fleet>();
             player_color = Color.Red;
-            player_planets = new List<Planet>();
-            player_ship = new List<Ship>();
 
             credit = 0;
             minerals = 0;
             energy = 0;
+        }
+        /// <summary>
+        /// Осуществляет все изменения, которые должны происходить с игроком во время шага.
+        /// Аналог метода SpaceObject.Process().
+        /// </summary>
+        public void Process()
+        {
+            ProcessLearning(); 
+            
+            for (int i = 0; i <stars.Count; i++)
+                for (int j = 0; j < stars[i].planets.Count; j++)
+                {
+                    credit += stars[i].planets[j].PROFIT;
+                    minerals += stars[i].planets[j].MINERALS;
+                    skillPoints += stars[i].planets[j].skillPointProduce;
+                }
+        }
+
+        /// <summary>
+        /// Начинает изучение игроком технологии. Возвращает true, если изучение началось и false в противном случае.
+        /// </summary>
+        /// <param name="tech">Параметры изучаемой технологии.</param>
+        public bool Learn(TechData tech)
+        {
+            if (Learning)
+                return false;
+
+            learningTech = tech;
+            return true;
+        }
+        /// <summary>
+        /// Получает прогресс изучения технологии игроком.
+        /// </summary>
+        /// <returns></returns>
+        public int getLearningProgress()
+        {
+            return learningProgress;
+        }
+        /// <summary>
+        /// Процесс изучения технологии.
+        /// </summary>
+        void ProcessLearning()
+        {
+            if (!Learning) return;
+
+            learningProgress++;
+
+            if (learningProgress >= Tech.learning_tech_time)
+            {
+                technologies.Add(new int[] { learningTech.Tier, learningTech.Line, learningTech.Subtech });
+                learningProgress = 0;
+                learningTech = new TechData();
+            }
         }
     }
 }

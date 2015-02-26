@@ -1,4 +1,5 @@
 ﻿using GalaxyConquest.Game;
+using GalaxyConquest.PathFinding;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -108,7 +109,7 @@ namespace GalaxyConquest.Drawing
     }
 
     /// <summary>
-    /// Класс отвечает за рисование
+    /// Представляет класс, отвечающий за рисование
     /// </summary>
     public class DrawController
     {
@@ -117,13 +118,13 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         public Control DrawTarget { get; private set; }
         /// <summary>
-        /// Поворот по оси вертикали
+        /// Поворот по вертикали
         /// </summary>
         double spinX = 0.0;
         /// <summary>
-        /// Поворот по оси горизонтали
+        /// Поворот по горизонтали
         /// </summary>
-        double spinY = Math.PI / 4;
+        double spinY = Math.PI / 2;
         /// <summary>
         /// Масштаб
         /// </summary>
@@ -176,10 +177,7 @@ namespace GalaxyConquest.Drawing
         {
             if (state.Galaxy == null || state.Player == null) return;
 
-            int r = 6;
             Pen pen = new Pen(Color.Gold);
-            double ugol = 2 * Math.PI / (3);
-            Point[] points = new Point[3];
 
             g.ScaleTransform(scaling, scaling);
 
@@ -195,19 +193,20 @@ namespace GalaxyConquest.Drawing
                 starSize = (s.type + 1) * 1.5f;
 
                 g.FillEllipse(s.br, (float)scr.X - starSize / 2, (float)scr.Y - starSize / 2, starSize, starSize);
-
+                //  Вокруг звезды рисуем вокруг неё круг
                 if (s == state.Player.selectedStar)
                 {
                     g.DrawEllipse(pen, new RectangleF((float)scr.X - starSize / 2 - 5, (float)scr.Y - starSize / 2 - 5, starSize + 10, starSize + 10));
                 }
-
-                if (state.Player.stars.Contains(s))
-                {
-                    g.DrawEllipse(Pens.GreenYellow, new RectangleF((float)scr.X - starSize / 2 - 3, (float)scr.Y - starSize / 2 - 3, starSize + 6, starSize + 6));
-                    g.DrawString(s.name, new Font("Arial", 5.5F, FontStyle.Bold), Brushes.GreenYellow, new PointF((float)scr.X + 6, (float)scr.Y + 6));
-                }
-                else if (s.Discovered)
-                    g.DrawString(s.name, new Font("Arial", 5.0F), Brushes.White, new PointF((float)scr.X + 6, (float)scr.Y + 6));
+                //  Вокруг звезды, принадлежащей игроку рисуем большой желтый круг и имя этой звезды пишем бОльшим шрифтом и другого цвета
+                if (s.Discovered)
+                    if (state.Player.stars.Contains(s))
+                    {
+                        g.DrawEllipse(Pens.GreenYellow, new RectangleF((float)scr.X - starSize / 2 - 3, (float)scr.Y - starSize / 2 - 3, starSize + 6, starSize + 6));
+                        g.DrawString(s.name, new Font("Arial", 5.5F, FontStyle.Bold), Brushes.GreenYellow, new PointF((float)scr.X + 6, (float)scr.Y + 6));
+                    }
+                    else
+                        g.DrawString(s.name, new Font("Arial", 5.0F), Brushes.White, new PointF((float)scr.X + 6, (float)scr.Y + 6));
             }
 
 
@@ -222,11 +221,11 @@ namespace GalaxyConquest.Drawing
                 scr.Y -= 10;
 
                 PointF[] compPointArrayShip = {  //точки для рисование корабля
-                                    new PointF((float)scr.X + r * (float)Math.Cos(-1 * ugol), (float)scr.Y + r * (float)Math.Sin(-1 * ugol)),
-                                    new PointF((float)scr.X + r * (float)Math.Cos(-2 * ugol), (float)scr.Y + r * (float)Math.Sin(-2 * ugol)),
-                                    new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol), (float)scr.Y + r * (float)Math.Sin(-3 * ugol))};
+                                    new PointF((float)scr.X - 3, (float)scr.Y - 5),
+                                    new PointF((float)scr.X - 3, (float)scr.Y + 5),
+                                    new PointF((float)scr.X + 6, (float)scr.Y)};
                 g.FillPolygon(FleetBrushes.NeutralFleet, compPointArrayShip);
-                g.DrawString(fleet.name, new Font("Arial", 5.0F), FleetBrushes.NeutralFleet, new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scr.Y + r * (float)Math.Sin(-3 * ugol) - 12));
+                g.DrawString(fleet.name, new Font("Arial", 5.0F), FleetBrushes.NeutralFleet, new PointF((float)scr.X, (float)scr.Y - 15));
             }
 
             //----------------------Player Fleets----------------------
@@ -241,50 +240,86 @@ namespace GalaxyConquest.Drawing
                 scr.Y -= 10;
 
                 PointF[] compPointArrayShip = {  //точки для рисование корабля
-                                    new PointF((float)scr.X + r * (float)Math.Cos(-1 * ugol), (float)scr.Y + r * (float)Math.Sin(-1 * ugol)),
-                                    new PointF((float)scr.X + r * (float)Math.Cos(-2 * ugol), (float)scr.Y + r * (float)Math.Sin(-2 * ugol)),
-                                    new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol), (float)scr.Y + r * (float)Math.Sin(-3 * ugol))};
+                                    new PointF((float)scr.X - 3, (float)scr.Y - 5),
+                                    new PointF((float)scr.X - 3, (float)scr.Y + 5),
+                                    new PointF((float)scr.X + 6, (float)scr.Y)};
 
                 if (k == state.Player.selectedFleet)
                 {
                     g.FillPolygon(FleetBrushes.ActiveFleet, compPointArrayShip);
-                    g.DrawString(fleet.name, new Font("Arial", 9.0F, FontStyle.Bold), FleetBrushes.ActiveFleet, new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scr.Y + r * (float)Math.Sin(-3 * ugol) - 12));
+                    g.DrawString(fleet.name, new Font("Arial", 9.0F, FontStyle.Bold), FleetBrushes.ActiveFleet, new PointF((float)scr.X, (float)scr.Y - 15));
 
                 }
                 else
                 {
                     g.FillPolygon(FleetBrushes.PassiveFleet, compPointArrayShip);
-                    g.DrawString(fleet.name, new Font("Arial", 8.0F), FleetBrushes.PassiveFleet, new PointF((float)scr.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scr.Y + r * (float)Math.Sin(-3 * ugol) - 12));
+                    g.DrawString(fleet.name, new Font("Arial", 8.0F), FleetBrushes.PassiveFleet, new PointF((float)scr.X, (float)scr.Y - 15));
                 }
 
-                if (state.Player.warpTarget != null && k == state.Player.selectedFleet && !state.Player.fleets[state.Player.selectedFleet].onWay)
+                /// Рисуется путь от текущего флота к звезде, на которую наведен курсор мыши
+                if (state.Player.warpTarget != null && k == state.Player.selectedFleet && (!state.Player.fleets[state.Player.selectedFleet].onWay))
                 {
-                    double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
+                    StarPath path = new StarPath();
+                    path.CalculateWay(state.Player.fleets[k].s1, state.Player.warpTarget);
+                    //double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
+                    double starDistance = path.Distance;
                     string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance * MovementsController.FIXED_TIME_DELTA) + 1).ToString() + ">";
 
-                    Vector scrFrom = getScreenCoordOf(flSys);
-                    Vector scrTo = getScreenCoordOf(state.Player.warpTarget);
-                    
+                    Vector scrFrom = new Vector(), scrTo = new Vector();
+                    Brush brush = Brushes.Lime;
+                    /*
+                    scrFrom = getScreenCoordOf(flSys);
+                    scrTo = getScreenCoordOf(state.Player.warpTarget);
+                    */
                     if (starDistance < Fleet.MaxDistance)//пока тестим
-                    {
                         pen.Color = Color.Lime;
-                        g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Lime,
-                            new PointF((float)scrTo.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scrTo.Y + r * (float)Math.Sin(-3 * ugol) + 12));
-                    }
                     else
                     {
                         pen.Color = Color.Red;
-                        g.DrawString(dis, new Font("Arial", 6.0F), Brushes.Red,
-                            new PointF((float)scrTo.X + r * (float)Math.Cos(-3 * ugol) - 3, (float)scrTo.Y + r * (float)Math.Sin(-3 * ugol) + 12));
+                        brush = Brushes.Red;
                     }
+
                     g.DrawLine(pen,
                         new PointF((float)scrFrom.X, (float)scrFrom.Y),
                         new PointF((float)scrTo.X, (float)scrTo.Y));
-                
+
+                    pen.Width = 1;
+
+                    for (int i = 1; i < path.Count; i++)
+                    {
+                        scrFrom = getScreenCoordOf(path[i - 1]);
+                        scrTo = getScreenCoordOf(path[i]);
+                        g.DrawLine(pen,
+                            new PointF((float)scrFrom.X, (float)scrFrom.Y),
+                            new PointF((float)scrTo.X, (float)scrTo.Y));
+                    }
+                    g.DrawString(dis, new Font("Arial", 6.0F), brush, new PointF((float)scrTo.X + 10, (float)scrTo.Y - 10));
+                }
+
+                /// Если для текущего флота рассчитан путь, рисуем его, отбрасывая те рёбра, которые флот уже прошел
+                if (!fleet.path.Empty && k == state.Player.selectedFleet)    //new 
+                {
+                    pen.Color = Color.White;
+                    pen.Width = 2;
+                    pen.DashStyle = DashStyle.Dash;
+
+                    for (int i = Math.Max(fleet.path.Current - 1, 0); i < fleet.path.Count - 1; i++)
+                    {
+                        Vector scrFrom = getScreenCoordOf(fleet.path[i]);
+                        scrFrom.X -= 10;
+                        scrFrom.Y -= 10;
+                        Vector scrTo = getScreenCoordOf(fleet.path[i + 1]);
+                        scrTo.X -= 10;
+                        scrTo.Y -= 10;
+
+                        g.DrawLine(pen,
+                                new PointF((float)scrFrom.X + 10, (float)scrFrom.Y + 10),
+                                new PointF((float)scrTo.X + 10, (float)scrTo.Y + 10));
+                    }
                 }
                 pen.Width = 1;
-
-                if (targSys != null)   //old
+                //старый код не используем
+                if (targSys != null && false)   //old
                 {
                     Vector scrFrom = getScreenCoordOf(flSys);
                     scrFrom.X -= 10;
@@ -322,16 +357,18 @@ namespace GalaxyConquest.Drawing
         /// <param name="g">Полотно для рисования</param>
         public void Render(StarSystem system, Graphics g)
         {
-            Vector centerScr = getScreenCoordOf(system.planets[0]);
+            g.ScaleTransform(scaling, scaling);
+
             for (int i = 0; i < system.planets.Count; i++)
             {
                 StarSystems.Planet p = system.planets[i];
 
                 Vector scr = getScreenCoordOf(p);
-
-                g.DrawEllipse(new Pen(Color.White), (float)centerScr.X - p.distance, (float)centerScr.Y - p.distance, p.distance * 2, p.distance * 2);
-                g.FillEllipse(new SolidBrush(p.planetColor), new RectangleF((float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE));
-                g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X, (float)scr.Y));
+                float distX = p.distance;
+                float distY = p.distance * (float)Math.Sin(spinY);
+                g.DrawEllipse(Pens.White, centerX - distX, centerY - distY, distX * 2, distY * 2);
+                g.FillEllipse(new SolidBrush(p.planetColor), (float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE);
+                g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X + 5f, (float)scr.Y + 5f));
             }
         }
         /// <summary>
@@ -431,6 +468,7 @@ namespace GalaxyConquest.Drawing
         {
             return Math.Sqrt(Math.Pow((to.x - from.x), 2) + Math.Pow((to.y - from.y), 2) + Math.Pow((to.z - from.z), 2));
         }
+
         /// <summary>
         /// Обновляет координаты центра
         /// </summary>
@@ -439,7 +477,6 @@ namespace GalaxyConquest.Drawing
             centerX = DrawTarget.Width / 2 / scaling + horizontal;
             centerY = DrawTarget.Height / 2 / scaling + vertical;
         }
-
         /// <summary>
         /// Обновляем координаты центра, если размер объекта, на котором происходит рисование изменился
         /// </summary>

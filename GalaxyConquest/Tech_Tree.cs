@@ -251,10 +251,11 @@ namespace GalaxyConquest
             {
                 if (tech_logic2 == true)
                 {
-                    Form1.SelfRef.tech_label.Visible = true;
-                    Form1.SelfRef.tech_progressBar.Visible = true;
-                    Form1.SelfRef.tech_label.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
-                    Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
+                    //Form1.SelfRef.tech_label.Visible = true;
+                    //Form1.SelfRef.tech_progressBar.Visible = true;
+                    //Form1.SelfRef.tech_label.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                    //Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
+                    Form1.Game.Player.Learn(new TechData(tierClicked, techLineClicked, subtechClicked));
 
                     Redraw();
                 }

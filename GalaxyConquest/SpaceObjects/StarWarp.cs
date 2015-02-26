@@ -2,6 +2,9 @@
 
 namespace GalaxyConquest
 {
+    /// <summary>
+    /// Представляет гиперпереход.
+    /// </summary>
     [Serializable]
     public class StarWarp : SpaceObject
     {

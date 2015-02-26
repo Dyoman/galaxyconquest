@@ -20,6 +20,38 @@ namespace GalaxyConquest
         public string subtech { get; set; }
         public string description { get; set; }
     }
+    /// <summary>
+    /// Структура описывает параметры технологий.
+    /// </summary>
+    public struct TechData
+    {
+        /// <summary>
+        /// Уровень технологии.
+        /// </summary>
+        public int Tier;
+        /// <summary>
+        /// Ветка технологии.
+        /// </summary>
+        public int Line;
+        /// <summary>
+        /// Номер технологии.
+        /// </summary>
+        public int Subtech;
+
+        public TechData(int tier, int line, int subtech)
+        {
+            Tier = tier;
+            Line = line;
+            Subtech = subtech;
+        }
+        /// <summary>
+        /// Возвращает true, если структура не содержит данных о технологии.
+        /// </summary>
+        public bool isNone()
+        {
+            return (Tier == 0) && (Line == 0) && (Subtech == 0);
+        }
+    }
 
     public static class Tech
     {

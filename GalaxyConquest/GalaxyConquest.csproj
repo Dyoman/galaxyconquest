@@ -68,6 +68,7 @@
     <Compile Include="Buildings.cs" />
     <Compile Include="Drawing\DrawController.cs" />
     <Compile Include="Fleet.cs" />
+    <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,12 +77,7 @@
     </Compile>
     <Compile Include="Game\GameState.cs" />
     <Compile Include="MovementsController.cs" />
-    <Compile Include="Shop.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Shop.Designer.cs">
-      <DependentUpon>Shop.cs</DependentUpon>
-    </Compile>
+    <Compile Include="PathFinding\StarPath.cs" />
     <Compile Include="Form_About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,9 +156,6 @@
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Shop.resx">
-      <DependentUpon>Shop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_About.resx">
       <DependentUpon>Form_About.cs</DependentUpon>

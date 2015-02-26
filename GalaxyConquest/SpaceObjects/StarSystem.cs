@@ -7,7 +7,7 @@ using GalaxyConquest.StarSystems;
 namespace GalaxyConquest
 {
     /// <summary>
-    /// Представляет звездную системы
+    /// Представляет звездную систему
     /// </summary>
     [Serializable]
     public class StarSystem : SpaceObject
@@ -27,10 +27,6 @@ namespace GalaxyConquest
         /// </summary>
         public SolidBrush br;
         /// <summary>
-        /// Количество планет (спорно)
-        /// </summary>
-        public int planets_count;
-        /// <summary>
         /// Флаг, показывающий открыта ли система
         /// </summary>
         public bool Discovered = false;
@@ -43,6 +39,14 @@ namespace GalaxyConquest
         {
             for (int i = 0; i < planets.Count; i++)
                 planets[i].Move(time);
+        }
+        /// <summary>
+        /// Осуществляет все изменения, которые должны происходить со звездной системой во время шага.
+        /// </summary>
+        public override void Process()
+        {
+            for (int i = 0; i < planets.Count; i++)
+                planets[i].Process();
         }
     }
 }

@@ -58,7 +58,7 @@ namespace GalaxyConquest
         IWavePlayer waveOutDevice;
         AudioFileReader audioFileReader;
 
-        public static Form1 SelfRef         //need for get var from other classes
+        public static Form1 SelfRef
         {
             get;
             set;
@@ -143,7 +143,7 @@ namespace GalaxyConquest
 
                 Game.New(seed);
 
-                UpdateLabels();
+                UpdateControls();
 
                 panel1.Enabled = true;
                 mainMenuSave.Enabled = true;
@@ -191,6 +191,8 @@ namespace GalaxyConquest
         private void MainMenuTechTree_Click(object sender, EventArgs e)
         {
             tt.ShowDialog();
+
+            UpdateControls();
         }
 
         //------------------------------------Events-----------------------------------
@@ -295,7 +297,7 @@ namespace GalaxyConquest
                             }
                         }   //Если мы кликаем на систему, которая выбрана для флота как конечная цель, тогда снимаем цель   -- без этого мы не сможем отменить перемещение!!!!
                         //else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
-                        else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && !Game.Player.fleets[Game.Player.selectedFleet].onWay)
+                        else if (Game.Player.fleets[Game.Player.selectedFleet].path.Last == s && !Game.Player.fleets[Game.Player.selectedFleet].onWay)
                         {
                             Game.Player.fleets[Game.Player.selectedFleet].setTarget(null);
                             Game.Player.selectedStar = null;
@@ -328,60 +330,42 @@ namespace GalaxyConquest
                     }
                 }
 
+                Fleet selectedFleet = null;
+
                 for (int i = 0; i < Game.Player.fleets.Count; i++)
-                {
                     if (DrawControl.CursorIsOnObject(e, Game.Player.fleets[i]))
                     {
-                        int scout = 0, aScount = 0, assault = 0, aAssault = 0;
-                        double health = 0;
-                        for (int j = 0; j < Game.Player.fleets[i].ships.Count; j++)
-                        {
-                            health += Math.Max(Game.Player.fleets[i].ships[j].currentHealth, 0);
-                            if (Game.Player.fleets[i].ships[j] is ShipScout)
-                            {
-                                scout++;
-                                if (Game.Player.fleets[i].ships[j].currentHealth > 0)
-                                    aScount++;
-                            }
-                            else if (Game.Player.fleets[i].ships[j] is ShipAssaulter)
-                            {
-                                assault++;
-                                if (Game.Player.fleets[i].ships[j].currentHealth > 0)
-                                    aAssault++;
-                            }
-                        }
-
-                        MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", "Флот " + (i + 1));
-                        return;
+                        selectedFleet = Game.Player.fleets[i];
+                        break;
                     }
-                }
-
                 for (int i = 0; i < Game.Galaxy.neutrals.Count; i++)
-                {
                     if (DrawControl.CursorIsOnObject(e, Game.Galaxy.neutrals[i]) && Game.Galaxy.neutrals[i].s1.Discovered)
                     {
-                        int scout = 0, aScount = 0, assault = 0, aAssault = 0;
-                        double health = 0;
-                        for (int j = 0; j < Game.Galaxy.neutrals[i].ships.Count; j++)
-                        {
-                            health += Math.Max(Game.Galaxy.neutrals[i].ships[j].currentHealth, 0);
-                            if (Game.Galaxy.neutrals[i].ships[j] is ShipScout)
-                            {
-                                scout++;
-                                if (Game.Galaxy.neutrals[i].ships[j].currentHealth > 0)
-                                    aScount++;
-                            }
-                            else if (Game.Galaxy.neutrals[i].ships[j] is ShipAssaulter)
-                            {
-                                assault++;
-                                if (Game.Galaxy.neutrals[i].ships[j].currentHealth > 0)
-                                    aAssault++;
-                            }
-                        }
-
-                        MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", "Нейтральный флот ( " + Game.Galaxy.neutrals[i].s1.name + " )");
-                        return;
+                        selectedFleet = Game.Galaxy.neutrals[i];
+                        break;
                     }
+
+                if (selectedFleet != null)
+                {
+                    int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                    double health = 0;
+                    for (int j = 0; j < selectedFleet.ships.Count; j++)
+                    {
+                        health += Math.Max(selectedFleet.ships[j].currentHealth, 0);
+                        if (selectedFleet.ships[j] is ShipScout)
+                        {
+                            scout++;
+                            if (selectedFleet.ships[j].currentHealth > 0)
+                                aScount++;
+                        }
+                        else if (selectedFleet.ships[j] is ShipAssaulter)
+                        {
+                            assault++;
+                            if (selectedFleet.ships[j].currentHealth > 0)
+                                aAssault++;
+                        }
+                    }
+                    MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", selectedFleet.name + " ( " + selectedFleet.s1.name + " )");
                 }
             }
         }
@@ -405,7 +389,7 @@ namespace GalaxyConquest
             shop_form = new StarShop();
             shop_form.ShowDialog();
 
-            UpdateLabels();
+            UpdateControls();
         }
 
         //---------------------Fast access panel--------------------------
@@ -468,7 +452,8 @@ namespace GalaxyConquest
 
                 if (star != Game.Player.fleets[Game.Player.selectedFleet].s1)
                 {
-                    Game.Player.warpTarget = star; statusStrip1.Items[1].Text = "x: " + star.x + " y: " + star.y;
+                    Game.Player.warpTarget = star; 
+                    statusStrip1.Items[1].Text = "x: " + star.x + " y: " + star.y;
                 }
                 else
                 {
@@ -502,7 +487,7 @@ namespace GalaxyConquest
             if (listView.Tag.Equals(systemsButton.Tag))
                 if (listView.SelectedIndices.Count > 0)
                 {
-                    if (Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
+                    if (Game.Player.fleets[Game.Player.selectedFleet].path.Empty)
                     {
                         StarSystem s = Game.Player.stars[listView.SelectedIndices[0]];
                         if (DrawController.Distance(Game.Player.fleets[Game.Player.selectedFleet], s) < Fleet.MaxDistance)
@@ -512,7 +497,7 @@ namespace GalaxyConquest
                             Game.Player.selectedStar = s;
                         }
                     }
-                    else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == Game.Player.stars[listView.SelectedIndices[0]])
+                    else if (Game.Player.fleets[Game.Player.selectedFleet].path.Last == Game.Player.stars[listView.SelectedIndices[0]])
                     {
                         if (Game.Player.fleets[Game.Player.selectedFleet].onWay)
                             return;
@@ -534,6 +519,7 @@ namespace GalaxyConquest
             captureButton.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
 
             onStep = true;      //Устанавливаем флаг шага
+            StepWorker.RunWorkerAsync();
             UpdateCaptureControls();//Во время шага кнопки захвата не должны быть активны, по-этому обновляем их
         }
         // Поток, в которм выполняются все рассчеты во время шага
@@ -543,107 +529,12 @@ namespace GalaxyConquest
             Random r = new Random(DateTime.Now.Millisecond);
 
             //---------------изменение популяции в системах---------
-            for (int j = 0; j < Game.Galaxy.stars.Count; j++)
-            {
-                for (int i = 0; i < Game.Galaxy.stars[j].planets_count; i++)
-                {
-                    Game.Galaxy.stars[j].planets[i].POPULATION *= 1.1;
-                }
-            }
+            for (int i = 0; i < Game.Galaxy.stars.Count; i++)
+                Game.Galaxy.stars[i].Process();
+            
 
             //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
-            for (int i = 0; i < Game.Player.player_planets.Count; i++)
-            {
-                  
-                float climateFactor = 0 ;
-                switch (Game.Player.player_planets[i].CLIMATE)
-                {
-                    case 0:
-                        climateFactor = (float)0.3;
-                        break;
-                    case 1:
-                        climateFactor = (float)0.5;
-                        break;
-                    case 2:
-                        climateFactor = (float)0.8;
-                        break;
-                    case 3:
-                        climateFactor = (float)1;
-                        break;
-                    case 4:
-                        climateFactor = (float)2;
-                        break;
-                    default:
-                        MessageBox.Show("Error occured with climat number(" + Game.Player.player_planets[i].CLIMATE + ")");
-                        break;
-                }
-
-                if (Game.Player.player_planets[i].POPULATION < Game.Player.player_planets[i].POPULATIONMAX)
-                {
-                    Game.Player.player_planets[i].POPULATION += Game.Player.player_planets[i].POPULATION * 0.1 * climateFactor;
-                    Game.Player.player_planets[i].POPULATION = Math.Round(Game.Player.player_planets[i].POPULATION, 3);
-                }
-                else
-                {
-                }
-                float popfactor = 0;
-              
-                {
-                      if (Game.Player.player_planets[i].SIZE < 15)
-                        {
-                            
-                            popfactor = 5;
-                        }
-                        else
-                          if ((Game.Player.player_planets[i].SIZE >= 15) && (Game.Player.player_planets[i].SIZE < 23))
-                            {
-                                
-                                popfactor = 10;
-                            }
-                            else
-                              if ((Game.Player.player_planets[i].SIZE >= 23) && (Game.Player.player_planets[i].SIZE < 30))
-                                {
-                                    
-                                    popfactor = 15;
-                                }
-                                else
-                                  if (Game.Player.player_planets[i].SIZE >= 30)
-                                    {
-                                        
-                                        popfactor = 20;
-                                    }
-                    
-                }
-
-                float mineraFactor = 0;
-                switch (Game.Player.player_planets[i].CLIMATE)
-                {
-                    case 0:
-                        mineraFactor = (float)0.05;
-                        break;
-                    case 1:
-                        mineraFactor = (float)0.2;
-                        break;
-                    case 2:
-                        mineraFactor = (float)1;
-                        break;
-                    case 3:
-                        mineraFactor = (float)1.5;
-                        break;
-                    case 4:
-                        mineraFactor = (float)4;
-                        break;
-                   
-                }
-
-                Game.Player.player_planets[i].PROFIT = mineraFactor * Game.Player.player_planets[i].POPULATION;
-                Game.Player.player_planets[i].PROFIT = Math.Round(Game.Player.player_planets[i].PROFIT, 2);
-                Game.Player.player_planets[i].POPULATIONMAX = popfactor * climateFactor;
-
-                Game.Player.credit += Game.Player.player_planets[i].PROFIT;
-                Game.Player.minerals += Game.Player.player_planets[i].MINERALS;
-                Game.Player.skillPoints += Game.Player.player_planets[i].skillPointProduce;
-            }
+            Game.Player.Process();
 
             //---------------процесс захвата систем---------
             for (int i = 0; i < Game.Player.fleets.Count; i++)
@@ -651,51 +542,28 @@ namespace GalaxyConquest
                 Game.Player.fleets[i].CaptureProcess();
             }
 
-            if (tech_progressBar.Value < Tech.learning_tech_time &&
-                tt.tierClicked != 1000 &&
-                tt.techLineClicked != 1000 &&
-                tt.subtechClicked != 1000)
-            {
-                if (InvokeRequired)
-                    Invoke(new Action(() => tech_progressBar.Value += 1));
-            }
-
-            if (tech_progressBar.Value == Tech.learning_tech_time)
-            {
-                Player.technologies.Add(new int[] { tt.tierClicked, tt.techLineClicked, tt.subtechClicked });
-                if (InvokeRequired)
-                {
-                    Invoke(new Action(() => tech_progressBar.Value = 0));
-                    Invoke(new Action(() => tech_progressBar.Visible = false));
-                    Invoke(new Action(() => tech_label.Visible = false));
-                }
-                Tech.CheckTechInnovaions();//Проверка, нужно ли поменять броню, добавить здание, в зависимости от выученной технологии
-                tt.tierClicked = 1000;
-                tt.techLineClicked = 1000;
-                tt.subtechClicked = 1000;
-            }
+            while (onStep) ;    //Пока галактика находится в движении, ждем
         }
         //Метод вызывается BacgroundWirker-ом после завершения действий в потоке
         private void StepWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             //проверяем нахождение нейтральных флотов и флотов игрока в одной системе
-            for (int k = 0; k < Game.Galaxy.neutrals.Count; k++)
-            {
-                for (int l = 0; l < Game.Player.fleets.Count; l++)
+            for (int l = 0; l < Game.Player.fleets.Count; l++)
+                for (int k = 0; k < Game.Galaxy.neutrals.Count; k++)
+                {
                     if (Game.Galaxy.neutrals[k].s1 == Game.Player.fleets[l].s1)
                     {
-                        if (Game.Player.fleets[l].starDistanse == 0)
-                            if (MessageBox.Show("Ваш " + (l + 1) + " флот обнаружил нейтральный флот в системе " + Game.Player.fleets[l].s1.name + "!\nАтаковать его?", "", MessageBoxButtons.YesNo)
+                        if (!Game.Player.fleets[l].onWay)
+                            if (MessageBox.Show("Ваш флот обнаружил нейтральный флот в системе " + Game.Player.fleets[l].s1.name + "!\nАтаковать его?", "", MessageBoxButtons.YesNo)
                                 == System.Windows.Forms.DialogResult.Yes)
                             {
-                                Fleet fl = Game.Galaxy.neutrals[k];
-
-                                CombatForm cf = new CombatForm(Game.Player.fleets[l], fl);
+                                CombatForm cf = new CombatForm(Game.Player.fleets[l], Game.Galaxy.neutrals[k]);
                                 cf.ShowDialog();
                             }
                     }
             }
             //проверяем флоты и удаляем из списка уничтоженные флоты
+            //Проверяем с конца, потому что, если удалить флот в начале списка, в конце вылетит исключение out of range
             for (int i = Game.Galaxy.neutrals.Count - 1; i >= 0; i--)
                 if (!Game.Galaxy.neutrals[i].Allive)
                     Game.Galaxy.neutrals.RemoveAt(i);
@@ -710,7 +578,7 @@ namespace GalaxyConquest
                 }
 
             //Обновляем лейблы
-            UpdateLabels();
+            UpdateControls();
             //включам панель с кнопками
             panel1.Enabled = true;
             step_button.Focus();//задаём фокус для кнопки шага
@@ -728,7 +596,6 @@ namespace GalaxyConquest
                 {
                     syncTime = 1;
                     onStep = false; //Снимаем флаг шага
-                    StepWorker.RunWorkerAsync();
                 }
 
                 MovementsController.Process(Game.Galaxy, Game.Galaxy.Time);
@@ -742,8 +609,8 @@ namespace GalaxyConquest
         }
         
         //-------------------------------other----------------------------------
-        //Обновляет все текстовые поля
-        private void UpdateLabels()
+        //Обновляет все контролы
+        private void UpdateControls()
         {
             galaxyNameLablel.Text = Game.Galaxy.name;
             dateLabel.Text = Math.Round(Game.Galaxy.Time).ToString() + " г.н.э.";
@@ -751,6 +618,12 @@ namespace GalaxyConquest
             MineralStatus.Text = Math.Round(Game.Player.minerals, 3) + " Т";
             EnergyStatus.Text = Math.Round(Game.Player.energy, 2).ToString() + " Wt";
             SkillPointsStatus.Text = Math.Round(Game.Player.skillPoints, 2).ToString() + "SP";
+
+            tech_label.Visible = Game.Player.Learning;
+            tech_progressBar.Visible = Game.Player.Learning;
+            tech_progressBar.Value = Game.Player.getLearningProgress();
+            if (Game.Player.Learning)
+                tech_label.Text = Tech.teches.tiers[Game.Player.learningTech.Tier][Game.Player.learningTech.Line][Game.Player.learningTech.Subtech].subtech;
         }
         //Обновляет кнопки захвата системы
         void UpdateCaptureControls()
@@ -796,10 +669,14 @@ namespace GalaxyConquest
                     return;
             }
         }
-        //Если форма закрывает в момент, когда шаг в процессе выполнения, ждем его завершения и тогда закрываемся
+        //Если форма закрывается в момент, когда шаг в процессе выполнения, ждем его завершения и тогда закрываемся
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            while (StepWorker.IsBusy || onStep) ;
+            if (StepWorker.IsBusy || onStep)
+            {
+                e.Cancel = true;
+                MessageBox.Show("Дождитесь завершения шага");
+            }
         }
     }
 }

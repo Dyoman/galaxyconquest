@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GalaxyConquest.Tactics;
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
+using GalaxyConquest.PathFinding;
 
 namespace GalaxyConquest
 {
@@ -48,6 +49,10 @@ namespace GalaxyConquest
         /// Прогресс захвата (0-5)
         /// </summary>
         int captureProgress;
+        /// <summary>
+        /// Путь флота
+        /// </summary>
+        public StarPath path { get; private set; }
 
         /// <summary>
         /// Максимальная дистанция, на которую флот способен лететь
@@ -60,6 +65,7 @@ namespace GalaxyConquest
             onWay = false;
             Capturing = false;
             Owner = null;
+            path = new StarPath();
         }
 
         public Fleet(Player player, StarSystem s1)
@@ -68,6 +74,7 @@ namespace GalaxyConquest
             onWay = false;
             Capturing = false;
             Owner = player;
+            path = new StarPath();
 
             if (player == null)
                 name = "Нейтральный флот";
@@ -86,6 +93,7 @@ namespace GalaxyConquest
             onWay = false;
             Capturing = false;
             Owner = player;
+            path = new StarPath();
 
             int playerID = 1;
             if (player == null)
@@ -162,7 +170,10 @@ namespace GalaxyConquest
             y = s1.y;
             z = s1.z;
         }
-
+        /// <summary>
+        /// Осуществляет движение флота.
+        /// </summary>
+        /// <param name="time">Время галактики</param>
         public override void Move(double time)
         {
             if (s2 == null)//обновляем координаты флота, если во время шага он остается в своей системе
@@ -183,7 +194,6 @@ namespace GalaxyConquest
                 y += dy;
                 z += dz;
 
-                //starDistanse = Math.Sqrt(Math.Pow(s2.x - x, 2) + Math.Pow(s2.y - y, 2) + Math.Pow(s2.z - z, 2));
                 starDistanse = DrawController.Distance(this, s2);
             }
             else//Флот долетел до звезды
@@ -193,6 +203,18 @@ namespace GalaxyConquest
                 starDistanse = 0;
                 onWay = false;
                 s1.Discovered = true;
+                s2 = path.Next();
+
+                if (s2 == null)
+                {
+                    path.Clear();
+                    starDistanse = 0;
+                    onWay = false;
+
+                    s1.Discovered = true;
+                }
+                else
+                    starDistanse = DrawController.Distance(s1, s2);
 
                 x = s1.x;
                 y = s1.y;
@@ -200,13 +222,14 @@ namespace GalaxyConquest
             }
         }
         /// <summary>
-        /// Устанавливает цель для флота
+        /// Устанавливает цель для флота.
         /// </summary>
         /// <param name="s">Звездная система</param>
         public void setTarget(StarSystem s)
         {
             if (s == null)
             {
+                path.Clear();
                 s2 = null;
                 starDistanse = 0;
             }
@@ -214,10 +237,13 @@ namespace GalaxyConquest
             {
                 s2 = s;
                 starDistanse = Math.Sqrt(Math.Pow(s.x - x, 2) + Math.Pow(s.y - y, 2) + Math.Pow(s.z - z, 2));
+                path.CalculateWay(s1, s);
+                s2 = path.First;
+                starDistanse = DrawController.Distance(path.First, this);
             }
         }
         /// <summary>
-        /// Процесс захвата системы. Если флот ничего не захватывает, метод ничего не делает
+        /// Процесс захвата системы. Если флот ничего не захватывает, метод ничего не делает.
         /// </summary>
         public void CaptureProcess()
         {
@@ -229,25 +255,23 @@ namespace GalaxyConquest
             if (captureProgress >= 5)
             {
                 Owner.stars.Add(CaptureTarget);
-                for (int i = 0; i < CaptureTarget.planets.Count; i++)
-                    Owner.player_planets.Add(CaptureTarget.planets[i]);
 
                 CaptureTarget = null;
                 Capturing = false;
             }
         }
         /// <summary>
-        /// Возвращает прогресс захвата звездной системы (0 - 5)
+        /// Возвращает прогресс захвата звездной системы (0 - 5).
         /// </summary>
         public int getCaptureProgress()
         {
             return (int)captureProgress;
         }
         /// <summary>
-        /// Пытается начать захват звездной системы флотом
+        /// Пытается начать захват звездной системы флотом.
+        /// Возвращает true, если захват начался и false, если захват уже идёт, либо выбрана не та система, в которой находится флот.
         /// </summary>
         /// <param name="s">Система, которую нужно захватить</param>
-        /// <returns>true, если захват начался и false, если захват уже идёт, либо выбрана не та система, в которой находится флот</returns>
         public bool StartCapturing(StarSystem s)
         {
             if (Capturing || s != s1)
@@ -259,7 +283,7 @@ namespace GalaxyConquest
             return true;
         }
         /// <summary>
-        /// Останавливает захват системы
+        /// Останавливает захват системы.
         /// </summary>
         public void StopCapturing()
         {
@@ -268,7 +292,7 @@ namespace GalaxyConquest
             captureProgress = 0;
         }
         /// <summary>
-        /// Получает информацию о жизни флота. Если хотябы один корабль имеет ненулевой запас прочности, флот считается живым
+        /// Получает информацию о жизни флота. Если хотябы один корабль имеет ненулевой запас прочности, флот считается живым.
         /// </summary>
         public bool Allive
         {

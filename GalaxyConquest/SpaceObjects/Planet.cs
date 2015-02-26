@@ -35,14 +35,22 @@ namespace GalaxyConquest.StarSystems
        /// <summary>
        /// Минимальное количество населения
        /// </summary>
+        public float POPULATIONFACTOR = 1;
+        /// <summary>
+        /// 
+        /// </summary>
         public double POPULATION = 0;
        /// <summary>
        /// Количество минералов на планете
        /// </summary>
-        public float MINERALS = 10;
+        public int MINERALS = 1;
        /// <summary>
        /// Размер планеты
        /// </summary>
+        public float MINERALFACTOR = 1;
+        /// <summary>
+        /// Размер планеты
+        /// </summary>
         public float SIZE = 10;
        /// <summary>
        /// Имя обладателя планеты

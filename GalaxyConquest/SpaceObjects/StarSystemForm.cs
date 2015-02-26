@@ -71,26 +71,38 @@ namespace GalaxyConquest.StarSystems
                         string climateText = "";
                         double population;
                         double profit;
+                        float popfactor = 1;
+                        double climfactor = 1;
 
                         //ниже- определение размера планеты
                         if (p.SIZE < 15)
                         {
                             sizeText = "Small";
+                            
                         }
                         else
-                            if ((p.SIZE >= 15) && (p.SIZE < 25))
+                            if ((p.SIZE >= 15) && (p.SIZE < 23))
                             {
                                 sizeText = "Medium";
+                               
                             }
                             else
-                                if (p.SIZE >= 25)
+                                if ((p.SIZE >= 23)&& (p.SIZE < 30))
                                 {
                                     sizeText = "Big";
+                                    
                                 }
+                                else
+                                    if (p.SIZE >= 30)
+                                    {
+                                        sizeText = "Extra";
+                                        
+                                    }
+
 
 
                         //ниже - определение ресурсов
-                        if (p.MINERALS == 0)
+                     /*   if (p.MINERALS == 0)
                         {
                             mineralsText = "No Minerals";
                         }
@@ -107,8 +119,31 @@ namespace GalaxyConquest.StarSystems
                                 else
                                     if (p.MINERALS > 20)
                                     {
-                                        mineralsText = "Big";
+                                        mineralsText = "Large";
                                     }
+                        */
+
+                        switch(p.MINERALS)
+                        {
+                            case 0:
+                                mineralsText = "Very Small";
+                                break;
+                            case 1:
+                                mineralsText = "Small";
+                                break;
+                            case 2:
+                                mineralsText = "Medium";
+                                break;
+                            case 3:
+                                mineralsText = "Large";
+                                break;
+                            case 4:
+                                mineralsText = "Extra";
+                                break;
+                            
+                        }
+
+
                         //ниже - определение климата
                         switch(p.CLIMATE)
                         {
@@ -139,7 +174,7 @@ namespace GalaxyConquest.StarSystems
                         labelPlanetName.Text = p.name;
                         labelPlanetSize.Text = sizeText;
                         labelPlanetMinerals.Text = mineralsText;
-
+                        p.POPULATIONFACTOR = popfactor;
                         climate1.Text = climateText;
                         labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
                         labelPlanetPopulation.Text = p.POPULATION.ToString();

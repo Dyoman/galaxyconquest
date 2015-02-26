@@ -121,7 +121,7 @@ namespace GalaxyConquest
             int popmin = 0;
             int popmax = 10;
             int mineralmin = 0;
-            int mineralmax = 35;
+            int mineralmax = 4;
             int climatemin = 0;
             int climatemax = 4;
             int colormin = 0;
@@ -168,12 +168,12 @@ namespace GalaxyConquest
                 pln.name = s.name + " " + i.ToString();     //Имя планеты = <Имя звезды> <порядковый номер>
 
                 pln.CLIMATE = r.Next(climatemin, climatemax);
-                pln.POPULATION = pln.Inc(p, r.NextDouble());
-                pln.POPULATIONMAX = r.Next(popmin, popmax);
-                pln.MINERALS = r.Next(mineralmin, mineralmax);
+                //pln.POPULATION = pln.Inc(p, r.NextDouble());
+                pln.POPULATIONMAX = 1; //r.Next(popmin, popmax);
+                //pln.MINERALS = r.Next(0, 4);
                 pln.PROFIT = pln.POPULATION * pln.MINERALS;
-                pln.POPULATION = pln.Inc(p, r.NextDouble());
-                pln.POPULATIONMAX = r.Next(popmin, popmax);
+                pln.POPULATION = 1;
+                //pln.POPULATIONMAX = r.Next(popmin, popmax);
                 pln.MINERALS = r.Next(mineralmin, mineralmax);
                 pln.PROFIT = pln.POPULATION * pln.MINERALS;
 

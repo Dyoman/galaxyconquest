@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using GalaxyConquest.StarSystems;
+using GalaxyConquest;
 using GalaxyConquest.Tactics;
 using NAudio;
 using NAudio.Wave;
@@ -25,7 +26,7 @@ namespace GalaxyConquest
         /// Экземпляр класса DrawController, который будет отвечать за отрисовку в главной форме
         /// </summary>
         DrawController DrawControl;
-
+        
         static public GameState Game;
         /// <summary>
         /// SaveFileDialog
@@ -553,7 +554,8 @@ namespace GalaxyConquest
             //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
             for (int i = 0; i < Game.Player.player_planets.Count; i++)
             {
-                float climateFactor = 0;
+                  
+                float climateFactor = 0 ;
                 switch (Game.Player.player_planets[i].CLIMATE)
                 {
                     case 0:
@@ -579,12 +581,64 @@ namespace GalaxyConquest
                 if (Game.Player.player_planets[i].POPULATION < Game.Player.player_planets[i].POPULATIONMAX)
                 {
                     Game.Player.player_planets[i].POPULATION += Game.Player.player_planets[i].POPULATION * 0.1 * climateFactor;
+                    Game.Player.player_planets[i].POPULATION = Math.Round(Game.Player.player_planets[i].POPULATION, 3);
                 }
                 else
                 {
                 }
+                float popfactor = 0;
+              
+                {
+                      if (Game.Player.player_planets[i].SIZE < 15)
+                        {
+                            
+                            popfactor = 5;
+                        }
+                        else
+                          if ((Game.Player.player_planets[i].SIZE >= 15) && (Game.Player.player_planets[i].SIZE < 23))
+                            {
+                                
+                                popfactor = 10;
+                            }
+                            else
+                              if ((Game.Player.player_planets[i].SIZE >= 23) && (Game.Player.player_planets[i].SIZE < 30))
+                                {
+                                    
+                                    popfactor = 15;
+                                }
+                                else
+                                  if (Game.Player.player_planets[i].SIZE >= 30)
+                                    {
+                                        
+                                        popfactor = 20;
+                                    }
+                    
+                }
 
-                Game.Player.player_planets[i].PROFIT = Game.Player.player_planets[i].MINERALS * Game.Player.player_planets[i].POPULATION;
+                float mineraFactor = 0;
+                switch (Game.Player.player_planets[i].CLIMATE)
+                {
+                    case 0:
+                        mineraFactor = (float)0.05;
+                        break;
+                    case 1:
+                        mineraFactor = (float)0.2;
+                        break;
+                    case 2:
+                        mineraFactor = (float)1;
+                        break;
+                    case 3:
+                        mineraFactor = (float)1.5;
+                        break;
+                    case 4:
+                        mineraFactor = (float)4;
+                        break;
+                   
+                }
+
+                Game.Player.player_planets[i].PROFIT = mineraFactor * Game.Player.player_planets[i].POPULATION;
+                Game.Player.player_planets[i].PROFIT = Math.Round(Game.Player.player_planets[i].PROFIT, 2);
+                Game.Player.player_planets[i].POPULATIONMAX = popfactor * climateFactor;
 
                 Game.Player.credit += Game.Player.player_planets[i].PROFIT;
                 Game.Player.minerals += Game.Player.player_planets[i].MINERALS;

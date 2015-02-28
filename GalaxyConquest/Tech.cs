@@ -78,28 +78,28 @@ namespace GalaxyConquest
 
             //----------------------------------Adds Armor-----------------------------------
             Armor armor = new ArmorNone();
-            if (Form1.SelfRef.tt.techLineClicked == 1)
+            if (Form1.SelfRef.techTreeForm.techLineClicked == 1)
             {
-                switch (Form1.SelfRef.tt.tierClicked)
+                switch (Form1.SelfRef.techTreeForm.tierClicked)
                 {
                     case 1:
-                        if (Form1.SelfRef.tt.subtechClicked == 0)//Titan
+                        if (Form1.SelfRef.techTreeForm.subtechClicked == 0)//Titan
                             armor = new ArmorTitan();
                         break;
 
                     case 2:
-                        if (Form1.SelfRef.tt.subtechClicked == 0)//Molibden
+                        if (Form1.SelfRef.techTreeForm.subtechClicked == 0)//Molibden
                             armor = new ArmorMolibden();
                         break;
                     case 3:
-                        if (Form1.SelfRef.tt.subtechClicked == 0)//Nanocom
+                        if (Form1.SelfRef.techTreeForm.subtechClicked == 0)//Nanocom
                             armor = new ArmorNanocom();
                         break;
                     default:
                         MessageBox.Show("Error occured with tech data" +
-                            " tier:" + Form1.SelfRef.tt.tierClicked +
-                            " techLine:" + Form1.SelfRef.tt.techLineClicked +
-                            " subtech:" + Form1.SelfRef.tt.subtechClicked);
+                            " tier:" + Form1.SelfRef.techTreeForm.tierClicked +
+                            " techLine:" + Form1.SelfRef.techTreeForm.techLineClicked +
+                            " subtech:" + Form1.SelfRef.techTreeForm.subtechClicked);
                         break;
                 }
             }

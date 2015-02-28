@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using GalaxyConquest.Tactics;
+using System.Windows.Forms;
 
 namespace GalaxyConquest
 {
@@ -73,27 +75,64 @@ namespace GalaxyConquest
         /// </summary>
         public static void CheckTechInnovaions()
         {
-            
+
+            //----------------------------------Adds Armor-----------------------------------
+            Armor armor = new ArmorNone();
+            if (Form1.SelfRef.tt.techLineClicked == 1)
+            {
+                switch (Form1.SelfRef.tt.tierClicked)
+                {
+                    case 1:
+                        if (Form1.SelfRef.tt.subtechClicked == 0)//Titan
+                            armor = new ArmorTitan();
+                        break;
+
+                    case 2:
+                        if (Form1.SelfRef.tt.subtechClicked == 0)//Molibden
+                            armor = new ArmorMolibden();
+                        break;
+                    case 3:
+                        if (Form1.SelfRef.tt.subtechClicked == 0)//Nanocom
+                            armor = new ArmorNanocom();
+                        break;
+                    default:
+                        MessageBox.Show("Error occured with tech data" +
+                            " tier:" + Form1.SelfRef.tt.tierClicked +
+                            " techLine:" + Form1.SelfRef.tt.techLineClicked +
+                            " subtech:" + Form1.SelfRef.tt.subtechClicked);
+                        break;
+                }
+            }
+
+            for (int i = 0; i < Form1.Game.Player.fleets.Count; i++)
+            {
+                for (int j = 0; j < Form1.Game.Player.fleets[i].ships.Count; j++)
+                {
+                    Form1.Game.Player.fleets[i].ships[j].InstallArmor(armor);
+                }
+            }
+
+
         }
 
-            public static void SerializeObject(this List<List<List<Pair>>> list, string fileName)
+        public static void SerializeObject(this List<List<List<Pair>>> list, string fileName)
+        {
+            var serializer = new XmlSerializer(typeof(List<List<List<Pair>>>));
+            using (var stream = File.OpenWrite(fileName))
             {
-                var serializer = new XmlSerializer(typeof(List<List<List<Pair>>>));
-                using (var stream = File.OpenWrite(fileName))
-                {
-                    serializer.Serialize(stream, list);
-                }
+                serializer.Serialize(stream, list);
             }
+        }
 
-            public static void Deserialize(this List<List<List<Pair>>> list, string fileName)
+        public static void Deserialize(this List<List<List<Pair>>> list, string fileName)
+        {
+            var serializer = new XmlSerializer(typeof(List<List<List<Pair>>>));
+            using (var stream = File.OpenRead(fileName))
             {
-                var serializer = new XmlSerializer(typeof(List<List<List<Pair>>>));
-                using (var stream = File.OpenRead(fileName))
-                {
-                    var other = (List<List<List<Pair>>>)(serializer.Deserialize(stream));
-                    list.Clear();
-                    list.AddRange(other);
-                }
+                var other = (List<List<List<Pair>>>)(serializer.Deserialize(stream));
+                list.Clear();
+                list.AddRange(other);
             }
+        }
     }
 }

@@ -227,7 +227,6 @@ namespace GalaxyConquest
                 {
                     if (Form1.Game.Player.skillPoints >= tierClicked * 100)
                     {
-                        Form1.Game.Player.skillPoints -= tierClicked * 100;
                         tech_logic2 = true;
                     }
                     else
@@ -255,6 +254,7 @@ namespace GalaxyConquest
                     //Form1.SelfRef.tech_progressBar.Visible = true;
                     //Form1.SelfRef.tech_label.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
                     //Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
+                    Form1.Game.Player.skillPoints -= tierClicked * 100;
                     Form1.Game.Player.Learn(new TechData(tierClicked, techLineClicked, subtechClicked));
 
                     Redraw();

@@ -170,6 +170,7 @@ namespace GalaxyConquest.Game
                 technologies.Add(new int[] { learningTech.Tier, learningTech.Line, learningTech.Subtech });
                 learningProgress = 0;
                 learningTech = new TechData();
+                Tech.CheckTechInnovaions();
             }
         }
     }

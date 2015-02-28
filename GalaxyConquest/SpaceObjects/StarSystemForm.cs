@@ -1,18 +1,19 @@
-﻿using System;
+﻿using GalaxyConquest.Drawing;
+using GalaxyConquest.Game;
+using GalaxyConquest.SpaceObjects;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
-using System.Collections.ObjectModel;
-using GalaxyConquest.Game;
-using GalaxyConquest.Drawing;
 
 
-namespace GalaxyConquest.StarSystems
+namespace GalaxyConquest.SpaceObjects
 {
     public partial class StarSystemForm : Form
     {
@@ -63,134 +64,7 @@ namespace GalaxyConquest.StarSystems
                     Planet p = starSystem.planets[j];
 
                     if (DrawControl.CursorIsOnObject(e, p))
-                    {
-
-                        string sizeText = "";
-                        string mineralsText = "";
-                        string climateText = "";
-                        double population;
-                        double profit;
-                        float popfactor = 1;
-
-                        //ниже- определение размера планеты
-                        if (p.SIZE < 15)
-                        {
-                            sizeText = "Small";
-                            
-                        }
-                        else
-                            if ((p.SIZE >= 15) && (p.SIZE < 23))
-                            {
-                                sizeText = "Medium";
-                               
-                            }
-                            else
-                                if ((p.SIZE >= 23)&& (p.SIZE < 30))
-                                {
-                                    sizeText = "Big";
-                                    
-                                }
-                                else
-                                    if (p.SIZE >= 30)
-                                    {
-                                        sizeText = "Extra";
-                                        
-                                    }
-
-
-
-                        //ниже - определение ресурсов
-                     /*   if (p.MINERALS == 0)
-                        {
-                            mineralsText = "No Minerals";
-                        }
-                        else
-                            if ((p.MINERALS > 0) && (p.MINERALS <= 10))
-                            {
-                                mineralsText = "Small";
-                            }
-                            else
-                                if ((p.MINERALS > 10) && (p.MINERALS <= 20))
-                                {
-                                    mineralsText = "Medium";
-                                }
-                                else
-                                    if (p.MINERALS > 20)
-                                    {
-                                        mineralsText = "Large";
-                                    }
-                        */
-
-                        switch(p.MINERALS)
-                        {
-                            case 0:
-                                mineralsText = "Very Small";
-                                break;
-                            case 1:
-                                mineralsText = "Small";
-                                break;
-                            case 2:
-                                mineralsText = "Medium";
-                                break;
-                            case 3:
-                                mineralsText = "Large";
-                                break;
-                            case 4:
-                                mineralsText = "Extra";
-                                break;
-                            
-                        }
-
-
-                        //ниже - определение климата
-                        switch(p.CLIMATE)
-                        {
-                            case 0:
-                                climateText = "no atmosphere";
-                                break;
-                            case 1:
-                                climateText = "lava";
-                                break;
-                            case 2:
-                                climateText = "tundra";
-                                break;
-                            case 3:
-                                climateText = "temperate";
-                                break;
-                            case 4:
-                                climateText = "gaya";
-                                break;
-                            default:
-                                MessageBox.Show("Error occured with climat number("+p.CLIMATE+")");
-                                break;
-                        }
-
-                        population = Math.Round(p.POPULATION, 3);
-                        profit = Math.Round(p.PROFIT, 2);
-
-                        planet_selected = j;
-                        labelPlanetName.Text = p.name;
-                        labelPlanetSize.Text = sizeText;
-                        labelPlanetMinerals.Text = mineralsText;
-                        p.POPULATIONFACTOR = popfactor;
-                        climate1.Text = climateText;
-                        labelPlanetPopulationMax.Text = p.POPULATIONMAX.ToString();
-                        labelPlanetPopulation.Text = p.POPULATION.ToString();
-                        ownerNameLabel.Text = p.ownerName;
-                        profitLabel.Text = p.PROFIT.ToString();
-
-                        buildings.Text = "";//set buildings textbox to empty string
-                        for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
-                        {
-                            if (Player.buildings[z][0] == Form1.Game.Player.stars.IndexOf(Form1.Game.Player.selectedStar) &&//check current starsystem
-                                Player.buildings[z][1] == j)                    //check current planet
-                            {
-                                //if ok add builds to text box
-                                buildings.AppendText(Buildings.buildings[Player.buildings[z][2]] + "\n");
-                            }
-                        }
-                        break;
-                    }
+                        ShowPlanet(p);
                 }
 
         }
@@ -200,21 +74,192 @@ namespace GalaxyConquest.StarSystems
         /// <param name="s">Звездная система</param>
         public void SetSystem(StarSystem s)
         {
-            starSystem = s;
             if (s == null) return;
+            starSystem = s;
 
             this.Text = "Система " + s.name;
 
             planet_selected = 0;
 
-            labelPlanetName.Text = "";
-            labelPlanetPopulation.Text = "";
-            labelPlanetPopulationMax.Text = "";
-            labelPlanetMinerals.Text = "";
-            labelPlanetSize.Text = "";
-            profitLabel.Text = "";
-            ownerNameLabel.Text = "";
-            buildings.Text = "";
+            buildingsTextBox.Text = "";
+
+            ShowAll();
+        }
+
+        private void showAllButton_Click(object sender, EventArgs e)
+        {
+            ShowAll();
+        }
+
+        void ShowAll()
+        {
+            Text = "Система " + starSystem.name;
+
+            float size = 0;
+            string sizeText = "";
+            double population = 0;
+            double maxPopulation = 0;
+            double profit = 0;
+            int minerals = 0;
+            string mineralsText = "";
+            int climate = 0;
+            string climateText = "";
+            double skillPoints = 0;
+
+            for (int i = 0; i < starSystem.planets.Count; i++)
+            {
+                size += starSystem.planets[i].SIZE;
+                population += starSystem.planets[i].POPULATION;
+                maxPopulation += starSystem.planets[i].POPULATIONMAX;
+                climate += starSystem.planets[i].CLIMATE;
+                profit += starSystem.planets[i].PROFIT;
+                skillPoints += starSystem.planets[i].skillPointProduce;
+                minerals += starSystem.planets[i].MINERALS;
+            }
+            size /= starSystem.planets.Count;
+            climate /= starSystem.planets.Count;
+            minerals /= starSystem.planets.Count;
+
+            //ниже- определение размера планеты
+            if (size < 15)
+                sizeText = "Small";
+            else if ((size >= 15) && (size < 23))
+                sizeText = "Medium";
+            else if ((size >= 23) && (size < 30))
+                sizeText = "Big";
+            else if (size >= 30)
+                sizeText = "Extra";
+
+            switch (minerals)
+            {
+                case 0:
+                    mineralsText = "Very Small";
+                    break;
+                case 1:
+                    mineralsText = "Small";
+                    break;
+                case 2:
+                    mineralsText = "Medium";
+                    break;
+                case 3:
+                    mineralsText = "Large";
+                    break;
+                case 4:
+                    mineralsText = "Extra";
+                    break;
+
+            }
+            //ниже - определение климата
+            switch (climate)
+            {
+                case 0:
+                    climateText = "Без атмосферы";
+                    break;
+                case 1:
+                    climateText = "Лава";
+                    break;
+                case 2:
+                    climateText = "Тундра";
+                    break;
+                case 3:
+                    climateText = "Умеренный";
+                    break;
+                case 4:
+                    climateText = "Идеальный";
+                    break;
+                default:
+                    MessageBox.Show("Error occured with climat number(" + climate + ")");
+                    break;
+            }
+
+            sizeLabel.Text = "Размер(ср): " + sizeText;
+            mineralsLabel.Text = "Минералы(общ): " + mineralsText;
+            populationLabel.Text = "Популяция(общ): " + Math.Round(population, 3) + "млн. / " + Math.Round(maxPopulation, 3) + "млн.";
+            profitLabel.Text = "Прирост кредитов(общ): " + Math.Round(profit, 3) + " $";
+            ownerLabel.Text = "Владелец: " + starSystem.Owner.name;
+            climateLabel.Text = "Климат(ср): " + climateText;
+            skillPointLabel.Text = "Прирост очков изучения(общ): " + skillPoints;
+        }
+
+        void ShowPlanet(Planet p)
+        {
+            Text = "Планета " + p.name;
+
+            string sizeText = "";
+            string mineralsText = "";
+            string climateText = "";
+
+            //ниже- определение размера планеты
+            if (p.SIZE < 15)
+                sizeText = "Small";
+            else if ((p.SIZE >= 15) && (p.SIZE < 23))
+                sizeText = "Medium";
+            else if ((p.SIZE >= 23) && (p.SIZE < 30))
+                sizeText = "Big";
+            else if (p.SIZE >= 30)
+                sizeText = "Extra";
+
+            switch (p.MINERALS)
+            {
+                case 0:
+                    mineralsText = "Very Small";
+                    break;
+                case 1:
+                    mineralsText = "Small";
+                    break;
+                case 2:
+                    mineralsText = "Medium";
+                    break;
+                case 3:
+                    mineralsText = "Large";
+                    break;
+                case 4:
+                    mineralsText = "Extra";
+                    break;
+
+            }
+            //ниже - определение климата
+            switch (p.CLIMATE)
+            {
+                case 0:
+                    climateText = "Без атмосферы";
+                    break;
+                case 1:
+                    climateText = "Лава";
+                    break;
+                case 2:
+                    climateText = "Тундра";
+                    break;
+                case 3:
+                    climateText = "Умеренный";
+                    break;
+                case 4:
+                    climateText = "Идеальный";
+                    break;
+                default:
+                    MessageBox.Show("Error occured with climat number(" + p.CLIMATE + ")");
+                    break;
+            }
+
+            sizeLabel.Text = "Размер: " + sizeText;
+            mineralsLabel.Text = "Минералы: " + mineralsText;
+            populationLabel.Text = "Популяция: " + Math.Round(p.POPULATION, 3) + "млн./" + Math.Round(p.POPULATIONMAX, 3) + "млн.";
+            profitLabel.Text = "Прирост кредитов : " + Math.Round(p.PROFIT, 3) + " $";
+            ownerLabel.Text = "Владелец: " + starSystem.Owner.name;
+            climateLabel.Text = "Климат: " + climateText;
+            skillPointLabel.Text = "Прирост очков изучения: " + p.skillPointProduce;
+
+
+            buildingsTextBox.Text = "";//set buildings textbox to empty string
+            for (int z = 0; z < Player.buildings.Count; z++)//chech all player builds
+            {
+                if (Player.buildings[z][0] == Form1.Game.Player.stars.IndexOf(Form1.Game.Player.selectedStar) &&//check current starsystem
+                    Player.buildings[z][1] == planet_selected)                    //check current planet
+                {
+                    //if ok add builds to text box
+                    buildingsTextBox.AppendText(Buildings.buildings[Player.buildings[z][2]] + "\n");
+                }
+            }
         }
         /// <summary>
         /// Обновляет кнопку захвата системы

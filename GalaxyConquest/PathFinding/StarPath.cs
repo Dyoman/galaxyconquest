@@ -1,4 +1,5 @@
 ﻿using GalaxyConquest.Drawing;
+using GalaxyConquest.SpaceObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

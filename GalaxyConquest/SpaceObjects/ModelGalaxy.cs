@@ -1,5 +1,4 @@
 ﻿using GalaxyConquest.Drawing;
-using GalaxyConquest.StarSystems;
 using GalaxyConquest.Tactics;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace GalaxyConquest
+namespace GalaxyConquest.SpaceObjects
 {
     /// <summary>
     /// Типы галактики
@@ -38,6 +37,10 @@ namespace GalaxyConquest
     [Serializable]
     public class ModelGalaxy : SpaceObject
     {
+        /// <summary>
+        /// Вероятность появления идеальной планеты.
+        /// </summary>
+        public const double GAYA_EMERGENCE_PROBABILITY = 0.001;
         /// <summary>
         /// Время в галактике
         /// </summary>
@@ -114,78 +117,6 @@ namespace GalaxyConquest
             PathFinding.PathFinder.FillDistancesFrom(stars);    //заносим дистанции в массив для дальнейшего поиска пути
         }
         /// <summary>
-        /// Генерирует планеты для звездной системы
-        /// </summary>
-        void generatePlanets(StarSystem s)
-        {
-            int sizemin = 10;
-            int sizemax = 40;
-            int mineralmin = 0;
-            int mineralmax = 4;
-            int climatemin = 0;
-            int climatemax = 4;
-            int colormin = 0;
-            int colormax = 255;
-            int dist = 50;
-            float speed = 1f;
-
-            if (s.planets.Count > 0)//Обновляем список планет
-            {
-                s.planets.Clear();
-                //throw new Exception("Планеты уже есть");
-            }
-
-            Random r = new Random(DateTime.Now.Millisecond);
-            Planet pln = new Planet();
-
-            int planets_count = s.type + r.Next(1, 2);//Количество планет в системе варьируется
-
-            pln.center = new PointF(0, 0);  //
-            pln.distance = 0;
-            pln.speed = 0;
-            pln.planetColor = s.br.Color;
-            pln.SIZE = 25;
-            pln.name = s.name;
-            pln.CLIMATE = 0;
-            pln.POPULATIONMAX = 0;
-            pln.POPULATION = 0;
-            pln.MINERALS = 0;
-
-            pln.Move(Time);//задаем начальные координаты планете опять же методом Move с начальным временем
-
-            s.planets.Add(pln);
-
-            for (int i = 1; i <= planets_count; i++)
-            {
-                pln = new Planet();
-
-                pln.center = new PointF(s.planets[0].GetPosition().X, s.planets[0].GetPosition().Y);
-                pln.distance = dist;
-                pln.speed = speed;
-                pln.planetColor = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
-                pln.SIZE = r.Next(sizemin, sizemax);
-
-                pln.name = s.name + " " + i.ToString();     //Имя планеты = <Имя звезды> <порядковый номер>
-
-                pln.CLIMATE = r.Next(climatemin, climatemax);
-                //pln.POPULATION = pln.Inc(p, r.NextDouble());
-                pln.POPULATIONMAX = 1; //r.Next(popmin, popmax);
-                //pln.MINERALS = r.Next(0, 4);
-                pln.PROFIT = pln.POPULATION * pln.MINERALS;
-                pln.POPULATION = 1;
-                //pln.POPULATIONMAX = r.Next(popmin, popmax);
-                pln.MINERALS = r.Next(mineralmin, mineralmax);
-                pln.PROFIT = pln.POPULATION * pln.MINERALS;
-
-                pln.Move(Time);
-
-                s.planets.Add(pln);
-
-                dist = dist + 25;//каждая следующая планета будет удалена от центра на 25 пикселей дальше
-                speed = speed / 3 + 0.1f;
-            }
-        }
-        /// <summary>
         /// Генерирует спиральную галактику
         /// </summary>
         /// <param name="offset">Временной сдвиг</param>
@@ -218,41 +149,41 @@ namespace GalaxyConquest
                 {
                     //O - Blue, t =30 000 — 60 000 K
                     case 0:
-                        s.br = PlanetBrushes.BlueBrush;
+                        s.color = PlanetBrushes.BlueBrush;
                         break;
 
                     //B - Light blue, t = 10 500 — 30 000 K
                     case 1:
-                        s.br = PlanetBrushes.LightBlueBrush;
+                        s.color = PlanetBrushes.LightBlueBrush;
                         break;
 
                     //A - White, t = 7500—10 000 K
                     case 2:
-                        s.br = PlanetBrushes.WhiteBrush;
+                        s.color = PlanetBrushes.WhiteBrush;
                         break;
 
                     //F - Light Yellow, t = 6000—7200 K
                     case 3:
-                        s.br = PlanetBrushes.LightYellowBrush;
+                        s.color = PlanetBrushes.LightYellowBrush;
                         break;
 
                     //G - Yellow, t = 5500 — 6000 K
                     case 4:
-                        s.br = PlanetBrushes.YellowBrush;
+                        s.color = PlanetBrushes.YellowBrush;
                         break;
 
                     //K - Orange, t = 4000 — 5250 K
                     case 5:
-                        s.br = PlanetBrushes.OrangeBrush;
+                        s.color = PlanetBrushes.OrangeBrush;
                         break;
 
                     //M - Red, t = 2600 — 3850 K
                     case 6:
-                        s.br = PlanetBrushes.RedBrush;
+                        s.color = PlanetBrushes.RedBrush;
                         break;
                 }
 
-                generatePlanets(s);
+                Planet.generatePlanets(s, Time);
                 stars.Add(s);
             }
 
@@ -286,41 +217,41 @@ namespace GalaxyConquest
                 {
                     //O - Blue, t =30 000 — 60 000 K
                     case 0:
-                        s.br = PlanetBrushes.BlueBrush;
+                        s.color = PlanetBrushes.BlueBrush;
                         break;
 
                     //B - Light blue, t = 10 500 — 30 000 K
                     case 1:
-                        s.br = PlanetBrushes.LightBlueBrush;
+                        s.color = PlanetBrushes.LightBlueBrush;
                         break;
 
                     //A - White, t = 7500—10 000 K
                     case 2:
-                        s.br = PlanetBrushes.WhiteBrush;
+                        s.color = PlanetBrushes.WhiteBrush;
                         break;
 
                     //F - Light Yellow, t = 6000—7200 K
                     case 3:
-                        s.br = PlanetBrushes.LightYellowBrush;
+                        s.color = PlanetBrushes.LightYellowBrush;
                         break;
 
                     //G - Yellow, t = 5500 — 6000 K
                     case 4:
-                        s.br = PlanetBrushes.YellowBrush;
+                        s.color = PlanetBrushes.YellowBrush;
                         break;
 
                     //K - Orange, t = 4000 — 5250 K
                     case 5:
-                        s.br = PlanetBrushes.OrangeBrush;
+                        s.color = PlanetBrushes.OrangeBrush;
                         break;
 
                     //M - Red, t = 2600 — 3850 K
                     case 6:
-                        s.br = PlanetBrushes.RedBrush;
+                        s.color = PlanetBrushes.RedBrush;
                         break;
                 }
 
-                generatePlanets(s);
+                Planet.generatePlanets(s, Time);
                 stars.Add(s);
             }
 
@@ -356,40 +287,40 @@ namespace GalaxyConquest
                     {
                         //O - Blue, t =30 000 — 60 000 K
                         case 0:
-                            s.br = PlanetBrushes.BlueBrush;
+                            s.color = PlanetBrushes.BlueBrush;
                             break;
 
                         //B - Light blue, t = 10 500 — 30 000 K
                         case 1:
-                            s.br = PlanetBrushes.LightBlueBrush;
+                            s.color = PlanetBrushes.LightBlueBrush;
                             break;
 
                         //A - White, t = 7500—10 000 K
                         case 2:
-                            s.br = PlanetBrushes.WhiteBrush;
+                            s.color = PlanetBrushes.WhiteBrush;
                             break;
 
                         //F - Light Yellow, t = 6000—7200 K
                         case 3:
-                            s.br = PlanetBrushes.LightYellowBrush;
+                            s.color = PlanetBrushes.LightYellowBrush;
                             break;
 
                         //G - Yellow, t = 5500 — 6000 K
                         case 4:
-                            s.br = PlanetBrushes.YellowBrush;
+                            s.color = PlanetBrushes.YellowBrush;
                             break;
 
                         //K - Orange, t = 4000 — 5250 K
                         case 5:
-                            s.br = PlanetBrushes.OrangeBrush;
+                            s.color = PlanetBrushes.OrangeBrush;
                             break;
 
                         //M - Red, t = 2600 — 3850 K
                         case 6:
-                            s.br = PlanetBrushes.RedBrush;
+                            s.color = PlanetBrushes.RedBrush;
                             break;
                     }
-                    generatePlanets(s);
+                    Planet.generatePlanets(s, Time);
                     stars.Add(s);
                 }
             }
@@ -429,41 +360,41 @@ namespace GalaxyConquest
                 {
                     //O - Blue, t =30 000 — 60 000 K
                     case 0:
-                        s.br = PlanetBrushes.BlueBrush;
+                        s.color = PlanetBrushes.BlueBrush;
                         break;
 
                     //B - Light blue, t = 10 500 — 30 000 K
                     case 1:
-                        s.br = PlanetBrushes.LightBlueBrush;
+                        s.color = PlanetBrushes.LightBlueBrush;
                         break;
 
                     //A - White, t = 7500—10 000 K
                     case 2:
-                        s.br = PlanetBrushes.WhiteBrush;
+                        s.color = PlanetBrushes.WhiteBrush;
                         break;
 
                     //F - Light Yellow, t = 6000—7200 K
                     case 3:
-                        s.br = PlanetBrushes.LightYellowBrush;
+                        s.color = PlanetBrushes.LightYellowBrush;
                         break;
 
                     //G - Yellow, t = 5500 — 6000 K
                     case 4:
-                        s.br = PlanetBrushes.YellowBrush;
+                        s.color = PlanetBrushes.YellowBrush;
                         break;
 
                     //K - Orange, t = 4000 — 5250 K
                     case 5:
-                        s.br = PlanetBrushes.OrangeBrush;
+                        s.color = PlanetBrushes.OrangeBrush;
                         break;
 
                     //M - Red, t = 2600 — 3850 K
                     case 6:
-                        s.br = PlanetBrushes.RedBrush;
+                        s.color = PlanetBrushes.RedBrush;
                         break;
                 }
 
-                generatePlanets(s);
+                Planet.generatePlanets(s, Time);
 
                 stars.Add(s);
             }
@@ -477,11 +408,10 @@ namespace GalaxyConquest
 
             nova.name = "Гайа";     //name for new star
             nova.type = 8;                //type for "super nova"
-            nova.br = PlanetBrushes.SuperWhiteBrush;    //brush for "super nova"
+            nova.color = PlanetBrushes.SuperWhiteBrush;    //brush for "super nova"
 
-            generatePlanets(nova);
+            Planet.generatePlanets(nova, Time);
         }
-
         /// <summary>
         /// Генерирует уникальное случайное имя для звезды
         /// </summary>

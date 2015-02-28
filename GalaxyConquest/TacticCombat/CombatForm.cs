@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
+using GalaxyConquest.SpaceObjects;
 
 namespace GalaxyConquest.Tactics
 {

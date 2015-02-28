@@ -1,4 +1,5 @@
-﻿using GalaxyConquest.Tactics;
+﻿using GalaxyConquest.SpaceObjects;
+using GalaxyConquest.Tactics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -137,9 +138,9 @@ namespace GalaxyConquest
                 else if (shipListBox.Items[i].Equals(names[1]))
                     totalPrice += costs[1];
                 else if (shipListBox.Items[i].Equals(names[2]))
-                    continue; //totalPrice += costs[2];
+                    totalPrice += costs[2];
                 else if (shipListBox.Items[i].Equals(names[3]))
-                    continue; //totalPrice += costs[3];
+                    totalPrice += costs[3];
             }
             priceLabel.Text = totalPrice + " $";
             if (Form1.Game.Player.credit < totalPrice)
@@ -166,7 +167,7 @@ namespace GalaxyConquest
         /// <param name="owner">Экземпляр класса Form, которому будет принадлежать данное диалоговое окно</param>
         /// <param name="objects">Массив объектов, которые будут представлены в окне</param>
         /// <param name="capture">Текст заголовка окна</param>
-        public static int Show(Form owner, SpaceObject[] objects, string capture)
+        public static int Show(Form owner, GalaxyConquest.SpaceObjects.SpaceObject[] objects, string capture)
         {
             Form form = new Form();
             ListBox listBox1 = new ListBox();

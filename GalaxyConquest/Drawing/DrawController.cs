@@ -1,11 +1,9 @@
 ﻿using GalaxyConquest.Game;
 using GalaxyConquest.PathFinding;
+using GalaxyConquest.SpaceObjects;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace GalaxyConquest.Drawing
@@ -25,7 +23,6 @@ namespace GalaxyConquest.Drawing
         public static SolidBrush SuperWhiteBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
         public static SolidBrush GoldBrush = new SolidBrush(Color.Gold);
     }
-
     /// <summary>
     /// Цвета флотов
     /// </summary>
@@ -36,7 +33,6 @@ namespace GalaxyConquest.Drawing
         public static Brush NeutralFleet = Brushes.Silver;
         public static Brush EnemyFleet = Brushes.OrangeRed;
     }
-
     /// <summary>
     /// Цвета флотов
     /// </summary>
@@ -46,6 +42,27 @@ namespace GalaxyConquest.Drawing
         public static Color PassiveFleet = Color.MediumSeaGreen;
         public static Color NeutralFleet = Color.Silver;
         public static Color EnemyFleet = Color.OrangeRed;
+    }
+    /// <summary>
+    /// Цвета имён звезд.
+    /// </summary>
+    public struct StarBrushes
+    {
+        public static Brush DefaultStarBrush = Brushes.White;
+        public static Brush PlayerStarBrush = Brushes.GreenYellow;
+    }
+    /// <summary>
+    /// Цвета линий.
+    /// </summary>
+    public struct Lines
+    {
+        public static Color LineAvailableColor = Color.Lime;
+        public static Color LineUnavailableColor = Color.Red;
+        public static Color WarpLineColor = Color.White;
+        public static Color TransitionLineColor = Color.Gray;
+        public static Color StarSelectionColor = Color.Gold;
+        public static Brush LineAvailableBrush = Brushes.Lime;
+        public static Brush LineUnvailableBrush = Brushes.Red;
     }
 
     /// <summary>
@@ -64,7 +81,6 @@ namespace GalaxyConquest.Drawing
             Y = y;
         }
     }
-
     /// <summary>
     /// Структура описывает вектор в трехмерном пространстве
     /// </summary>
@@ -113,6 +129,47 @@ namespace GalaxyConquest.Drawing
     /// </summary>
     public class DrawController
     {
+        #region CONSTANTS
+        int DISPERSION = 7; //Дисперсия/разброс. Радиус области вокруг объекта, при клике на которую объект будет выбран
+        //Margin
+        const int FLEET_ICON_MARGIN = -10;  // отступ рисования иконки флота (треугольника)
+        const int FLEET_NAME_MARGIN_X = 0;  // отступ рисования имени флота
+        const int FLEET_NAME_MARGIN_Y = -15;// отступ рисования имени флота
+        const int STAR_NAME_MARGIN = 6;     // отступ рисования имени звезды
+        const int STAR_SELECTION_MARGIN = 5;// дополнительный отступ при рисовании элипса вокруг выделенной звезды
+        const int WARP_TEXT_MARGIN_X = 10;  // отступ рисования текста перемещения
+        const int WARP_TEXT_MARGIN_Y = -10; // отступ рисования текста перемещения
+        const int PLANET_NAME_MARGIN = 6;   // отступ рисования имени планеты
+        //StarSize
+        const float STAR_SIZE_SCALE = 1.5f; // множитель размера звезд
+        //Font
+        const string FONT_FAMILY_NAME = "Arial";                // стандартный шрифт
+        const float STARNAME_FONT_SIZE = 5.0f;                  // размер шрифта имени звезды
+        const float PLAYER_STARNAME_FONT_SIZE = 6.0f;           // размер шрифта имени звезды, если она принадлежит игроку
+        const float FLEET_NAME_FONT_SIZE = 6.0f;                // размер шрифта имени флота
+        const float PLAYER_FLEET_NAME_FONT_SIZE = 8.0f;         // размер шрифта имени флота, если он принадлежит игроку
+        const float ACTIVE_PLAYER_FLEET_NAME_FONT_SIZE = 9.0f;  // размер шрифта имени флота, если он является активным флотом игрока
+        const FontStyle STAR_FONTSTYLE = FontStyle.Regular;     // стандартный стиль шрифта для имён звёзд
+        const FontStyle PLAYER_STAR_FONTSTYLE = FontStyle.Bold; // стиль шрифта для имён звезд игрока
+        const float WARP_TEXT_FONT_SIZE = 6.0F;                 // размер шрифта текста, выводимого при отображении пути
+        const float PLANET_NAME_FONT_SIZE = 7.0f;               // размер шрифта имени планеты
+        //Scalling
+        const double MAX_SCALE = 10.0;      // максимальный масштаб
+        const double MIN_SCALE = 0.2;       // минимальный масштаб
+        const double SCALE_DELTA = 0.2;     // величина, на которую изменяется масштаб за одну прокрутку ролика
+        //Rotation
+        const double ROTATION_SPEED = 0.01; // скорость вращения "камеры"
+        //Drawing
+        const float PATH_LINE_PEN_WIDTH = 2f;   // ширина линии, которая рисует путь
+        //Fleet
+        const int FLEET_ICON_UPLEFT_X = -3;     // 
+        const int FLEET_ICON_UPLEFT_Y = -5;     //
+        const int FLEET_ICON_BOTTOMLEFT_X = -3; // координаты вершин иконки флота относительно центра
+        const int FLEET_ICON_BOTTOMLEFT_Y = 5;  //
+        const int FLEET_ICON_RIGHT_X = 6;       //
+        const int FLEET_ICON_RIGHT_Y = 0;       //
+        #endregion
+
         /// <summary>
         /// Контрол, к которму привязано рисование
         /// </summary>
@@ -124,7 +181,7 @@ namespace GalaxyConquest.Drawing
         /// <summary>
         /// Поворот по горизонтали
         /// </summary>
-        double spinY = Math.PI / 2;
+        double spinY = Math.PI / 4;
         /// <summary>
         /// Масштаб
         /// </summary>
@@ -141,10 +198,6 @@ namespace GalaxyConquest.Drawing
         /// Координаты центра
         /// </summary>
         float centerX, centerY;
-        /// <summary>
-        /// Дисперсия/разброс. Радиус области вокруг объекта, при клике на которую объект будет выбран
-        /// </summary>
-        int dispersion = 7;
         /// <summary>
         /// Создание экземпляра класса
         /// </summary>
@@ -177,36 +230,32 @@ namespace GalaxyConquest.Drawing
         {
             if (state.Galaxy == null || state.Player == null) return;
 
-            Pen pen = new Pen(Color.Gold);
-
             g.ScaleTransform(scaling, scaling);
 
             //рисуем звездные системы
             for (int i = 0; i < state.Galaxy.stars.Count; i++)
             {
-                float starSize = 0;
-
                 StarSystem s = state.Galaxy.stars[i];
 
                 Vector scr = getScreenCoordOf(s);
 
-                starSize = (s.type + 1) * 1.5f;
+                float starSize = (s.type + 1) * STAR_SIZE_SCALE;
 
-                g.FillEllipse(s.br, (float)scr.X - starSize / 2, (float)scr.Y - starSize / 2, starSize, starSize);
-                //  Вокруг звезды рисуем вокруг неё круг
+                g.FillEllipse(s.color, (float)scr.X - starSize / 2, (float)scr.Y - starSize / 2, starSize, starSize);
+                //  Вокруг выбраной звезды рисуем круг
                 if (s == state.Player.selectedStar)
                 {
-                    g.DrawEllipse(pen, new RectangleF((float)scr.X - starSize / 2 - 5, (float)scr.Y - starSize / 2 - 5, starSize + 10, starSize + 10));
+                    g.DrawEllipse(new Pen(Lines.StarSelectionColor), new RectangleF((float)scr.X - starSize / 2 - STAR_SELECTION_MARGIN, (float)scr.Y - starSize / 2 - STAR_SELECTION_MARGIN, starSize + STAR_SELECTION_MARGIN * 2, starSize + STAR_SELECTION_MARGIN * 2));
                 }
-                //  Вокруг звезды, принадлежащей игроку рисуем большой желтый круг и имя этой звезды пишем бОльшим шрифтом и другого цвета
+                //  Вокруг звезды, принадлежащей игроку рисуем большой желтый круг и имя этой звезды пишем бОльшим шрифтом и другим цвета
                 if (s.Discovered)
-                    if (state.Player.stars.Contains(s))
+                    if (s.Owner == state.Player)
                     {
-                        g.DrawEllipse(Pens.GreenYellow, new RectangleF((float)scr.X - starSize / 2 - 3, (float)scr.Y - starSize / 2 - 3, starSize + 6, starSize + 6));
-                        g.DrawString(s.name, new Font("Arial", 5.5F, FontStyle.Bold), Brushes.GreenYellow, new PointF((float)scr.X + 6, (float)scr.Y + 6));
+                        //g.DrawEllipse(Pens.GreenYellow, new RectangleF((float)scr.X - starSize / 2 - 3, (float)scr.Y - starSize / 2 - 3, starSize + 6, starSize + 6));
+                        g.DrawString(s.name, new Font(FONT_FAMILY_NAME, PLAYER_STARNAME_FONT_SIZE, PLAYER_STAR_FONTSTYLE), StarBrushes.PlayerStarBrush, new PointF((float)scr.X + STAR_NAME_MARGIN, (float)scr.Y + STAR_NAME_MARGIN));
                     }
                     else
-                        g.DrawString(s.name, new Font("Arial", 5.0F), Brushes.White, new PointF((float)scr.X + 6, (float)scr.Y + 6));
+                        g.DrawString(s.name, new Font(FONT_FAMILY_NAME, STARNAME_FONT_SIZE, STAR_FONTSTYLE), StarBrushes.DefaultStarBrush, new PointF((float)scr.X + STAR_NAME_MARGIN, (float)scr.Y + STAR_NAME_MARGIN));
             }
 
 
@@ -217,15 +266,12 @@ namespace GalaxyConquest.Drawing
                 if (!fleet.s1.Discovered)
                     continue;
                 Vector scr = getScreenCoordOf(fleet);
-                scr.X -= 10;
-                scr.Y -= 10;
+                scr.X += FLEET_ICON_MARGIN;
+                scr.Y += FLEET_ICON_MARGIN;
 
-                PointF[] compPointArrayShip = {  //точки для рисование корабля
-                                    new PointF((float)scr.X - 3, (float)scr.Y - 5),
-                                    new PointF((float)scr.X - 3, (float)scr.Y + 5),
-                                    new PointF((float)scr.X + 6, (float)scr.Y)};
+                PointF[] compPointArrayShip = GetFleetIcon(scr);
                 g.FillPolygon(FleetBrushes.NeutralFleet, compPointArrayShip);
-                g.DrawString(fleet.name, new Font("Arial", 5.0F), FleetBrushes.NeutralFleet, new PointF((float)scr.X, (float)scr.Y - 15));
+                g.DrawString(fleet.name, new Font(FONT_FAMILY_NAME, FLEET_NAME_FONT_SIZE), FleetBrushes.NeutralFleet, new PointF((float)scr.X + FLEET_NAME_MARGIN_X, (float)scr.Y + FLEET_NAME_MARGIN_Y));
             }
 
             //----------------------Player Fleets----------------------
@@ -236,24 +282,21 @@ namespace GalaxyConquest.Drawing
                 StarSystem targSys = fleet.s2;
 
                 Vector scr = getScreenCoordOf(fleet);
-                scr.X -= 10;
-                scr.Y -= 10;
+                scr.X += FLEET_ICON_MARGIN;
+                scr.Y += FLEET_ICON_MARGIN;
 
-                PointF[] compPointArrayShip = {  //точки для рисование корабля
-                                    new PointF((float)scr.X - 3, (float)scr.Y - 5),
-                                    new PointF((float)scr.X - 3, (float)scr.Y + 5),
-                                    new PointF((float)scr.X + 6, (float)scr.Y)};
+                PointF[] compPointArrayShip = GetFleetIcon(scr);
 
                 if (k == state.Player.selectedFleet)
                 {
                     g.FillPolygon(FleetBrushes.ActiveFleet, compPointArrayShip);
-                    g.DrawString(fleet.name, new Font("Arial", 9.0F, FontStyle.Bold), FleetBrushes.ActiveFleet, new PointF((float)scr.X, (float)scr.Y - 15));
+                    g.DrawString(fleet.name, new Font(FONT_FAMILY_NAME, ACTIVE_PLAYER_FLEET_NAME_FONT_SIZE, FontStyle.Bold), FleetBrushes.ActiveFleet, new PointF((float)scr.X + FLEET_NAME_MARGIN_X, (float)scr.Y + FLEET_NAME_MARGIN_Y));
 
                 }
                 else
                 {
                     g.FillPolygon(FleetBrushes.PassiveFleet, compPointArrayShip);
-                    g.DrawString(fleet.name, new Font("Arial", 8.0F), FleetBrushes.PassiveFleet, new PointF((float)scr.X, (float)scr.Y - 15));
+                    g.DrawString(fleet.name, new Font(FONT_FAMILY_NAME, PLAYER_FLEET_NAME_FONT_SIZE), FleetBrushes.PassiveFleet, new PointF((float)scr.X + FLEET_NAME_MARGIN_X, (float)scr.Y + FLEET_NAME_MARGIN_Y));
                 }
 
                 /// Рисуется путь от текущего флота к звезде, на которую наведен курсор мыши
@@ -261,29 +304,27 @@ namespace GalaxyConquest.Drawing
                 {
                     StarPath path = new StarPath();
                     path.CalculateWay(state.Player.fleets[k].s1, state.Player.warpTarget);
-                    //double starDistance = Distance(state.Player.fleets[state.Player.selectedFleet], state.Player.warpTarget);
                     double starDistance = path.Distance;
                     string dis = Math.Round(starDistance, 3).ToString() + " св. лет\n<Ходов: ~" + ((int)(starDistance * MovementsController.FIXED_TIME_DELTA) + 1).ToString() + ">";
 
                     Vector scrFrom = new Vector(), scrTo = new Vector();
-                    Brush brush = Brushes.Lime;
-                    /*
-                    scrFrom = getScreenCoordOf(flSys);
-                    scrTo = getScreenCoordOf(state.Player.warpTarget);
-                    */
-                    if (starDistance < Fleet.MaxDistance)//пока тестим
-                        pen.Color = Color.Lime;
+                    Pen pen = null;
+                    Brush brush = null;
+
+                    if (starDistance < Fleet.MaxDistance)
+                    {
+                        pen = new Pen(Lines.LineAvailableColor);
+                        brush = Lines.LineAvailableBrush;
+                    }
                     else
                     {
-                        pen.Color = Color.Red;
-                        brush = Brushes.Red;
+                        pen = new Pen(Lines.LineUnavailableColor);
+                        brush = Lines.LineUnvailableBrush;
                     }
 
                     g.DrawLine(pen,
                         new PointF((float)scrFrom.X, (float)scrFrom.Y),
                         new PointF((float)scrTo.X, (float)scrTo.Y));
-
-                    pen.Width = 1;
 
                     for (int i = 1; i < path.Count; i++)
                     {
@@ -293,51 +334,25 @@ namespace GalaxyConquest.Drawing
                             new PointF((float)scrFrom.X, (float)scrFrom.Y),
                             new PointF((float)scrTo.X, (float)scrTo.Y));
                     }
-                    g.DrawString(dis, new Font("Arial", 6.0F), brush, new PointF((float)scrTo.X + 10, (float)scrTo.Y - 10));
+                    g.DrawString(dis, new Font(FONT_FAMILY_NAME, WARP_TEXT_FONT_SIZE), brush, new PointF((float)scrTo.X + WARP_TEXT_MARGIN_X, (float)scrTo.Y + WARP_TEXT_MARGIN_Y));
                 }
 
                 /// Если для текущего флота рассчитан путь, рисуем его, отбрасывая те рёбра, которые флот уже прошел
                 if (!fleet.path.Empty && k == state.Player.selectedFleet)    //new 
                 {
-                    pen.Color = Color.White;
-                    pen.Width = 2;
+                    Pen pen = new Pen(Lines.WarpLineColor, PATH_LINE_PEN_WIDTH);
                     pen.DashStyle = DashStyle.Dash;
 
                     for (int i = Math.Max(fleet.path.Current - 1, 0); i < fleet.path.Count - 1; i++)
                     {
                         Vector scrFrom = getScreenCoordOf(fleet.path[i]);
-                        scrFrom.X -= 10;
-                        scrFrom.Y -= 10;
                         Vector scrTo = getScreenCoordOf(fleet.path[i + 1]);
-                        scrTo.X -= 10;
-                        scrTo.Y -= 10;
 
                         g.DrawLine(pen,
-                                new PointF((float)scrFrom.X + 10, (float)scrFrom.Y + 10),
-                                new PointF((float)scrTo.X + 10, (float)scrTo.Y + 10));
+                                new PointF((float)scrFrom.X, (float)scrFrom.Y),
+                                new PointF((float)scrTo.X, (float)scrTo.Y));
                     }
                 }
-                pen.Width = 1;
-                //старый код не используем
-                if (targSys != null && false)   //old
-                {
-                    Vector scrFrom = getScreenCoordOf(flSys);
-                    scrFrom.X -= 10;
-                    scrFrom.Y -= 10;
-                    Vector scrTo = getScreenCoordOf(targSys);
-                    scrTo.X -= 10;
-                    scrTo.Y -= 10;
-
-                    pen.Color = Color.White;
-                    pen.Width += 2;
-                    pen.DashStyle = DashStyle.Dash;
-
-                    g.DrawLine(pen,
-                            new PointF((float)scrFrom.X + 10, (float)scrFrom.Y + 10),
-                            new PointF((float)scrTo.X + 10, (float)scrTo.Y + 10));
-                }
-                pen.Color = Color.Gold;
-                pen.DashStyle = DashStyle.Solid;
             }
 
             //рисуем гиперпереходы
@@ -345,7 +360,7 @@ namespace GalaxyConquest.Drawing
             {
                 StarWarp w = state.Galaxy.lanes[i];
 
-                g.DrawLine(Pens.Gray,
+                g.DrawLine(new Pen(Lines.TransitionLineColor),
                     new PointF((float)w.system1.x, (float)w.system1.y),
                     new PointF((float)w.system2.x, (float)w.system2.y));
             }
@@ -359,16 +374,19 @@ namespace GalaxyConquest.Drawing
         {
             g.ScaleTransform(scaling, scaling);
 
+            Vector scr = getScreenCoordOf(system.centralStar);
+            g.FillEllipse(system.centralStar.color, (float)scr.X - system.centralStar.size / 2, (float)scr.Y - system.centralStar.size / 2, system.centralStar.size, system.centralStar.size);
+
             for (int i = 0; i < system.planets.Count; i++)
             {
-                StarSystems.Planet p = system.planets[i];
+                Planet p = system.planets[i];
 
-                Vector scr = getScreenCoordOf(p);
+                scr = getScreenCoordOf(p);
                 float distX = p.distance;
                 float distY = p.distance * (float)Math.Sin(spinY);
                 g.DrawEllipse(Pens.White, centerX - distX, centerY - distY, distX * 2, distY * 2);
                 g.FillEllipse(new SolidBrush(p.planetColor), (float)scr.X - p.SIZE / 2, (float)scr.Y - p.SIZE / 2, p.SIZE, p.SIZE);
-                g.DrawString(p.name, new Font("arial", 7.0f), new SolidBrush(Color.White), new PointF((float)scr.X + 5f, (float)scr.Y + 5f));
+                g.DrawString(p.name, new Font(FONT_FAMILY_NAME, PLANET_NAME_FONT_SIZE), new SolidBrush(Color.White), new PointF((float)scr.X + PLANET_NAME_MARGIN, (float)scr.Y + PLANET_NAME_MARGIN));
             }
         }
         /// <summary>
@@ -390,8 +408,8 @@ namespace GalaxyConquest.Drawing
         /// <param name="dy">По горизонтали</param>
         public void Rotate(float dx, float dy)
         {
-            spinX += dx * 0.01;
-            spinY += dy * 0.01;
+            spinX += dx * ROTATION_SPEED;
+            spinY += dy * ROTATION_SPEED;
         }
         /// <summary>
         /// Изменяет масштаб
@@ -400,19 +418,10 @@ namespace GalaxyConquest.Drawing
         public void ChangeScale(double dv)
         {
             if (dv > 0)
-            {
-                if (scaling >= 10)
-                    return;
-                else
-                    scaling += 0.2f;
-            }
+                scaling = (float)Math.Min(scaling + SCALE_DELTA, MAX_SCALE);
             else
-            {
-                if (scaling <= 0.4)
-                    return;
-                else
-                    scaling -= 0.2f;
-            }
+                scaling = (float)Math.Max(scaling - SCALE_DELTA, MIN_SCALE);
+
             UpdateCenters();
         }
         /// <summary>
@@ -423,12 +432,12 @@ namespace GalaxyConquest.Drawing
         public bool CursorIsOnObject(MouseEventArgs e, Fleet obj)
         {
             Vector scr = getScreenCoordOf(obj);
-            scr.X -= 10;
-            scr.Y -= 10;
-            return (e.X + dispersion) / scaling > (scr.X - dispersion) &&
-                   (e.X - dispersion) / scaling < (scr.X + dispersion) &&
-                   (e.Y + dispersion) / scaling > (scr.Y - dispersion) &&
-                   (e.Y - dispersion) / scaling < (scr.Y + dispersion);
+            scr.X += FLEET_ICON_MARGIN;
+            scr.Y += FLEET_ICON_MARGIN;
+            return (e.X + DISPERSION) / scaling > (scr.X - DISPERSION) &&
+                   (e.X - DISPERSION) / scaling < (scr.X + DISPERSION) &&
+                   (e.Y + DISPERSION) / scaling > (scr.Y - DISPERSION) &&
+                   (e.Y - DISPERSION) / scaling < (scr.Y + DISPERSION);
         }
         /// <summary>
         /// Проверка нахождения курсора мыши на звездной системе
@@ -438,26 +447,26 @@ namespace GalaxyConquest.Drawing
         public bool CursorIsOnObject(MouseEventArgs e, StarSystem obj)
         {
             Vector scr = getScreenCoordOf(obj);
-            double starSize = (obj.type + 1) * 1.5;
+            double starSize = (obj.type + 1) * STAR_SIZE_SCALE;
 
-            return (e.X + dispersion) / scaling > (scr.X - starSize / 2) &&
-                   (e.X - dispersion) / scaling < (scr.X + starSize / 2) &&
-                   (e.Y + dispersion) / scaling > (scr.Y - starSize / 2) &&
-                   (e.Y - dispersion) / scaling < (scr.Y + starSize / 2);
+            return (e.X + DISPERSION) / scaling > (scr.X - starSize / 2) &&
+                   (e.X - DISPERSION) / scaling < (scr.X + starSize / 2) &&
+                   (e.Y + DISPERSION) / scaling > (scr.Y - starSize / 2) &&
+                   (e.Y - DISPERSION) / scaling < (scr.Y + starSize / 2);
         }
         /// <summary>
         /// Проверка нахождения курсора мыши на планете
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Планета для проверки</param>
-        public bool CursorIsOnObject(MouseEventArgs e, StarSystems.Planet obj)
+        public bool CursorIsOnObject(MouseEventArgs e, Planet obj)
         {
             Vector scr = getScreenCoordOf(obj);
 
-            return e.X > (scr.X - obj.SIZE / 2) &&
-                   e.X < (scr.X + obj.SIZE / 2) &&
-                   e.Y > (scr.Y - obj.SIZE / 2) &&
-                   e.Y < (scr.Y + obj.SIZE / 2);
+            return (e.X + DISPERSION) / scaling > (scr.X - obj.SIZE / 2) &&
+                   (e.X - DISPERSION) / scaling < (scr.X + obj.SIZE / 2) &&
+                   (e.Y + DISPERSION) / scaling > (scr.Y - obj.SIZE / 2) &&
+                   (e.Y - DISPERSION) / scaling < (scr.Y + obj.SIZE / 2);
         }
         /// <summary>
         /// Рассчитывает дистанцию от одного объекта до другого
@@ -469,6 +478,16 @@ namespace GalaxyConquest.Drawing
             return Math.Sqrt(Math.Pow((to.x - from.x), 2) + Math.Pow((to.y - from.y), 2) + Math.Pow((to.z - from.z), 2));
         }
 
+        /// <summary>
+        /// Получает массив точек, представляющих координаты иконки флота на экране.
+        /// </summary>
+        /// <param name="screenCoords">Экранные координаты флота.</param>
+        PointF[] GetFleetIcon(Vector screenCoords)
+        {
+            return new PointF[3] {new PointF((float)screenCoords.X + FLEET_ICON_UPLEFT_X, (float)screenCoords.Y + FLEET_ICON_UPLEFT_Y),
+                                  new PointF((float)screenCoords.X + FLEET_ICON_BOTTOMLEFT_X, (float)screenCoords.Y + FLEET_ICON_BOTTOMLEFT_Y),
+                                  new PointF((float)screenCoords.X + FLEET_ICON_RIGHT_X, (float)screenCoords.Y+FLEET_ICON_RIGHT_Y)};
+        }
         /// <summary>
         /// Обновляет координаты центра
         /// </summary>

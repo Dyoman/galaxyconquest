@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaxyConquest.SpaceObjects;
+using System;
 using System.Windows.Forms;
 
 namespace GalaxyConquest

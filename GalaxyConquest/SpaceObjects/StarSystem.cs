@@ -2,9 +2,7 @@
 using System.Drawing;
 using System.Collections.Generic;
 
-using GalaxyConquest.StarSystems;
-
-namespace GalaxyConquest
+namespace GalaxyConquest.SpaceObjects
 {
     /// <summary>
     /// Представляет звездную систему
@@ -25,11 +23,15 @@ namespace GalaxyConquest
         /// <summary>
         /// Браш, в виде которого планета будет представлена на экране
         /// </summary>
-        public SolidBrush br;
+        public SolidBrush color;
         /// <summary>
         /// Флаг, показывающий открыта ли система
         /// </summary>
         public bool Discovered = false;
+        /// <summary>
+        /// Центральное тело звездной системы.
+        /// </summary>
+        public Star centralStar = new Star();
         /// <summary>
         /// Планеты в звездной системе
         /// </summary>

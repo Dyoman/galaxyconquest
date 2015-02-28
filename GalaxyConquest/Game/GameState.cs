@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaxyConquest.SpaceObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +66,9 @@ namespace GalaxyConquest.Game
             StarSystem s = Galaxy.stars[rand.Next(Galaxy.stars.Count - 1)];
 
             Player.stars.Add(s);
+            s.Owner = Player;
+            for (int i = 0; i < s.planets.Count; i++)
+                s.planets[i].Owner = Player;
 
             Player.fleets.Add(new Fleet(Player, rand.Next(2, 5), s));
             s.Discovered = true;

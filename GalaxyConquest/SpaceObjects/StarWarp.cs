@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GalaxyConquest
+namespace GalaxyConquest.SpaceObjects
 {
     /// <summary>
     /// Представляет гиперпереход.

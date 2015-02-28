@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using GalaxyConquest.StarSystems;
 using GalaxyConquest.Tactics;
+using GalaxyConquest.SpaceObjects;
 
 namespace GalaxyConquest.Game
 {
@@ -78,7 +78,7 @@ namespace GalaxyConquest.Game
 
         public Player()
         {
-            name = "New player";
+            name = "none";
             technologies.Add(new int[] { 0, 0, 0 });
             technologies.Add(new int[] { 0, 1, 0 });
             technologies.Add(new int[] { 0, 2, 0 });

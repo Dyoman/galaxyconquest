@@ -5,7 +5,7 @@ using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
 using GalaxyConquest.PathFinding;
 
-namespace GalaxyConquest
+namespace GalaxyConquest.SpaceObjects
 {
     /// <summary>
     /// Представляет флот
@@ -13,10 +13,6 @@ namespace GalaxyConquest
     [Serializable]
     public class Fleet : SpaceObject
     {
-        /// <summary>
-        /// Владелец флота
-        /// </summary>
-        public Player Owner { get; private set; }
         /// <summary>
         /// Корабли во флоте
         /// </summary>
@@ -235,8 +231,6 @@ namespace GalaxyConquest
             }
             else
             {
-                s2 = s;
-                starDistanse = Math.Sqrt(Math.Pow(s.x - x, 2) + Math.Pow(s.y - y, 2) + Math.Pow(s.z - z, 2));
                 path.CalculateWay(s1, s);
                 s2 = path.First;
                 starDistanse = DrawController.Distance(path.First, this);
@@ -255,6 +249,9 @@ namespace GalaxyConquest
             if (captureProgress >= 5)
             {
                 Owner.stars.Add(CaptureTarget);
+                CaptureTarget.Owner = Owner;//Задаем владельца системе и всем её планетам после захвата.
+                for (int i = 0; i < CaptureTarget.planets.Count; i++)
+                    CaptureTarget.planets[i].Owner = Owner;
 
                 CaptureTarget = null;
                 Capturing = false;

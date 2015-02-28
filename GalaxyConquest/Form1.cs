@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using GalaxyConquest.StarSystems;
 using GalaxyConquest;
 using GalaxyConquest.Tactics;
 using NAudio;
@@ -15,6 +14,7 @@ using NAudio.Wave;
 using Tao.FreeGlut;
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
+using GalaxyConquest.SpaceObjects;
 
 
 namespace GalaxyConquest
@@ -28,6 +28,7 @@ namespace GalaxyConquest
         DrawController DrawControl;
         
         static public GameState Game;
+
         /// <summary>
         /// SaveFileDialog
         /// </summary>
@@ -51,10 +52,7 @@ namespace GalaxyConquest
         /// </summary>
         int mouseX, mouseY;
 
-        //public static Shop shop_form;
-        public static StarShop shop_form;
-
-        public Tech_Tree tt = new Tech_Tree();
+        public Tech_Tree techTreeForm = new Tech_Tree();
         IWavePlayer waveOutDevice;
         AudioFileReader audioFileReader;
 
@@ -67,7 +65,6 @@ namespace GalaxyConquest
         public Form1()
         {
             InitializeComponent();
-            shop_form = new StarShop();
             Buildings builds = new Buildings();
             SelfRef = this;
             tech_progressBar.Visible = false;
@@ -190,7 +187,7 @@ namespace GalaxyConquest
 
         private void MainMenuTechTree_Click(object sender, EventArgs e)
         {
-            tt.ShowDialog();
+            techTreeForm.ShowDialog();
 
             UpdateControls();
         }
@@ -201,7 +198,6 @@ namespace GalaxyConquest
         {
             if (Game == null)
                 return;
-
             DrawControl.Render(Game, e.Graphics);
         }
 
@@ -386,8 +382,6 @@ namespace GalaxyConquest
 
             StarShop shop = new StarShop();
             shop.ShowDialog();
-            shop_form = new StarShop();
-            shop_form.ShowDialog();
 
             UpdateControls();
         }
@@ -621,9 +615,11 @@ namespace GalaxyConquest
 
             tech_label.Visible = Game.Player.Learning;
             tech_progressBar.Visible = Game.Player.Learning;
-            tech_progressBar.Value = Game.Player.getLearningProgress();
             if (Game.Player.Learning)
+            {
                 tech_label.Text = Tech.teches.tiers[Game.Player.learningTech.Tier][Game.Player.learningTech.Line][Game.Player.learningTech.Subtech].subtech;
+                tech_progressBar.Value = Game.Player.getLearningProgress();
+            }
         }
         //Обновляет кнопки захвата системы
         void UpdateCaptureControls()

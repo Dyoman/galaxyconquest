@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace GalaxyConquest.StarSystems
+namespace GalaxyConquest.SpaceObjects
 {
     /// <summary>
     /// Представляет планету
@@ -15,7 +15,7 @@ namespace GalaxyConquest.StarSystems
         /// <summary>
         /// Координаты центрального тела
         /// </summary>
-        public PointF center = new PointF(0, 0);
+        public Star center;
         /// <summary>
         /// Скорость вращения вокруг центрального тела
         /// </summary>
@@ -50,10 +50,6 @@ namespace GalaxyConquest.StarSystems
         /// Размер планеты
         /// </summary>
         public float SIZE = 10;
-        /// <summary>
-        /// Имя обладателя планеты
-        /// </summary>
-        public string ownerName = "None";
         /// <summary>
         /// Прибыль, которую можно получить, захватив планету
         /// </summary>
@@ -125,17 +121,12 @@ namespace GalaxyConquest.StarSystems
                     break;
             }
 
-            if (POPULATION < POPULATIONMAX)
-            {
-                POPULATION += POPULATION * 0.1 * climateFactor;
-                POPULATION = Math.Round(POPULATION, 3);
-            }
+            POPULATION = Math.Min(POPULATIONMAX, POPULATION + POPULATION * 0.1 * climateFactor);
 
             float popfactor = 0;
 
             {
                 if (SIZE < 15)
-
                     popfactor = 5;
                 else if ((SIZE >= 15) && (SIZE < 23))
                     popfactor = 10;
@@ -147,9 +138,66 @@ namespace GalaxyConquest.StarSystems
             }
 
             PROFIT = mineralFactor * POPULATION;
-            PROFIT = Math.Round(PROFIT, 2);
             POPULATIONMAX = popfactor * climateFactor;
 
+        }
+        /// <summary>
+        /// Генерирует планеты для звездной системы
+        /// </summary>
+        public static void generatePlanets(StarSystem s, double Time)
+        {
+            int sizemin = 10;
+            int sizemax = 40;
+            int mineralmin = 0;
+            int mineralmax = 4;
+            int climatemin = 0;
+            int climatemax = 4;
+            int colormin = 0;
+            int colormax = 255;
+            float speed = 1f;
+
+            if (s.planets.Count > 0)//Обновляем список планет
+            {
+                s.planets.Clear();
+            }
+
+            Random r = new Random(DateTime.Now.Millisecond);
+
+            int planets_count = s.type + r.Next(1, 2);//Количество планет в системе варьируется
+
+            s.centralStar = new Star();
+            s.centralStar.name = s.name;
+            s.centralStar.size = r.Next(sizemax, sizemax * 2);
+            s.centralStar.color = s.color;
+
+            int dist = s.centralStar.size + 30;
+            for (int i = 0; i <= planets_count; i++)
+            {
+                Planet pln = new Planet();
+
+                pln.center = s.centralStar;
+                pln.distance = dist;
+                pln.speed = speed;
+                pln.planetColor = Color.FromArgb((r.Next(colormin, colormax)), (r.Next(colormin, colormax)), (r.Next(colormin, colormax)));
+                pln.SIZE = r.Next(sizemin, sizemax);
+
+                pln.name = s.name + " " + i.ToString();     //Имя планеты = <Имя звезды> <порядковый номер>
+
+                pln.CLIMATE = r.Next(climatemin, climatemax);
+                pln.POPULATIONMAX = 1;
+                pln.PROFIT = pln.POPULATION * pln.MINERALS;
+                pln.POPULATION = 1;
+                pln.MINERALS = r.Next(mineralmin, mineralmax);
+                pln.PROFIT = pln.POPULATION * pln.MINERALS;
+                pln.Owner = s.Owner;
+
+                pln.Move(Time);
+
+                s.planets.Add(pln);
+
+                dist += 30;//каждая следующая планета будет удалена от центра на 30 пикселей дальше
+                speed = speed / 3 + 0.1f;
+            }
         }
     }
 

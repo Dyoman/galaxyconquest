@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GalaxyConquest
+namespace GalaxyConquest.SpaceObjects
 {
     /// <summary>
     /// Абстрактный класс космического объекта. Определяет общие свойства и методы для всех остальных космических объектов.
@@ -15,6 +15,10 @@ namespace GalaxyConquest
         /// Координаты объекта в трехмерном пространстве.
         /// </summary>
         public double x, y, z;
+        /// <summary>
+        /// Владелец.
+        /// </summary>
+        public Game.Player Owner;
         /// <summary>
         /// Имя объекта.
         /// </summary>
@@ -30,6 +34,11 @@ namespace GalaxyConquest
         public virtual void Process()
         {
             throw new NotImplementedException("Виртуальный метод SpaceObject.Process() не переопределён.");
+        }
+
+        public SpaceObject()
+        {
+            Owner = new Game.Player();
         }
     }
 }

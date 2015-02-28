@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GalaxyConquest.Tactics;
 using System.Linq;
 using System.Text;
+using GalaxyConquest.SpaceObjects;
 
 namespace GalaxyConquest.Game
 {

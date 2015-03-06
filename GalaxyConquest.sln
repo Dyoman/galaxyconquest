@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalaxyConquest", "GalaxyConquest\GalaxyConquest.csproj", "{92260662-62DD-4DB2-A66F-A3B75E8EDA0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen", "Gwen\Gwen.csproj", "{ADDA2F43-96C0-497F-8216-29C67ABC9806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen.SFML", "Gwen.SFML\Gwen.SFML.csproj", "{7C90197E-16D2-4574-943F-AB588DBE10BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +17,13 @@ Global
 		{92260662-62DD-4DB2-A66F-A3B75E8EDA0A}.Debug|x86.Build.0 = Debug|x86
 		{92260662-62DD-4DB2-A66F-A3B75E8EDA0A}.Release|x86.ActiveCfg = Release|x86
 		{92260662-62DD-4DB2-A66F-A3B75E8EDA0A}.Release|x86.Build.0 = Release|x86
+		{ADDA2F43-96C0-497F-8216-29C67ABC9806}.Debug|x86.ActiveCfg = Debug|x86
+		{ADDA2F43-96C0-497F-8216-29C67ABC9806}.Debug|x86.Build.0 = Debug|x86
+		{ADDA2F43-96C0-497F-8216-29C67ABC9806}.Release|x86.ActiveCfg = Release|x86
+		{ADDA2F43-96C0-497F-8216-29C67ABC9806}.Release|x86.Build.0 = Release|x86
+		{7C90197E-16D2-4574-943F-AB588DBE10BA}.Debug|x86.ActiveCfg = Debug|x86
+		{7C90197E-16D2-4574-943F-AB588DBE10BA}.Debug|x86.Build.0 = Debug|x86
+		{7C90197E-16D2-4574-943F-AB588DBE10BA}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

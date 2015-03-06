@@ -10,8 +10,6 @@ using GalaxyConquest.Tactics;
 using NAudio;
 using NAudio.Wave;
 
-// для работы с библиотекой FreeGLUT 
-using Tao.FreeGlut;
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
 using GalaxyConquest.SpaceObjects;

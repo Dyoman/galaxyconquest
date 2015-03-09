@@ -22,6 +22,9 @@ namespace GalaxyConquest
         public static ScreenManager screenManager;
         public static bool quitFlag = false;
 
+        public static int width = 800;
+        public static int height = 600;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -30,11 +33,10 @@ namespace GalaxyConquest
         {
             //try
             {
-                const int width = 800;
-                const int height = 600;
+
 
                 // Create main window
-                m_Window = new RenderWindow(new VideoMode(width, height), "GalaxyConquest", Styles.Titlebar | Styles.Close | Styles.Resize, new ContextSettings(32, 0));
+                m_Window = new RenderWindow(new VideoMode((uint)width, (uint)height), "GalaxyConquest", Screen_Settings.fullScreen ? Styles.Fullscreen : (Styles.Close | Styles.Resize) | Styles.Titlebar, new ContextSettings(32, 0));
 
                 // Setup event handlers
                 m_Window.Closed += OnClosed;
@@ -177,6 +179,12 @@ namespace GalaxyConquest
             }*/
 
             m_Window.Dispose();
+        }
+
+        public static void applyVideoSettings()
+        {
+            m_Window.Dispose();
+            Main();
         }
 
         #region RedirectsToGwen

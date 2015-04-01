@@ -23,7 +23,7 @@ namespace GalaxyConquest
 {
     class Screen_TechTree : Gwen.Control.DockBase
     {
-        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(80), PixelFormat.Format32bppArgb);
+        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
         public float scaling = 1f;
         public float horizontal = 0;
         public float vertical = 0;
@@ -42,8 +42,6 @@ namespace GalaxyConquest
 
 
         bool dragging = false;
-        int mx = 0;
-        int my = 0;
 
         public Screen_TechTree (Base parent)
             : base(parent)
@@ -62,8 +60,8 @@ namespace GalaxyConquest
             
             updateDrawing();
 
-            img.SetPosition(Program.percentW(0), Program.percentH(20));
-            img.SetSize(Program.percentW(100), Program.percentH(80));
+            img.SetPosition(Program.percentW(0), Program.percentH(0));
+            img.SetSize(Program.percentW(100), Program.percentH(100));
             //img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
             img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
@@ -80,25 +78,56 @@ namespace GalaxyConquest
         {
             label.Text = "DOWN";
             dragging = true;
-            mx = arguments.X;
-            my = arguments.Y;
+            mouseX = arguments.X;
+            mouseY = arguments.Y;
         }
 
         void img_MouseMoved(Base sender, MovedEventArgs arguments)
         {
             if (dragging)
             {
-                label.Text = arguments.X.ToString() + "," + arguments.Y.ToString();
-                //DrawControl.Move(arguments.X - mx, arguments.Y - my);
+                horizontal += (arguments.X - mouseX) / scaling;
+                vertical += (arguments.Y - mouseY) / scaling;
+
+                mouseX = arguments.X;
+                mouseY = arguments.Y;
+
+                centerX = TechTreeBitmap.Width / 2 / scaling + horizontal;
+                centerY = TechTreeBitmap.Height / 2 / scaling + vertical;
+
                 updateDrawing();
-                mx = arguments.X;
-                my = arguments.Y;
             }
         }
 
         void img_Clicked(Base sender, ClickedEventArgs arguments)
         {
-            System.Windows.Forms.MessageBox.Show(arguments.X.ToString() + "," + arguments.Y.ToString());
+            /*System.Windows.Forms.MessageBox.Show("lern started");
+            for (int i = 0; i < Tech.teches.tiers.Count; i++)
+            {
+                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
+                {
+                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
+                    {
+                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
+
+                        if (arguments.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
+                            arguments.X > (centerX + 340 * i - 2) * scaling &&
+                            arguments.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
+                            arguments.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
+                        {
+                            //tierClicked = i;
+                            //techLineClicked = j;
+                            //subtechClicked = k;
+
+                            System.Windows.Forms.MessageBox.Show("lern started");
+
+                            //properties_tech_textBox.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description;
+                            //groupBox1.Visible = true;
+                            //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                        }
+                    }
+                }
+            }*/
         }
 
         protected override bool OnKeyReturn(bool down)
@@ -110,9 +139,9 @@ namespace GalaxyConquest
         private void updateDrawing()
         {
 
-            
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);
+            g.FillRectangle(Brushes.Black, 0, 0, TechTreeBitmap.Width, TechTreeBitmap.Height);
 
             centerX = TechTreeBitmap.Width / 2 / scaling;
             centerY = TechTreeBitmap.Height / 2 / scaling;
@@ -153,7 +182,6 @@ namespace GalaxyConquest
 
                 }
             }
-
             img.Image = TechTreeBitmap;
         }
             

@@ -65,7 +65,7 @@ namespace GalaxyConquest
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
 
             Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
-            buttonTech.Text = "Osdfdsdsf";
+            buttonTech.Text = "Tech Tree";
             buttonTech.Font = fontButonLabels;
             buttonTech.SetBounds(550, 500, 200, 50);
             buttonTech.Clicked += onButtonTechClick;

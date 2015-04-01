@@ -75,7 +75,9 @@ namespace GalaxyConquest
         /// </summary>
         public static void CheckTechInnovaions()
         {
+            MessageBox.Show("TODO");
 
+            /*
             //----------------------------------Adds Armor-----------------------------------
             Armor armor = new ArmorNone();
             if (Form1.SelfRef.techTreeForm.techLineClicked == 1)
@@ -111,7 +113,7 @@ namespace GalaxyConquest
                     Form1.Game.Player.fleets[i].ships[j].InstallArmor(armor);
                 }
             }
-
+            */
 
         }
 

@@ -40,6 +40,7 @@ namespace GalaxyConquest
             buttonNewGame.Text = "New game";
             buttonNewGame.Font = fontButonLabels;
             buttonNewGame.SetBounds(300, 200, 200, 50);
+            buttonNewGame.Pressed += onButtonNewGameClick;
 
             Gwen.Control.Button buttonLoadGame = new Gwen.Control.Button(this);
             buttonLoadGame.Text = "Load game";
@@ -69,6 +70,11 @@ namespace GalaxyConquest
         private void onButtonSettingsClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("settings");
+        }
+
+        private void onButtonNewGameClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("newgame");
         }
 
         private void onButtonQuitClick(Base control, EventArgs args)

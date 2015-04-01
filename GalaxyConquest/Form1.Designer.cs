@@ -1,4 +1,4 @@
-﻿namespace GalaxyConquest
+﻿/*namespace GalaxyConquest
 {
     partial class Form1
     {
@@ -575,3 +575,4 @@
     }
 }
 
+*/

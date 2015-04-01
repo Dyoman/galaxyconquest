@@ -64,26 +64,22 @@
   <ItemGroup>
     <Compile Include="Buildings.cs" />
     <Compile Include="Drawing\DrawController.cs" />
-    <Compile Include="ScreenManager.cs" />
-    <Compile Include="Screen_MainMenu.cs" />
-    <Compile Include="Screen_Settings.cs" />
-    <Compile Include="SpaceObjects\Fleet.cs" />
-    <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScreenManager.cs" />
+    <Compile Include="Screen_GameScreen.cs" />
+    <Compile Include="Screen_MainMenu.cs" />
+    <Compile Include="Screen_NewGame.cs" />
+    <Compile Include="Screen_Settings.cs" />
+    <Compile Include="SpaceObjects\Fleet.cs" />
+    <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="Game\GameState.cs" />
     <Compile Include="MovementsController.cs" />
     <Compile Include="PathFinding\StarPath.cs" />
-    <Compile Include="Form_About.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_About.Designer.cs">
-      <DependentUpon>Form_About.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form_NewGameDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,12 +89,6 @@
     <Compile Include="SpaceObjects\ModelGalaxy.cs" />
     <Compile Include="SpaceObjects\Planet.cs" />
     <Compile Include="SpaceObjects\Star.cs" />
-    <Compile Include="SpaceObjects\StarSystemForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SpaceObjects\StarSystemForm.Designer.cs">
-      <DependentUpon>StarSystemForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Game\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,12 +100,6 @@
     <Compile Include="SpaceObjects\SpaceObject.cs" />
     <Compile Include="SpaceObjects\StarSystem.cs" />
     <Compile Include="SpaceObjects\StarWarp.cs" />
-    <Compile Include="StarShop.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StarShop.Designer.cs">
-      <DependentUpon>StarShop.cs</DependentUpon>
-    </Compile>
     <Compile Include="TacticCombat\Armor\Armor.cs" />
     <Compile Include="TacticCombat\Armor\ArmorMolibden.cs" />
     <Compile Include="TacticCombat\Armor\ArmorNanocom.cs" />
@@ -148,38 +132,22 @@
     <Compile Include="TacticCombat\Weapons\Weapon.cs" />
     <Compile Include="TacticCombat\Weapons\WpnGauss.cs" />
     <Compile Include="TacticCombat\Weapons\WpnLightLaser.cs" />
-    <Compile Include="Tech.cs" />
-    <Compile Include="Tech_Tree.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tech_Tree.Designer.cs">
-      <DependentUpon>Tech_Tree.cs</DependentUpon>
+    <Compile Include="Tech.cs">
+      <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_About.resx">
-      <DependentUpon>Form_About.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form_NewGameDialog.resx">
       <DependentUpon>Form_NewGameDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SpaceObjects\StarSystemForm.resx">
-      <DependentUpon>StarSystemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="StarShop.resx">
-      <DependentUpon>StarShop.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="TacticCombat\CombatForm.resx">
       <DependentUpon>CombatForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tech_Tree.resx">
-      <DependentUpon>Tech_Tree.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

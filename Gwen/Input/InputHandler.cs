@@ -277,6 +277,11 @@ namespace Gwen.Input
             if (down)
                 HoveredControl.Touch();
 
+            if (down)
+                HoveredControl.InputMouseDown(MousePosition.X, MousePosition.Y, down);
+            else
+                HoveredControl.InputMouseUp(MousePosition.X, MousePosition.Y, down);
+
 #if GWEN_HOOKSYSTEM
             if (bDown)
             {

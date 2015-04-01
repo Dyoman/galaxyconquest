@@ -67,9 +67,9 @@ namespace GalaxyConquest.PathFinding
             {
                 Vector3 mainDirection = new Vector3(to.x - currSys.x, to.y - currSys.y, to.z - currSys.z);
                 double minDistance = double.MaxValue;
-                for (int i = 0; i < Form1.Game.Galaxy.stars.Count; i++)
+                for (int i = 0; i < Program.Game.Galaxy.stars.Count; i++)
                 {
-                    s = Form1.Game.Galaxy.stars[i];
+                    s = Program.Game.Galaxy.stars[i];
                     if (s == currSys) continue;
 
                     Vector3 direction = new Vector3(s.x - currSys.x, s.y - currSys.y, s.z - currSys.z);

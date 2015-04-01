@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -10,9 +10,6 @@ using GalaxyConquest.Tactics;
 using NAudio;
 using NAudio.Wave;
 
-using GalaxyConquest.Drawing;
-using GalaxyConquest.Game;
-using GalaxyConquest.SpaceObjects;
 
 
 namespace GalaxyConquest
@@ -20,12 +17,6 @@ namespace GalaxyConquest
     [Serializable]
     public partial class Form1 : Form
     {
-        /// <summary>
-        /// Экземпляр класса DrawController, который будет отвечать за отрисовку в главной форме
-        /// </summary>
-        DrawController DrawControl;
-        
-        static public GameState Game;
 
         /// <summary>
         /// SaveFileDialog
@@ -83,7 +74,6 @@ namespace GalaxyConquest
             ofd.InitialDirectory = Application.StartupPath;
             ofd.Filter = "Galaxy files|*.gal|All files|*.*";
 
-            DrawControl = new DrawController(galaxyImage);
             ssf = new StarSystemForm(null);
         }
 
@@ -117,37 +107,6 @@ namespace GalaxyConquest
 
         //-----------------------------Main Menu--------------------------------------
 
-        private void mainMenuQuit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void mainMenuNew_Click(object sender, EventArgs e)
-        {
-            Form_NewGameDialog nd = new Form_NewGameDialog();
-            if (nd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Game = new GameState();
-                GameSeed seed = new GameSeed();
-                seed.pName = nd.namePlayer;
-                seed.gName = nd.galaxyName;
-                seed.gType = nd.getGalaxyType();
-                seed.gSize = nd.getGalaxySize();
-                seed.gStarsCount = nd.getStarsCount();
-                seed.gGenerateRandomEvent = nd.getGalaxyRandomEvents();
-
-                Game.New(seed);
-
-                UpdateControls();
-
-                panel1.Enabled = true;
-                mainMenuSave.Enabled = true;
-                MainMenuTechTree.Enabled = true;
-                systemsButton.Enabled = true;
-                fleetsButton.Enabled = true;
-                GameTimer.Start();
-            }
-        }
 
         private void mainMenuSave_Click(object sender, EventArgs e)
         {
@@ -177,12 +136,6 @@ namespace GalaxyConquest
             }
         }
 
-        private void mainMenuAbout_Click(object sender, EventArgs e)
-        {
-            Form_About af = new Form_About();
-            af.ShowDialog();
-        }
-
         private void MainMenuTechTree_Click(object sender, EventArgs e)
         {
             techTreeForm.ShowDialog();
@@ -191,13 +144,6 @@ namespace GalaxyConquest
         }
 
         //------------------------------------Events-----------------------------------
-
-        private void galaxyImage_Paint(object sender, PaintEventArgs e)
-        {
-            if (Game == null)
-                return;
-            DrawControl.Render(Game, e.Graphics);
-        }
 
         private void galaxyImage_MouseDown(object sender, MouseEventArgs e)
         {
@@ -674,3 +620,4 @@ namespace GalaxyConquest
         }
     }
 }
+*/

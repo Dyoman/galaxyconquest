@@ -11,6 +11,10 @@ using MessageBox = System.Windows.Forms.MessageBox;
 
 using System.Runtime.InteropServices;
 
+using GalaxyConquest.Drawing;
+using GalaxyConquest.Game;
+using GalaxyConquest.SpaceObjects;
+
 namespace GalaxyConquest
 {
     public static class Program
@@ -24,6 +28,16 @@ namespace GalaxyConquest
 
         public static int width = 800;
         public static int height = 600;
+
+
+
+        public static Gwen.Font fontLogo;
+        public static Gwen.Font fontText;
+        public static Gwen.Font fontButtonLabels;
+
+
+        public static GameState Game;
+
 
         /// <summary>
         /// The main entry point for the application.
@@ -100,6 +114,25 @@ namespace GalaxyConquest
 
 
 
+
+
+
+                fontLogo = new Gwen.Font(gwenRenderer);
+                fontLogo.FaceName = "OpenSans.ttf";
+                fontLogo.Size = 35;
+
+                fontText = new Gwen.Font(gwenRenderer);
+                fontText.FaceName = "OpenSans.ttf";
+                fontText.Size = 15;
+
+                fontButtonLabels = new Gwen.Font(gwenRenderer);
+                fontButtonLabels.FaceName = "OpenSans.ttf";
+                fontButtonLabels.Size = 25;
+
+
+
+
+
                 /*Gwen.Control.StatusBar m_StatusBar;
                 m_StatusBar = new Gwen.Control.StatusBar(m_Canvas);
                 m_StatusBar.Dock = Gwen.Pos.Bottom;
@@ -164,6 +197,10 @@ namespace GalaxyConquest
                     m_Window.Display();
                 }
 
+                fontLogo.Dispose();
+                fontText.Dispose();
+                fontButtonLabels.Dispose();
+
                 // we only need to dispose the canvas, it will take care of disposing all its children
                 // and current game screen
                 m_Canvas.Dispose();
@@ -179,6 +216,16 @@ namespace GalaxyConquest
             }*/
 
             m_Window.Dispose();
+        }
+
+        public static int percentW(int percent)
+        {
+            return width * percent / 100;
+        }
+
+        public static int percentH(int percent)
+        {
+            return height * percent / 100;
         }
 
         public static void applyVideoSettings()

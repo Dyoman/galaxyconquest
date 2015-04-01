@@ -34,10 +34,12 @@ namespace GalaxyConquest.SpaceObjects
         {
             InitializeComponent();
             SetSystem(system);
-            DrawControl = new DrawController(pictureBox1);
+//TODO: check            DrawControl = new DrawController(pictureBox1);
 
             SelfRef = this;
-            captureButton.Click += Form1.SelfRef.captureButton_Click;   //Привязываем события клика на кнопку захвата к обработчику такого же события в главной форме
+            captureButton.Click += Form1.SelfRef.captureButton_Click;   
+            //Привязываем события клика на кнопку захвата к обработчику 
+            //такого же события в главной форме
         }
 
         private void Form1_Load(object sender, EventArgs e)

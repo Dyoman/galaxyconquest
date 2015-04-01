@@ -15,4 +15,17 @@ namespace Gwen.Control {
 			this.MouseDown = down;
 		}
 	}
+
+    public class MovedEventArgs : EventArgs
+    {
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public bool MouseDown { get; private set; }
+
+        internal MovedEventArgs(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+    }
 }

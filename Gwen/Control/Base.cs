@@ -98,7 +98,22 @@ namespace Gwen.Control
 		/// </summary>
 		public virtual event GwenEventHandler<ClickedEventArgs> Clicked;
 
-		/// <summary>
+        /// <summary>
+        /// Invoked when the control has been mouse button pressed over it.
+        /// </summary>
+        public virtual event GwenEventHandler<ClickedEventArgs> MouseDown;
+
+        /// <summary>
+        /// Invoked when the control has been mouse button depressed over it.
+        /// </summary>
+        public virtual event GwenEventHandler<ClickedEventArgs> MouseUp;
+
+        /// <summary>
+        /// Invoked when the control has mouse moved over it.
+        /// </summary>
+        public virtual event GwenEventHandler<MovedEventArgs> MouseMoved;
+        
+        /// <summary>
 		/// Invoked when the control has been double-left-clicked.
 		/// </summary>
 		public virtual event GwenEventHandler<ClickedEventArgs> DoubleClicked;
@@ -1229,7 +1244,8 @@ namespace Gwen.Control
         /// <param name="dy">Y change.</param>
         protected virtual void OnMouseMoved(int x, int y, int dx, int dy)
         {
-
+            if (MouseMoved != null)
+                MouseMoved(this, new MovedEventArgs(x, y));
         }
 
         /// <summary>
@@ -1253,6 +1269,23 @@ namespace Gwen.Control
         }
 
         /// <summary>
+        /// Handler invoked on mouse click (left) event.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        protected virtual void OnMouseDown(int x, int y, bool downLeft, bool downRight)
+        {
+            if ((downLeft || downRight) && MouseDown != null)
+                MouseDown(this, new ClickedEventArgs(x, y, downLeft));
+        }
+
+        protected virtual void OnMouseUp(int x, int y, bool downLeft, bool downRight)
+        {
+            if ((!downLeft || !downRight) && MouseUp != null)
+                MouseUp(this, new ClickedEventArgs(x, y, downLeft));
+        }
+
+        /// <summary>
         /// Invokes left mouse click event (used by input system).
         /// </summary>
         internal void InputMouseClickedLeft(int x, int y, bool down)
@@ -1260,6 +1293,16 @@ namespace Gwen.Control
             OnMouseClickedLeft(x, y, down);
         }
 
+        internal void InputMouseDown(int x, int y, bool down)
+        {
+            OnMouseDown(x, y, down, false);
+        }
+
+        internal void InputMouseUp(int x, int y, bool down)
+        {
+            OnMouseUp(x, y, down, false);
+        }
+        
         /// <summary>
         /// Handler invoked on mouse click (right) event.
         /// </summary>

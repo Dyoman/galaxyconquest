@@ -173,7 +173,7 @@ namespace GalaxyConquest.Drawing
         /// <summary>
         /// Контрол, к которму привязано рисование
         /// </summary>
-        public Control DrawTarget { get; private set; }
+        public Image DrawTarget { get; private set; }
         /// <summary>
         /// Поворот по вертикали
         /// </summary>
@@ -202,10 +202,10 @@ namespace GalaxyConquest.Drawing
         /// Создание экземпляра класса
         /// </summary>
         /// <param name="target">Цель для рисования</param>
-        public DrawController(Control target)
+        public DrawController(Image target)
         {
             DrawTarget = target;
-            DrawTarget.SizeChanged += drawTarget_SizeChanged;
+            //TODO: DrawTarget.SizeChanged += drawTarget_SizeChanged;
 
             UpdateCenters();
         }

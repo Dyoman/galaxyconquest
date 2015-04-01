@@ -19,7 +19,7 @@ namespace GalaxyConquest
 
         public ScreenManager(Canvas canvas)
         {
-            m_canvas = canvas;
+            m_canvas = canvas;            
         }
 
         public void LoadScreen(string name)
@@ -35,10 +35,25 @@ namespace GalaxyConquest
             {
                 currentScreen = new Screen_MainMenu(m_canvas);
             }
+            else if (name == "newgame")
+            {
+                currentScreen = new Screen_NewGame(m_canvas);
+            }
+            else if (name == "gamescreen")
+            {
+                currentScreen = new Screen_GameScreen(m_canvas);
+                currentScreen.KeyboardInputEnabled = true;
+                
+            }
             else if (name == "settings")
             {
                 currentScreen = new Screen_Settings(m_canvas);
             }
+        }
+
+        void currentScreen_Clicked(Base sender, ClickedEventArgs arguments)
+        {
+            System.Windows.Forms.MessageBox.Show(arguments.X.ToString() + "," + arguments.Y.ToString());
         }
     }
 }

@@ -243,6 +243,8 @@ namespace Gwen.Control
         {
             if (IsHidden) return false;
 
+            
+
             return InputHandler.OnMouseClicked(this, button, down);
         }
 

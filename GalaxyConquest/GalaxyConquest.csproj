@@ -136,7 +136,6 @@
     <Compile Include="Tech.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tech_Tree_2.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

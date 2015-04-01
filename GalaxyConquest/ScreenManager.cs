@@ -49,6 +49,10 @@ namespace GalaxyConquest
             {
                 currentScreen = new Screen_Settings(m_canvas);
             }
+            else if (name == "techtree")
+            {
+                currentScreen = new Screen_TechTree(m_canvas);
+            }
         }
 
         void currentScreen_Clicked(Base sender, ClickedEventArgs arguments)

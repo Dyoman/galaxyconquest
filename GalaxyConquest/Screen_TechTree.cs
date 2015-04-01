@@ -10,6 +10,7 @@ using SFML;
 using Gwen;
 using Gwen.Control;
 
+
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
 using GalaxyConquest.SpaceObjects;
@@ -22,6 +23,7 @@ namespace GalaxyConquest
          public Image galaxyImage;
         public Gwen.Control.ImagePanel img;
         Gwen.Control.Label label;
+        Tech_Tree techTree = new Tech_Tree();
 
         /// <summary>
         /// Экземпляр класса DrawController, который будет отвечать за отрисовку в главной форме
@@ -44,11 +46,11 @@ namespace GalaxyConquest
             label.Font = Program.fontLogo;
 
             img = new Gwen.Control.ImagePanel(this);
+
             
-
             galaxyImage = new Bitmap(Program.percentW(100), Program.percentH(80), PixelFormat.Format32bppArgb);
-            DrawControl = new DrawController(galaxyImage);
-
+            galaxyImage = techTree.TechTreeBitmap;
+            
             updateDrawing();
 
             img.SetPosition(Program.percentW(0), Program.percentH(20));
@@ -59,7 +61,7 @@ namespace GalaxyConquest
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
         }
         // label Up и Down в Tech_Tree пожалуй не нужен
-        /*void img_MouseUp(Base sender, ClickedEventArgs arguments)
+        void img_MouseUp(Base sender, ClickedEventArgs arguments)
         {
             label.Text = "UP";
             dragging = false;
@@ -71,7 +73,7 @@ namespace GalaxyConquest
             dragging = true;
             mx = arguments.X;
             my = arguments.Y;
-        }*/
+        }
 
         void img_MouseMoved(Base sender, MovedEventArgs arguments)
         {
@@ -101,9 +103,9 @@ namespace GalaxyConquest
             Graphics gr = Graphics.FromImage(galaxyImage);
             gr.FillRectangle(Brushes.Black, 0, 0, galaxyImage.Width, galaxyImage.Height);
 
-            DrawControl.Render(Program.Game, gr);
+            techTree.Redraw();
 
-            img.Image = (Bitmap)galaxyImage;
+            img.Image = techTree.TechTreeBitmap;
         }
 
         public override void Dispose()

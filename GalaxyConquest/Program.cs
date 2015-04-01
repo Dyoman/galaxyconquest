@@ -36,6 +36,7 @@ namespace GalaxyConquest
         public static Gwen.Font fontButtonLabels;
 
 
+
         public static GameState Game;
 
 

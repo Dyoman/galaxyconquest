@@ -19,6 +19,8 @@ namespace GalaxyConquest
 {
     class Screen_GameScreen : Gwen.Control.DockBase
     {
+        Gwen.Font fontButonLabels;
+
         public Image galaxyImage;
         public Gwen.Control.ImagePanel img;
         Gwen.Control.Label label;
@@ -35,6 +37,10 @@ namespace GalaxyConquest
         public Screen_GameScreen(Base parent)
             : base(parent)
         {
+            fontButonLabels = new Gwen.Font(Skin.Renderer);
+            fontButonLabels.FaceName = "OpenSans.ttf";
+            fontButonLabels.Size = 25;
+
             SetSize(parent.Width, parent.Height);
 
             label = new Gwen.Control.Label(this);
@@ -57,6 +63,17 @@ namespace GalaxyConquest
             img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
+
+            Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
+            buttonTech.Text = "Osdfdsdsf";
+            buttonTech.Font = fontButonLabels;
+            buttonTech.SetBounds(550, 500, 200, 50);
+            buttonTech.Clicked += onButtonTechClick;
+        }
+
+        private void onButtonTechClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("techtree");
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)
@@ -108,6 +125,7 @@ namespace GalaxyConquest
 
         public override void Dispose()
         {
+            fontButonLabels.Dispose();
             base.Dispose();
         }
 

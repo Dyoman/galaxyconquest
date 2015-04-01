@@ -1,0 +1,5 @@
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen\bin\x86\Debug\Gwen.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen\bin\x86\Debug\Gwen.pdb
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen\obj\x86\Debug\Gwen.csprojResolveAssemblyReference.cache
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen\obj\x86\Debug\Gwen.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen\obj\x86\Debug\Gwen.pdb

@@ -75,6 +75,7 @@
     <Compile Include="Screen_MainMenu.cs" />
     <Compile Include="Screen_NewGame.cs" />
     <Compile Include="Screen_Settings.cs" />
+    <Compile Include="Screen_TechTree.cs" />
     <Compile Include="SpaceObjects\Fleet.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="Game\GameState.cs" />

@@ -1,0 +1,12 @@
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.SFML.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.SFML.pdb
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-graphics-2.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-window-2.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\Tao.OpenGl.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.pdb
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-graphics-2.pdb
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-window-2.pdb
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\obj\x86\Debug\Gwen.SFML.csprojResolveAssemblyReference.cache
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\obj\x86\Debug\Gwen.SFML.dll
+C:\Users\Михаил\Desktop\galaxyconquest\Gwen.SFML\obj\x86\Debug\Gwen.SFML.pdb

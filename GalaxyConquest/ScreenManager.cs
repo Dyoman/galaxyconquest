@@ -39,6 +39,10 @@ namespace GalaxyConquest
             {
                 currentScreen = new Screen_NewGame(m_canvas);
             }
+            else if (name == "planet")
+            {
+                currentScreen = new ScreenPlanet(m_canvas);
+            }
             else if (name == "gamescreen")
             {
                 currentScreen = new Screen_GameScreen(m_canvas);
@@ -53,6 +57,10 @@ namespace GalaxyConquest
             {
                 currentScreen = new Screen_TechTree(m_canvas);
             }
+            else if (name == "solarSystem")
+            {
+                currentScreen = new ScreenSolarSystem(m_canvas);
+            } 
         }
 
         void currentScreen_Clicked(Base sender, ClickedEventArgs arguments)

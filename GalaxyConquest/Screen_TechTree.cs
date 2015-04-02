@@ -23,6 +23,10 @@ namespace GalaxyConquest
 {
     class Screen_TechTree : Gwen.Control.DockBase
     {
+        Gwen.Font fontLogo;
+        Gwen.Font fontText;
+        Gwen.Font fontButonLabels;
+
         public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
         public float scaling = 1f;
         public float horizontal = 0;
@@ -46,6 +50,25 @@ namespace GalaxyConquest
         public Screen_TechTree (Base parent)
             : base(parent)
         {
+
+            fontLogo = new Gwen.Font(Skin.Renderer);
+            fontLogo.FaceName = "OpenSans.ttf";
+            fontLogo.Size = 35;
+
+            fontText = new Gwen.Font(Skin.Renderer);
+            fontText.FaceName = "OpenSans.ttf";
+            fontText.Size = 15;
+
+            fontButonLabels = new Gwen.Font(Skin.Renderer);
+            fontButonLabels.FaceName = "OpenSans.ttf";
+            fontButonLabels.Size = 25;
+
+            Gwen.Control.Button buttonOK = new Gwen.Control.Button(this);
+            buttonOK.Text = "Back";
+            buttonOK.Font = fontButonLabels;
+            buttonOK.SetBounds(500, 500, 50, 50);
+            buttonOK.Clicked += onButtonOKClick;
+
             Tech.Inint();
             SetSize(parent.Width, parent.Height);
 
@@ -61,7 +84,7 @@ namespace GalaxyConquest
             updateDrawing();
 
             img.SetPosition(Program.percentW(0), Program.percentH(0));
-            img.SetSize(Program.percentW(100), Program.percentH(100));
+            img.SetSize(Program.percentW(80), Program.percentH(80));
             //img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
             img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
@@ -184,8 +207,11 @@ namespace GalaxyConquest
             }
             img.Image = TechTreeBitmap;
         }
-            
-        
+
+        private void onButtonOKClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("gamescreen");
+        }
 
         public override void Dispose()
         {

@@ -8,3 +8,8 @@ C:\Users\Jerk\Desktop\galaxy\Gwen\bin\x86\Debug\Gwen.pdb
 C:\Users\Jerk\Desktop\galaxy\Gwen\obj\x86\Debug\Gwen.csprojResolveAssemblyReference.cache
 C:\Users\Jerk\Desktop\galaxy\Gwen\obj\x86\Debug\Gwen.dll
 C:\Users\Jerk\Desktop\galaxy\Gwen\obj\x86\Debug\Gwen.pdb
+C:\Users\Mr.Sky\Desktop\galaxy\Gwen\bin\x86\Debug\Gwen.dll
+C:\Users\Mr.Sky\Desktop\galaxy\Gwen\bin\x86\Debug\Gwen.pdb
+C:\Users\Mr.Sky\Desktop\galaxy\Gwen\obj\x86\Debug\Gwen.csprojResolveAssemblyReference.cache
+C:\Users\Mr.Sky\Desktop\galaxy\Gwen\obj\x86\Debug\Gwen.dll
+C:\Users\Mr.Sky\Desktop\galaxy\Gwen\obj\x86\Debug\Gwen.pdb

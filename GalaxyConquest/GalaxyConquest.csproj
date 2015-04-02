@@ -71,6 +71,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="ScreenManager.cs" />
+    <Compile Include="ScreenPlanet.cs" />
+    <Compile Include="ScreenSolarSystem.cs" />
     <Compile Include="Screen_GameScreen.cs" />
     <Compile Include="Screen_MainMenu.cs" />
     <Compile Include="Screen_NewGame.cs" />

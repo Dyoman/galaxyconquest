@@ -69,11 +69,22 @@ namespace GalaxyConquest
             buttonTech.Font = fontButonLabels;
             buttonTech.SetBounds(550, 500, 200, 50);
             buttonTech.Clicked += onButtonTechClick;
+
+            Gwen.Control.Button buttonSolarSystem = new Gwen.Control.Button(this);
+            buttonSolarSystem.Text = "Solar System";
+            buttonSolarSystem.Font = fontButonLabels;
+            buttonSolarSystem.SetBounds(300, 500, 200, 50);
+            buttonSolarSystem.Clicked += onSolarSystemClick;
         }
 
         private void onButtonTechClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("techtree");
+        }
+
+        private void onSolarSystemClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("solarSystem");
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)

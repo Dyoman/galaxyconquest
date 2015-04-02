@@ -39,6 +39,7 @@ namespace GalaxyConquest
             buttonNewGame.Font = Program.fontButtonLabels;
             buttonNewGame.SetBounds(Program.percentW(77), Program.percentH(87), Program.percentW(18), Program.percentH(8));
             buttonNewGame.Clicked += onButtonNewGameClick;
+
         }
 
         private void onButtonBackClick(Base control, EventArgs args)

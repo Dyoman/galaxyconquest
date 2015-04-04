@@ -23,9 +23,6 @@ namespace GalaxyConquest
 {
     class Screen_TechTree : Gwen.Control.DockBase
     {
-        Gwen.Font fontLogo;
-        Gwen.Font fontText;
-        Gwen.Font fontButonLabels;
 
         public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
         public float scaling = 1f;
@@ -51,21 +48,9 @@ namespace GalaxyConquest
             : base(parent)
         {
 
-            fontLogo = new Gwen.Font(Skin.Renderer);
-            fontLogo.FaceName = "OpenSans.ttf";
-            fontLogo.Size = 35;
-
-            fontText = new Gwen.Font(Skin.Renderer);
-            fontText.FaceName = "OpenSans.ttf";
-            fontText.Size = 15;
-
-            fontButonLabels = new Gwen.Font(Skin.Renderer);
-            fontButonLabels.FaceName = "OpenSans.ttf";
-            fontButonLabels.Size = 25;
-
             Gwen.Control.Button buttonOK = new Gwen.Control.Button(this);
             buttonOK.Text = "Back";
-            buttonOK.Font = fontButonLabels;
+            buttonOK.Font = Program.fontButtonLabels;
             buttonOK.SetBounds(500, 500, 50, 50);
             buttonOK.Clicked += onButtonOKClick;
 

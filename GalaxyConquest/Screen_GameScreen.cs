@@ -19,7 +19,7 @@ namespace GalaxyConquest
 {
     class Screen_GameScreen : Gwen.Control.DockBase
     {
-        Gwen.Font fontButonLabels;
+
 
         public Image galaxyImage;
         public Gwen.Control.ImagePanel img;
@@ -38,9 +38,9 @@ namespace GalaxyConquest
         public Screen_GameScreen(Base parent)
             : base(parent)
         {
-            fontButonLabels = new Gwen.Font(Skin.Renderer);
-            fontButonLabels.FaceName = "OpenSans.ttf";
-            fontButonLabels.Size = 25;
+            Program.fontButtonLabels = new Gwen.Font(Skin.Renderer);
+            Program.fontButtonLabels.FaceName = "OpenSans.ttf";
+            Program.fontButtonLabels.Size = 25;
 
             SetSize(parent.Width, parent.Height);
 
@@ -67,13 +67,13 @@ namespace GalaxyConquest
 
             Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
             buttonTech.Text = "Tech Tree";
-            buttonTech.Font = fontButonLabels;
+            buttonTech.Font = Program.fontButtonLabels;
             buttonTech.SetBounds(550, 500, 200, 50);
             buttonTech.Clicked += onButtonTechClick;
 
             Gwen.Control.Button buttonSolarSystem = new Gwen.Control.Button(this);
             buttonSolarSystem.Text = "Solar System";
-            buttonSolarSystem.Font = fontButonLabels;
+            buttonSolarSystem.Font = Program.fontButtonLabels;
             buttonSolarSystem.SetBounds(300, 500, 200, 50);
             buttonSolarSystem.Clicked += onSolarSystemClick;
 
@@ -150,7 +150,6 @@ namespace GalaxyConquest
 
         public override void Dispose()
         {
-            fontButonLabels.Dispose();
             base.Dispose();
         }
 

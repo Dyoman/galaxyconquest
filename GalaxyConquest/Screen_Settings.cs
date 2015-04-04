@@ -11,9 +11,6 @@ namespace GalaxyConquest
 {
     public class Screen_Settings : Gwen.Control.DockBase
     {
-        Gwen.Font fontLogo;
-        Gwen.Font fontText;
-        Gwen.Font fontButonLabels;
 
         public static bool fullScreen = false;
 
@@ -22,26 +19,11 @@ namespace GalaxyConquest
         {
             SetSize(parent.Width, parent.Height);
 
-            // Note that when using a custom font, this font object has to stick around
-            // for the lifetime of the label. Rethink, or is that ideal?
-            //перевожу по-простому: шрифты надо повторно использовать и хранить для всего приложения
-            fontLogo = new Gwen.Font(Skin.Renderer);
-            fontLogo.FaceName = "OpenSans.ttf";
-            fontLogo.Size = 35;
-
-            fontText = new Gwen.Font(Skin.Renderer);
-            fontText.FaceName = "OpenSans.ttf";
-            fontText.Size = 15;
-
-            fontButonLabels = new Gwen.Font(Skin.Renderer);
-            fontButonLabels.FaceName = "OpenSans.ttf";
-            fontButonLabels.Size = 25;
-
             Gwen.Control.Label label = new Gwen.Control.Label(this);
             label.Text = "Settings";
             label.SetPosition(30, 30);
             label.TextColor = Color.FromArgb(200, 80, 0, 250);
-            label.Font = fontLogo;
+            label.Font = Program.fontLogo;
 
             Gwen.Control.WindowControl settingsWindow = new Gwen.Control.WindowControl(this);
             settingsWindow.Width = parent.Width / 2;
@@ -52,7 +34,7 @@ namespace GalaxyConquest
             musicLabel.Text = "Music:";
             musicLabel.SetPosition(parent.Width / 10, parent.Height / 10);
             musicLabel.TextColor = Color.FromArgb(255, 0, 0, 0);
-            musicLabel.Font = fontText;
+            musicLabel.Font = Program.fontText;
 
             Gwen.Control.HorizontalSlider musicSlider = new Gwen.Control.HorizontalSlider(settingsWindow);
             musicSlider.SetPosition(parent.Width / 5, parent.Height / 10);
@@ -62,7 +44,7 @@ namespace GalaxyConquest
             sfxLabel.Text = "SFX:";
             sfxLabel.SetPosition(parent.Width / 10, musicLabel.Y + musicLabel.Height);
             sfxLabel.TextColor = Color.FromArgb(255, 0, 0, 0);
-            sfxLabel.Font = fontText;
+            sfxLabel.Font = Program.fontText;
 
             Gwen.Control.CheckBox sfxCheckBox = new Gwen.Control.CheckBox(settingsWindow);
             sfxCheckBox.SetPosition(parent.Width / 5, musicLabel.Y + musicLabel.Height);
@@ -71,7 +53,7 @@ namespace GalaxyConquest
             fpsLabel.Text = "FPS Limit:";
             fpsLabel.SetPosition(parent.Width / 10, sfxLabel.Y + sfxLabel.Height);
             fpsLabel.TextColor = Color.FromArgb(255, 0, 0, 0);
-            fpsLabel.Font = fontText;
+            fpsLabel.Font = Program.fontText;
 
             Gwen.Control.HorizontalSlider fpsSlider = new Gwen.Control.HorizontalSlider(settingsWindow);
             fpsSlider.SetPosition(parent.Width / 5, sfxLabel.Y + sfxLabel.Height);
@@ -81,7 +63,7 @@ namespace GalaxyConquest
             resolutionLabel.Text = "Resolution:";
             resolutionLabel.SetPosition(parent.Width / 10, fpsLabel.Y + fpsLabel.Height);
             resolutionLabel.TextColor = Color.FromArgb(255, 0, 0, 0);
-            resolutionLabel.Font = fontText;
+            resolutionLabel.Font = Program.fontText;
 
             Gwen.Control.ComboBox resolution = new ComboBox(settingsWindow);
             resolution.AddItem("800x600");
@@ -93,7 +75,7 @@ namespace GalaxyConquest
             fullScreenLabel.Text = "Full screen:";
             fullScreenLabel.SetPosition(parent.Width / 10, resolutionLabel.Y + resolutionLabel.Height);
             fullScreenLabel.TextColor = Color.FromArgb(255, 0, 0, 0);
-            fullScreenLabel.Font = fontText;
+            fullScreenLabel.Font = Program.fontText;
 
             Gwen.Control.CheckBox fullScreenCheckBox = new Gwen.Control.CheckBox(settingsWindow);
             fullScreenCheckBox.SetPosition(parent.Width / 5, resolutionLabel.Y + resolutionLabel.Height);
@@ -106,7 +88,7 @@ namespace GalaxyConquest
 
             Gwen.Control.Button buttonOK = new Gwen.Control.Button(this);
             buttonOK.Text = "OK";
-            buttonOK.Font = fontButonLabels;
+            buttonOK.Font = Program.fontButtonLabels;
             buttonOK.SetBounds(550, 500, 200, 50);
             buttonOK.Clicked += onButtonOKClick;
         }
@@ -127,9 +109,6 @@ namespace GalaxyConquest
 
         public override void Dispose()
         {
-            fontLogo.Dispose();
-            fontText.Dispose();
-            fontButonLabels.Dispose();
             base.Dispose();
         }
 

@@ -24,6 +24,7 @@ namespace GalaxyConquest
         public Image galaxyImage;
         public Gwen.Control.ImagePanel img;
         Gwen.Control.Label label;
+        Gwen.Control.Button buttonCombat;
 
         /// <summary>
         /// Экземпляр класса DrawController, который будет отвечать за отрисовку в главной форме
@@ -75,6 +76,12 @@ namespace GalaxyConquest
             buttonSolarSystem.Font = fontButonLabels;
             buttonSolarSystem.SetBounds(300, 500, 200, 50);
             buttonSolarSystem.Clicked += onSolarSystemClick;
+
+            buttonCombat = new Gwen.Control.Button(this);
+            buttonCombat.Text = "Combat";
+            buttonCombat.Font = Program.fontButtonLabels;
+            buttonCombat.SetBounds(Program.percentW(0), Program.percentH(92), Program.percentW(18), Program.percentH(8));
+            buttonCombat.Clicked += onCombatClick;
         }
 
         private void onButtonTechClick(Base control, EventArgs args)
@@ -85,6 +92,13 @@ namespace GalaxyConquest
         private void onSolarSystemClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("solarSystem");
+        }
+
+        private void onCombatClick(Base control, EventArgs args)
+        {
+            TacticState.left = Program.Game.Player.fleets[0];
+            TacticState.right = Program.Game.Galaxy.neutrals[0];
+            Program.screenManager.LoadScreen("combat");
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)

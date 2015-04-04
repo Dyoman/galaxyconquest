@@ -126,8 +126,12 @@ namespace GalaxyConquest.Tactics
         public void InstallArmor(Armor armor)
         {
             equippedArmor = armor;
-            maxHealth = baseHealth * armor.factor;
-            currentHealth = maxHealth;
+            if (currentHealth > 0)
+            {
+                maxHealth = baseHealth * armor.factor;
+                currentHealth += maxHealth - baseHealth;
+            }
+            
         }
 
         public void InstallWpn(Weapon weapon)

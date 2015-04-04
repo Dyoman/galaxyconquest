@@ -1,4 +1,4 @@
-﻿namespace GalaxyConquest.Tactics
+﻿/*namespace GalaxyConquest.Tactics
 {
     partial class CombatForm
     {
@@ -137,5 +137,5 @@
         private System.Windows.Forms.Label txtRedShips;
         public System.Windows.Forms.PictureBox pictureMap;
     }
-}
+}*/
 

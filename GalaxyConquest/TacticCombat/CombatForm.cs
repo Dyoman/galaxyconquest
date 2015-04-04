@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
@@ -53,8 +53,8 @@ namespace GalaxyConquest.Tactics
                                 boxDescription.Text = tacticState.cMap.boxes[seed.select].spaceObject.description();
                                 seed.activeShip = (Ship)tacticState.cMap.boxes[seed.select].spaceObject;
 
-                                tacticDraw.DrawSavedImages(pictureMap, /*bmFull,*/ seed);
-                                tacticDraw.DrawActiveShipFrames(pictureMap, /*bmFull,*/ seed, tacticState);
+                                tacticDraw.DrawSavedImages(pictureMap,seed);
+                                tacticDraw.DrawActiveShipFrames(pictureMap, seed, tacticState);
                             }
                             else
                             {
@@ -100,12 +100,12 @@ namespace GalaxyConquest.Tactics
 
                                 if (seed.activeShip.actionsLeft != 0)
                                 {
-                                    tacticDraw.DrawSavedImages(pictureMap, /*bmFull,*/ seed);
-                                    tacticDraw.DrawActiveShipFrames(pictureMap, /*bmFull,*/ seed, tacticState);
+                                    tacticDraw.DrawSavedImages(pictureMap, seed);
+                                    tacticDraw.DrawActiveShipFrames(pictureMap, seed, tacticState);
                                 }
                                 else
                                 {
-                                    tacticDraw.DrawSavedImages(pictureMap, /*bmFull,*/ seed);
+                                    tacticDraw.DrawSavedImages(pictureMap,seed);
                                     seed.activeShip = null;
                                 }
                             }
@@ -116,8 +116,8 @@ namespace GalaxyConquest.Tactics
                             {
                                 boxDescription.Text = tacticState.cMap.boxes[seed.select].spaceObject.description();
                                 seed.activeShip = (Ship)tacticState.cMap.boxes[seed.select].spaceObject;
-                                tacticDraw.DrawSavedImages(pictureMap, /*bmFull,*/ seed);
-                                tacticDraw.DrawActiveShipFrames(pictureMap, /*bmFull,*/ seed, tacticState);
+                                tacticDraw.DrawSavedImages(pictureMap, seed);
+                                tacticDraw.DrawActiveShipFrames(pictureMap, seed, tacticState);
                                 break;
                             }
                             // просчет возможности атаки 
@@ -149,8 +149,8 @@ namespace GalaxyConquest.Tactics
                                     }
                                     else
                                     {
-                                        tacticDraw.DrawSavedImages(pictureMap, /*bmFull,*/ seed);
-                                        tacticDraw.DrawActiveShipFrames(pictureMap, /*bmFull,*/ seed, tacticState);
+                                        tacticDraw.DrawSavedImages(pictureMap, seed);
+                                        tacticDraw.DrawActiveShipFrames(pictureMap,seed, tacticState);
                                     }
                                     flag = 0;
                                     break;
@@ -169,7 +169,7 @@ namespace GalaxyConquest.Tactics
             else seed.activePlayer = 1;
             lblTurn.Text = "Ходит " + seed.activePlayer + "-й игрок";
             seed.activeShip = null;
-            tacticDraw.DrawSavedImages(pictureMap, /*bmFull,*/ seed);
+            tacticDraw.DrawSavedImages(pictureMap, seed);
             for (int count = 0; count < seed.allShips.Count; count++)
             {
                 seed.allShips[count].refill();
@@ -192,3 +192,4 @@ namespace GalaxyConquest.Tactics
 
     }
 }
+*/

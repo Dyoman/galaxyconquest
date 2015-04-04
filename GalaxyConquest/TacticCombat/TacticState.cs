@@ -29,7 +29,10 @@ namespace GalaxyConquest.Game
         public combatMap cMap = new combatMap(7, 5);
         public ObjectManager objectManager = new ObjectManager();
 
-        public void New(ref TacticSeed seed, Fleet left, Fleet right)
+        public static Fleet left;
+        public static Fleet right;
+
+        public void New(ref TacticSeed seed)
         {
             seed.activePlayer = 1;
             seed.activeShip = null;

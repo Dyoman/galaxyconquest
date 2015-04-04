@@ -73,6 +73,7 @@
     <Compile Include="ScreenManager.cs" />
     <Compile Include="ScreenPlanet.cs" />
     <Compile Include="ScreenSolarSystem.cs" />
+    <Compile Include="Screen_Combat.cs" />
     <Compile Include="Screen_GameScreen.cs" />
     <Compile Include="Screen_MainMenu.cs" />
     <Compile Include="Screen_NewGame.cs" />
@@ -109,9 +110,7 @@
     <Compile Include="TacticCombat\Armor\ArmorNone.cs" />
     <Compile Include="TacticCombat\Armor\ArmorTitan.cs" />
     <Compile Include="TacticCombat\Box.cs" />
-    <Compile Include="TacticCombat\CombatForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="TacticCombat\CombatForm.cs" />
     <Compile Include="TacticCombat\CombatForm.Designer.cs">
       <DependentUpon>CombatForm.cs</DependentUpon>
     </Compile>

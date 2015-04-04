@@ -57,12 +57,11 @@ namespace GalaxyConquest.Tactics
 
                 pictureMap.Image = bmFull;
                 pictureMap.Refresh();
-
                 // --- 3) отрисовываем тот битмам, который сохранили выше
                 //g.DrawImage(oldImage, 0, 0);
 
 
-                System.Threading.Thread.Sleep(35);
+                //System.Threading.Thread.Sleep(35);
             }
             g.DrawImage(oldImage, xmin, ymin);
             pictureMap.Refresh();

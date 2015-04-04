@@ -96,6 +96,10 @@ namespace GalaxyConquest.Drawing
                 pictureMap.Image = bmFull;
                 pictureMap.Refresh();
             }
+            for (int count = 0; count < seed.allShips.Count; count++)
+            {
+                seed.allShips[count].statusRefresh(ref bmBackground, ref bmFull);
+            }
         }
         // возвращает битмап с задним фоном
         public Bitmap DrawBackground(PictureBox pictureMap, TacticState tacticState)
@@ -286,8 +290,8 @@ namespace GalaxyConquest.Drawing
                             seed.activeShip.objectImg.Height)
                         );
                     pictureMap.Image = bmFull;
-                    pictureMap.Refresh();
-                    Thread.Sleep(5);
+                    
+                    //Thread.Sleep(5);
                     g.DrawImage(bg, seed.activeShip.x - halfBoxWidth, seed.activeShip.y - halfBoxHeight);
                 }
                 seed.activeShip.moveShip(tacticState.cMap, seed.activeShip.boxId, completeBoxWay[cnt].id, 1);
@@ -318,7 +322,7 @@ namespace GalaxyConquest.Drawing
                 angle = FindWay.AttackAngleSearch(targetx, targety, seed, tacticState);
                 doShipRotate(angle, 1, true, pictureMap, seed);
                 // отрисовка атаки
-                Thread.Sleep(150);
+                //Thread.Sleep(150);
 
                 ret = seed.activeShip.attack(tacticState.cMap, tacticState.cMap.boxes[seed.select].id, ref combatBitmap,
                     player, ref pictureMap, ref bmBackground, ref bmFull);

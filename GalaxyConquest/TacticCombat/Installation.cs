@@ -22,7 +22,7 @@ namespace GalaxyConquest.Tactics
                             switch (Player.technologies[j][0])
                             {
                                 case 0:
-                                    seed.left.ships[i].InstallWpn(new WpnNone());
+                                    seed.left.ships[i].InstallWpn(new WpnGauss());
                                     break;
                                 case 1:
                                     seed.left.ships[i].InstallWpn(new WpnGauss());

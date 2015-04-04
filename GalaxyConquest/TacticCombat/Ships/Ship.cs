@@ -61,10 +61,6 @@ namespace GalaxyConquest.Tactics
                     cMap.clearBox(pointB, ref bmBackground, ref bmFull);
                     flag = 1;
                 }
-                else
-                {
-                    cMap.boxes[pointB].spaceObject.statusRefresh(ref bmBackground, ref bmFull);
-                }
 
                 pictureMap.Image = bmFull;
                 pictureMap.Refresh();
@@ -78,7 +74,7 @@ namespace GalaxyConquest.Tactics
             Image bg = bmBg.Clone(new Rectangle(x - 25, y + 28, 50, 10), bmBg.PixelFormat);
             g.DrawImage(bg, x - 25, y + 28);
             g.DrawString(actionsLeft.ToString(), new Font("Arial", 8.0F), Brushes.Blue, new PointF(x + 10, y + 26));
-            g.DrawString(currentHealth.ToString(), new Font("Arial", 8.0F), Brushes.Red, new PointF(x - 20, y + 26));
+            g.DrawString(currentHealth.ToString("###.#"), new Font("Arial", 8.0F), Brushes.Red, new PointF(x - 20, y + 26));
         }
 
         public void placeShip(ref combatMap cMap)

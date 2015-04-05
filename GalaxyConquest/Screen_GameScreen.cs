@@ -65,19 +65,31 @@ namespace GalaxyConquest
             Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
             buttonTech.Text = "Tech Tree";
             buttonTech.Font = Program.fontButtonLabels;
-            buttonTech.SetBounds(550, 500, 200, 50);
+            buttonTech.SetBounds(Program.percentW(80), Program.percentH(84), Program.percentW(20), Program.percentH(8));
             buttonTech.Clicked += onButtonTechClick;
+
+            Gwen.Control.Button buttonMenu = new Gwen.Control.Button(this);
+            buttonMenu.Text = "Menu";
+            buttonMenu.Font = Program.fontButtonLabels;
+            buttonMenu.SetBounds(Program.percentW(0), Program.percentH(0), Program.percentW(13), Program.percentH(8));
+            buttonMenu.Clicked += onButtonMenuClick;
 
             Gwen.Control.Button buttonSolarSystem = new Gwen.Control.Button(this);
             buttonSolarSystem.Text = "Solar System";
             buttonSolarSystem.Font = Program.fontButtonLabels;
-            buttonSolarSystem.SetBounds(300, 500, 200, 50);
+            buttonSolarSystem.SetBounds(Program.percentW(0), Program.percentH(92), Program.percentW(19), Program.percentH(8));
             buttonSolarSystem.Clicked += onSolarSystemClick;
+
+            Gwen.Control.Button buttonStep = new Gwen.Control.Button(this);
+            buttonStep.Text = "Step";
+            buttonStep.Font = Program.fontButtonLabels;
+            buttonStep.SetBounds(Program.percentW(90), Program.percentH(92), Program.percentW(10), Program.percentH(8));
+            buttonStep.Clicked += onSolarSystemClick;
 
             buttonCombat = new Gwen.Control.Button(this);
             buttonCombat.Text = "Combat";
             buttonCombat.Font = Program.fontButtonLabels;
-            buttonCombat.SetBounds(Program.percentW(0), Program.percentH(92), Program.percentW(18), Program.percentH(8));
+            buttonCombat.SetBounds(Program.percentW(19), Program.percentH(92), Program.percentW(18), Program.percentH(8));
             buttonCombat.Clicked += onCombatClick;
         }
 
@@ -86,7 +98,65 @@ namespace GalaxyConquest
             Program.screenManager.LoadScreen("techtree");
         }
 
-        private void onSolarSystemClick(Base control, EventArgs args)
+
+
+
+
+
+        private void onButtonMenuClick(Base control, EventArgs args)
+        {
+    
+        
+
+            Gwen.Control.WindowControl settingsWindow = new Gwen.Control.WindowControl(this);
+            settingsWindow.Width = Program.percentW(50);
+            settingsWindow.Height = Program.percentH(50);
+            settingsWindow.SetPosition(Program.percentW(25), Program.percentH(20));
+
+            Gwen.Control.Button buttonNewGame = new Gwen.Control.Button(settingsWindow);
+            buttonNewGame.Text = "New game";
+            buttonNewGame.Font = Program.fontButtonLabels;
+            buttonNewGame.SetBounds(Program.percentW(12), Program.percentH(0), 200, 50);
+            buttonNewGame.Pressed += onButtonNewGameClick;
+
+            Gwen.Control.Button buttonLoadGame = new Gwen.Control.Button(settingsWindow);
+            buttonLoadGame.Text = "Load game";
+            buttonLoadGame.Disable();
+            buttonLoadGame.Font = Program.fontButtonLabels;
+            buttonLoadGame.SetBounds(Program.percentW(12), Program.percentH(10), 200, 50);
+
+            Gwen.Control.Button buttonSaveGame = new Gwen.Control.Button(settingsWindow);
+            buttonSaveGame.Text = "Save Game";
+            buttonSaveGame.Disable();
+            buttonSaveGame.Font = Program.fontButtonLabels;
+            buttonSaveGame.SetBounds(Program.percentW(12), Program.percentH(20), 200, 50);
+
+            Gwen.Control.Button buttonQuit = new Gwen.Control.Button(settingsWindow);
+            buttonQuit.Text = "Quit";
+            buttonQuit.Font = Program.fontButtonLabels;
+            buttonQuit.SetBounds(Program.percentW(12), Program.percentH(30), 200, 50);
+            buttonQuit.Pressed += onButtonQuitClick;
+        }
+    
+
+        private void onButtonNewGameClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("newgame");
+        }
+
+        private void onButtonQuitClick(Base control, EventArgs args)
+        {
+            Program.quitFlag = true;
+        }
+
+             
+    
+
+
+
+
+
+         private void onSolarSystemClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("solarSystem");
         }

@@ -46,3 +46,14 @@ D:\GitHub\GalaxyConqest_main\Gwen.SFML\bin\x86\Debug\sfmlnet-window-2.pdb
 D:\GitHub\GalaxyConqest_main\Gwen.SFML\obj\x86\Debug\Gwen.SFML.csprojResolveAssemblyReference.cache
 D:\GitHub\GalaxyConqest_main\Gwen.SFML\obj\x86\Debug\Gwen.SFML.dll
 D:\GitHub\GalaxyConqest_main\Gwen.SFML\obj\x86\Debug\Gwen.SFML.pdb
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.SFML.dll
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.SFML.pdb
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.dll
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-graphics-2.dll
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-window-2.dll
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\Gwen.pdb
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-graphics-2.pdb
+D:\Games\project\5\galaxyconquest\Gwen.SFML\bin\x86\Debug\sfmlnet-window-2.pdb
+D:\Games\project\5\galaxyconquest\Gwen.SFML\obj\x86\Debug\Gwen.SFML.csprojResolveAssemblyReference.cache
+D:\Games\project\5\galaxyconquest\Gwen.SFML\obj\x86\Debug\Gwen.SFML.dll
+D:\Games\project\5\galaxyconquest\Gwen.SFML\obj\x86\Debug\Gwen.SFML.pdb

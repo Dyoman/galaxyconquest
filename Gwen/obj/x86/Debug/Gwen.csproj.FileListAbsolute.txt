@@ -18,3 +18,7 @@ D:\GitHub\GalaxyConqest_main\Gwen\bin\x86\Debug\Gwen.pdb
 D:\GitHub\GalaxyConqest_main\Gwen\obj\x86\Debug\Gwen.csprojResolveAssemblyReference.cache
 D:\GitHub\GalaxyConqest_main\Gwen\obj\x86\Debug\Gwen.dll
 D:\GitHub\GalaxyConqest_main\Gwen\obj\x86\Debug\Gwen.pdb
+D:\Games\project\5\galaxyconquest\Gwen\bin\x86\Debug\Gwen.dll
+D:\Games\project\5\galaxyconquest\Gwen\bin\x86\Debug\Gwen.pdb
+D:\Games\project\5\galaxyconquest\Gwen\obj\x86\Debug\Gwen.dll
+D:\Games\project\5\galaxyconquest\Gwen\obj\x86\Debug\Gwen.pdb

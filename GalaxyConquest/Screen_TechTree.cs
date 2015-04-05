@@ -24,7 +24,7 @@ namespace GalaxyConquest
     class Screen_TechTree : Gwen.Control.DockBase
     {
 
-        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
+        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(80), Program.percentH(80), PixelFormat.Format32bppArgb);
         public float scaling = 1f;
         public float horizontal = 0;
         public float vertical = 0;
@@ -59,7 +59,7 @@ namespace GalaxyConquest
 
             label = new Gwen.Control.Label(this);
             label.Text = "Tech_Tree Probe";
-            label.SetPosition(Program.percentW(5), Program.percentH(5));
+            label.SetPosition(Program.percentW(85), Program.percentH(85));
             label.TextColor = Color.FromArgb(200, 80, 0, 250);
             label.Font = Program.fontLogo;
 
@@ -84,7 +84,36 @@ namespace GalaxyConquest
 
         void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
-            label.Text = "DOWN";
+            //System.Windows.Forms.MessageBox.Show("lern started");
+            for (int i = 0; i < Tech.teches.tiers.Count; i++)
+            {
+                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
+                {
+                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
+                    {
+                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
+
+                        if (arguments.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
+                            arguments.X > (centerX + 340 * i - 2) * scaling &&
+                            arguments.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
+                            arguments.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
+                        {
+                            //tierClicked = i;
+                            //techLineClicked = j;
+                            //subtechClicked = k;
+
+                            label.Text = i+";"+j+";"+k;
+
+                            //properties_tech_textBox.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description;
+                            //groupBox1.Visible = true;
+                            //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                        }
+                    }
+                }
+            }
+
+
+            //label.Text = "DOWN";
             dragging = true;
             mouseX = arguments.X;
             mouseY = arguments.Y;
@@ -109,33 +138,7 @@ namespace GalaxyConquest
 
         void img_Clicked(Base sender, ClickedEventArgs arguments)
         {
-            /*System.Windows.Forms.MessageBox.Show("lern started");
-            for (int i = 0; i < Tech.teches.tiers.Count; i++)
-            {
-                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
-                {
-                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
-                    {
-                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
-
-                        if (arguments.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
-                            arguments.X > (centerX + 340 * i - 2) * scaling &&
-                            arguments.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
-                            arguments.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
-                        {
-                            //tierClicked = i;
-                            //techLineClicked = j;
-                            //subtechClicked = k;
-
-                            System.Windows.Forms.MessageBox.Show("lern started");
-
-                            //properties_tech_textBox.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description;
-                            //groupBox1.Visible = true;
-                            //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
-                        }
-                    }
-                }
-            }*/
+            
         }
 
         protected override bool OnKeyReturn(bool down)

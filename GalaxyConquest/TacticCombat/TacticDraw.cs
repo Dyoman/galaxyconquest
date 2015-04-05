@@ -32,7 +32,6 @@ namespace GalaxyConquest.Drawing
             g.DrawImage(bm, 0, 0);
             g.DrawImage(ships, 0, 0);
             pictureMap.Image = tmpBitmap;
-            pictureMap.Refresh();
             return tmpBitmap;
         }
         // отрисовывает рамку вокруг активного корабля и вражеских кораблей в зоне поражения
@@ -76,7 +75,7 @@ namespace GalaxyConquest.Drawing
                 }
             }
             pictureMap.Image = bmFull;
-            pictureMap.Refresh();
+            
         }
         // восстанавливает сохраненные куски изображения
         public void DrawSavedImages(PictureBox pictureMap, /*Bitmap bmFull,*/ TacticSeed seed)
@@ -93,8 +92,7 @@ namespace GalaxyConquest.Drawing
 
                 }
                 seed.savedImages.Clear();
-                pictureMap.Image = bmFull;
-                pictureMap.Refresh();
+                pictureMap.Image = bmFull; 
             }
             for (int count = 0; count < seed.allShips.Count; count++)
             {
@@ -184,7 +182,7 @@ namespace GalaxyConquest.Drawing
                     0 - seed.activeShip.objectImg.Height / 2,
                     seed.activeShip.objectImg.Width,
                     seed.activeShip.objectImg.Height));
-                pictureMap.Refresh();
+                
                 if (count + 5 >= (int)Math.Abs(angle))
                 {
                     g = Graphics.FromImage(tmpBitmap);
@@ -197,7 +195,7 @@ namespace GalaxyConquest.Drawing
                             seed.activeShip.objectImg.Height));
                     g = Graphics.FromImage(bmFull);
                 }
-                Thread.Sleep(15);
+                //Thread.Sleep(15);
                 g.ResetTransform();
             }
             if (seed.activeShip.player == 1) sign = 1;
@@ -208,8 +206,6 @@ namespace GalaxyConquest.Drawing
             else seed.activeShip.objectImg = seed.activeShip.baseObjectImg;
             if (!saveImage) g.DrawImage(bg, rect);
         }
-
-        
 
         public void Move(PictureBox pictureMap, TacticSeed seed, TacticState tacticState, List<Box> completeBoxWay, int x1, int x2, int y1, int y2)
         {
@@ -249,7 +245,7 @@ namespace GalaxyConquest.Drawing
                     );
                 bg = bmBackground.Clone(rect, bmBackground.PixelFormat);
                 g.DrawImage(bg, seed.activeShip.x - halfBoxWidth, seed.activeShip.y - halfBoxHeight);
-                pictureMap.Refresh();
+                
                 actualDeltaX1 = completeBoxWay[cnt].x - tacticState.cMap.boxes[seed.activeShip.boxId].x;
                 actualDeltaY1 = completeBoxWay[cnt].y - tacticState.cMap.boxes[seed.activeShip.boxId].y;
                 if (cnt > 0)
@@ -290,7 +286,7 @@ namespace GalaxyConquest.Drawing
                             seed.activeShip.objectImg.Height)
                         );
                     pictureMap.Image = bmFull;
-                    
+                    Screen_Combat.UpdateDrawing();
                     //Thread.Sleep(5);
                     g.DrawImage(bg, seed.activeShip.x - halfBoxWidth, seed.activeShip.y - halfBoxHeight);
                 }
@@ -300,7 +296,6 @@ namespace GalaxyConquest.Drawing
                         seed.activeShip.y - seed.activeShip.objectImg.Height/2,
                         seed.activeShip.objectImg.Width,
                         seed.activeShip.objectImg.Height));
-                pictureMap.Refresh();
                 if (cnt == completeBoxWay.Count - 1)
                 {
                     doShipRotate(rotateAngle, -1, true, pictureMap, seed);
@@ -323,11 +318,8 @@ namespace GalaxyConquest.Drawing
                 doShipRotate(angle, 1, true, pictureMap, seed);
                 // отрисовка атаки
                 //Thread.Sleep(150);
-
                 ret = seed.activeShip.attack(tacticState.cMap, tacticState.cMap.boxes[seed.select].id, ref combatBitmap,
                     player, ref pictureMap, ref bmBackground, ref bmFull);
-
-                pictureMap.Refresh();
                 // возвращаем корабль в исходное положение
                 doShipRotate(angle, -1, false, pictureMap, seed);
             }

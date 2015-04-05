@@ -14,11 +14,11 @@ namespace GalaxyConquest
 {
     class Screen_Combat : Gwen.Control.DockBase
     {
-        public PictureBox pictureMap = new PictureBox();
+        public static PictureBox pictureMap = new PictureBox();
         public Bitmap combatBitmap;
         System.Media.SoundPlayer player = new System.Media.SoundPlayer();
 
-        Gwen.Control.ImagePanel imgCombatMap;
+        static Gwen.Control.ImagePanel imgCombatMap;
         Gwen.Control.Button buttonStep;
         Gwen.Control.Button buttonConcede;
         Gwen.Control.Button buttonAutoBattle;
@@ -81,6 +81,7 @@ namespace GalaxyConquest
 
         private void onStepClick(Base control, EventArgs args)
         {
+            labelDescription.Text = "";
             if (seed.activePlayer == 1) seed.activePlayer = 2;
             else seed.activePlayer = 1;
             labelStep.Text = "Ходит " + seed.activePlayer + "-й игрок";
@@ -101,6 +102,10 @@ namespace GalaxyConquest
                 }
             }
             UpdateDrawing();
+            if (seed.redShipsCount == 0)
+                EndCombat(1);
+            if (seed.blueShipsCount == 0)
+                EndCombat(2);
         }
 
         private void onConcedeClick(Base control, EventArgs args)
@@ -137,7 +142,6 @@ namespace GalaxyConquest
                                 seed.activeShip = (Ship)tacticState.cMap.boxes[seed.select].spaceObject;
                                 tacticDraw.DrawSavedImages(pictureMap, seed);
                                 tacticDraw.DrawActiveShipFrames(pictureMap, seed, tacticState);
-                                UpdateDrawing();
                             }
                             else
                             {
@@ -179,9 +183,6 @@ namespace GalaxyConquest
                             {
                                 tacticDraw.Move(pictureMap, seed, tacticState, completeBoxWay, x1, x2, y1, y2);
                                 labelDescription.Text = seed.activeShip.description();
-                                //seed.activeShip.statusRefresh(ref tacticDraw.bmBackground, ref tacticDraw.bmFull);
-                                //UpdateDrawing();
-
                                 if (seed.activeShip.actionsLeft != 0)
                                 {
                                     tacticDraw.DrawSavedImages(pictureMap, seed);
@@ -192,7 +193,6 @@ namespace GalaxyConquest
                                     tacticDraw.DrawSavedImages(pictureMap, seed);
                                     seed.activeShip = null;
                                 }
-                                UpdateDrawing();
                             }
                         }
                         else if (tacticState.cMap.boxes[seed.select].spaceObject != null)
@@ -203,7 +203,6 @@ namespace GalaxyConquest
                                 seed.activeShip = (Ship)tacticState.cMap.boxes[seed.select].spaceObject;
                                 tacticDraw.DrawSavedImages(pictureMap, seed);
                                 tacticDraw.DrawActiveShipFrames(pictureMap, seed, tacticState);
-                                UpdateDrawing();
                             }
                             // просчет возможности атаки 
                             else if (tacticState.cMap.boxes[seed.select].spaceObject.player != seed.activePlayer)
@@ -223,8 +222,7 @@ namespace GalaxyConquest
                                 }
                                 if (flag == 1)
                                 {
-                                    int attack = tacticDraw.Attack(pictureMap, seed, tacticState, combatBitmap, player);
-                                    if (attack == 1)
+                                    if (tacticDraw.Attack(pictureMap, seed, tacticState, combatBitmap, player) == 1)
                                         ShipsCounter.ShipsCount(ref seed);
                                     labelDescription.Text = seed.activeShip.description();
                                     
@@ -239,23 +237,26 @@ namespace GalaxyConquest
                                         tacticDraw.DrawSavedImages(pictureMap, seed);
                                         tacticDraw.DrawActiveShipFrames(pictureMap, seed, tacticState);
                                     }
-                                    UpdateDrawing();
-                                    if (seed.redShipsCount == 0)
-                                        EndCombat(1);
-                                    if (seed.blueShipsCount == 0)
-                                        EndCombat(2);
                                 }
                             }
                         }
                     }
+                    UpdateDrawing();
+                    if (seed.redShipsCount == 0)
+                        EndCombat(1);
+                    if (seed.blueShipsCount == 0)
+                        EndCombat(2);
                     break;
                 }
             }
         }
 
-        public void UpdateDrawing()
+        public static void UpdateDrawing()
         {
             imgCombatMap.Image = (Bitmap)pictureMap.Image;
+
+            Program.m_Canvas.RenderCanvas();
+            Program.m_Window.Display();
         }
 
         private void EndCombat(int win)

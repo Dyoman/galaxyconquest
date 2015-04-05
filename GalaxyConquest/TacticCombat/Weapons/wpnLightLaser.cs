@@ -49,14 +49,11 @@ namespace GalaxyConquest.Tactics
             for (int i = 0; i < 5; i++)
             {
                 g.DrawLine(laserPen1, new Point(x, y), new Point(targetx + i, targety));
-
                 pictureMap.Image = bmFull;
-                pictureMap.Refresh();
-
-                System.Threading.Thread.Sleep(35);
+                Screen_Combat.UpdateDrawing();
+                //System.Threading.Thread.Sleep(35);
             }
             g.DrawImage(oldImage, xmin, ymin);
-            pictureMap.Refresh();
         }
     }
 }

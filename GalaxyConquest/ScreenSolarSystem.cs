@@ -12,8 +12,6 @@ namespace GalaxyConquest
     public class ScreenSolarSystem : Gwen.Control.DockBase
     {
 
-        public static bool fullScreen = false;
-
         public ScreenSolarSystem(Base parent)
             : base(parent)
         {

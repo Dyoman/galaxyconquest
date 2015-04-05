@@ -38,9 +38,6 @@ namespace GalaxyConquest
         public Screen_GameScreen(Base parent)
             : base(parent)
         {
-            Program.fontButtonLabels = new Gwen.Font(Skin.Renderer);
-            Program.fontButtonLabels.FaceName = "OpenSans.ttf";
-            Program.fontButtonLabels.Size = 25;
 
             SetSize(parent.Width, parent.Height);
 
@@ -146,6 +143,9 @@ namespace GalaxyConquest
             DrawControl.Render(Program.Game, gr);
 
             img.Image = (Bitmap)galaxyImage;
+
+            Program.m_Canvas.RenderCanvas();
+            Program.m_Window.Display();
         }
 
         public override void Dispose()

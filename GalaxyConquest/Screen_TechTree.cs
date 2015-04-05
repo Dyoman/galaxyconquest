@@ -191,6 +191,9 @@ namespace GalaxyConquest
                 }
             }
             img.Image = TechTreeBitmap;
+
+            Program.m_Canvas.RenderCanvas();
+            Program.m_Window.Display();
         }
 
         private void onButtonOKClick(Base control, EventArgs args)
@@ -200,6 +203,7 @@ namespace GalaxyConquest
 
         public override void Dispose()
         {
+            fnt.Dispose();
             base.Dispose();
         }
 

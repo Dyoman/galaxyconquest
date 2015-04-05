@@ -20,8 +20,8 @@ namespace GalaxyConquest
     public static class Program
     {
         private static Gwen.Input.SFML.GwenInput m_Input;    //SFML inputs
-        private static RenderWindow m_Window;               //SFML window
-        private static Canvas m_Canvas;                     //GWEN canvas
+        public static RenderWindow m_Window;               //SFML window
+        public static Canvas m_Canvas;                     //GWEN canvas
 
         public static ScreenManager screenManager;
         public static bool quitFlag = false;

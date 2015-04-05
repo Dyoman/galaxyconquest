@@ -32,6 +32,7 @@ namespace GalaxyConquest
         DrawController DrawControl;
 
         bool dragging = false;
+        bool menuOpenned = false;
         int mx = 0;
         int my = 0;
 
@@ -105,47 +106,53 @@ namespace GalaxyConquest
 
         private void onButtonMenuClick(Base control, EventArgs args)
         {
-    
-        
 
-            Gwen.Control.WindowControl settingsWindow = new Gwen.Control.WindowControl(this);
-            settingsWindow.Width = Program.percentW(50);
-            settingsWindow.Height = Program.percentH(50);
-            settingsWindow.SetPosition(Program.percentW(25), Program.percentH(20));
 
-            Gwen.Control.Button buttonNewGame = new Gwen.Control.Button(settingsWindow);
-            buttonNewGame.Text = "New game";
-            buttonNewGame.Font = Program.fontButtonLabels;
-            buttonNewGame.SetBounds(Program.percentW(12), Program.percentH(0), 200, 50);
-            buttonNewGame.Pressed += onButtonNewGameClick;
+            if (!menuOpenned)
+            {
+                menuOpenned = true;
 
-            Gwen.Control.Button buttonLoadGame = new Gwen.Control.Button(settingsWindow);
-            buttonLoadGame.Text = "Load game";
-            buttonLoadGame.Disable();
-            buttonLoadGame.Font = Program.fontButtonLabels;
-            buttonLoadGame.SetBounds(Program.percentW(12), Program.percentH(10), 200, 50);
+                Gwen.Control.WindowControl menuWindow = new Gwen.Control.WindowControl(this);
+                menuWindow.Width = Program.percentW(50);
+                menuWindow.Height = Program.percentH(50);
+                menuWindow.SetPosition(Program.percentW(25), Program.percentH(20));
 
-            Gwen.Control.Button buttonSaveGame = new Gwen.Control.Button(settingsWindow);
-            buttonSaveGame.Text = "Save Game";
-            buttonSaveGame.Disable();
-            buttonSaveGame.Font = Program.fontButtonLabels;
-            buttonSaveGame.SetBounds(Program.percentW(12), Program.percentH(20), 200, 50);
+                Gwen.Control.Button buttonNewGame = new Gwen.Control.Button(menuWindow);
+                buttonNewGame.Text = "New game";
+                buttonNewGame.Font = Program.fontButtonLabels;
+                buttonNewGame.SetBounds(Program.percentW(12), Program.percentH(0), 200, 50);
+                buttonNewGame.Pressed += onButtonNewGameClick;
 
-            Gwen.Control.Button buttonQuit = new Gwen.Control.Button(settingsWindow);
-            buttonQuit.Text = "Quit";
-            buttonQuit.Font = Program.fontButtonLabels;
-            buttonQuit.SetBounds(Program.percentW(12), Program.percentH(30), 200, 50);
-            buttonQuit.Pressed += onButtonQuitClick;
+                Gwen.Control.Button buttonLoadGame = new Gwen.Control.Button(menuWindow);
+                buttonLoadGame.Text = "Load game";
+                buttonLoadGame.Disable();
+                buttonLoadGame.Font = Program.fontButtonLabels;
+                buttonLoadGame.SetBounds(Program.percentW(12), Program.percentH(10), 200, 50);
+
+                Gwen.Control.Button buttonSaveGame = new Gwen.Control.Button(menuWindow);
+                buttonSaveGame.Text = "Save Game";
+                buttonSaveGame.Disable();
+                buttonSaveGame.Font = Program.fontButtonLabels;
+                buttonSaveGame.SetBounds(Program.percentW(12), Program.percentH(20), 200, 50);
+
+                Gwen.Control.Button buttonQuit = new Gwen.Control.Button(menuWindow);
+                buttonQuit.Text = "Quit";
+                buttonQuit.Font = Program.fontButtonLabels;
+                buttonQuit.SetBounds(Program.percentW(12), Program.percentH(30), 200, 50);
+                buttonQuit.Pressed += onButtonQuitClick;
+            }
         }
     
 
         private void onButtonNewGameClick(Base control, EventArgs args)
         {
+            menuOpenned = false;
             Program.screenManager.LoadScreen("newgame");
         }
 
         private void onButtonQuitClick(Base control, EventArgs args)
         {
+            menuOpenned = false;
             Program.quitFlag = true;
         }
 

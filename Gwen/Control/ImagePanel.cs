@@ -75,7 +75,7 @@ namespace Gwen.Control
                 value.Save(ms, ImageFormat.Bmp);
                 ms.Seek(0, SeekOrigin.Begin);
 
-                byte[] imgBytes = ImageToByte(value);
+                //byte[] imgBytes = ImageToByte(value);
                 //m_Texture.LoadRaw(value.Width, value.Height, imgBytes);
                 m_Texture.LoadStream(ms);
             }

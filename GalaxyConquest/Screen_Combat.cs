@@ -101,6 +101,7 @@ namespace GalaxyConquest
                     tacticDraw.DrawMeteor(seed, tacticState, newMeteor);
                 }
             }
+            ShipsCounter.ShipsCount(ref seed);
             UpdateDrawing();
             if (seed.redShipsCount == 0)
                 EndCombat(1);

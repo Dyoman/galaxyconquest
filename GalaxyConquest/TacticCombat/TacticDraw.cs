@@ -227,11 +227,11 @@ namespace GalaxyConquest.Drawing
                 y2 = tacticState.cMap.boxes[completeBoxWay[cnt].id].ycenter;
                 int stepLineRange = (int) Math.Sqrt((x2 - x1)*(x2 - x1) + ((y2 - y1)*(y2 - y1))*0.35);
                 range = (int) Math.Sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
-                dx = range/15;
+                dx = range/8;
                 int deltax;
                 int deltay;
-                deltax = (x2 - x1)/15;
-                deltay = (y2 - y1)/15;
+                deltax = (x2 - x1)/8;
+                deltay = (y2 - y1)/8;
                 Image bg;
                 Rectangle rect;
                 int halfBoxWidth = (tacticState.cMap.boxes[0].xpoint3 - tacticState.cMap.boxes[0].xpoint2)/2;

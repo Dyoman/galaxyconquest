@@ -46,7 +46,7 @@ namespace GalaxyConquest.Tactics
             Pen laserPen1 = new Pen(Color.Gray, 1);
 
             player.Play();
-            for (int i = -3; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 g.DrawLine(laserPen1, new Point(x, y), new Point(targetx + i, targety));
                 pictureMap.Image = bmFull;

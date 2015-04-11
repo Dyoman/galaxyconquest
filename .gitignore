@@ -49,3 +49,6 @@ GalaxyConquest/obj/x86/Debug/GalaxyConquest.SpaceObjects.StarSystemForm.resource
 /GalaxyConquest/bin/Debug/Gwen.dll
 /GalaxyConquest/bin/Debug/Gwen.pdb
 /GalaxyConquest/bin/Debug/Gwen.SFML.dll
+bin
+obj
+/GalaxyConquest.v12.suo

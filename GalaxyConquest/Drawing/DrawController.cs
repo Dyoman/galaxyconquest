@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using Gwen.Control;
 
 namespace GalaxyConquest.Drawing
 {
@@ -429,7 +430,7 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Флот для проверки</param>
-        public bool CursorIsOnObject(MouseEventArgs e, Fleet obj)
+        public bool CursorIsOnObject(ClickedEventArgs e, Fleet obj)
         {
             Vector scr = getScreenCoordOf(obj);
             scr.X += FLEET_ICON_MARGIN;
@@ -444,7 +445,7 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Система для проверки</param>
-        public bool CursorIsOnObject(MouseEventArgs e, StarSystem obj)
+        public bool CursorIsOnObject(ClickedEventArgs e, StarSystem obj)
         {
             Vector scr = getScreenCoordOf(obj);
             double starSize = (obj.type + 1) * STAR_SIZE_SCALE;
@@ -459,7 +460,7 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         /// <param name="e">Представляет информацию о курсоре</param>
         /// <param name="obj">Планета для проверки</param>
-        public bool CursorIsOnObject(MouseEventArgs e, Planet obj)
+        public bool CursorIsOnObject(ClickedEventArgs e, Planet obj)
         {
             Vector scr = getScreenCoordOf(obj);
 

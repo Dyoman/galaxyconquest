@@ -14,6 +14,7 @@ using Gwen.Control;
 using GalaxyConquest.Drawing;
 using GalaxyConquest.Game;
 using GalaxyConquest.SpaceObjects;
+using GalaxyConquest.Tactics;
 
 namespace GalaxyConquest
 {
@@ -42,27 +43,30 @@ namespace GalaxyConquest
 
             SetSize(parent.Width, parent.Height);
 
+
+
+            img = new Gwen.Control.ImagePanel(this);
+
+
+            galaxyImage = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
+            DrawControl = new DrawController(galaxyImage);
+
+            updateDrawing();
+
+            img.SetPosition(Program.percentW(0), Program.percentH(0));
+            img.SetSize(Program.percentW(100), Program.percentH(100));
+            img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
+            img.RightClicked += new GwenEventHandler<ClickedEventArgs>(img_RightClicked);
+            img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
+            img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
+            img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
+            img.MouseWheeled += new GwenEventHandler<MouseWheeledEventArgs>(img_MouseWheeled);
+
             label = new Gwen.Control.Label(this);
             label.Text = "GAME!!!";
             label.SetPosition(Program.percentW(5), Program.percentH(5));
             label.TextColor = Color.FromArgb(200, 80, 0, 250);
             label.Font = Program.fontLogo;
-
-            img = new Gwen.Control.ImagePanel(this);
-            
-
-            galaxyImage = new Bitmap(Program.percentW(100), Program.percentH(80), PixelFormat.Format32bppArgb);
-            DrawControl = new DrawController(galaxyImage);
-
-            updateDrawing();
-
-            img.SetPosition(Program.percentW(0), Program.percentH(20));
-            img.SetSize(Program.percentW(100), Program.percentH(80));
-            //img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
-            img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
-            img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
-            img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
-            img.MouseWheeled += new GwenEventHandler<MouseWheeledEventArgs>(img_MouseWheeled);
 
             Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
             buttonTech.Text = "Tech Tree";
@@ -99,8 +103,6 @@ namespace GalaxyConquest
         {
             Program.screenManager.LoadScreen("techtree");
         }
-
-
 
 
 
@@ -143,7 +145,7 @@ namespace GalaxyConquest
                 buttonQuit.Pressed += onButtonQuitClick;
             }
         }
-    
+
 
         private void onButtonNewGameClick(Base control, EventArgs args)
         {
@@ -158,7 +160,7 @@ namespace GalaxyConquest
         }
 
 
-         private void onSolarSystemClick(Base control, EventArgs args)
+        private void onSolarSystemClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("solarSystem");
         }
@@ -184,7 +186,7 @@ namespace GalaxyConquest
 
         void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
-            label.Text = "DOWN";
+
             dragging = true;
             mx = arguments.X;
             my = arguments.Y;
@@ -202,9 +204,120 @@ namespace GalaxyConquest
             }
         }
 
+        //по нажатию левой клавиши выделяем флот/звезду для активного флота
         void img_Clicked(Base sender, ClickedEventArgs arguments)
         {
-            System.Windows.Forms.MessageBox.Show(arguments.X.ToString() + "," + arguments.Y.ToString());
+            label.Text = arguments.X.ToString() + " : " + arguments.Y.ToString();
+            if (Program.Game == null)
+                return;
+
+            for (int i = 0; i < Program.Game.Player.fleets.Count; i++)
+            {
+                if (DrawControl.CursorIsOnObject(arguments, Program.Game.Player.fleets[i]))
+                {
+                    Program.Game.Player.selectedFleet = i;
+                    Program.Game.Player.selectedStar = Program.Game.Player.fleets[i].s2;
+                    label.Text = "Выбран " + (i + 1) + " флот";
+                    //Обновляем кнопки захвата при смене флота
+                    //UpdateCaptureControls();
+                    updateDrawing();
+                    return;
+                }
+            }
+
+            //if (onStep) return;
+
+            for (int j = 0; j < Program.Game.Galaxy.stars.Count; j++)
+            {
+                StarSystem s = Program.Game.Galaxy.stars[j];
+
+                if (DrawControl.CursorIsOnObject(arguments, s))
+                {
+                    /// Если флот ничего не захватывает, не в пути и еще не имеет конечной цели, тогда выбираем ему цель
+                    if (!Program.Game.Player.fleets[Program.Game.Player.selectedFleet].Capturing && !Program.Game.Player.fleets[Program.Game.Player.selectedFleet].onWay
+                        && Program.Game.Player.fleets[Program.Game.Player.selectedFleet].s2 == null)
+                    {
+                        if (DrawController.Distance(Program.Game.Player.fleets[Program.Game.Player.selectedFleet], s) < Fleet.MaxDistance)
+                        {
+                            Program.Game.Player.fleets[Program.Game.Player.selectedFleet].setTarget(s);
+                            Program.Game.Player.selectedStar = s;
+                        }
+                    }   //Если мы кликаем на систему, которая выбрана для флота как конечная цель, тогда снимаем цель   -- без этого мы не сможем отменить перемещение!!!!
+                    //else if (Game.Player.fleets[Game.Player.selectedFleet].s2 == s && Game.Player.fleets[Game.Player.selectedFleet].starDistanse == 0)
+                    else if (Program.Game.Player.fleets[Program.Game.Player.selectedFleet].path.Last == s && !Program.Game.Player.fleets[Program.Game.Player.selectedFleet].onWay)
+                    {
+                        Program.Game.Player.fleets[Program.Game.Player.selectedFleet].setTarget(null);
+                        Program.Game.Player.selectedStar = null;
+                    }
+                    updateDrawing();
+                    return;
+                }
+            }
+        }
+
+        private void img_RightClicked(Base control, ClickedEventArgs args)
+        {
+                for (int j = 0; j < Program.Game.Galaxy.stars.Count; j++)
+                {
+                    if (DrawControl.CursorIsOnObject(args, Program.Game.Galaxy.stars[j]) && Program.Game.Galaxy.stars[j].Discovered)
+                    {
+                        //загрузка экрана звездной системы
+                        /*if (!ssf.IsDisposed)
+                        {
+                            ssf.SetSystem(Program.Game.Galaxy.stars[j]);
+                            ssf.Show();
+                            ssf.Focus();
+                        }
+                        else
+                        {
+                            ssf = new StarSystemForm(Program.Game.Galaxy.stars[j]);
+                            ssf.Show();
+                        }*/
+                        //UpdateCaptureControls();//Обновляем кнопку захвата после выбора системы для просмотра
+                        updateDrawing();
+                        return;
+                    }
+                }
+
+                Fleet selectedFleet = null;
+
+                for (int i = 0; i < Program.Game.Player.fleets.Count; i++)
+                    if (DrawControl.CursorIsOnObject(args, Program.Game.Player.fleets[i]))
+                    {
+                        selectedFleet = Program.Game.Player.fleets[i];
+                        break;
+                    }
+                for (int i = 0; i < Program.Game.Galaxy.neutrals.Count; i++)
+                    if (DrawControl.CursorIsOnObject(args, Program.Game.Galaxy.neutrals[i]) && Program.Game.Galaxy.neutrals[i].s1.Discovered)
+                    {
+                        selectedFleet = Program.Game.Galaxy.neutrals[i];
+                        break;
+                    }
+
+                if (selectedFleet != null)
+                {
+                    int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                    double health = 0;
+                    for (int j = 0; j < selectedFleet.ships.Count; j++)
+                    {
+                        health += Math.Max(selectedFleet.ships[j].currentHealth, 0);
+                        if (selectedFleet.ships[j] is ShipScout)
+                        {
+                            scout++;
+                            if (selectedFleet.ships[j].currentHealth > 0)
+                                aScount++;
+                        }
+                        else if (selectedFleet.ships[j] is ShipAssaulter)
+                        {
+                            assault++;
+                            if (selectedFleet.ships[j].currentHealth > 0)
+                                aAssault++;
+                        }
+                    }
+                    System.Windows.Forms.MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", selectedFleet.name + " ( " + selectedFleet.s1.name + " )");
+                }
+                updateDrawing();
+
         }
 
         protected override bool OnKeyReturn(bool down)

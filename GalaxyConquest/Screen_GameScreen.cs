@@ -62,6 +62,7 @@ namespace GalaxyConquest
             img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
+            img.MouseWheeled += new GwenEventHandler<MouseWheeledEventArgs>(img_MouseWheeled);
 
             Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
             buttonTech.Text = "Tech Tree";
@@ -156,12 +157,6 @@ namespace GalaxyConquest
             Program.quitFlag = true;
         }
 
-             
-    
-
-
-
-
 
          private void onSolarSystemClick(Base control, EventArgs args)
         {
@@ -173,6 +168,12 @@ namespace GalaxyConquest
             TacticState.left = Program.Game.Player.fleets[0];
             TacticState.right = Program.Game.Galaxy.neutrals[0];
             Program.screenManager.LoadScreen("combat");
+        }
+
+        void img_MouseWheeled(Base sender, MouseWheeledEventArgs arguments)
+        {
+            DrawControl.ChangeScale(arguments.Delta);
+            updateDrawing();
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)

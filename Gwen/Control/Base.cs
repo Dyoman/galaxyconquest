@@ -109,6 +109,11 @@ namespace Gwen.Control
         public virtual event GwenEventHandler<ClickedEventArgs> MouseUp;
 
         /// <summary>
+        /// Invoked when the control has been mouse wheeled over it.
+        /// </summary>
+        public virtual event GwenEventHandler<MouseWheeledEventArgs> MouseWheeled;
+
+        /// <summary>
         /// Invoked when the control has mouse moved over it.
         /// </summary>
         public virtual event GwenEventHandler<MovedEventArgs> MouseMoved;
@@ -1221,8 +1226,8 @@ namespace Gwen.Control
         /// <param name="delta">Scroll delta.</param>
         protected virtual bool OnMouseWheeled(int delta)
         {
-            if (m_ActualParent != null)
-                return m_ActualParent.OnMouseWheeled(delta);
+            if (m_ActualParent != null && MouseWheeled != null)
+                MouseWheeled(this, new MouseWheeledEventArgs(delta));
 
             return false;
         }

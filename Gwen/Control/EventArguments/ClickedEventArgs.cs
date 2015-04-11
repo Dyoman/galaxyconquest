@@ -28,4 +28,18 @@ namespace Gwen.Control {
             this.Y = y;
         }
     }
+
+    public class MouseWheeledEventArgs : EventArgs
+    {
+        public int Delta { get; private set; }
+        //public int X { get; private set; }
+        //public int Y { get; private set; }
+
+        internal MouseWheeledEventArgs(int delta)
+        {
+            this.Delta = delta;
+            //this.X = x;
+            //this.Y = y;
+        }
+    }
 }

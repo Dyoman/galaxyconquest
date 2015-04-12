@@ -71,6 +71,7 @@ namespace GalaxyConquest
             img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
+            img.MouseWheeled += new GwenEventHandler<MouseWheeledEventArgs>(img_MouseWheeled);
 
             techDescription = new Gwen.Control.TextBox(this);
             techDescription.SetPosition(Program.percentW(5), Program.percentH(80));
@@ -92,6 +93,17 @@ namespace GalaxyConquest
         void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
             
+        }
+
+        void img_MouseWheeled(Base sender, MouseWheeledEventArgs arguments)
+        {
+            if (arguments.Delta > 0)
+                scaling = (float)Math.Min(scaling + 0.1, 10);
+            else
+                scaling = (float)Math.Max(scaling - 0.1, 0.1);
+
+                updateDrawing();
+    
         }
 
         void img_MouseMoved(Base sender, MovedEventArgs arguments)
@@ -191,14 +203,47 @@ namespace GalaxyConquest
                             }
                         }
 
+                       
                         Size techStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
                         Size RPStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].RP, fnt);
-                        
+
+                        StringFormat stringFormat = new StringFormat();
+                        stringFormat.Alignment = StringAlignment.Center;
+                        stringFormat.LineAlignment = StringAlignment.Center;
+
+                        RectangleF rectF1 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
+                                centerY - i * 300,
+                                150,
+                                40
+                                );
+
+                        RectangleF rectF2 = new RectangleF(centerX - RPStringLenght.Width + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
+                                centerY - i * 300,
+                                RPStringLenght.Width,
+                                40
+                                );
+
+                         g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
+                            rectF1, stringFormat);
+
+                         g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
+                             rectF2, stringFormat);
+                                    
+
+
+
+                         //----------------------------------------------------
+
+                         g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF1));
+                         g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF2));
+                         
+
+                        /*
                         g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
-                                    new PointF(centerX + 340 * j, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2)));
+                                    new PointF(centerX + 340 * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + techStringLenght.Width, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i));
 
                         g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
-                                    new PointF(centerX + 340 * j - RPStringLenght.Width, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2)));
+                                    new PointF(centerX + 340 * j - RPStringLenght.Width - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + techStringLenght.Width, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i));
 
                         //----------------------------------------------------
 
@@ -207,6 +252,7 @@ namespace GalaxyConquest
 
                         g.DrawRectangle(Pens.AliceBlue, centerX + 340 * j - 2 - RPStringLenght.Width,
                             centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, RPStringLenght.Width, RPStringLenght.Height + 2);
+                    */
                     }
 
                 }

@@ -5,36 +5,42 @@
       <Pair>
         <subtech>Конструкции</subtech>
         <description>Постройка зданий и кораблей</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Химия</subtech>
         <description>Получение новых химических веществ и сплавов</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Физика</subtech>
         <description>Разработка новых видов оружия и брони</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Биология</subtech>
         <description>Изучение особенностей планет и человеческого тела</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Социология</subtech>
         <description>Изучение человеческих взаимоотношений</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Математические и компьютерные науки</subtech>
         <description>Компьютерные разработки</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     </ArrayOfArrayOfPair>
@@ -43,48 +49,57 @@
       <Pair>
         <subtech>Верфь(здание)</subtech>
         <description>Постройка кораблей</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Фрегат</subtech>
         <description>боевой корабль</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Автоматизированная фабрика(здание)</subtech>
         <description>+5 производства * 1.2 от рабочих</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Титановая броня</subtech>
         <description>HP*1.25</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Ядерный двигатель</subtech>
         <description>Больше скорости кораблям!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Гаусс-оружие</subtech>
         <description>сила магнитов и ускорения!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Биосфера(здание)</subtech>
         <description>Макс. население +2</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Борьба с коррупцией</subtech>
         <description>налоги +20%</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Электронный компьютер</subtech>
         <description>Считает быстрее людей!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
   </ArrayOfArrayOfPair>
@@ -93,60 +108,72 @@
       <Pair>
         <subtech>Эсминец</subtech>
         <description>Корабль</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Планетарная ракетная батарея(здание)</subtech>
         <description>----</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Роботизированная фабрика(здание)</subtech>
         <description>+10 произвадства * 1.2 от рабочих</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Молибденовая броня</subtech>
         <description>HP * 1.5</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Ядерная ракета</subtech>
         <description>сила ядер!</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Термоядерный двигатель</subtech>
         <description>Жарко, зато быстро!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Лазерное оружие</subtech>
         <description>разрушающая оптика!</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Защитное поле 1</subtech>
         <description>HP корабля без учета брони *0.2/regen 33% за ход</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Клонирование (технология+здание)</subtech>
         <description>Дает возможность построить центр клонирования(прирост населения*1.5)</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Космическая торговля</subtech>
         <description>+30% к налогам</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Технопарк(здание)</subtech>
         <description>+10RP за ход исслед. на планете*1.5</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Квантовый компьютер</subtech>
         <description>Обуздай неопределенность!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
   </ArrayOfArrayOfPair>
@@ -155,56 +182,67 @@
       <Pair>
         <subtech>Крейсер</subtech>
         <description>корабль</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Нанофабрика(здание)</subtech>
         <description>+20 производства * 1.2 от рабочих</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Нанокомпозитная броня</subtech>
         <description>HP*1.75</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Фотонная торпеда</subtech>
         <description>Сила фотонов, сжатая в торпеду!</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Двигатель на антиматерии</subtech>
         <description>Искривляй пространство, лети быстрее света!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Плазменное оружие</subtech>
         <description>преврати врага в четвертое состояние вещества!</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Защитное поле 2</subtech>
         <description>HP корабля без учета брони *0.3/regen 33% за ход</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Терраформинг(здание)</subtech>
         <description>Улучшай свое окружение!(можно построить много раз)</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Космическая дипломатия</subtech>
         <description>Нейтралы больше не атакуют!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>
       <Pair>
         <subtech>Нейронный компьютер</subtech>
         <description>почти как человек, но умнее и быстрее!</description>
+	<RP>100</RP>
       </Pair>
       <Pair>
         <subtech>Институт ИИ(здание)</subtech>
         <description>проникни в тайну нейронов!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
   </ArrayOfArrayOfPair>
@@ -225,6 +263,7 @@
       <Pair>
         <subtech>Кинетический щит</subtech>
         <description>Энергия на твоей стороне!</description>
+	<RP>100</RP>
       </Pair>
     </ArrayOfPair>
     <ArrayOfPair>

@@ -45,7 +45,7 @@ namespace GalaxyConquest
 
         bool dragging = false;
 
-        public Screen_TechTree (Base parent)
+        public Screen_TechTree(Base parent)
             : base(parent)
         {
 
@@ -58,11 +58,11 @@ namespace GalaxyConquest
             Tech.Inint();
             SetSize(parent.Width, parent.Height);
 
-            
+
 
             img = new Gwen.Control.ImagePanel(this);
 
-            
+
             updateDrawing();
 
             img.SetPosition(Program.percentW(0), Program.percentH(0));
@@ -75,7 +75,7 @@ namespace GalaxyConquest
 
             techDescription = new Gwen.Control.TextBox(this);
             techDescription.SetPosition(Program.percentW(5), Program.percentH(80));
-            techDescription.SetSize(200,50);
+            techDescription.SetSize(200, 50);
             //techDescription.SetBounds(Program.percentW(5), Program.percentH(80), Program.percentH(20), Program.percentH(100));
 
             label = new Gwen.Control.Label(this);
@@ -92,7 +92,7 @@ namespace GalaxyConquest
 
         void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
-            
+
         }
 
         void img_MouseWheeled(Base sender, MouseWheeledEventArgs arguments)
@@ -102,8 +102,8 @@ namespace GalaxyConquest
             else
                 scaling = (float)Math.Max(scaling - 0.1, 0.1);
 
-                updateDrawing();
-    
+            updateDrawing();
+
         }
 
         void img_MouseMoved(Base sender, MovedEventArgs arguments)
@@ -131,12 +131,39 @@ namespace GalaxyConquest
                 {
                     for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
                     {
-                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
+                        for (int z = 0; z < Player.technologies.Count; z++)
+                        {
+                            if (i == Player.technologies[z][0] &&
+                                j == Player.technologies[z][1] &&
+                                k == Player.technologies[z][2])
+                            {
+                                br = Brushes.Yellow;
+                                break;
+                            }
+                            else
+                            {
+                                br = Brushes.White;
+                            }
+                        }
 
-                        if (arguments.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
-                            arguments.X > (centerX + 340 * i - 2) * scaling &&
-                            arguments.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
-                            arguments.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
+                        Size RPStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].RP, fnt);
+
+                        RectangleF rectF1 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
+                                centerY - i * 300,
+                                150,
+                                40
+                                );
+
+                        RectangleF rectF3 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150 - RPStringLenght.Width,
+                                centerY - i * 300 + 40,
+                                150 + RPStringLenght.Width,
+                                60
+                                );
+
+                        if (arguments.X < (rectF3.Right) * scaling &&
+                            arguments.X > (rectF3.Left) * scaling &&
+                            arguments.Y < (rectF3.Bottom) * scaling &&
+                            arguments.Y > (rectF1.Top) * scaling)
                         {
                             //tierClicked = i;
                             //techLineClicked = j;
@@ -144,7 +171,7 @@ namespace GalaxyConquest
 
                             //label.Text = i+";"+j+";"+k;
 
-                            
+
                             techDescription.Text = Tech.teches.tiers[i][j][k].description;
                             //groupBox1.Visible = true;
                             //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
@@ -203,8 +230,6 @@ namespace GalaxyConquest
                             }
                         }
 
-                       
-                        Size techStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
                         Size RPStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].RP, fnt);
 
                         StringFormat stringFormat = new StringFormat();
@@ -223,20 +248,27 @@ namespace GalaxyConquest
                                 40
                                 );
 
-                         g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
-                            rectF1, stringFormat);
+                        RectangleF rectF3 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150 - RPStringLenght.Width,
+                                centerY - i * 300 + 40,
+                                150 + RPStringLenght.Width,
+                                60
+                                );
 
-                         g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
-                             rectF2, stringFormat);
-                                    
+                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
+                           rectF1, stringFormat);
+
+                        g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
+                            rectF2, stringFormat);
+
+                        g.DrawString(Tech.teches.tiers[i][j][k].description, fnt, br,
+                             rectF3, stringFormat);
 
 
+                        //----------------------------------------------------
 
-                         //----------------------------------------------------
-
-                         g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF1));
-                         g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF2));
-                         
+                        g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF1));
+                        g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF2));
+                        g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF3));
 
                         /*
                         g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,

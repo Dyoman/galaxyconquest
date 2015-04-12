@@ -24,7 +24,7 @@ namespace GalaxyConquest
     class Screen_TechTree : Gwen.Control.DockBase
     {
 
-        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(80), Program.percentH(80), PixelFormat.Format32bppArgb);
+        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
         public float scaling = 1f;
         public float horizontal = 0;
         public float vertical = 0;
@@ -41,6 +41,7 @@ namespace GalaxyConquest
         public Gwen.Control.ImagePanel img;
         Gwen.Control.Label label;
 
+        Gwen.Control.TextBox techDescription;
 
         bool dragging = false;
 
@@ -57,11 +58,7 @@ namespace GalaxyConquest
             Tech.Inint();
             SetSize(parent.Width, parent.Height);
 
-            label = new Gwen.Control.Label(this);
-            label.Text = "Tech_Tree Probe";
-            label.SetPosition(Program.percentW(85), Program.percentH(85));
-            label.TextColor = Color.FromArgb(200, 80, 0, 250);
-            label.Font = Program.fontLogo;
+            
 
             img = new Gwen.Control.ImagePanel(this);
 
@@ -69,54 +66,32 @@ namespace GalaxyConquest
             updateDrawing();
 
             img.SetPosition(Program.percentW(0), Program.percentH(0));
-            img.SetSize(Program.percentW(80), Program.percentH(80));
-            //img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
+            img.SetSize(Program.percentW(100), Program.percentH(100));
+            img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
             img.MouseMoved += new GwenEventHandler<MovedEventArgs>(img_MouseMoved);
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
+
+            techDescription = new Gwen.Control.TextBox(this);
+            techDescription.SetPosition(Program.percentW(5), Program.percentH(80));
+            techDescription.SetSize(200,50);
+            //techDescription.SetBounds(Program.percentW(5), Program.percentH(80), Program.percentH(20), Program.percentH(100));
+
+            label = new Gwen.Control.Label(this);
+            label.Text = "Tech_Tree Probe";
+            label.SetPosition(Program.percentW(5), Program.percentH(5));
+            label.TextColor = Color.FromArgb(200, 80, 0, 250);
+            label.Font = Program.fontLogo;
         }
-        // label Up и Down в Tech_Tree пожалуй не нужен
+
         void img_MouseUp(Base sender, ClickedEventArgs arguments)
         {
-            label.Text = "UP";
             dragging = false;
         }
 
         void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
-            //System.Windows.Forms.MessageBox.Show("lern started");
-            for (int i = 0; i < Tech.teches.tiers.Count; i++)
-            {
-                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
-                {
-                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
-                    {
-                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
-
-                        if (arguments.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
-                            arguments.X > (centerX + 340 * i - 2) * scaling &&
-                            arguments.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
-                            arguments.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
-                        {
-                            //tierClicked = i;
-                            //techLineClicked = j;
-                            //subtechClicked = k;
-
-                            label.Text = i+";"+j+";"+k;
-
-                            //properties_tech_textBox.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description;
-                            //groupBox1.Visible = true;
-                            //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
-                        }
-                    }
-                }
-            }
-
-
-            //label.Text = "DOWN";
-            dragging = true;
-            mouseX = arguments.X;
-            mouseY = arguments.Y;
+            
         }
 
         void img_MouseMoved(Base sender, MovedEventArgs arguments)
@@ -138,7 +113,39 @@ namespace GalaxyConquest
 
         void img_Clicked(Base sender, ClickedEventArgs arguments)
         {
-            
+            for (int i = 0; i < Tech.teches.tiers.Count; i++)
+            {
+                for (int j = 0; j < Tech.teches.tiers[i].Count; j++)
+                {
+                    for (int k = 0; k < Tech.teches.tiers[i][j].Count; k++)
+                    {
+                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
+
+                        if (arguments.X < (centerX + 340 * i + (string_lenght.Width + 2)) * scaling &&
+                            arguments.X > (centerX + 340 * i - 2) * scaling &&
+                            arguments.Y < (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + (string_lenght.Height + 2)) * scaling &&
+                            arguments.Y > (centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2) * scaling)
+                        {
+                            //tierClicked = i;
+                            //techLineClicked = j;
+                            //subtechClicked = k;
+
+                            //label.Text = i+";"+j+";"+k;
+
+                            
+                            techDescription.Text = Tech.teches.tiers[i][j][k].description;
+                            //groupBox1.Visible = true;
+                            //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                        }
+                    }
+                }
+            }
+
+
+            //label.Text = "DOWN";
+            dragging = true;
+            mouseX = arguments.X;
+            mouseY = arguments.Y;
         }
 
         protected override bool OnKeyReturn(bool down)
@@ -183,12 +190,23 @@ namespace GalaxyConquest
                                 br = Brushes.White;
                             }
                         }
-                        Size string_lenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
-                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
-                                    new PointF(centerX + 340 * i, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2)));
 
-                        g.DrawRectangle(Pens.AliceBlue, centerX + 340 * i - 2,
-                            centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, string_lenght.Width + 2, string_lenght.Height + 2);
+                        Size techStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].subtech, fnt);
+                        Size RPStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].RP, fnt);
+                        
+                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
+                                    new PointF(centerX + 340 * j, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2)));
+
+                        g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
+                                    new PointF(centerX + 340 * j - RPStringLenght.Width, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2)));
+
+                        //----------------------------------------------------
+
+                        g.DrawRectangle(Pens.AliceBlue, centerX + 340 * j - 2,
+                            centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, techStringLenght.Width + 2, techStringLenght.Height + 2);
+
+                        g.DrawRectangle(Pens.AliceBlue, centerX + 340 * j - 2 - RPStringLenght.Width,
+                            centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, RPStringLenght.Width, RPStringLenght.Height + 2);
                     }
 
                 }

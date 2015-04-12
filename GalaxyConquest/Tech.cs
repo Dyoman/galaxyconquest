@@ -21,6 +21,7 @@ namespace GalaxyConquest
     {
         public string subtech { get; set; }
         public string description { get; set; }
+        public string RP { get; set; }
     }
     /// <summary>
     /// Структура описывает параметры технологий.

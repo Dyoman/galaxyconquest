@@ -5,6 +5,8 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Threading;
+using System.ComponentModel;
 
 using SFML;
 using Gwen;
@@ -32,6 +34,19 @@ namespace GalaxyConquest
         /// </summary>
         DrawController DrawControl;
 
+        /// <summary>
+        /// Флаг, показывающий находится ли игра на стадии шага
+        /// </summary>
+        bool onStep = false;
+
+        /// <summary>
+        /// Переменная для синхронизации времени во время шага
+        /// </summary>
+        double syncTime = 1;
+
+        System.ComponentModel.BackgroundWorker StepWorker;
+        System.Timers.Timer GameTimer; 
+
         bool dragging = false;
         bool menuOpenned = false;
         int mx = 0;
@@ -40,10 +55,12 @@ namespace GalaxyConquest
         public Screen_GameScreen(Base parent)
             : base(parent)
         {
-
+            StepWorker = new BackgroundWorker();
+            GameTimer = new System.Timers.Timer(2000);
+            InitializeComponent();
             SetSize(parent.Width, parent.Height);
 
-
+            
 
             img = new Gwen.Control.ImagePanel(this);
 
@@ -90,7 +107,7 @@ namespace GalaxyConquest
             buttonStep.Text = "Step";
             buttonStep.Font = Program.fontButtonLabels;
             buttonStep.SetBounds(Program.percentW(90), Program.percentH(92), Program.percentW(10), Program.percentH(8));
-            buttonStep.Clicked += onSolarSystemClick;
+            buttonStep.Clicked += onButtonStepClick;
 
             buttonCombat = new Gwen.Control.Button(this);
             buttonCombat.Text = "Combat";
@@ -104,7 +121,15 @@ namespace GalaxyConquest
             Program.screenManager.LoadScreen("techtree");
         }
 
-
+        // Set up the BackgroundWorker object by 
+        // attaching event handlers. 
+        private void InitializeComponent()
+        {
+            StepWorker.DoWork += new DoWorkEventHandler(StepWorker_DoWork);
+            StepWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(StepWorker_RunWorkerCompleted);
+            GameTimer.Elapsed += GameTimer_Tick;
+            GameTimer.Start();
+        }
 
 
         private void onButtonMenuClick(Base control, EventArgs args)
@@ -163,6 +188,107 @@ namespace GalaxyConquest
         private void onSolarSystemClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("solarSystem");
+        }
+
+        //--------------------------Step----------------------------------
+        private void onButtonStepClick(Base control, EventArgs args)
+        {
+            if (Program.Game == null) return;
+
+            //выключаем всю панель, пока запущен поток
+            //panel1.Enabled = false;
+            //captureButton.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
+
+            onStep = true;      //Устанавливаем флаг шага
+            StepWorker.RunWorkerAsync();
+            //UpdateCaptureControls();//Во время шага кнопки захвата не должны быть активны, по-этому обновляем их
+        }
+
+        // Поток, в которм выполняются все рассчеты во время шага
+        private void StepWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            StarSystem s = Program.Game.Player.selectedStar;
+            Random r = new Random(DateTime.Now.Millisecond);
+
+            //---------------изменение популяции в системах---------
+            for (int i = 0; i < Program.Game.Galaxy.stars.Count; i++)
+                Program.Game.Galaxy.stars[i].Process();
+
+
+            //---------------получение бабосиков и минералов и очков исследований с захваченных систем---------
+            Program.Game.Player.Process();
+
+            //---------------процесс захвата систем---------
+            for (int i = 0; i < Program.Game.Player.fleets.Count; i++)
+            {
+                Program.Game.Player.fleets[i].CaptureProcess();
+            }
+
+            while (onStep) ;    //Пока галактика находится в движении, ждем
+        }
+        //Метод вызывается BacgroundWirker-ом после завершения действий в потоке
+        private void StepWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            //проверяем нахождение нейтральных флотов и флотов игрока в одной системе
+            for (int l = 0; l < Program.Game.Player.fleets.Count; l++)
+                for (int k = 0; k < Program.Game.Galaxy.neutrals.Count; k++)
+                {
+                    if (Program.Game.Galaxy.neutrals[k].s1 == Program.Game.Player.fleets[l].s1)
+                    {
+                        if (!Program.Game.Player.fleets[l].onWay)
+                            if (System.Windows.Forms.MessageBox.Show("Ваш флот обнаружил нейтральный флот в системе " + Program.Game.Player.fleets[l].s1.name + "!\nАтаковать его?", "", MessageBoxButtons.YesNo)
+                                == System.Windows.Forms.DialogResult.Yes)
+                            {
+                                //CombatForm cf = new CombatForm(Program.Game.Player.fleets[l], Program.Game.Galaxy.neutrals[k]);
+                                //cf.ShowDialog();
+                            }
+                    }
+                }
+            //проверяем флоты и удаляем из списка уничтоженные флоты
+            //Проверяем с конца, потому что, если удалить флот в начале списка, в конце вылетит исключение out of range
+            for (int i = Program.Game.Galaxy.neutrals.Count - 1; i >= 0; i--)
+                if (!Program.Game.Galaxy.neutrals[i].Allive)
+                    Program.Game.Galaxy.neutrals.RemoveAt(i);
+
+            for (int i = Program.Game.Player.fleets.Count - 1; i >= 0; i--)
+                if (!Program.Game.Player.fleets[i].Allive)
+                {
+                    Program.Game.Player.fleets.RemoveAt(i);
+                    if (i == Program.Game.Player.selectedFleet)
+                        if (Program.Game.Player.fleets.Count > 0)
+                            Program.Game.Player.selectedFleet = 0;
+                }
+
+            //Обновляем лейблы
+            //UpdateControls();
+            //включам панель с кнопками
+            //panel1.Enabled = true;
+            //step_button.Focus();//задаём фокус для кнопки шага
+            //Обновляем кнопки захвата по завершению шага
+            //UpdateCaptureControls();
+        }
+
+
+        //----------------------Timer-------------------
+        //Обновление изображения и движение во время шага строго по тику таймера
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            if (onStep)
+            {
+                if (syncTime <= 0)
+                {
+                    syncTime = 1;
+                    onStep = false; //Снимаем флаг шага
+                }
+
+                MovementsController.Process(Program.Game.Galaxy, Program.Game.Galaxy.Time);
+                MovementsController.Process(Program.Game.Galaxy.neutrals.ToArray(), Program.Game.Galaxy.Time);
+                MovementsController.Process(Program.Game.Player.fleets.ToArray(), Program.Game.Galaxy.Time);
+
+                syncTime -= MovementsController.FIXED_TIME_DELTA;
+                Program.Game.Galaxy.Time += MovementsController.FIXED_TIME_DELTA;
+            }
+            //updateDrawing();
         }
 
         private void onCombatClick(Base control, EventArgs args)

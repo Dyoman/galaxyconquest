@@ -56,7 +56,7 @@ namespace GalaxyConquest
             : base(parent)
         {
             StepWorker = new BackgroundWorker();
-            GameTimer = new System.Timers.Timer(2000);
+            GameTimer = new System.Timers.Timer(10);
             InitializeComponent();
             SetSize(parent.Width, parent.Height);
 
@@ -279,6 +279,7 @@ namespace GalaxyConquest
                 {
                     syncTime = 1;
                     onStep = false; //Снимаем флаг шага
+                    updateDrawing();
                 }
 
                 MovementsController.Process(Program.Game.Galaxy, Program.Game.Galaxy.Time);

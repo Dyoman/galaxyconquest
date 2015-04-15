@@ -29,6 +29,8 @@ namespace GalaxyConquest
         public static int width = 800;
         public static int height = 600;
 
+        public static object isDrawing = new object();
+        public static bool isDrawingFlag = false;
 
 
         public static Gwen.Font fontLogo;
@@ -193,7 +195,11 @@ namespace GalaxyConquest
                     //m_StatusBar.Text = "GalaxyConquest v.0.1 - " + Math.Round(Fps, 2).ToString() + " fps";
 
                     // render GWEN canvas
-                    m_Canvas.RenderCanvas();
+                    //while (Program.isDrawingFlag)
+                        lock (Program.isDrawing)
+                        {
+                            m_Canvas.RenderCanvas();
+                        }
 
                     m_Window.Display();
                 }

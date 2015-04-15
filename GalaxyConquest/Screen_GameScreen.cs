@@ -195,6 +195,10 @@ namespace GalaxyConquest
         {
             if (Program.Game == null) return;
 
+            //если ход еще делается, дождаться его завершения
+            if (onStep)
+                return;
+
             //выключаем всю панель, пока запущен поток
             //panel1.Enabled = false;
             //captureButton.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
@@ -225,6 +229,7 @@ namespace GalaxyConquest
             }
 
             while (onStep) ;    //Пока галактика находится в движении, ждем
+
         }
         //Метод вызывается BacgroundWirker-ом после завершения действий в потоке
         private void StepWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -266,6 +271,12 @@ namespace GalaxyConquest
             //step_button.Focus();//задаём фокус для кнопки шага
             //Обновляем кнопки захвата по завершению шага
             //UpdateCaptureControls();
+
+            //перерисовка
+            lock (Program.isDrawing)
+            {
+                updateDrawing();
+            }
         }
 
 
@@ -279,7 +290,7 @@ namespace GalaxyConquest
                 {
                     syncTime = 1;
                     onStep = false; //Снимаем флаг шага
-                    updateDrawing();
+                    //updateDrawing();
                 }
 
                 MovementsController.Process(Program.Game.Galaxy, Program.Game.Galaxy.Time);
@@ -289,7 +300,7 @@ namespace GalaxyConquest
                 syncTime -= MovementsController.FIXED_TIME_DELTA;
                 Program.Game.Galaxy.Time += MovementsController.FIXED_TIME_DELTA;
             }
-            //updateDrawing();
+//            updateDrawing();
         }
 
         private void onCombatClick(Base control, EventArgs args)
@@ -453,17 +464,21 @@ namespace GalaxyConquest
             return base.OnKeyEscape(down);
         }
 
+
         public void updateDrawing()
         {
-            Graphics gr = Graphics.FromImage(galaxyImage);
-            gr.FillRectangle(Brushes.Black, 0, 0, galaxyImage.Width, galaxyImage.Height);
+                    Graphics gr = Graphics.FromImage(galaxyImage);
+                    gr.FillRectangle(Brushes.Black, 0, 0, galaxyImage.Width, galaxyImage.Height);
 
-            DrawControl.Render(Program.Game, gr);
+                    DrawControl.Render(Program.Game, gr);
 
-            img.Image = (Bitmap)galaxyImage;
+                    lock (img)
+                    {
+                        img.Image = (Bitmap)galaxyImage;
+                    }
 
-            Program.m_Canvas.RenderCanvas();
-            Program.m_Window.Display();
+                    //Program.m_Canvas.RenderCanvas();
+                    //Program.m_Window.Display();
         }
 
         public override void Dispose()

@@ -28,6 +28,7 @@ namespace GalaxyConquest
         TacticDraw tacticDraw = new TacticDraw();
         TacticState tacticState = new TacticState();
         TacticSeed seed = new TacticSeed();
+        bool ConcedeOpenned = false;
 
         public Screen_Combat(Base parent) 
             : base(parent)
@@ -111,10 +112,14 @@ namespace GalaxyConquest
 
         private void onConcedeClick(Base control, EventArgs args)
         {
-            if (seed.activePlayer == 1)
-                EndCombat(2);
-            if (seed.activePlayer == 2)
-                EndCombat(1);
+            if(!ConcedeOpenned)
+            {
+                ConcedeOpenned = true;
+                if (seed.activePlayer == 1)
+                    EndCombat(2);
+                if (seed.activePlayer == 2)
+                    EndCombat(1);
+            }
         }
 
         private void onAutoBattleClick(Base control, EventArgs args)

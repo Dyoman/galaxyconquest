@@ -11,7 +11,8 @@ namespace GalaxyConquest
 {
     public class Screen_MainMenu : Gwen.Control.Base
     {
-
+        public bool LoadGameOpend = false;
+        Gwen.Control.WindowControl LoadGameWindow;
         public Screen_MainMenu(Base parent) : base(parent)
         {
             SetSize(parent.Width, parent.Height);
@@ -31,9 +32,11 @@ namespace GalaxyConquest
 
             Gwen.Control.Button buttonLoadGame = new Gwen.Control.Button(this);
             buttonLoadGame.Text = "Load game";
-            buttonLoadGame.Disable();
+            //buttonLoadGame.Disable();
             buttonLoadGame.Font = Program.fontButtonLabels;
             buttonLoadGame.SetBounds(300, 260, 200, 50);
+            buttonLoadGame.Pressed += onButtonLoadGameClick;
+
 
             Gwen.Control.Button buttonSettings = new Gwen.Control.Button(this);
             buttonSettings.Text = "Settings";
@@ -51,7 +54,7 @@ namespace GalaxyConquest
             buttonQuit.Font = Program.fontButtonLabels;
             buttonQuit.SetBounds(300, 440, 200, 50);
             buttonQuit.Pressed += onButtonQuitClick;
-
+            
         }
 
         private void onButtonSettingsClick(Base control, EventArgs args)
@@ -73,6 +76,43 @@ namespace GalaxyConquest
         {
             base.Dispose();
         }
+
+        private void onButtonLoadGameClick(Base control, EventArgs args)
+        {
+
+            if (!LoadGameOpend)
+            {
+                LoadGameOpend = true;
+                LoadGameWindow = new Gwen.Control.WindowControl(this);
+                LoadGameWindow.Width = Program.percentW(50);
+                LoadGameWindow.Height = Program.percentH(50);
+                LoadGameWindow.SetPosition(Program.percentW(25), Program.percentH(20));
+                LoadGameWindow.IsClosable = false;
+
+                Gwen.Control.Button buttonBackMenu = new Gwen.Control.Button(LoadGameWindow);
+                buttonBackMenu.Text = "BackMenu";
+                buttonBackMenu.Font = Program.fontButtonLabels;
+                buttonBackMenu.SetBounds(Program.percentW(50)/100, Program.percentH(50)*60/100, 150, 50);
+                buttonBackMenu.Pressed += onButtonBackMenuClick;
+
+                Gwen.Control.Button buttonLoadOk = new Gwen.Control.Button(LoadGameWindow);
+                buttonLoadOk.Text = "Ok";
+                buttonLoadOk.Font = Program.fontButtonLabels;
+                buttonLoadOk.SetBounds(Program.percentW(50)/100+160, Program.percentH(50) * 60 / 100, 150, 50);
+                buttonLoadOk.Pressed += onButtonLoadOkClick;
+
+            }
+            
+        }
+        public void onButtonBackMenuClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("mainmenu");
+        }
+        public void onButtonLoadOkClick(Base control, EventArgs args)
+        {
+           
+        }
+
 
     }
 }

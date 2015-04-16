@@ -36,6 +36,10 @@ namespace GalaxyConquest
         float centerY;
 
         public Brush br;
+        public Pen pen;
+        public Pen whitePen = new Pen(Brushes.White);
+        public Pen grayPen = new Pen(Brushes.Gray);
+        public Pen yellowPen = new Pen(Brushes.Yellow);
         public System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F);
 
         public Gwen.Control.ImagePanel img;
@@ -45,23 +49,18 @@ namespace GalaxyConquest
 
         bool dragging = false;
 
+        public int tierClicked = 1000;
+        public int techLineClicked = 1000;
+        public int subtechClicked = 1000;
+
         public Screen_TechTree(Base parent)
             : base(parent)
         {
 
-            Gwen.Control.Button buttonOK = new Gwen.Control.Button(this);
-            buttonOK.Text = "Back";
-            buttonOK.Font = Program.fontButtonLabels;
-            buttonOK.SetBounds(500, 500, 50, 50);
-            buttonOK.Clicked += onButtonOKClick;
-
             Tech.Inint();
             SetSize(parent.Width, parent.Height);
 
-
-
             img = new Gwen.Control.ImagePanel(this);
-
 
             updateDrawing();
 
@@ -83,6 +82,12 @@ namespace GalaxyConquest
             label.SetPosition(Program.percentW(5), Program.percentH(5));
             label.TextColor = Color.FromArgb(200, 80, 0, 250);
             label.Font = Program.fontLogo;
+
+            Gwen.Control.Button buttonBack = new Gwen.Control.Button(this);
+            buttonBack.Text = "Back";
+            buttonBack.Font = Program.fontButtonLabels;
+            buttonBack.SetBounds(Program.percentW(80), Program.percentH(80), 100, 50);
+            buttonBack.Clicked += onButtonBackClick;
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)
@@ -92,7 +97,9 @@ namespace GalaxyConquest
 
         void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
-
+            dragging = true;
+            mouseX = arguments.X;
+            mouseY = arguments.Y;
         }
 
         void img_MouseWheeled(Base sender, MouseWheeledEventArgs arguments)
@@ -146,28 +153,22 @@ namespace GalaxyConquest
                             }
                         }
 
-                        Size RPStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].RP, fnt);
-
-                        RectangleF rectF1 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
-                                centerY - i * 300,
-                                150,
-                                40
+                        RectangleF imageRect = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
+                                centerY - i * 300 - 120,
+                                100,
+                                100
                                 );
 
-                        RectangleF rectF3 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150 - RPStringLenght.Width,
-                                centerY - i * 300 + 40,
-                                150 + RPStringLenght.Width,
-                                60
-                                );
+                        RectangleF boundRect = new RectangleF(imageRect.Left, imageRect.Top,100,100 + 60);
 
-                        if (arguments.X < (rectF3.Right) * scaling &&
-                            arguments.X > (rectF3.Left) * scaling &&
-                            arguments.Y < (rectF3.Bottom) * scaling &&
-                            arguments.Y > (rectF1.Top) * scaling)
+                        if (arguments.X < (boundRect.Right) * scaling &&
+                            arguments.X > (boundRect.Left) * scaling &&
+                            arguments.Y < (boundRect.Bottom) * scaling &&
+                            arguments.Y > (boundRect.Top) * scaling)
                         {
-                            //tierClicked = i;
-                            //techLineClicked = j;
-                            //subtechClicked = k;
+                            tierClicked = i;
+                            techLineClicked = j;
+                            subtechClicked = k;
 
                             //label.Text = i+";"+j+";"+k;
 
@@ -175,14 +176,23 @@ namespace GalaxyConquest
                             techDescription.Text = Tech.teches.tiers[i][j][k].description;
                             //groupBox1.Visible = true;
                             //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
+                            updateDrawing();
+                            return;
+                        }
+                        else
+                        {
+                            tierClicked = 1000;
+                            techLineClicked = 1000;
+                            subtechClicked = 1000;
                         }
                     }
                 }
             }
 
+            updateDrawing();
 
             //label.Text = "DOWN";
-            dragging = true;
+            
             mouseX = arguments.X;
             mouseY = arguments.Y;
         }
@@ -208,6 +218,10 @@ namespace GalaxyConquest
 
             g.ScaleTransform(scaling, scaling);
             br = Brushes.White;
+            whitePen.Width = 4;
+            grayPen.Width = 4;
+            yellowPen.Width = 4;
+            pen = grayPen;
             //достаем технологии из Tech.teches i - столбец(Tier); j - строка(TechLine); k - подстрока(Subtech)
             for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
@@ -217,74 +231,59 @@ namespace GalaxyConquest
                     {
                         for (int z = 0; z < Player.technologies.Count; z++)
                         {
+                            if (i == tierClicked && j == techLineClicked && k == subtechClicked)
+                            {
+                                br = Brushes.Yellow;
+                                pen = whitePen;
+                                break;
+                            }
                             if (i == Player.technologies[z][0] &&
                                 j == Player.technologies[z][1] &&
                                 k == Player.technologies[z][2])
                             {
                                 br = Brushes.Yellow;
+                                pen = yellowPen;
                                 break;
                             }
                             else
                             {
                                 br = Brushes.White;
+                                pen = grayPen;
                             }
                         }
-
-                        Size RPStringLenght = TextRenderer.MeasureText(Tech.teches.tiers[i][j][k].RP, fnt);
 
                         StringFormat stringFormat = new StringFormat();
                         stringFormat.Alignment = StringAlignment.Center;
                         stringFormat.LineAlignment = StringAlignment.Center;
 
-                        RectangleF rectF1 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
-                                centerY - i * 300,
-                                150,
-                                40
+                        RectangleF imageRect = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
+                                centerY - i * 300-120,
+                                100,
+                                100
                                 );
-
-                        RectangleF rectF2 = new RectangleF(centerX - RPStringLenght.Width + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
-                                centerY - i * 300,
-                                RPStringLenght.Width,
-                                40
+                        RectangleF progressRect = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150 - 2,
+                                centerY - i * 300 - 120 - 2,
+                                100+4,
+                                100+4
                                 );
-
-                        RectangleF rectF3 = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150 - RPStringLenght.Width,
-                                centerY - i * 300 + 40,
-                                150 + RPStringLenght.Width,
-                                60
+                        RectangleF boundRect = new RectangleF(imageRect.Left, imageRect.Top,
+                                100,
+                                100 + 60
                                 );
 
                         g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
-                           rectF1, stringFormat);
+                           new RectangleF(imageRect.Left,imageRect.Bottom+20,100,40), stringFormat);
 
-                        g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
-                            rectF2, stringFormat);
-
-                        g.DrawString(Tech.teches.tiers[i][j][k].description, fnt, br,
-                             rectF3, stringFormat);
 
 
                         //----------------------------------------------------
 
-                        g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF1));
-                        g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF2));
-                        g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(rectF3));
-
-                        /*
-                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
-                                    new PointF(centerX + 340 * j - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + techStringLenght.Width, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i));
-
-                        g.DrawString(Tech.teches.tiers[i][j][k].RP, fnt, br,
-                                    new PointF(centerX + 340 * j - RPStringLenght.Width - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) + techStringLenght.Width, centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i));
-
-                        //----------------------------------------------------
-
-                        g.DrawRectangle(Pens.AliceBlue, centerX + 340 * j - 2,
-                            centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, techStringLenght.Width + 2, techStringLenght.Height + 2);
-
-                        g.DrawRectangle(Pens.AliceBlue, centerX + 340 * j - 2 - RPStringLenght.Width,
-                            centerY + 300 - (80 + Tech.teches.tiers[i][j].Count + 1 * 10) * i - (30 * k) + (30 * Tech.teches.tiers[i][j].Count / 2) - 2, RPStringLenght.Width, RPStringLenght.Height + 2);
-                    */
+                        //g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(boundRect));
+                        //g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(imageRect));
+                        //g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(progressRect));
+                        g.DrawArc(pen, imageRect, 0, 360);
+                        g.DrawArc(grayPen, progressRect, 0, 360);
+                        g.DrawArc(yellowPen, progressRect, -90, 60);
                     }
 
                 }
@@ -295,7 +294,7 @@ namespace GalaxyConquest
             Program.m_Window.Display();
         }
 
-        private void onButtonOKClick(Base control, EventArgs args)
+        private void onButtonBackClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("gamescreen");
         }

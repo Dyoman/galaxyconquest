@@ -35,6 +35,14 @@ namespace GalaxyConquest
         float centerX;
         float centerY;
 
+        bool dragging = false;
+
+        public int tierClicked = 1000;
+        public int techLineClicked = 1000;
+        public int subtechClicked = 1000;
+
+        public float progress = 0;
+
         public Brush br;
         public Pen pen;
         public Pen whitePen = new Pen(Brushes.White);
@@ -46,12 +54,6 @@ namespace GalaxyConquest
         Gwen.Control.Label label;
 
         Gwen.Control.TextBox techDescription;
-
-        bool dragging = false;
-
-        public int tierClicked = 1000;
-        public int techLineClicked = 1000;
-        public int subtechClicked = 1000;
 
         public Screen_TechTree(Base parent)
             : base(parent)
@@ -86,8 +88,14 @@ namespace GalaxyConquest
             Gwen.Control.Button buttonBack = new Gwen.Control.Button(this);
             buttonBack.Text = "Back";
             buttonBack.Font = Program.fontButtonLabels;
-            buttonBack.SetBounds(Program.percentW(80), Program.percentH(80), 100, 50);
+            buttonBack.SetBounds(Program.percentW(60), Program.percentH(80), 100, 50);
             buttonBack.Clicked += onButtonBackClick;
+
+            Gwen.Control.Button buttonLearn = new Gwen.Control.Button(this);
+            buttonLearn.Text = "Learn";
+            buttonLearn.Font = Program.fontButtonLabels;
+            buttonLearn.SetBounds(Program.percentW(80), Program.percentH(80), 100, 50);
+            buttonLearn.Clicked += onButtonLearnClick;
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)
@@ -217,11 +225,9 @@ namespace GalaxyConquest
             centerY += vertical;
 
             g.ScaleTransform(scaling, scaling);
-            br = Brushes.White;
             whitePen.Width = 4;
             grayPen.Width = 4;
             yellowPen.Width = 4;
-            pen = grayPen;
             //достаем технологии из Tech.teches i - столбец(Tier); j - строка(TechLine); k - подстрока(Subtech)
             for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
@@ -231,26 +237,29 @@ namespace GalaxyConquest
                     {
                         for (int z = 0; z < Player.technologies.Count; z++)
                         {
+                            pen = grayPen;
+                            br = Brushes.White;
                             if (i == tierClicked && j == techLineClicked && k == subtechClicked)
                             {
-                                br = Brushes.Yellow;
                                 pen = whitePen;
-                                break;
                             }
                             if (i == Player.technologies[z][0] &&
                                 j == Player.technologies[z][1] &&
                                 k == Player.technologies[z][2])
                             {
                                 br = Brushes.Yellow;
-                                pen = yellowPen;
+                                progress = 100;
                                 break;
                             }
-                            else
-                            {
-                                br = Brushes.White;
-                                pen = grayPen;
-                            }
+
                         }
+
+                        if (Program.Game.Player.Learning == true &&
+                            Program.Game.Player.learningTech.Line == j &&
+                            Program.Game.Player.learningTech.Tier == i &&
+                            Program.Game.Player.learningTech.Subtech == k)
+                            progress = (float)(Program.Game.Player.getLearningProgress()) / (float)Tech.learning_tech_time * (float)100;
+
 
                         StringFormat stringFormat = new StringFormat();
                         stringFormat.Alignment = StringAlignment.Center;
@@ -283,7 +292,9 @@ namespace GalaxyConquest
                         //g.DrawRectangle(Pens.AliceBlue, Rectangle.Round(progressRect));
                         g.DrawArc(pen, imageRect, 0, 360);
                         g.DrawArc(grayPen, progressRect, 0, 360);
-                        g.DrawArc(yellowPen, progressRect, -90, 60);
+                        g.DrawArc(yellowPen, progressRect, -90, (int)(progress * 3.6));
+
+                        progress = 0;
                     }
 
                 }
@@ -297,6 +308,63 @@ namespace GalaxyConquest
         private void onButtonBackClick(Base control, EventArgs args)
         {
             Program.screenManager.LoadScreen("gamescreen");
+        }
+
+        private void onButtonLearnClick(Base control, EventArgs args)
+        {
+            bool tech_logic = true;
+            bool tech_logic2 = false;
+            for (int i = 0; i < Player.technologies.Count; i++)
+            {
+                if (tierClicked == Player.technologies[i][0] &&
+                    techLineClicked == Player.technologies[i][1] &&
+                    subtechClicked == Player.technologies[i][2])
+                {
+                    tech_logic = false;
+                    break;
+                }
+
+                if (tierClicked == Player.technologies[i][0] + 1 && techLineClicked == Player.technologies[i][1])
+                {
+                    if (Program.Game.Player.skillPoints >= tierClicked * 100)
+                    {
+                        tech_logic2 = true;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Not enough skill popints!");
+                        tierClicked = 1000;
+                        techLineClicked = 1000;
+                        subtechClicked = 1000;
+                        return;
+                    }
+                }
+            }
+            if (tech_logic == false)
+            {
+                System.Windows.Forms.MessageBox.Show("You alrady have this tech!");
+                tierClicked = 1000;
+                techLineClicked = 1000;
+                subtechClicked = 1000;
+            }
+            else
+            {
+                if (tech_logic2 == true)
+                {
+                    //Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
+                    Program.Game.Player.skillPoints -= tierClicked * 100;
+                    Program.Game.Player.Learn(new TechData(tierClicked, techLineClicked, subtechClicked));
+
+                    updateDrawing();
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Learn previos tech before!");
+                    tierClicked = 1000;
+                    techLineClicked = 1000;
+                    subtechClicked = 1000;
+                }
+            }
         }
 
         public override void Dispose()

@@ -27,6 +27,7 @@ namespace GalaxyConquest
         public Image galaxyImage;
         public Gwen.Control.ImagePanel img;
         Gwen.Control.Label label;
+        public Gwen.Control.Label skillPointsLabel;
         Gwen.Control.Button buttonCombat;
 
         /// <summary>
@@ -84,6 +85,12 @@ namespace GalaxyConquest
             label.SetPosition(Program.percentW(5), Program.percentH(5));
             label.TextColor = Color.FromArgb(200, 80, 0, 250);
             label.Font = Program.fontLogo;
+
+            skillPointsLabel = new Gwen.Control.Label(this);
+            skillPointsLabel.Text = Program.Game.Player.skillPoints.ToString();
+            skillPointsLabel.SetPosition(Program.percentW(80), Program.percentH(5));
+            skillPointsLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            skillPointsLabel.Font = Program.fontLogo;
 
             Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
             buttonTech.Text = "Tech Tree";
@@ -265,6 +272,7 @@ namespace GalaxyConquest
                 }
 
             //Обновляем лейблы
+            skillPointsLabel.Text = Program.Game.Player.skillPoints.ToString();
             //UpdateControls();
             //включам панель с кнопками
             //panel1.Enabled = true;

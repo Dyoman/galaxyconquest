@@ -142,7 +142,7 @@ namespace GalaxyConquest.Drawing
         const int WARP_TEXT_MARGIN_Y = -10; // отступ рисования текста перемещения
         const int PLANET_NAME_MARGIN = 6;   // отступ рисования имени планеты
         //StarSize
-        const float STAR_SIZE_SCALE = 1.5f; // множитель размера звезд
+        const float STAR_SIZE_SCALE = 4.5f; // множитель размера звезд
         //Font
         const string FONT_FAMILY_NAME = "Arial";                // стандартный шрифт
         const float STARNAME_FONT_SIZE = 5.0f;                  // размер шрифта имени звезды
@@ -240,7 +240,7 @@ namespace GalaxyConquest.Drawing
 
                 Vector scr = getScreenCoordOf(s);
 
-                float starSize = (s.type + 1) * STAR_SIZE_SCALE;
+                float starSize = (s.type + 5) * STAR_SIZE_SCALE;
 
                 g.FillEllipse(s.color, (float)scr.X - starSize / 2, (float)scr.Y - starSize / 2, starSize, starSize);
                 //  Вокруг выбраной звезды рисуем круг

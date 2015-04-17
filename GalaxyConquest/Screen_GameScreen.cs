@@ -23,15 +23,24 @@ namespace GalaxyConquest
     class Screen_GameScreen : Gwen.Control.DockBase
     {
 
-
+        /// <summary>
+        /// Полотно на котором отрисовывается весь космос
+        /// </summary>
         public Image galaxyImage;
+        /// <summary>
+        /// Полотно для кнопки технологий
+        /// </summary>
         public Image techButtonImage;
+
+        //контролы, которые отображают содержимое полотна для рисования
         public Gwen.Control.ImagePanel img;
         public Gwen.Control.ImagePanel imgTechTree;
+
         Gwen.Control.Label label;
         public Gwen.Control.Label skillPointsLabel;
         Gwen.Control.Button buttonCombat;
-        public System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F,FontStyle.Bold);
+
+        public System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F, FontStyle.Bold);
 
         public Pen whitePen = new Pen(Brushes.White);
         public Pen grayPen = new Pen(Brushes.Gray);
@@ -68,9 +77,9 @@ namespace GalaxyConquest
             InitializeComponent();
             SetSize(parent.Width, parent.Height);
 
-            whitePen.Width = 4;
-            grayPen.Width = 4;
-            yellowPen.Width = 4;
+            whitePen.Width = 10;
+            grayPen.Width = 10;
+            yellowPen.Width = 10;
 
             img = new Gwen.Control.ImagePanel(this);
 
@@ -91,10 +100,10 @@ namespace GalaxyConquest
 
 
             imgTechTree = new Gwen.Control.ImagePanel(this);
-            techButtonImage = new Bitmap(Program.percentW(20), Program.percentW(20), PixelFormat.Format32bppArgb);
+            techButtonImage = new Bitmap(Program.percentW(12), Program.percentW(12), PixelFormat.Format32bppArgb);
 
-            imgTechTree.SetPosition(Program.percentW(80), Program.percentH(55));
-            imgTechTree.SetSize(Program.percentW(20), Program.percentW(20));
+            imgTechTree.SetPosition(Program.percentW(88), Program.percentH(75));
+            imgTechTree.SetSize(Program.percentW(12), Program.percentW(12));
             imgTechTree.Clicked += new GwenEventHandler<ClickedEventArgs>(imgTechTree_Clicked);
 
             label = new Gwen.Control.Label(this);
@@ -491,16 +500,8 @@ namespace GalaxyConquest
             Graphics gr = Graphics.FromImage(galaxyImage);
             gr.FillRectangle(Brushes.Black, 0, 0, galaxyImage.Width, galaxyImage.Height);
 
-            Graphics gr2 = Graphics.FromImage(techButtonImage);
-            gr2.FillRectangle(Brushes.Blue, 0, 0, techButtonImage.Width, techButtonImage.Height);
-            gr2.DrawString("Tech Tree", fnt, Brushes.White, new PointF(20, 10));
+            RenderTechButton();
 
-            if (Program.Game.Player.Learning == true)
-            {
-                gr2.DrawLine(grayPen, new Point(20, 40), new Point(120, 40));
-                gr2.DrawLine(whitePen, new Point(20, 40), new Point((int)Program.Game.Player.getLearningProgressPercent() + 20, 40));
-                gr2.DrawLine(yellowPen, new Point((int)Program.Game.Player.getLearningProgressPercent() + 20, 40), new Point((int)Program.Game.Player.getLearningProgressPercent() + 20 + (int)Program.Game.Player.getStepLearningProgressPercent(), 40));
-            }
             DrawControl.Render(Program.Game, gr);
 
             lock (img)
@@ -511,6 +512,51 @@ namespace GalaxyConquest
 
             //Program.m_Canvas.RenderCanvas();
             //Program.m_Window.Display();
+        }
+
+        public void RenderTechButton()
+        {
+            //Формат для выводимого текста (центрирование по вертикали и горизонтали)
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            Graphics gr2 = Graphics.FromImage(techButtonImage);
+            gr2.FillRectangle(Brushes.Blue, 0, 0, techButtonImage.Width, techButtonImage.Height);
+
+            //если игрок изучает технологию
+            if (Program.Game.Player.Learning == true)
+            {
+                //выводим название изучаемой технологии
+                gr2.DrawString(Tech.teches.tiers[Program.Game.Player.learningTech.Tier][Program.Game.Player.learningTech.Line][Program.Game.Player.learningTech.Subtech].subtech,
+                    fnt, Brushes.White,
+                    new RectangleF(10, 5, techButtonImage.Width - 10, techButtonImage.Height / 2),
+                    stringFormat);
+                //рисуем прогресс бар
+                gr2.DrawLine(grayPen, 
+                    new Point(5, techButtonImage.Height / 2 + 10),
+                    new Point(techButtonImage.Width - 5, techButtonImage.Height / 2 + 10));
+                //отображаем сколько изучили
+                gr2.DrawLine(whitePen, 
+                    new Point(5, techButtonImage.Height / 2 + 10),
+                    new Point((int)TechImagePercent(Program.Game.Player.getLearningProgressPercent()) + 5,techButtonImage.Height / 2 + 10));
+                //отображаем сколько изучается за ход
+                gr2.DrawLine(yellowPen,
+                    new Point((int)TechImagePercent(Program.Game.Player.getLearningProgressPercent()) + 5, techButtonImage.Height / 2 + 10),
+                    new Point((int)TechImagePercent(Program.Game.Player.getLearningProgressPercent()) + 5 + (int)TechImagePercent(Program.Game.Player.getStepLearningProgressPercent()), techButtonImage.Height / 2 + 10));
+            }
+            else
+            {
+                gr2.DrawString("Tech Tree", fnt, Brushes.White, new RectangleF(10, 5, techButtonImage.Width - 10, techButtonImage.Height / 2), stringFormat);
+            }
+        }
+
+        /// <summary>
+        /// Uses for scaling player learning progress to tech image button
+        /// </summary>
+        public float TechImagePercent(float value)
+        {
+            return (float)value * (float)(techButtonImage.Width - 10) / (float)100;
         }
 
         public override void Dispose()

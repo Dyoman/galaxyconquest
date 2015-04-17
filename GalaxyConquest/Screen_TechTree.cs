@@ -218,6 +218,9 @@ namespace GalaxyConquest
         private void updateDrawing()
         {
 
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);
             g.FillRectangle(Brushes.Black, 0, 0, TechTreeBitmap.Width, TechTreeBitmap.Height);
@@ -260,11 +263,6 @@ namespace GalaxyConquest
                             Program.Game.Player.learningTech.Tier == i &&
                             Program.Game.Player.learningTech.Subtech == k)
                             progress = Program.Game.Player.getLearningProgressPercent();
-
-
-                        StringFormat stringFormat = new StringFormat();
-                        stringFormat.Alignment = StringAlignment.Center;
-                        stringFormat.LineAlignment = StringAlignment.Center;
 
                         RectangleF imageRect = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
                                 centerY - i * 300-120,
@@ -355,6 +353,7 @@ namespace GalaxyConquest
                     //Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
                     Program.Game.Player.skillPoints -= tierClicked * 100;
                     Program.Game.Player.Learn(new TechData(tierClicked, techLineClicked, subtechClicked));
+                    System.Windows.Forms.MessageBox.Show("Learn started!");
 
                     updateDrawing();
                 }

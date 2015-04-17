@@ -124,6 +124,7 @@ namespace GalaxyConquest
             buttonMenu.SetBounds(Program.percentW(0), Program.percentH(0), Program.percentW(13), Program.percentH(8));
             buttonMenu.Clicked += onButtonMenuClick;
 
+
             Gwen.Control.Button buttonSolarSystem = new Gwen.Control.Button(this);
             buttonSolarSystem.Text = "Solar System";
             buttonSolarSystem.Font = Program.fontButtonLabels;
@@ -211,7 +212,31 @@ namespace GalaxyConquest
 
         private void onSolarSystemClick(Base control, EventArgs args)
         {
-            Program.screenManager.LoadScreen("solarSystem");
+            menuOpenned = true;
+            Gwen.Control.WindowControl SolarSystemWindow = new Gwen.Control.WindowControl(this);
+            SolarSystemWindow.Width = Program.percentW(70);
+            SolarSystemWindow.Height = Program.percentH(70);
+            SolarSystemWindow.SetPosition(Program.percentW(20), Program.percentH(20));
+
+
+            Gwen.Control.Label labelSolarSystem = new Gwen.Control.Label(SolarSystemWindow);
+            labelSolarSystem.Text = "Solar System";
+            labelSolarSystem.SetPosition(30, 30);
+            labelSolarSystem.TextColor = Color.FromArgb(200, 80, 0, 250);
+            labelSolarSystem.Font = Program.fontLogo;
+
+            Gwen.Control.Button buttonPlanet = new Gwen.Control.Button(SolarSystemWindow);
+            buttonPlanet.Text = "Planet";
+            buttonPlanet.Font = Program.fontButtonLabels;
+            buttonPlanet.SetBounds(300, 300, 200, 50);
+            buttonPlanet.Clicked += onButtonPlanetClick;
+            menuOpenned = false;
+           // Program.screenManager.LoadScreen("solarSystem");
+        }
+        /// Обработчик кнопки с формаой планеты
+        private void onButtonPlanetClick(Base control, EventArgs args)
+        {
+            Program.screenManager.LoadScreen("planet");
         }
 
         //--------------------------Step----------------------------------

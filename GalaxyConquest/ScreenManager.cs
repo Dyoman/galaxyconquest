@@ -57,10 +57,6 @@ namespace GalaxyConquest
             {
                 currentScreen = new Screen_TechTree(m_canvas);
             }
-            else if (name == "solarSystem")
-            {
-                currentScreen = new ScreenSolarSystem(m_canvas);
-            }
             else if (name == "combat")
             {
                 currentScreen = new Screen_Combat(m_canvas);

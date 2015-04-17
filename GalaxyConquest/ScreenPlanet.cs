@@ -25,24 +25,16 @@ namespace GalaxyConquest
             label.TextColor = Color.FromArgb(200, 80, 0, 250);
             label.Font = Program.fontLogo;
 
-            int width; 
-            int height;
-
-            Gwen.Control.WindowControl settingsWindow = new Gwen.Control.WindowControl(this);
-            settingsWindow.Width = parent.Width / 2;
-            settingsWindow.Height = parent.Height / 2;
-            settingsWindow.SetPosition(width = parent.Width / 2 - settingsWindow.Width / 2, height = parent.Height / 2 - settingsWindow.Height / 2);
-
-            Gwen.Control.Button buttonBack = new Gwen.Control.Button(settingsWindow);
+            Gwen.Control.Button buttonBack = new Gwen.Control.Button(this);
             buttonBack.Text = "Back";
             buttonBack.Font = Program.fontButtonLabels;
-            buttonBack.SetBounds(width / 100 * 8, height / 100 * 8, width / 3, height / 3);
+            buttonBack.SetBounds(Program.percentW(90), Program.percentH(92), Program.percentW(10), Program.percentH(8));
             buttonBack.Clicked += onButtonBackClick;
         }
 
         private void onButtonBackClick(Base control, EventArgs args)
         {
-            Program.screenManager.LoadScreen("solarSystem");
+            Program.screenManager.LoadScreen("gamescreen");
         }
 
         public override void Dispose()

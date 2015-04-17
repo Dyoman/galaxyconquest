@@ -64,7 +64,9 @@ namespace GalaxyConquest
 
             img = new Gwen.Control.ImagePanel(this);
 
-            updateDrawing();
+            whitePen.Width = 4;
+            grayPen.Width = 4;
+            yellowPen.Width = 4;
 
             img.SetPosition(Program.percentW(0), Program.percentH(0));
             img.SetSize(Program.percentW(100), Program.percentH(100));
@@ -96,6 +98,8 @@ namespace GalaxyConquest
             buttonLearn.Font = Program.fontButtonLabels;
             buttonLearn.SetBounds(Program.percentW(80), Program.percentH(80), 100, 50);
             buttonLearn.Clicked += onButtonLearnClick;
+
+            updateDrawing();
         }
 
         void img_MouseUp(Base sender, ClickedEventArgs arguments)
@@ -225,9 +229,6 @@ namespace GalaxyConquest
             centerY += vertical;
 
             g.ScaleTransform(scaling, scaling);
-            whitePen.Width = 4;
-            grayPen.Width = 4;
-            yellowPen.Width = 4;
             //достаем технологии из Tech.teches i - столбец(Tier); j - строка(TechLine); k - подстрока(Subtech)
             for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
@@ -258,7 +259,7 @@ namespace GalaxyConquest
                             Program.Game.Player.learningTech.Line == j &&
                             Program.Game.Player.learningTech.Tier == i &&
                             Program.Game.Player.learningTech.Subtech == k)
-                            progress = (float)(Program.Game.Player.getLearningProgress()) / (float)Tech.learning_tech_time * (float)100;
+                            progress = Program.Game.Player.getLearningProgressPercent();
 
 
                         StringFormat stringFormat = new StringFormat();

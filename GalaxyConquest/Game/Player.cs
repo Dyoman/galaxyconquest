@@ -157,6 +157,22 @@ namespace GalaxyConquest.Game
             return learningProgress;
         }
         /// <summary>
+        /// Получает прогресс изучения технологии игроком в процентах.
+        /// </summary>
+        /// <returns></returns>
+        public float getLearningProgressPercent()
+        {
+            return (float)learningProgress/(float)Tech.learning_tech_time*(float)100;
+        }
+        /// <summary>
+        /// Получает прогресс изучения технологии игроком за один ход в процентах.
+        /// </summary>
+        /// <returns></returns>
+        public float getStepLearningProgressPercent()
+        {
+            return (float)1 / (float)Tech.learning_tech_time * (float)100;
+        }
+        /// <summary>
         /// Процесс изучения технологии.
         /// </summary>
         void ProcessLearning()

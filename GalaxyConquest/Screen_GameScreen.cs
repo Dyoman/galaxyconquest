@@ -25,10 +25,17 @@ namespace GalaxyConquest
 
 
         public Image galaxyImage;
+        public Image techButtonImage;
         public Gwen.Control.ImagePanel img;
+        public Gwen.Control.ImagePanel imgTechTree;
         Gwen.Control.Label label;
         public Gwen.Control.Label skillPointsLabel;
         Gwen.Control.Button buttonCombat;
+        public System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F,FontStyle.Bold);
+
+        public Pen whitePen = new Pen(Brushes.White);
+        public Pen grayPen = new Pen(Brushes.Gray);
+        public Pen yellowPen = new Pen(Brushes.Yellow);
 
         /// <summary>
         /// Экземпляр класса DrawController, который будет отвечать за отрисовку в главной форме
@@ -46,7 +53,7 @@ namespace GalaxyConquest
         double syncTime = 1;
 
         System.ComponentModel.BackgroundWorker StepWorker;
-        System.Timers.Timer GameTimer; 
+        System.Timers.Timer GameTimer;
 
         bool dragging = false;
         bool menuOpenned = false;
@@ -61,7 +68,9 @@ namespace GalaxyConquest
             InitializeComponent();
             SetSize(parent.Width, parent.Height);
 
-            
+            whitePen.Width = 4;
+            grayPen.Width = 4;
+            yellowPen.Width = 4;
 
             img = new Gwen.Control.ImagePanel(this);
 
@@ -69,7 +78,7 @@ namespace GalaxyConquest
             galaxyImage = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
             DrawControl = new DrawController(galaxyImage);
 
-            updateDrawing();
+
 
             img.SetPosition(Program.percentW(0), Program.percentH(0));
             img.SetSize(Program.percentW(100), Program.percentH(100));
@@ -79,6 +88,14 @@ namespace GalaxyConquest
             img.MouseDown += new GwenEventHandler<ClickedEventArgs>(img_MouseDown);
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
             img.MouseWheeled += new GwenEventHandler<MouseWheeledEventArgs>(img_MouseWheeled);
+
+
+            imgTechTree = new Gwen.Control.ImagePanel(this);
+            techButtonImage = new Bitmap(Program.percentW(20), Program.percentW(20), PixelFormat.Format32bppArgb);
+
+            imgTechTree.SetPosition(Program.percentW(80), Program.percentH(55));
+            imgTechTree.SetSize(Program.percentW(20), Program.percentW(20));
+            imgTechTree.Clicked += new GwenEventHandler<ClickedEventArgs>(imgTechTree_Clicked);
 
             label = new Gwen.Control.Label(this);
             label.Text = "GAME!!!";
@@ -91,12 +108,6 @@ namespace GalaxyConquest
             skillPointsLabel.SetPosition(Program.percentW(80), Program.percentH(5));
             skillPointsLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
             skillPointsLabel.Font = Program.fontLogo;
-
-            Gwen.Control.Button buttonTech = new Gwen.Control.Button(this);
-            buttonTech.Text = "Tech Tree";
-            buttonTech.Font = Program.fontButtonLabels;
-            buttonTech.SetBounds(Program.percentW(80), Program.percentH(84), Program.percentW(20), Program.percentH(8));
-            buttonTech.Clicked += onButtonTechClick;
 
             Gwen.Control.Button buttonMenu = new Gwen.Control.Button(this);
             buttonMenu.Text = "Menu";
@@ -121,11 +132,8 @@ namespace GalaxyConquest
             buttonCombat.Font = Program.fontButtonLabels;
             buttonCombat.SetBounds(Program.percentW(19), Program.percentH(92), Program.percentW(18), Program.percentH(8));
             buttonCombat.Clicked += onCombatClick;
-        }
 
-        private void onButtonTechClick(Base control, EventArgs args)
-        {
-            Program.screenManager.LoadScreen("techtree");
+            updateDrawing();
         }
 
         // Set up the BackgroundWorker object by 
@@ -308,7 +316,7 @@ namespace GalaxyConquest
                 syncTime -= MovementsController.FIXED_TIME_DELTA;
                 Program.Game.Galaxy.Time += MovementsController.FIXED_TIME_DELTA;
             }
-//            updateDrawing();
+            //            updateDrawing();
         }
 
         private void onCombatClick(Base control, EventArgs args)
@@ -401,68 +409,73 @@ namespace GalaxyConquest
             }
         }
 
+
+        private void imgTechTree_Clicked(Base sender, ClickedEventArgs arguments)
+        {
+            Program.screenManager.LoadScreen("techtree");
+        }
         private void img_RightClicked(Base control, ClickedEventArgs args)
         {
-                for (int j = 0; j < Program.Game.Galaxy.stars.Count; j++)
+            for (int j = 0; j < Program.Game.Galaxy.stars.Count; j++)
+            {
+                if (DrawControl.CursorIsOnObject(args, Program.Game.Galaxy.stars[j]) && Program.Game.Galaxy.stars[j].Discovered)
                 {
-                    if (DrawControl.CursorIsOnObject(args, Program.Game.Galaxy.stars[j]) && Program.Game.Galaxy.stars[j].Discovered)
+                    //загрузка экрана звездной системы
+                    /*if (!ssf.IsDisposed)
                     {
-                        //загрузка экрана звездной системы
-                        /*if (!ssf.IsDisposed)
-                        {
-                            ssf.SetSystem(Program.Game.Galaxy.stars[j]);
-                            ssf.Show();
-                            ssf.Focus();
-                        }
-                        else
-                        {
-                            ssf = new StarSystemForm(Program.Game.Galaxy.stars[j]);
-                            ssf.Show();
-                        }*/
-                        //UpdateCaptureControls();//Обновляем кнопку захвата после выбора системы для просмотра
-                        updateDrawing();
-                        return;
+                        ssf.SetSystem(Program.Game.Galaxy.stars[j]);
+                        ssf.Show();
+                        ssf.Focus();
                     }
+                    else
+                    {
+                        ssf = new StarSystemForm(Program.Game.Galaxy.stars[j]);
+                        ssf.Show();
+                    }*/
+                    //UpdateCaptureControls();//Обновляем кнопку захвата после выбора системы для просмотра
+                    updateDrawing();
+                    return;
+                }
+            }
+
+            Fleet selectedFleet = null;
+
+            for (int i = 0; i < Program.Game.Player.fleets.Count; i++)
+                if (DrawControl.CursorIsOnObject(args, Program.Game.Player.fleets[i]))
+                {
+                    selectedFleet = Program.Game.Player.fleets[i];
+                    break;
+                }
+            for (int i = 0; i < Program.Game.Galaxy.neutrals.Count; i++)
+                if (DrawControl.CursorIsOnObject(args, Program.Game.Galaxy.neutrals[i]) && Program.Game.Galaxy.neutrals[i].s1.Discovered)
+                {
+                    selectedFleet = Program.Game.Galaxy.neutrals[i];
+                    break;
                 }
 
-                Fleet selectedFleet = null;
-
-                for (int i = 0; i < Program.Game.Player.fleets.Count; i++)
-                    if (DrawControl.CursorIsOnObject(args, Program.Game.Player.fleets[i]))
-                    {
-                        selectedFleet = Program.Game.Player.fleets[i];
-                        break;
-                    }
-                for (int i = 0; i < Program.Game.Galaxy.neutrals.Count; i++)
-                    if (DrawControl.CursorIsOnObject(args, Program.Game.Galaxy.neutrals[i]) && Program.Game.Galaxy.neutrals[i].s1.Discovered)
-                    {
-                        selectedFleet = Program.Game.Galaxy.neutrals[i];
-                        break;
-                    }
-
-                if (selectedFleet != null)
+            if (selectedFleet != null)
+            {
+                int scout = 0, aScount = 0, assault = 0, aAssault = 0;
+                double health = 0;
+                for (int j = 0; j < selectedFleet.ships.Count; j++)
                 {
-                    int scout = 0, aScount = 0, assault = 0, aAssault = 0;
-                    double health = 0;
-                    for (int j = 0; j < selectedFleet.ships.Count; j++)
+                    health += Math.Max(selectedFleet.ships[j].currentHealth, 0);
+                    if (selectedFleet.ships[j] is ShipScout)
                     {
-                        health += Math.Max(selectedFleet.ships[j].currentHealth, 0);
-                        if (selectedFleet.ships[j] is ShipScout)
-                        {
-                            scout++;
-                            if (selectedFleet.ships[j].currentHealth > 0)
-                                aScount++;
-                        }
-                        else if (selectedFleet.ships[j] is ShipAssaulter)
-                        {
-                            assault++;
-                            if (selectedFleet.ships[j].currentHealth > 0)
-                                aAssault++;
-                        }
+                        scout++;
+                        if (selectedFleet.ships[j].currentHealth > 0)
+                            aScount++;
                     }
-                    System.Windows.Forms.MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", selectedFleet.name + " ( " + selectedFleet.s1.name + " )");
+                    else if (selectedFleet.ships[j] is ShipAssaulter)
+                    {
+                        assault++;
+                        if (selectedFleet.ships[j].currentHealth > 0)
+                            aAssault++;
+                    }
                 }
-                updateDrawing();
+                System.Windows.Forms.MessageBox.Show("Штурмовых кораблей - " + aAssault + " / (" + assault + ")\nИстребителей - " + aScount + " / (" + scout + ")\n\nОбщее количество здоровья: " + health + "hp", selectedFleet.name + " ( " + selectedFleet.s1.name + " )");
+            }
+            updateDrawing();
 
         }
 
@@ -475,18 +488,29 @@ namespace GalaxyConquest
 
         public void updateDrawing()
         {
-                    Graphics gr = Graphics.FromImage(galaxyImage);
-                    gr.FillRectangle(Brushes.Black, 0, 0, galaxyImage.Width, galaxyImage.Height);
+            Graphics gr = Graphics.FromImage(galaxyImage);
+            gr.FillRectangle(Brushes.Black, 0, 0, galaxyImage.Width, galaxyImage.Height);
 
-                    DrawControl.Render(Program.Game, gr);
+            Graphics gr2 = Graphics.FromImage(techButtonImage);
+            gr2.FillRectangle(Brushes.Blue, 0, 0, techButtonImage.Width, techButtonImage.Height);
+            gr2.DrawString("Tech Tree", fnt, Brushes.White, new PointF(20, 10));
 
-                    lock (img)
-                    {
-                        img.Image = (Bitmap)galaxyImage;
-                    }
+            if (Program.Game.Player.Learning == true)
+            {
+                gr2.DrawLine(grayPen, new Point(20, 40), new Point(120, 40));
+                gr2.DrawLine(whitePen, new Point(20, 40), new Point((int)Program.Game.Player.getLearningProgressPercent() + 20, 40));
+                gr2.DrawLine(yellowPen, new Point((int)Program.Game.Player.getLearningProgressPercent() + 20, 40), new Point((int)Program.Game.Player.getLearningProgressPercent() + 20 + (int)Program.Game.Player.getStepLearningProgressPercent(), 40));
+            }
+            DrawControl.Render(Program.Game, gr);
 
-                    //Program.m_Canvas.RenderCanvas();
-                    //Program.m_Window.Display();
+            lock (img)
+            {
+                img.Image = (Bitmap)galaxyImage;
+                imgTechTree.Image = (Bitmap)techButtonImage;
+            }
+
+            //Program.m_Canvas.RenderCanvas();
+            //Program.m_Window.Display();
         }
 
         public override void Dispose()

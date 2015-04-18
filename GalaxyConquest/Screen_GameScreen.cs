@@ -81,14 +81,13 @@ namespace GalaxyConquest
             grayPen.Width = 10;
             yellowPen.Width = 10;
 
-            img = new Gwen.Control.ImagePanel(this);
-
-
             galaxyImage = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
-            DrawControl = new DrawController(galaxyImage);
+            techButtonImage = new Bitmap(Program.percentW(12), Program.percentW(12), PixelFormat.Format32bppArgb);
 
+            DrawControl = new DrawController(galaxyImage);
             DrawControl.UpdateCenters(Program.Game.Player.fleets[Program.Game.Player.selectedFleet].s1);
 
+            img = new Gwen.Control.ImagePanel(this);
             img.SetPosition(Program.percentW(0), Program.percentH(0));
             img.SetSize(Program.percentW(100), Program.percentH(100));
             img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
@@ -100,8 +99,6 @@ namespace GalaxyConquest
 
 
             imgTechTree = new Gwen.Control.ImagePanel(this);
-            techButtonImage = new Bitmap(Program.percentW(12), Program.percentW(12), PixelFormat.Format32bppArgb);
-
             imgTechTree.SetPosition(Program.percentW(88), Program.percentH(75));
             imgTechTree.SetSize(Program.percentW(12), Program.percentW(12));
             imgTechTree.Clicked += new GwenEventHandler<ClickedEventArgs>(imgTechTree_Clicked);
@@ -555,12 +552,12 @@ namespace GalaxyConquest
                 //выводим название изучаемой технологии
                 gr2.DrawString(Tech.teches.tiers[Program.Game.Player.learningTech.Tier][Program.Game.Player.learningTech.Line][Program.Game.Player.learningTech.Subtech].subtech,
                     fnt, Brushes.White,
-                    new RectangleF(10, 5, techButtonImage.Width - 10, techButtonImage.Height / 2),
+                    new RectangleF(10, 5, techButtonImage.Width - 20, techButtonImage.Height / 2),
                     stringFormat);
                 //рисуем прогресс бар
                 gr2.DrawLine(grayPen, 
                     new Point(5, techButtonImage.Height / 2 + 10),
-                    new Point(techButtonImage.Width - 5, techButtonImage.Height / 2 + 10));
+                    new Point(techButtonImage.Width - 10, techButtonImage.Height / 2 + 10));
                 //отображаем сколько изучили
                 gr2.DrawLine(whitePen, 
                     new Point(5, techButtonImage.Height / 2 + 10),
@@ -572,7 +569,7 @@ namespace GalaxyConquest
             }
             else
             {
-                gr2.DrawString("Tech Tree", fnt, Brushes.White, new RectangleF(10, 5, techButtonImage.Width - 10, techButtonImage.Height / 2), stringFormat);
+                gr2.DrawString("Tech Tree", fnt, Brushes.White, new RectangleF(10, 5, techButtonImage.Width - 20, techButtonImage.Height / 2), stringFormat);
             }
         }
 

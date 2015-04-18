@@ -23,37 +23,43 @@ namespace GalaxyConquest
 {
     class Screen_TechTree : Gwen.Control.DockBase
     {
+        /// <summary>
+        /// Полотно на котором отрисовывается все технологии
+        /// </summary>
+        private Image TechTreeBitmap;
+        /// <summary>
+        /// Полотно на котором отрисовывается описание технологии и пр. информация
+        /// </summary>
+        private Image TechDescriptionBitmap;
 
-        public Bitmap TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
-        public float scaling = 1f;
-        public float horizontal = 0;
-        public float vertical = 0;
+        private float scaling = 1f;
+        private float horizontal = 0;
+        private float vertical = 0;
 
-        public int mouseX;
-        public int mouseY;
+        private int mouseX;
+        private int mouseY;
 
-        float centerX;
-        float centerY;
+        private float centerX;
+        private float centerY;
 
-        bool dragging = false;
+        private bool dragging = false;
 
-        public int tierClicked = 1000;
-        public int techLineClicked = 1000;
-        public int subtechClicked = 1000;
+        private int tierClicked = 1000;
+        private int techLineClicked = 1000;
+        private int subtechClicked = 1000;
 
-        public float progress = 0;
+        private float progress = 0;
 
-        public Brush br;
-        public Pen pen;
-        public Pen whitePen = new Pen(Brushes.White);
-        public Pen grayPen = new Pen(Brushes.Gray);
-        public Pen yellowPen = new Pen(Brushes.Yellow);
-        public System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F);
+        private Brush br;
+        private Pen pen;
+        private Pen whitePen = new Pen(Brushes.White);
+        private Pen grayPen = new Pen(Brushes.Gray);
+        private Pen yellowPen = new Pen(Brushes.Yellow);
+        private System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F);
 
-        public Gwen.Control.ImagePanel img;
-        Gwen.Control.Label label;
-
-        Gwen.Control.TextBox techDescription;
+        private Gwen.Control.ImagePanel img;
+        private Gwen.Control.ImagePanel techDescriptionImg;
+        private Gwen.Control.Label label;
 
         public Screen_TechTree(Base parent)
             : base(parent)
@@ -62,12 +68,14 @@ namespace GalaxyConquest
             Tech.Inint();
             SetSize(parent.Width, parent.Height);
 
-            img = new Gwen.Control.ImagePanel(this);
+            TechTreeBitmap = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
+            TechDescriptionBitmap = new Bitmap(Program.percentW(20), Program.percentH(20), PixelFormat.Format32bppArgb);
 
             whitePen.Width = 4;
             grayPen.Width = 4;
             yellowPen.Width = 4;
 
+            img = new Gwen.Control.ImagePanel(this);
             img.SetPosition(Program.percentW(0), Program.percentH(0));
             img.SetSize(Program.percentW(100), Program.percentH(100));
             img.Clicked += new GwenEventHandler<ClickedEventArgs>(img_Clicked);
@@ -76,10 +84,9 @@ namespace GalaxyConquest
             img.MouseUp += new GwenEventHandler<ClickedEventArgs>(img_MouseUp);
             img.MouseWheeled += new GwenEventHandler<MouseWheeledEventArgs>(img_MouseWheeled);
 
-            techDescription = new Gwen.Control.TextBox(this);
-            techDescription.SetPosition(Program.percentW(5), Program.percentH(80));
-            techDescription.SetSize(200, 50);
-            //techDescription.SetBounds(Program.percentW(5), Program.percentH(80), Program.percentH(20), Program.percentH(100));
+            techDescriptionImg = new Gwen.Control.ImagePanel(this);
+            techDescriptionImg.SetPosition(Program.percentW(0), Program.percentH(80));
+            techDescriptionImg.SetSize(Program.percentW(20), Program.percentH(20));
 
             label = new Gwen.Control.Label(this);
             label.Text = "Tech_Tree Probe";
@@ -102,19 +109,19 @@ namespace GalaxyConquest
             updateDrawing();
         }
 
-        void img_MouseUp(Base sender, ClickedEventArgs arguments)
+        private void img_MouseUp(Base sender, ClickedEventArgs arguments)
         {
             dragging = false;
         }
 
-        void img_MouseDown(Base sender, ClickedEventArgs arguments)
+        private void img_MouseDown(Base sender, ClickedEventArgs arguments)
         {
             dragging = true;
             mouseX = arguments.X;
             mouseY = arguments.Y;
         }
 
-        void img_MouseWheeled(Base sender, MouseWheeledEventArgs arguments)
+        private void img_MouseWheeled(Base sender, MouseWheeledEventArgs arguments)
         {
             if (arguments.Delta > 0)
                 scaling = (float)Math.Min(scaling + 0.1, 10);
@@ -125,7 +132,7 @@ namespace GalaxyConquest
 
         }
 
-        void img_MouseMoved(Base sender, MovedEventArgs arguments)
+        private void img_MouseMoved(Base sender, MovedEventArgs arguments)
         {
             if (dragging)
             {
@@ -142,7 +149,7 @@ namespace GalaxyConquest
             }
         }
 
-        void img_Clicked(Base sender, ClickedEventArgs arguments)
+        private void img_Clicked(Base sender, ClickedEventArgs arguments)
         {
             for (int i = 0; i < Tech.teches.tiers.Count; i++)
             {
@@ -171,7 +178,7 @@ namespace GalaxyConquest
                                 100
                                 );
 
-                        RectangleF boundRect = new RectangleF(imageRect.Left, imageRect.Top,100,100 + 60);
+                        RectangleF boundRect = new RectangleF(imageRect.Left, imageRect.Top, 100, 100 + 60);
 
                         if (arguments.X < (boundRect.Right) * scaling &&
                             arguments.X > (boundRect.Left) * scaling &&
@@ -183,9 +190,6 @@ namespace GalaxyConquest
                             subtechClicked = k;
 
                             //label.Text = i+";"+j+";"+k;
-
-
-                            techDescription.Text = Tech.teches.tiers[i][j][k].description;
                             //groupBox1.Visible = true;
                             //groupBox1.Text = Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].subtech;
                             updateDrawing();
@@ -204,7 +208,7 @@ namespace GalaxyConquest
             updateDrawing();
 
             //label.Text = "DOWN";
-            
+
             mouseX = arguments.X;
             mouseY = arguments.Y;
         }
@@ -224,6 +228,8 @@ namespace GalaxyConquest
 
             Graphics g = Graphics.FromImage(TechTreeBitmap);
             g.FillRectangle(Brushes.Black, 0, 0, TechTreeBitmap.Width, TechTreeBitmap.Height);
+
+            RenderTechDescriptionImg();
 
             centerX = TechTreeBitmap.Width / 2 / scaling;
             centerY = TechTreeBitmap.Height / 2 / scaling;
@@ -265,14 +271,14 @@ namespace GalaxyConquest
                             progress = Program.Game.Player.getLearningProgressPercent();
 
                         RectangleF imageRect = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150,
-                                centerY - i * 300-120,
+                                centerY - i * 300 - 120,
                                 100,
                                 100
                                 );
                         RectangleF progressRect = new RectangleF(centerX + j * 500 - Tech.teches.tiers[i][j].Count / 2 * 150 + k * 150 - 2,
                                 centerY - i * 300 - 120 - 2,
-                                100+4,
-                                100+4
+                                100 + 4,
+                                100 + 4
                                 );
                         RectangleF boundRect = new RectangleF(imageRect.Left, imageRect.Top,
                                 100,
@@ -280,7 +286,7 @@ namespace GalaxyConquest
                                 );
 
                         g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
-                           new RectangleF(imageRect.Left,imageRect.Bottom+20,100,40), stringFormat);
+                           new RectangleF(imageRect.Left, imageRect.Bottom + 20, 100, 40), stringFormat);
 
 
 
@@ -298,7 +304,8 @@ namespace GalaxyConquest
 
                 }
             }
-            img.Image = TechTreeBitmap;
+            img.Image = (Bitmap)TechTreeBitmap;
+            techDescriptionImg.Image = (Bitmap)TechDescriptionBitmap;
 
             Program.m_Canvas.RenderCanvas();
             Program.m_Window.Display();
@@ -325,7 +332,7 @@ namespace GalaxyConquest
 
                 if (tierClicked == Player.technologies[i][0] + 1 && techLineClicked == Player.technologies[i][1])
                 {
-                    if (Program.Game.Player.skillPoints >= tierClicked * 100)
+                    if (Program.Game.Player.skillPoints >= Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].RP)
                     {
                         tech_logic2 = true;
                     }
@@ -351,7 +358,7 @@ namespace GalaxyConquest
                 if (tech_logic2 == true)
                 {
                     //Form1.SelfRef.tech_progressBar.Maximum = Tech.learning_tech_time;
-                    Program.Game.Player.skillPoints -= tierClicked * 100;
+                    Program.Game.Player.skillPoints -= Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].RP;
                     Program.Game.Player.Learn(new TechData(tierClicked, techLineClicked, subtechClicked));
                     System.Windows.Forms.MessageBox.Show("Learn started!");
 
@@ -367,6 +374,31 @@ namespace GalaxyConquest
             }
         }
 
+        private void RenderTechDescriptionImg()
+        {
+            //Формат для выводимого текста (центрирование по вертикали и горизонтали)
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            Graphics gr2 = Graphics.FromImage(TechDescriptionBitmap);
+            gr2.FillRectangle(Brushes.White, 0, 0, TechDescriptionBitmap.Width, TechDescriptionBitmap.Height);
+
+            if (tierClicked != 1000 && techLineClicked != 1000 && subtechClicked != 1000)
+            {
+                //выводим очки исследований
+                gr2.DrawString("RP cost: " + Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].RP.ToString(),
+                    fnt, Brushes.Black,
+                    new RectangleF(10, 5, TechDescriptionBitmap.Width - 20, TechDescriptionBitmap.Height / 2),
+                    stringFormat);
+
+                //выводим описание технологии
+                gr2.DrawString(Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description,
+                    fnt, Brushes.Black,
+                    new RectangleF(10, TechDescriptionBitmap.Height / 2, TechDescriptionBitmap.Width - 20, TechDescriptionBitmap.Height / 2),
+                    stringFormat);
+            }
+        }
         public override void Dispose()
         {
             fnt.Dispose();

@@ -52,89 +52,125 @@ namespace GalaxyConquest
 
             imageGalaxyType = new Gwen.Control.ImagePanel(this);
             imageGalaxyType.Image = Properties.Resources.icon_newgame_spiral;
-            imageGalaxyType.SetBounds(Program.percentW(5), Program.percentH(20), Program.percentW(15), Program.percentH(15));
+            imageGalaxyType.SetBounds(Program.percentW(10), Program.percentH(20), Program.percentW(15), Program.percentH(15));
 
             Gwen.Control.Button buttonGalaxyTypeLeft = new Gwen.Control.Button(this);
             buttonGalaxyTypeLeft.Text = "<";
-            buttonGalaxyTypeLeft.SetBounds(Program.percentW(0), Program.percentH(35), Program.percentW(5), Program.percentH(5));
+            buttonGalaxyTypeLeft.SetBounds(Program.percentW(5), Program.percentH(35), Program.percentW(5), Program.percentH(5));
             buttonGalaxyTypeLeft.Clicked += onButtonGalaxyTypeLeftClick;
 
             Gwen.Control.Button buttonGalaxyTypeRight = new Gwen.Control.Button(this);
             buttonGalaxyTypeRight.Text = ">";
-            buttonGalaxyTypeRight.SetBounds(Program.percentW(20), Program.percentH(35), Program.percentW(5), Program.percentH(5));
+            buttonGalaxyTypeRight.SetBounds(Program.percentW(25), Program.percentH(35), Program.percentW(5), Program.percentH(5));
             buttonGalaxyTypeRight.Clicked += onButtonGalaxyTypeRightClick;
+
+            Gwen.Control.Label GalaxyTypeLabel = new Gwen.Control.Label(this);
+            GalaxyTypeLabel.Text = "Galaxy Type";
+            GalaxyTypeLabel.SetPosition(Program.percentW(5), Program.percentH(40));
+            GalaxyTypeLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            GalaxyTypeLabel.Font = Program.fontLogo;
 
             //-----------------------------------------------------------------------
 
             labelGalaxySize = new Gwen.Control.Label(this);
             labelGalaxySize.Text = galaxysize.ToString();
-            labelGalaxySize.SetPosition(Program.percentW(40), Program.percentH(20));
+            labelGalaxySize.SetPosition(Program.percentW(45), Program.percentH(20));
             labelGalaxySize.TextColor = Color.FromArgb(200, 80, 0, 250);
             labelGalaxySize.Font = Program.fontLogo;
 
             Gwen.Control.Button buttonGalaxySizeLeft = new Gwen.Control.Button(this);
             buttonGalaxySizeLeft.Text = "<";
-            buttonGalaxySizeLeft.SetBounds(Program.percentW(30), Program.percentH(35), Program.percentW(5), Program.percentH(5));
+            buttonGalaxySizeLeft.SetBounds(Program.percentW(35), Program.percentH(35), Program.percentW(5), Program.percentH(5));
             buttonGalaxySizeLeft.Clicked += onButtonGalaxySizeLeftClick;
 
             Gwen.Control.Button buttonGalaxySizeRight = new Gwen.Control.Button(this);
             buttonGalaxySizeRight.Text = ">";
-            buttonGalaxySizeRight.SetBounds(Program.percentW(50), Program.percentH(35), Program.percentW(5), Program.percentH(5));
+            buttonGalaxySizeRight.SetBounds(Program.percentW(55), Program.percentH(35), Program.percentW(5), Program.percentH(5));
             buttonGalaxySizeRight.Clicked += onButtonGalaxySizeRightClick;
+
+            Gwen.Control.Label GalaxySizeLabel = new Gwen.Control.Label(this);
+            GalaxySizeLabel.Text = "Galaxy Size";
+            GalaxySizeLabel.SetPosition(Program.percentW(36), Program.percentH(40));
+            GalaxySizeLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            GalaxySizeLabel.Font = Program.fontLogo;
 
             //-----------------------------------------------------------------------
 
             labelStarsCount = new Gwen.Control.Label(this);
             labelStarsCount.Text = starsCount.ToString();
-            labelStarsCount.SetPosition(Program.percentW(70), Program.percentH(20));
+            labelStarsCount.SetPosition(Program.percentW(75), Program.percentH(20));
             labelStarsCount.TextColor = Color.FromArgb(200, 80, 0, 250);
             labelStarsCount.Font = Program.fontLogo;
 
             Gwen.Control.Button buttonStarsCountLeft = new Gwen.Control.Button(this);
             buttonStarsCountLeft.Text = "<";
-            buttonStarsCountLeft.SetBounds(Program.percentW(60), Program.percentH(35), Program.percentW(5), Program.percentH(5));
+            buttonStarsCountLeft.SetBounds(Program.percentW(65), Program.percentH(35), Program.percentW(5), Program.percentH(5));
             buttonStarsCountLeft.Clicked += onButtonStarsCountLeftClick;
 
             Gwen.Control.Button buttonStarsCountRight = new Gwen.Control.Button(this);
             buttonStarsCountRight.Text = ">";
-            buttonStarsCountRight.SetBounds(Program.percentW(80), Program.percentH(35), Program.percentW(5), Program.percentH(5));
+            buttonStarsCountRight.SetBounds(Program.percentW(85), Program.percentH(35), Program.percentW(5), Program.percentH(5));
             buttonStarsCountRight.Clicked += onButtonStarsCountRightClick;
+
+            Gwen.Control.Label GalaxyStarsCountLabel = new Gwen.Control.Label(this);
+            GalaxyStarsCountLabel.Text = "Stars Count";
+            GalaxyStarsCountLabel.SetPosition(Program.percentW(65), Program.percentH(40));
+            GalaxyStarsCountLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            GalaxyStarsCountLabel.Font = Program.fontLogo;
 
             //----------------------------------------------------------------------
 
             Gwen.Control.Button buttonRaceLeft = new Gwen.Control.Button(this);
             buttonRaceLeft.Text = "<";
-            buttonRaceLeft.SetBounds(Program.percentW(0), Program.percentH(65), Program.percentW(5), Program.percentH(5));
+            buttonRaceLeft.SetBounds(Program.percentW(5), Program.percentH(65), Program.percentW(5), Program.percentH(5));
             buttonRaceLeft.Clicked += onButtonRaceLeftClick;
 
             Gwen.Control.Button buttonRaceRight = new Gwen.Control.Button(this);
             buttonRaceRight.Text = ">";
-            buttonRaceRight.SetBounds(Program.percentW(20), Program.percentH(65), Program.percentW(5), Program.percentH(5));
+            buttonRaceRight.SetBounds(Program.percentW(25), Program.percentH(65), Program.percentW(5), Program.percentH(5));
             buttonRaceRight.Clicked += onButtonRaceRightClick;
+
+            Gwen.Control.Label GalaxyRaceLabel = new Gwen.Control.Label(this);
+            GalaxyRaceLabel.Text = "Race";
+            GalaxyRaceLabel.SetPosition(Program.percentW(12), Program.percentH(70));
+            GalaxyRaceLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            GalaxyRaceLabel.Font = Program.fontLogo;
 
             //-----------------------------------------------------------------------
 
             Gwen.Control.Button buttonBannerLeft = new Gwen.Control.Button(this);
             buttonBannerLeft.Text = "<";
-            buttonBannerLeft.SetBounds(Program.percentW(30), Program.percentH(65), Program.percentW(5), Program.percentH(5));
+            buttonBannerLeft.SetBounds(Program.percentW(35), Program.percentH(65), Program.percentW(5), Program.percentH(5));
             buttonBannerLeft.Clicked += onButtonBannerLeftClick;
 
             Gwen.Control.Button buttonBannerRight = new Gwen.Control.Button(this);
             buttonBannerRight.Text = ">";
-            buttonBannerRight.SetBounds(Program.percentW(50), Program.percentH(65), Program.percentW(5), Program.percentH(5));
+            buttonBannerRight.SetBounds(Program.percentW(55), Program.percentH(65), Program.percentW(5), Program.percentH(5));
             buttonBannerRight.Clicked += onButtonBannerRightClick;
+
+            Gwen.Control.Label GalaxyBannerLabel = new Gwen.Control.Label(this);
+            GalaxyBannerLabel.Text = "Banner";
+            GalaxyBannerLabel.SetPosition(Program.percentW(41), Program.percentH(70));
+            GalaxyBannerLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            GalaxyBannerLabel.Font = Program.fontLogo;
 
             //-----------------------------------------------------------------------
 
             Gwen.Control.Button buttonFleetStyleLeft = new Gwen.Control.Button(this);
             buttonFleetStyleLeft.Text = "<";
-            buttonFleetStyleLeft.SetBounds(Program.percentW(60), Program.percentH(65), Program.percentW(5), Program.percentH(5));
+            buttonFleetStyleLeft.SetBounds(Program.percentW(65), Program.percentH(65), Program.percentW(5), Program.percentH(5));
             buttonFleetStyleLeft.Clicked += onButtonFleetStyleLeftClick;
 
             Gwen.Control.Button buttonFleetStyleRight = new Gwen.Control.Button(this);
             buttonFleetStyleRight.Text = ">";
-            buttonFleetStyleRight.SetBounds(Program.percentW(80), Program.percentH(65), Program.percentW(5), Program.percentH(5));
+            buttonFleetStyleRight.SetBounds(Program.percentW(85), Program.percentH(65), Program.percentW(5), Program.percentH(5));
             buttonFleetStyleRight.Clicked += onButtonFleetStyleRightClick;
+
+            Gwen.Control.Label GalaxyFleetStyleLabel = new Gwen.Control.Label(this);
+            GalaxyFleetStyleLabel.Text = "Fleet Style";
+            GalaxyFleetStyleLabel.SetPosition(Program.percentW(67), Program.percentH(70));
+            GalaxyFleetStyleLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            GalaxyFleetStyleLabel.Font = Program.fontLogo;
 
         }
 

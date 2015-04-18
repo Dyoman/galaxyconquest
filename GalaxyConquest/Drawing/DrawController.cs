@@ -241,6 +241,24 @@ namespace GalaxyConquest.Drawing
                 Vector scr = getScreenCoordOf(s);
 
                 float starSize = (s.type + 5) * STAR_SIZE_SCALE;
+                int glowSize = (int)((s.type + 12) * STAR_SIZE_SCALE);
+
+                Rectangle GlowRectangle = new Rectangle((int)(scr.X - glowSize / 2), (int)(scr.Y - glowSize / 2), glowSize, glowSize);
+                GraphicsPath gp = new GraphicsPath();
+                gp.AddEllipse(GlowRectangle);
+
+                PathGradientBrush pgb = new PathGradientBrush(gp);
+
+                pgb.CenterPoint = new PointF((int)(scr.X - glowSize / 2) + (int)(glowSize / 2), (int)(scr.Y - glowSize / 2) + (int)(glowSize / 2));
+                pgb.CenterColor = s.color.Color;
+                pgb.SurroundColors = new Color[] { Color.FromArgb(0x00FF0000) };
+                pgb.SetBlendTriangularShape(.5f, 1.0f);
+                pgb.FocusScales = new PointF(0f, 0f);
+
+                g.FillPath(pgb, gp);
+
+                pgb.Dispose();
+                gp.Dispose();
 
                 g.FillEllipse(s.color, (float)scr.X - starSize / 2, (float)scr.Y - starSize / 2, starSize, starSize);
                 //  Вокруг выбраной звезды рисуем круг

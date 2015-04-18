@@ -145,15 +145,15 @@ namespace GalaxyConquest.Drawing
         const float STAR_SIZE_SCALE = 4.5f; // множитель размера звезд
         //Font
         const string FONT_FAMILY_NAME = "Arial";                // стандартный шрифт
-        const float STARNAME_FONT_SIZE = 5.0f;                  // размер шрифта имени звезды
-        const float PLAYER_STARNAME_FONT_SIZE = 6.0f;           // размер шрифта имени звезды, если она принадлежит игроку
-        const float FLEET_NAME_FONT_SIZE = 6.0f;                // размер шрифта имени флота
-        const float PLAYER_FLEET_NAME_FONT_SIZE = 8.0f;         // размер шрифта имени флота, если он принадлежит игроку
-        const float ACTIVE_PLAYER_FLEET_NAME_FONT_SIZE = 9.0f;  // размер шрифта имени флота, если он является активным флотом игрока
+        const float STARNAME_FONT_SIZE = 10.0f;                  // размер шрифта имени звезды
+        const float PLAYER_STARNAME_FONT_SIZE = 11.0f;           // размер шрифта имени звезды, если она принадлежит игроку
+        const float FLEET_NAME_FONT_SIZE = 11.0f;                // размер шрифта имени флота
+        const float PLAYER_FLEET_NAME_FONT_SIZE = 12.0f;         // размер шрифта имени флота, если он принадлежит игроку
+        const float ACTIVE_PLAYER_FLEET_NAME_FONT_SIZE = 13.0f;  // размер шрифта имени флота, если он является активным флотом игрока
         const FontStyle STAR_FONTSTYLE = FontStyle.Regular;     // стандартный стиль шрифта для имён звёзд
         const FontStyle PLAYER_STAR_FONTSTYLE = FontStyle.Bold; // стиль шрифта для имён звезд игрока
-        const float WARP_TEXT_FONT_SIZE = 6.0F;                 // размер шрифта текста, выводимого при отображении пути
-        const float PLANET_NAME_FONT_SIZE = 7.0f;               // размер шрифта имени планеты
+        const float WARP_TEXT_FONT_SIZE = 11.0F;                 // размер шрифта текста, выводимого при отображении пути
+        const float PLANET_NAME_FONT_SIZE = 12.0f;               // размер шрифта имени планеты
         //Scalling
         const double MAX_SCALE = 10.0;      // максимальный масштаб
         const double MIN_SCALE = 0.2;       // минимальный масштаб
@@ -161,7 +161,7 @@ namespace GalaxyConquest.Drawing
         //Rotation
         const double ROTATION_SPEED = 0.01; // скорость вращения "камеры"
         //Drawing
-        const float PATH_LINE_PEN_WIDTH = 2f;   // ширина линии, которая рисует путь
+        const float PATH_LINE_PEN_WIDTH = 4f;   // ширина линии, которая рисует путь
         //Fleet
         const int FLEET_ICON_UPLEFT_X = -3;     // 
         const int FLEET_ICON_UPLEFT_Y = -5;     //
@@ -502,6 +502,15 @@ namespace GalaxyConquest.Drawing
         /// </summary>
         void drawTarget_SizeChanged(object sender, EventArgs e)
         {
+            UpdateCenters();
+        }
+        /// <summary>
+        /// Обновляем координаты центра, центром становится звездная система
+        /// </summary>
+        public void UpdateCenters(StarSystem s)
+        {
+            horizontal -= (float)getScreenCoordOf(s).X / scaling - DrawTarget.Width / 2;
+            vertical -= (float)getScreenCoordOf(s).Y / scaling - DrawTarget.Height / 2;
             UpdateCenters();
         }
     }

@@ -53,7 +53,7 @@ namespace GalaxyConquest.SpaceObjects
         /// <summary>
         /// Максимальная дистанция, на которую флот способен лететь
         /// </summary>
-        public static double MaxDistance = 440;
+        public static double MaxDistance = 1000;
 
         public Fleet()
         {

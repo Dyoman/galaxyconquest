@@ -87,7 +87,7 @@ namespace GalaxyConquest
             galaxyImage = new Bitmap(Program.percentW(100), Program.percentH(100), PixelFormat.Format32bppArgb);
             DrawControl = new DrawController(galaxyImage);
 
-
+            DrawControl.UpdateCenters(Program.Game.Player.fleets[Program.Game.Player.selectedFleet].s1);
 
             img.SetPosition(Program.percentW(0), Program.percentH(0));
             img.SetSize(Program.percentW(100), Program.percentH(100));

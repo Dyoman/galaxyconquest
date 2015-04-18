@@ -17,7 +17,7 @@ namespace GalaxyConquest
     class Screen_NewGame : Gwen.Control.DockBase
     {
         GalaxyType galaxytype = GalaxyType.Spiral;
-        int galaxysize = 4;
+        int galaxysize = 5;
         int starsCount = 20;
         Gwen.Control.ImagePanel imageGalaxyType;
         Gwen.Control.Label label;
@@ -140,7 +140,7 @@ namespace GalaxyConquest
 
         private void onButtonGalaxySizeLeftClick(Base control, EventArgs args)
         {
-            if (galaxysize == 1)
+            if (galaxysize == 5)
             {
                 return;
             }
@@ -153,7 +153,7 @@ namespace GalaxyConquest
 
         private void onButtonGalaxySizeRightClick(Base control, EventArgs args)
         {
-            if (galaxysize == 5)
+            if (galaxysize == 10)
             {
                 return;
             }

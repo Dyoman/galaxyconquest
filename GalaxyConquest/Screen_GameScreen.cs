@@ -71,7 +71,7 @@ namespace GalaxyConquest
             : base(parent)
         {
             StepWorker = new BackgroundWorker();
-            GameTimer = new System.Timers.Timer(10);
+            GameTimer = new System.Timers.Timer(1);
             InitializeComponent();
             SetSize(parent.Width, parent.Height);
 
@@ -226,7 +226,7 @@ namespace GalaxyConquest
             buttonPlanet.SetBounds(300, 300, 200, 50);
             buttonPlanet.Clicked += onButtonPlanetClick;
             menuOpenned = false;
-           // Program.screenManager.LoadScreen("solarSystem");
+            // Program.screenManager.LoadScreen("solarSystem");
         }
         /// Обработчик кнопки с формаой планеты
         private void onButtonPlanetClick(Base control, EventArgs args)
@@ -318,10 +318,9 @@ namespace GalaxyConquest
             //UpdateCaptureControls();
 
             //перерисовка
-            lock (Program.isDrawing)
-            {
-                updateDrawing();
-            }
+            Program._pool.WaitOne();
+            updateDrawing();
+            Program._pool.Release();
         }
 
 
@@ -331,6 +330,7 @@ namespace GalaxyConquest
         {
             if (onStep)
             {
+                Program._pool.WaitOne();
                 if (syncTime <= 0)
                 {
                     syncTime = 1;
@@ -344,8 +344,9 @@ namespace GalaxyConquest
 
                 syncTime -= MovementsController.FIXED_TIME_DELTA;
                 Program.Game.Galaxy.Time += MovementsController.FIXED_TIME_DELTA;
+                updateDrawing();
+                Program._pool.Release();
             }
-            //            updateDrawing();
         }
 
         private void onCombatClick(Base control, EventArgs args)
@@ -553,13 +554,13 @@ namespace GalaxyConquest
                     new RectangleF(10, 5, techButtonImage.Width - 20, techButtonImage.Height / 2),
                     stringFormat);
                 //рисуем прогресс бар
-                gr2.DrawLine(grayPen, 
+                gr2.DrawLine(grayPen,
                     new Point(5, techButtonImage.Height / 2 + 10),
                     new Point(techButtonImage.Width - 10, techButtonImage.Height / 2 + 10));
                 //отображаем сколько изучили
-                gr2.DrawLine(whitePen, 
+                gr2.DrawLine(whitePen,
                     new Point(5, techButtonImage.Height / 2 + 10),
-                    new Point((int)TechImagePercent(Program.Game.Player.getLearningProgressPercent()) + 5,techButtonImage.Height / 2 + 10));
+                    new Point((int)TechImagePercent(Program.Game.Player.getLearningProgressPercent()) + 5, techButtonImage.Height / 2 + 10));
                 //отображаем сколько изучается за ход
                 gr2.DrawLine(yellowPen,
                     new Point((int)TechImagePercent(Program.Game.Player.getLearningProgressPercent()) + 5, techButtonImage.Height / 2 + 10),

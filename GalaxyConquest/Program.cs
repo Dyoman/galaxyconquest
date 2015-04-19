@@ -6,6 +6,7 @@ using Gwen.Control;
 using SFML.Graphics;
 using SFML.Window;
 using Tao.OpenGl;
+using System.Threading;
 using KeyEventArgs = SFML.Window.KeyEventArgs;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -51,7 +52,7 @@ namespace GalaxyConquest
         /// <summary>
         /// Semaphore for drawing
         /// </summary>
-        public static object isDrawing = new object();
+        public static Semaphore _pool;
         /// <summary>
         /// flag for drawing
         /// </summary>
@@ -86,7 +87,8 @@ namespace GalaxyConquest
         {
             //try
             {
-
+                _pool = new Semaphore(0, 1);
+                _pool.Release(1);
                 // Create main window
                 m_Window = new RenderWindow(new VideoMode((uint)width, (uint)height), "GalaxyConquest", Screen_Settings.fullScreen ? Styles.Fullscreen : (Styles.Close | Styles.Resize) | Styles.Titlebar, new ContextSettings(32, 0));
 
@@ -225,12 +227,10 @@ namespace GalaxyConquest
 
                     // render GWEN canvas
                     //while (Program.isDrawingFlag)
-                        lock (Program.isDrawing)
-                        {
-                            m_Canvas.RenderCanvas();
-                        }
-
+                    _pool.WaitOne();
+                    m_Canvas.RenderCanvas();
                     m_Window.Display();
+                    _pool.Release();
                 }
 
                 fontLogo.Dispose();

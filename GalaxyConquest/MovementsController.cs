@@ -14,7 +14,7 @@ namespace GalaxyConquest
         /// <summary>
         /// Фиксированное число, на которое будет изменяться время
         /// </summary>
-        public const double FIXED_TIME_DELTA = 0.01;
+        public const double FIXED_TIME_DELTA = 0.2;
         /// <summary>
         /// Двигает несколько космических объектов
         /// </summary>

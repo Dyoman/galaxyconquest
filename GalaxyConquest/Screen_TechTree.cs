@@ -55,7 +55,6 @@ namespace GalaxyConquest
         private Pen whitePen = new Pen(Brushes.White);
         private Pen grayPen = new Pen(Brushes.Gray);
         private Pen yellowPen = new Pen(Brushes.Yellow);
-        private System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F);
 
         private Gwen.Control.ImagePanel img;
         private Gwen.Control.ImagePanel techDescriptionImg;
@@ -285,7 +284,7 @@ namespace GalaxyConquest
                                 100 + 60
                                 );
 
-                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, fnt, br,
+                        g.DrawString(Tech.teches.tiers[i][j][k].subtech, Program.SystemFont, br,
                            new RectangleF(imageRect.Left, imageRect.Bottom + 20, 100, 40), stringFormat);
 
 
@@ -388,20 +387,19 @@ namespace GalaxyConquest
             {
                 //выводим очки исследований
                 gr2.DrawString("RP cost: " + Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].RP.ToString(),
-                    fnt, Brushes.Black,
+                    Program.SystemFont, Brushes.Black,
                     new RectangleF(10, 5, TechDescriptionBitmap.Width - 20, TechDescriptionBitmap.Height / 2),
                     stringFormat);
 
                 //выводим описание технологии
                 gr2.DrawString(Tech.teches.tiers[tierClicked][techLineClicked][subtechClicked].description,
-                    fnt, Brushes.Black,
+                    Program.SystemFont, Brushes.Black,
                     new RectangleF(10, TechDescriptionBitmap.Height / 2, TechDescriptionBitmap.Width - 20, TechDescriptionBitmap.Height / 2),
                     stringFormat);
             }
         }
         public override void Dispose()
         {
-            fnt.Dispose();
             base.Dispose();
         }
 

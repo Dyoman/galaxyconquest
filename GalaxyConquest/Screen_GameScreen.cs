@@ -40,8 +40,6 @@ namespace GalaxyConquest
         public Gwen.Control.Label skillPointsLabel;
         Gwen.Control.Button buttonCombat;
 
-        public System.Drawing.Font fnt = new System.Drawing.Font("Consolas", 10.0F, FontStyle.Bold);
-
         public Pen whitePen = new Pen(Brushes.White);
         public Pen grayPen = new Pen(Brushes.Gray);
         public Pen yellowPen = new Pen(Brushes.Yellow);
@@ -551,7 +549,7 @@ namespace GalaxyConquest
             {
                 //выводим название изучаемой технологии
                 gr2.DrawString(Tech.teches.tiers[Program.Game.Player.learningTech.Tier][Program.Game.Player.learningTech.Line][Program.Game.Player.learningTech.Subtech].subtech,
-                    fnt, Brushes.White,
+                    Program.SystemFont, Brushes.White,
                     new RectangleF(10, 5, techButtonImage.Width - 20, techButtonImage.Height / 2),
                     stringFormat);
                 //рисуем прогресс бар
@@ -569,7 +567,7 @@ namespace GalaxyConquest
             }
             else
             {
-                gr2.DrawString("Tech Tree", fnt, Brushes.White, new RectangleF(10, 5, techButtonImage.Width - 20, techButtonImage.Height / 2), stringFormat);
+                gr2.DrawString("Tech Tree", Program.SystemFont, Brushes.White, new RectangleF(10, 5, techButtonImage.Width - 20, techButtonImage.Height / 2), stringFormat);
             }
         }
 

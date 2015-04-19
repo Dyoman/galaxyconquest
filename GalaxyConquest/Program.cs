@@ -19,26 +19,62 @@ namespace GalaxyConquest
 {
     public static class Program
     {
-        private static Gwen.Input.SFML.GwenInput m_Input;    //SFML inputs
-        public static RenderWindow m_Window;               //SFML window
-        public static Canvas m_Canvas;                     //GWEN canvas
-
+        /// <summary>
+        /// SFML inputs
+        /// </summary>
+        private static Gwen.Input.SFML.GwenInput m_Input;
+        /// <summary>
+        /// SFML window
+        /// </summary>
+        public static RenderWindow m_Window;
+        /// <summary>
+        /// GWEN canvas
+        /// </summary>
+        public static Canvas m_Canvas;
+        /// <summary>
+        /// uses for switch screens
+        /// </summary>
         public static ScreenManager screenManager;
+        /// <summary>
+        /// quit flag
+        /// to close the application change state to false
+        /// </summary>
         public static bool quitFlag = false;
-
+        /// <summary>
+        /// main window width
+        /// </summary>
         public static int width = 800;
+        /// <summary>
+        /// main window height
+        /// </summary>
         public static int height = 600;
-
+        /// <summary>
+        /// Semaphore for drawing
+        /// </summary>
         public static object isDrawing = new object();
+        /// <summary>
+        /// flag for drawing
+        /// </summary>
         public static bool isDrawingFlag = false;
-
-
+        /// <summary>
+        /// Gwen font, size 35
+        /// </summary>
         public static Gwen.Font fontLogo;
-        public static Gwen.Font fontText;
+        /// <summary>
+        /// Gwen font, size 25
+        /// </summary>
         public static Gwen.Font fontButtonLabels;
-
-
-
+        /// <summary>
+        /// Gwen font, size 15
+        /// </summary>
+        public static Gwen.Font fontText;
+        /// <summary>
+        /// System drawing font, size 10
+        /// </summary>
+        public static System.Drawing.Font SystemFont;
+        /// <summary>
+        /// Game State
+        /// </summary>
         public static GameState Game;
 
 
@@ -50,7 +86,6 @@ namespace GalaxyConquest
         {
             //try
             {
-
 
                 // Create main window
                 m_Window = new RenderWindow(new VideoMode((uint)width, (uint)height), "GalaxyConquest", Screen_Settings.fullScreen ? Styles.Fullscreen : (Styles.Close | Styles.Resize) | Styles.Titlebar, new ContextSettings(32, 0));
@@ -115,25 +150,19 @@ namespace GalaxyConquest
                 // Create GWEN input processor
                 m_Input = new Gwen.Input.SFML.GwenInput(m_Window, m_Canvas);
 
-
-
-
-
-
                 fontLogo = new Gwen.Font(gwenRenderer);
                 fontLogo.FaceName = "OpenSans.ttf";
                 fontLogo.Size = 35;
-
-                fontText = new Gwen.Font(gwenRenderer);
-                fontText.FaceName = "OpenSans.ttf";
-                fontText.Size = 15;
 
                 fontButtonLabels = new Gwen.Font(gwenRenderer);
                 fontButtonLabels.FaceName = "OpenSans.ttf";
                 fontButtonLabels.Size = 25;
 
+                fontText = new Gwen.Font(gwenRenderer);
+                fontText.FaceName = "OpenSans.ttf";
+                fontText.Size = 15;
 
-
+                SystemFont = new System.Drawing.Font("Consolas", 10.0F, System.Drawing.FontStyle.Bold);
 
 
                 /*Gwen.Control.StatusBar m_StatusBar;
@@ -207,6 +236,7 @@ namespace GalaxyConquest
                 fontLogo.Dispose();
                 fontText.Dispose();
                 fontButtonLabels.Dispose();
+                SystemFont.Dispose();
 
                 // we only need to dispose the canvas, it will take care of disposing all its children
                 // and current game screen

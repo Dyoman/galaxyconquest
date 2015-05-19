@@ -105,6 +105,8 @@ namespace GalaxyConquest
                 buttonLoadOk.Pressed += onButtonLoadOkClick;
 
                 savedFilesListControl = new Gwen.Control.ListBox(LoadGameWindow);
+                savedFilesListControl.SetSize(Program.percentW(45), 200);
+                savedFilesListControl.SetPosition(10, 10);
 
                 IEnumerable<string> fileNamesCollection = System.IO.Directory.EnumerateFiles(@"C:\","*.sav");
 

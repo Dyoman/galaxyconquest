@@ -12,6 +12,9 @@ namespace GalaxyConquest
     public class Screen_MainMenu : Gwen.Control.Base
     {
         public bool LoadGameOpend = false;
+
+        public Gwen.Control.ListBox savedFilesListControl;
+
         Gwen.Control.WindowControl LoadGameWindow;
         public Screen_MainMenu(Base parent) : base(parent)
         {
@@ -101,7 +104,15 @@ namespace GalaxyConquest
                 buttonLoadOk.SetBounds(Program.percentW(50)/100+160, Program.percentH(50) * 60 / 100, 150, 50);
                 buttonLoadOk.Pressed += onButtonLoadOkClick;
 
-            }
+                savedFilesListControl = new Gwen.Control.ListBox(LoadGameWindow);
+
+                IEnumerable<string> fileNamesCollection = System.IO.Directory.EnumerateFiles(@"C:\","*.sav");
+
+                foreach (string fileName in fileNamesCollection)
+                {
+                    savedFilesListControl.AddRow(fileName);
+                }
+           }
             
         }
         public void onButtonBackMenuClick(Base control, EventArgs args)
@@ -110,7 +121,8 @@ namespace GalaxyConquest
         }
         public void onButtonLoadOkClick(Base control, EventArgs args)
         {
-           
+     
+
         }
 
 

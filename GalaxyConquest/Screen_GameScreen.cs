@@ -22,6 +22,11 @@ namespace GalaxyConquest
 {
     class Screen_GameScreen : Gwen.Control.DockBase
     {
+        const int TIMER_TICK_INTERVAL = 10;
+
+        const string SKILLPOINT_LABEL_FORMAT = "RP: {0}";
+        const string MONEY_LABEL_FORMAT = "${0}";
+        const string YEAR_LABEL_FORMAT = "{0} св.лет";
 
         /// <summary>
         /// Полотно на котором отрисовывается весь космос
@@ -38,7 +43,12 @@ namespace GalaxyConquest
 
         Gwen.Control.Label label;
         public Gwen.Control.Label skillPointsLabel;
+        Gwen.Control.Label yearLabel;
+        Gwen.Control.Label moneyLabel;
+
         Gwen.Control.Button buttonCombat;
+        Gwen.Control.Button buttonStep;
+        Gwen.Control.Button buttonMenu;
 
         public Pen whitePen = new Pen(Brushes.White);
         public Pen grayPen = new Pen(Brushes.Gray);
@@ -70,10 +80,27 @@ namespace GalaxyConquest
         public Screen_GameScreen(Base parent)
             : base(parent)
         {
-            StepWorker = new BackgroundWorker();
-            GameTimer = new System.Timers.Timer(1);
-            InitializeComponent();
             SetSize(parent.Width, parent.Height);
+
+            InitializeComponent();
+
+            UpdateLabels();
+
+            updateDrawing();
+
+            GameTimer.Start();
+        }
+
+        // Set up the BackgroundWorker object by 
+        // attaching event handlers. 
+        private void InitializeComponent()
+        {
+            StepWorker = new BackgroundWorker();
+            StepWorker.DoWork += new DoWorkEventHandler(StepWorker_DoWork);
+            StepWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(StepWorker_RunWorkerCompleted);
+
+            GameTimer = new System.Timers.Timer(TIMER_TICK_INTERVAL);
+            GameTimer.Elapsed += GameTimer_Tick;
 
             whitePen.Width = 10;
             grayPen.Width = 10;
@@ -108,12 +135,21 @@ namespace GalaxyConquest
             label.Font = Program.fontLogo;
 
             skillPointsLabel = new Gwen.Control.Label(this);
-            skillPointsLabel.Text = Program.Game.Player.skillPoints.ToString();
             skillPointsLabel.SetPosition(Program.percentW(80), Program.percentH(5));
             skillPointsLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
             skillPointsLabel.Font = Program.fontLogo;
 
-            Gwen.Control.Button buttonMenu = new Gwen.Control.Button(this);
+            yearLabel = new Gwen.Control.Label(this);
+            yearLabel.SetPosition(Program.percentW(70), Program.percentH(15));
+            yearLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            yearLabel.Font = Program.fontLogo;
+
+            moneyLabel = new Gwen.Control.Label(this);
+            moneyLabel.SetPosition(Program.percentW(70), Program.percentH(25));
+            moneyLabel.TextColor = Color.FromArgb(200, 80, 0, 250);
+            moneyLabel.Font = Program.fontLogo;
+
+            buttonMenu = new Gwen.Control.Button(this);
             buttonMenu.Text = "Menu";
             buttonMenu.Font = Program.fontButtonLabels;
             buttonMenu.SetBounds(Program.percentW(0), Program.percentH(0), Program.percentW(13), Program.percentH(8));
@@ -126,7 +162,7 @@ namespace GalaxyConquest
             buttonSolarSystem.SetBounds(Program.percentW(0), Program.percentH(92), Program.percentW(19), Program.percentH(8));
             buttonSolarSystem.Clicked += onSolarSystemClick;
 
-            Gwen.Control.Button buttonStep = new Gwen.Control.Button(this);
+            buttonStep = new Gwen.Control.Button(this);
             buttonStep.Text = "Step";
             buttonStep.Font = Program.fontButtonLabels;
             buttonStep.SetBounds(Program.percentW(90), Program.percentH(92), Program.percentW(10), Program.percentH(8));
@@ -137,20 +173,7 @@ namespace GalaxyConquest
             buttonCombat.Font = Program.fontButtonLabels;
             buttonCombat.SetBounds(Program.percentW(19), Program.percentH(92), Program.percentW(18), Program.percentH(8));
             buttonCombat.Clicked += onCombatClick;
-
-            updateDrawing();
         }
-
-        // Set up the BackgroundWorker object by 
-        // attaching event handlers. 
-        private void InitializeComponent()
-        {
-            StepWorker.DoWork += new DoWorkEventHandler(StepWorker_DoWork);
-            StepWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(StepWorker_RunWorkerCompleted);
-            GameTimer.Elapsed += GameTimer_Tick;
-            GameTimer.Start();
-        }
-
 
         private void onButtonMenuClick(Base control, EventArgs args)
         {
@@ -191,7 +214,6 @@ namespace GalaxyConquest
             }
         }
 
-
         private void onButtonNewGameClick(Base control, EventArgs args)
         {
             menuOpenned = false;
@@ -203,7 +225,6 @@ namespace GalaxyConquest
             menuOpenned = false;
             Program.quitFlag = true;
         }
-
 
         private void onSolarSystemClick(Base control, EventArgs args)
         {
@@ -248,6 +269,7 @@ namespace GalaxyConquest
             //captureButton.Enabled = false;//кнопка захвата по умолчанию будет неактивна. Включается только если система, в которой находится активный флот еще не захвачена
 
             onStep = true;      //Устанавливаем флаг шага
+            buttonStep.Disable();
             StepWorker.RunWorkerAsync();
             //UpdateCaptureControls();//Во время шага кнопки захвата не должны быть активны, по-этому обновляем их
         }
@@ -309,9 +331,10 @@ namespace GalaxyConquest
                 }
 
             //Обновляем лейблы
-            skillPointsLabel.Text = Program.Game.Player.skillPoints.ToString();
+            UpdateLabels();
             //UpdateControls();
             //включам панель с кнопками
+            buttonStep.Enable();
             //panel1.Enabled = true;
             //step_button.Focus();//задаём фокус для кнопки шага
             //Обновляем кнопки захвата по завершению шага
@@ -585,7 +608,11 @@ namespace GalaxyConquest
             base.Dispose();
         }
 
-
-
+        void UpdateLabels()
+        {
+            skillPointsLabel.Text = string.Format(SKILLPOINT_LABEL_FORMAT, Program.Game.Player.skillPoints);
+            yearLabel.Text = string.Format(YEAR_LABEL_FORMAT, Program.Game.Galaxy.Time);
+            moneyLabel.Text = string.Format(MONEY_LABEL_FORMAT, Math.Round(Program.Game.Player.credit, 2));
+        }
     }
 }

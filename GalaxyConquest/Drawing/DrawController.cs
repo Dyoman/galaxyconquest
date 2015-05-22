@@ -133,10 +133,10 @@ namespace GalaxyConquest.Drawing
         #region CONSTANTS
         int DISPERSION = 7; //Дисперсия/разброс. Радиус области вокруг объекта, при клике на которую объект будет выбран
         //Margin
-        const int FLEET_ICON_MARGIN = -10;  // отступ рисования иконки флота (треугольника)
+        const int FLEET_ICON_MARGIN = -25;  // отступ рисования иконки флота (треугольника)
         const int FLEET_NAME_MARGIN_X = 0;  // отступ рисования имени флота
-        const int FLEET_NAME_MARGIN_Y = -15;// отступ рисования имени флота
-        const int STAR_NAME_MARGIN = 6;     // отступ рисования имени звезды
+        const int FLEET_NAME_MARGIN_Y = -30;// отступ рисования имени флота
+        const int STAR_NAME_MARGIN = 20;     // отступ рисования имени звезды
         const int STAR_SELECTION_MARGIN = 5;// дополнительный отступ при рисовании элипса вокруг выделенной звезды
         const int WARP_TEXT_MARGIN_X = 10;  // отступ рисования текста перемещения
         const int WARP_TEXT_MARGIN_Y = -10; // отступ рисования текста перемещения
@@ -285,7 +285,7 @@ namespace GalaxyConquest.Drawing
                 if (!fleet.s1.Discovered)
                     continue;
                 Vector scr = getScreenCoordOf(fleet);
-                scr.X += FLEET_ICON_MARGIN;
+                scr.X -= FLEET_ICON_MARGIN;
                 scr.Y += FLEET_ICON_MARGIN;
 
                 PointF[] compPointArrayShip = GetFleetIcon(scr);

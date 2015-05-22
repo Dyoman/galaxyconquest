@@ -346,7 +346,6 @@ namespace GalaxyConquest
             Program._pool.Release();
         }
 
-
         //----------------------Timer-------------------
         //Обновление изображения и движение во время шага строго по тику таймера
         private void GameTimer_Tick(object sender, EventArgs e)
@@ -462,11 +461,11 @@ namespace GalaxyConquest
             }
         }
 
-
         private void imgTechTree_Clicked(Base sender, ClickedEventArgs arguments)
         {
             Program.screenManager.LoadScreen("techtree");
         }
+
         private void img_RightClicked(Base control, ClickedEventArgs args)
         {
             for (int j = 0; j < Program.Game.Galaxy.stars.Count; j++)
@@ -537,7 +536,6 @@ namespace GalaxyConquest
             System.Windows.Forms.MessageBox.Show("URA");
             return base.OnKeyEscape(down);
         }
-
 
         public void updateDrawing()
         {

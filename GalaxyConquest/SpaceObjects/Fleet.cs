@@ -14,6 +14,10 @@ namespace GalaxyConquest.SpaceObjects
     public class Fleet : SpaceObject
     {
         /// <summary>
+        /// Скорость движения флота
+        /// </summary>
+        public const double FLEET_SPEED = 4.5;
+        /// <summary>
         /// Корабли во флоте
         /// </summary>
         public List<Ship> ships;
@@ -182,9 +186,9 @@ namespace GalaxyConquest.SpaceObjects
             {
                 onWay = true;
 
-                double dx = (s2.x - x) / starDistanse;
-                double dy = (s2.y - y) / starDistanse;
-                double dz = (s2.z - z) / starDistanse;
+                double dx = (s2.x - x) / starDistanse * FLEET_SPEED;
+                double dy = (s2.y - y) / starDistanse * FLEET_SPEED;
+                double dz = (s2.z - z) / starDistanse * FLEET_SPEED;
                                 
                 x += dx;
                 y += dy;
@@ -195,9 +199,6 @@ namespace GalaxyConquest.SpaceObjects
             else//Флот долетел до звезды
             {
                 s1 = s2;
-                s2 = null;
-                starDistanse = 0;
-                onWay = false;
                 s1.Discovered = true;
                 s2 = path.Next();
 
@@ -206,8 +207,6 @@ namespace GalaxyConquest.SpaceObjects
                     path.Clear();
                     starDistanse = 0;
                     onWay = false;
-
-                    s1.Discovered = true;
                 }
                 else
                     starDistanse = DrawController.Distance(s1, s2);
@@ -232,8 +231,8 @@ namespace GalaxyConquest.SpaceObjects
             else
             {
                 path.CalculateWay(s1, s);
-                s2 = path.First;
-                starDistanse = DrawController.Distance(path.First, this);
+                s2 = path.Next();
+                starDistanse = DrawController.Distance(this, s2);
             }
         }
         /// <summary>

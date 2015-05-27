@@ -105,9 +105,9 @@ namespace GalaxyConquest
             ShipsCounter.ShipsCount(ref seed);
             UpdateDrawing();
             if (seed.redShipsCount == 0)
-                EndCombat(1);
+                EndCombat(1, seed.redShipsCount, seed.blueShipsCount);
             if (seed.blueShipsCount == 0)
-                EndCombat(2);
+                EndCombat(2, seed.redShipsCount, seed.blueShipsCount);
         }
 
         private void onConcedeClick(Base control, EventArgs args)
@@ -116,9 +116,9 @@ namespace GalaxyConquest
             {
                 ConcedeOpenned = true;
                 if (seed.activePlayer == 1)
-                    EndCombat(2);
+                    EndCombat(2,seed.redShipsCount, seed.blueShipsCount);
                 if (seed.activePlayer == 2)
-                    EndCombat(1);
+                    EndCombat(1, seed.redShipsCount, seed.blueShipsCount);
             }
         }
 
@@ -249,9 +249,9 @@ namespace GalaxyConquest
                     }
                     UpdateDrawing();
                     if (seed.redShipsCount == 0)
-                        EndCombat(1);
+                        EndCombat(1, seed.redShipsCount, seed.blueShipsCount);
                     if (seed.blueShipsCount == 0)
-                        EndCombat(2);
+                        EndCombat(2, seed.redShipsCount, seed.blueShipsCount);
                     break;
                 }
             }
@@ -265,7 +265,7 @@ namespace GalaxyConquest
             Program.m_Window.Display();
         }
 
-        private void EndCombat(int win)
+        private void EndCombat(int win, int k1, int k2)
         {
             Gwen.Control.WindowControl windowEnd = new Gwen.Control.WindowControl(this);
             windowEnd.Width = this.Width / 2;
@@ -276,7 +276,12 @@ namespace GalaxyConquest
             labelWin.Text = "Win Player " + win.ToString();
             labelWin.Font = Program.fontLogo;
             labelWin.SetBounds(windowEnd.Width / 2 - labelWin.Width / 2, windowEnd.Height / 2 - labelWin.Height, windowEnd.Width, windowEnd.Height * 15 / 100);
-
+            
+            Gwen.Control.Label labelWinCount = new Gwen.Control.Label(windowEnd);
+            labelWinCount.Text = k1.ToString() + ":" + k2.ToString();
+            labelWinCount.Font = Program.fontLogo;
+            labelWinCount.SetBounds(windowEnd.Width / 2 - labelWinCount.Width / 2, windowEnd.Height / 2 + 5, windowEnd.Width, windowEnd.Height * 15 / 100);
+            
             Gwen.Control.Button buttonOK = new Gwen.Control.Button(windowEnd);
             buttonOK.Text = "OK";
             buttonOK.Font = Program.fontButtonLabels;
